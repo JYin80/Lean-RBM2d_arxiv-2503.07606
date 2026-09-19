@@ -95,6 +95,19 @@
 
 \chapter{Section 8: proof of Lemma \texorpdfstring{\texttt{lem\_propTH}}{lem-propTH}}
 
+\begin{definition}[Deterministic domination, Definition \texttt{stoch\_domination} (ii)]
+  \label{def:detdom}
+  \lean{RBM.UnifDetDom, RBM.DetDom}\leanok
+  $A\prec B$ means that for every fixed $\varepsilon>0$ one has
+  $A\le C_\varepsilon L^{\varepsilon}B$ for all large $L$; in particular powers of
+  $\log L$ are harmless.  The sequence parameter is the number of blocks $L$,
+  which is the form \S8 uses; the introduction's $N^{\tau}$ version follows since
+  $L\le N$.  The basic notion is the version uniform in a parameter
+  $u\in U(L)$, because Properties 5 and 6 hold uniformly in the lattice points.
+  See \texttt{docs/paper-deltas.md}, items 3 and 4.
+\end{definition}
+
+
 \begin{definition}[Scales, \texttt{(eq\_kappa\_def)}]\label{def:kappa}
   \lean{RBM.kappa, RBM.ellhat}\leanok
   $\kappa:=|1-\xi|^{1/2}$ and $\lhat=\lhat(\xi):=\min(\kappa^{-1},L)$.
@@ -204,8 +217,15 @@
 \end{lemma}
 
 \begin{lemma}[Harmonic sum]\label{lem:harmonic}
-  $\sum_{k=1}^{L}k^{-1}\le1+\log L\prec1$.
-  \emph{Work order T16.}
+  \uses{def:detdom}
+  \lean{RBM.mul_log_le_rpow, RBM.sum_inv_Icc_le_one_add_log,
+        RBM.one_add_log_detDom_one, RBM.harmonic_detDom_one}
+  $\sum_{k=1}^{L}k^{-1}\le1+\log L\prec1$, the Lean form of the paper's remark
+  that powers of $\log L$ are harmless.  Mathlib supplies the first inequality
+  over $\mathbb Q$ (\texttt{harmonic\_le\_one\_add\_log}); the domination is
+  $\tau\log x\le x^{\tau}$, itself $\log y\le y-1$ at $y=x^{\tau}$.
+  \emph{Work order T16 --- drafted, awaiting a CI round; no
+  \texttt{\textbackslash leanok} until it compiles.}
 \end{lemma}
 
 \begin{lemma}[Lattice sum]\label{lem:latticesum}
