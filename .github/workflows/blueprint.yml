@@ -21,6 +21,7 @@ on:
       - 'blueprint/**'
       - 'home_page/**'
       - 'lakefile.toml'
+      - 'lake-manifest.json'
       - 'lean-toolchain'
       - '.github/workflows/blueprint.yml'
   workflow_dispatch:

@@ -88,7 +88,7 @@ theorem zero_ne_one_zmod (hL : 3 ≤ L) : (0 : ZMod L) ≠ 1 :=
   Ne.symm (one_ne_zero_zmod L hL)
 
 theorem zero_ne_neg_one_zmod (hL : 3 ≤ L) : (0 : ZMod L) ≠ -1 := fun h =>
-  one_ne_zero_zmod L hL (by linear_combination -h)
+  one_ne_zero_zmod L hL (by linear_combination h)
 
 end Char
 
