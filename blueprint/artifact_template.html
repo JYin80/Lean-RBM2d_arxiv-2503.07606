@@ -1,0 +1,147 @@
+<title>Band Matrix Blueprint d=2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#f5f7f8; --surface:#ffffff; --border:#dfe4e9; --ink:#141a20; --muted:#6d7883;
+    --accent:#2c4a7c; --done:#1a8a5e; --done-bg:#e3f3ec; --ready:#3d74ad; --ready-bg:#e2edf7;
+    --todo:#8d97a2; --todo-bg:#eceff2; --cited:#9a7328; --cited-bg:#fbf1de;
+    --plate:#f8fafb; --plate-border:#dde3e8;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#11161b; --surface:#191f26; --border:#2a333c; --ink:#e5e9ed; --muted:#98a3ae;
+    --accent:#8fb4e0; --done:#4bc094; --done-bg:#14302a; --ready:#79a9d8; --ready-bg:#16283a;
+    --todo:#8e99a4; --todo-bg:#222a32; --cited:#d7ab5f; --cited-bg:#2e2617;
+    --plate:#e7ebee; --plate-border:#c7ced4;}}
+  :root[data-theme="dark"]{
+    --bg:#11161b; --surface:#191f26; --border:#2a333c; --ink:#e5e9ed; --muted:#98a3ae;
+    --accent:#8fb4e0; --done:#4bc094; --done-bg:#14302a; --ready:#79a9d8; --ready-bg:#16283a;
+    --todo:#8e99a4; --todo-bg:#222a32; --cited:#d7ab5f; --cited-bg:#2e2617;
+    --plate:#e7ebee; --plate-border:#c7ced4;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.55;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:40px 64px}
+  header{border-bottom:1px solid var(--border);padding-bottom:22px;margin-bottom:28px}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:clamp(26px,4.4vw,38px);
+    line-height:1.15;margin:0 0 6px;text-wrap:balance;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0;font-size:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .chip{display:flex;align-items:baseline;gap:8px;background:var(--surface);
+    border:1px solid var(--border);border-radius:6px;padding:9px 13px}
+  .chip b{font-size:19px;font-weight:600;font-variant-numeric:tabular-nums}
+  .chip span{font-size:12.5px;color:var(--muted)}
+  .chip.done b{color:var(--done)}.chip.ready b{color:var(--ready)}.chip.todo b{color:var(--todo)}
+  h2{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:21px;margin:38px 0 10px}
+  .graph{margin:0}
+  .gbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;margin-bottom:8px}
+  .gbar .gcap{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .gtools{display:flex;align-items:center;gap:6px}
+  .gtools button{font:inherit;font-size:13px;line-height:1;color:var(--ink);background:var(--surface);
+    border:1px solid var(--border);border-radius:6px;padding:6px 10px;cursor:pointer}
+  .gtools button:hover{border-color:var(--accent);color:var(--accent)}
+  .gtools button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .gtools .gpct{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+  .plate{background:var(--plate);border:1px solid var(--plate-border);border-radius:8px;padding:12px;
+    overflow:auto;max-height:76vh;overscroll-behavior:contain;cursor:grab}
+  .plate.dragging{cursor:grabbing}
+  .plate svg.depgraph{display:block;height:auto;max-width:none;width:100%}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:13px;color:var(--muted)}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;
+    vertical-align:-1px;border:1px solid rgba(0,0,0,.18)}
+  ul.rows{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--border)}
+  .row{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;align-items:baseline;
+    padding:11px 2px;border-bottom:1px solid var(--border)}
+  .row-main{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;min-width:0}
+  .row-name{font-weight:500}
+  .row-ref{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .row-side{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;min-width:0}
+  .pill{font-size:11.5px;padding:2px 8px;border-radius:99px;white-space:nowrap}
+  .pill.done,.pill.defn{color:var(--done);background:var(--done-bg)}
+  .pill.ready{color:var(--ready);background:var(--ready-bg)}
+  .pill.blocked{color:var(--todo);background:var(--todo-bg)}
+  .pill.cited{color:var(--cited);background:var(--cited-bg)}
+  code{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+  .note{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);
+    border-radius:0 6px 6px 0;padding:14px 16px;margin-top:22px;font-size:13.5px;color:var(--muted)}
+  .note strong{color:var(--ink);font-weight:600}
+  footer{margin-top:34px;font-size:12.5px;color:var(--muted)}
+  @media (max-width:640px){.row{flex-direction:column;align-items:flex-start}}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Lean 4 · Mathlib · 形式化蓝图</p>
+    <h1>二维随机带矩阵的退局域化</h1>
+    <p class="sub">arXiv:2503.07606（AOP 提交版）· Lean 4.34.0 / Mathlib 5ed2965256 · 确定性内核</p>
+    <div class="chips">
+      <div class="chip done"><b>@@DONE@@</b><span>节点已形式化</span></div>
+      <div class="chip ready"><b>@@READY@@</b><span>依赖就绪，可开工</span></div>
+      <div class="chip todo"><b>@@TODO@@</b><span>待解锁</span></div>
+      <div class="chip done"><b>@@THMS@@</b><span>Lean 声明 · 0 sorry</span></div>
+    </div>
+  </header>
+
+  <div class="legend">
+    <span><i style="background:#1f9d6b"></i>已在 Lean 中证明</span>
+    <span><i style="background:#cfe9dc"></i>定义（已形式化）</span>
+    <span><i style="background:#dbe8f5"></i>前提就绪，可开工</span>
+    <span><i style="background:#ffffff"></i>尚被上游阻塞</span>
+    <span><i style="background:#fdf3e0"></i>不形式化</span>
+  </div>
+
+@@BODY@@
+
+  <div class="note">
+    <strong>与 d=1 的区别，也是这个项目的全部难点。</strong>
+    一维最近邻三项递推有特征方程，闭式解 <code>Θ_ξ = A(ξ)(ρ^d + ρ^{L−d})</code> 存在，
+    <a href="https://github.com/JYin80/Lean-RBM1d_arxiv-2501.01718">RBM1D</a> 的衰减估计全建在它上面。
+    <code>Z_L²</code> 上没有这种递推，闭式解不存在，所以只剩论文 §8 的 Fourier 一条路：
+    椭圆性 → 围道平移 → 周期化 → dyadic 分解。图里那条从 <code>elliptic</code> 出发、
+    经 <code>contour</code> 与 <code>periodize</code> 汇到 <code>propTH-5</code> 的链就是它。
+    旁边那条只经过 <code>latticesum</code> 的短路径（<code>κL &lt; 1</code> 区制与导数界 Case 2）
+    不需要围道，所以排在前面做。
+  </div>
+
+  <footer>
+    由 <code>blueprint/render_artifact.py</code> 从 <code>blueprint/src/content.tex</code> 与
+    <code>RBM2D/**/*.lean</code> 直接生成；节点状态取自 <code>\leanok</code>，
+    每个 <code>\lean{}</code> 标签都校验过能解析到真实声明。图可缩放、拖动平移。
+  </footer>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll("figure.graph").forEach(function(fig){
+    var plate = fig.querySelector(".plate"), svg = fig.querySelector("svg.depgraph"),
+        pct = fig.querySelector(".gpct"), base = parseFloat(fig.dataset.basew) || 800, z = 1;
+    function apply(){ svg.style.width = (base * z) + "px"; pct.textContent = Math.round(z*100) + "%"; }
+    function fit(){ z = Math.min(1, (plate.clientWidth - 26) / base); apply(); }
+    fig.querySelectorAll(".gtools button").forEach(function(b){
+      b.addEventListener("click", function(){
+        var a = b.dataset.act;
+        if (a === "fit") return fit();
+        z = Math.min(4, Math.max(.2, z * (a === "in" ? 1.25 : .8)));
+        apply();
+      });
+    });
+    plate.addEventListener("dblclick", function(){ if (z > 1.01) fit(); else { z = 1.6; apply(); } });
+    var down = false, sx = 0, sy = 0, cx = 0, cy = 0;
+    plate.addEventListener("pointerdown", function(e){
+      down = true; plate.classList.add("dragging"); plate.setPointerCapture(e.pointerId);
+      sx = e.clientX; sy = e.clientY; cx = plate.scrollLeft; cy = plate.scrollTop;
+    });
+    plate.addEventListener("pointermove", function(e){
+      if (!down) return;
+      plate.scrollLeft = cx - (e.clientX - sx); plate.scrollTop = cy - (e.clientY - sy);
+    });
+    ["pointerup","pointercancel"].forEach(function(t){
+      plate.addEventListener(t, function(){ down = false; plate.classList.remove("dragging"); });
+    });
+    fit(); window.addEventListener("resize", fit);
+  });
+})();
+</script>
