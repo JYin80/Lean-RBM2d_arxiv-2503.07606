@@ -3,6 +3,8 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.Analysis.Real.Pi.Bounds
 import RBM2D.Defs.Dist
 import RBM2D.Propagator.Elliptic
 
@@ -55,6 +57,14 @@ and the restatement of `(eq_elliptic)` in the paper's own form
 
 `RBM.pstar2_pos_of_ne_zero` is the positivity fact the lattice sum of T3 needs
 in order to divide by `|p|_*²` away from the zero mode.
+
+## Imports
+
+`Trigonometric.Bounds` and `Real.Pi.Bounds` are imported **explicitly**: the two
+cosine bounds and `Real.pi_gt_three` exist in Mathlib but are *not* in the
+import closure of `Defs.Dist` + `Propagator.Elliptic`, so the first CI round
+failed with `Unknown constant` on all three.  Grepping the Mathlib source proves
+a name exists; it does not prove it is in scope.
 
 ## Names checked against the pinned Mathlib (v4.34.0)
 
@@ -120,7 +130,7 @@ theorem cos_eq_cos_pstar (p : ZMod L) :
       Nat.cast_sub (le_of_lt hlt)
     have hval : pstar L p = 2 * Real.pi - 2 * Real.pi * (p.val : ℝ) / (L : ℝ) := by
       simp only [pstar, hz, hcast]
-      field_simp [hLne] <;> ring
+      field_simp [hLne]
     rw [hval, Real.cos_two_pi_sub]
 
 theorem pstar_pos_of_ne_zero {u : ZMod L} (hu : u ≠ 0) : 0 < pstar L u := by
@@ -155,6 +165,7 @@ variable (L : ℕ) [NeZero L]
 /-- `|p|_*²`, the paper's `dist(p₁,2πZ)² + dist(p₂,2πZ)²`. -/
 noncomputable def pstar2 (p : Z2 L) : ℝ := (pstar L p.1) ^ 2 + (pstar L p.2) ^ 2
 
+omit [NeZero L] in
 theorem pstar2_nonneg (p : Z2 L) : 0 ≤ pstar2 L p := by
   simp only [pstar2]
   positivity
@@ -162,9 +173,11 @@ theorem pstar2_nonneg (p : Z2 L) : 0 ≤ pstar2 L p := by
 /-- Away from the zero mode `|p|_*² > 0`; this is what lets T3 divide by it. -/
 theorem pstar2_pos_of_ne_zero {p : Z2 L} (hp : p ≠ 0) : 0 < pstar2 L p := by
   have hcoord : p.1 ≠ 0 ∨ p.2 ≠ 0 := by
-    by_contra hc
-    push_neg at hc
-    exact hp (Prod.ext_iff.mpr ⟨hc.1, hc.2⟩)
+    rcases eq_or_ne p.1 0 with h1 | h1
+    · rcases eq_or_ne p.2 0 with h2 | h2
+      · exact absurd (Prod.ext_iff.mpr ⟨h1, h2⟩) hp
+      · exact Or.inr h2
+    · exact Or.inl h1
   have h1 := pstar_nonneg L p.1
   have h2 := pstar_nonneg L p.2
   simp only [pstar2]
@@ -206,7 +219,8 @@ theorem pstar2_le_qsym (p : Z2 L) :
       = 2 / 5 * (2 / Real.pi ^ 2 * (pstar L p.1) ^ 2
           + 2 / Real.pi ^ 2 * (pstar L p.2) ^ 2) := by
     simp only [pstar2]
-    field_simp [hpi] <;> ring
+    field_simp [hpi]
+    ring
   rw [key]
   simp only [qsym]
   linarith
@@ -225,7 +239,7 @@ theorem four_div_le_one_div_nine : 4 / (45 * Real.pi ^ 2) ≤ (1 / 9 : ℝ) := b
   have heq : (1 / 9 : ℝ) - 4 / (45 * Real.pi ^ 2)
       = (5 * Real.pi ^ 2 - 4) / (45 * Real.pi ^ 2) := by
     have hpi : (Real.pi : ℝ) ≠ 0 := Real.pi_ne_zero
-    field_simp <;> ring
+    field_simp [hpi] <;> ring
   have hnn : (0 : ℝ) ≤ (1 / 9 : ℝ) - 4 / (45 * Real.pi ^ 2) := by
     rw [heq]
     apply div_nonneg
@@ -256,7 +270,8 @@ theorem norm_one_sub_mul_Shat_ge_pstar {ξ : ℂ} (hξ : ‖ξ‖ < 1) (p : Z2 L
   have hsplit : 4 / (45 * Real.pi ^ 2) * ((kappa ξ) ^ 2 + pstar2 L p)
       = 4 / (45 * Real.pi ^ 2) * (kappa ξ) ^ 2
         + 1 / 9 * (4 / (5 * Real.pi ^ 2) * pstar2 L p) := by
-    field_simp [hpi] <;> ring
+    field_simp [hpi]
+    ring
   have hc1 : 4 / (45 * Real.pi ^ 2) * (kappa ξ) ^ 2 ≤ 1 / 9 * (kappa ξ) ^ 2 := by
     have := mul_le_mul_of_nonneg_right hconst hkap
     linarith
