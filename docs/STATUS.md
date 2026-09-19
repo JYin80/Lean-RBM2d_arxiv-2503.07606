@@ -90,6 +90,33 @@ Real.cos_le_one_sub_mul_cos_sq (hx : |x| ≤ π) : cos x ≤ 1 - 2 / π ^ 2 * x 
 **蓝图侧故意没有给 `lem:qcomp` 加 `\leanok`** —— 没过 CI 就说「已形式化」是假的。
 `\lean{}` 标签加了（`render_artifact.py` 的 checkdecls 过了，说明这 6 个名字确实存在于源码里）。
 
+### CI 第一轮的结果：错的不是上面那四条，是 import（已修）
+
+`Lean Action CI #14/#15/#16` 红。三条 error，全是同一个毛病：
+
+```
+Unknown constant `Real.one_sub_sq_div_two_le_cos`
+Unknown constant `Real.cos_le_one_sub_mul_cos_sq`
+Unknown constant `Real.pi_gt_three`
+```
+
+三个名字**确实存在**（我在 `../RBM1D/.lake/packages/mathlib/` 里逐条 grep 过），
+但 `Mathlib/Analysis/SpecialFunctions/Trigonometric/Bounds.lean` 与
+`Mathlib/Analysis/Real/Pi/Bounds.lean` **不在 `Defs.Dist` + `Propagator.Elliptic`
+的 import 闭包里**，所以不在作用域。
+
+> **教训，值得写进 `CLAUDE.md`：grep 源码只能证明名字存在，不能证明它被 import 了。**
+> 「不许发明 Mathlib 引理名」这条规矩防住了名字，没防住作用域。
+> 从 Mathlib 深处取引理时，**同时把它所在的模块显式 import 一行**。
+
+已在 `b39a47f` 修：显式加了那两个 import。顺带按同一份日志修掉了
+`cos_eq_cos_pstar` 里 field_simp 之后多余的 `ring`、两处应当用 `;` 而非 `<;>` 的
+field_simp、弃用的 `push_neg`、以及 `pstar2_nonneg` 的 `omit [NeZero L] in`。
+
+上面那张「不确定的地方」表里的四条战术风险，**第一轮一条都没触发**
+（错误全集中在 import），但它们在这一轮里也还没被真正执行到 —— `Momentum.lean`
+在 `Unknown constant` 之后就没往下编了。**第二轮才是它们的第一次体检。**
+
 ### 队列：4 条 → 7 条
 
 原来 T3 是一条「什么都干」的大工单，而 T4 和 T5 的第一步**是同一条引理**
