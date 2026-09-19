@@ -22,15 +22,16 @@
 | T14 | 零模分离：把 `(eq_Fourier_rep)` 的 `p = 0` 项拎出来 | `Propagator/ZeroMode.lean`（新建） | Cowork | **进行中**（草稿待 CI） |
 | T15 | `max`-壳层计数 `#{p : k(p) = k} ≤ 12k + 4` | `Propagator/Shells.lean`（新建） | 空闲 | **可开工**，不碰实数 |
 | T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | Cowork | **完成**（CI #22 绿，0 sorry，0 warning） |
+| T17 | dyadic 几何级数 `(eq_dyadic_sum1)(eq_dyadic_sum2)` | `Propagator/GeomSum.lean`（新建） | 空闲 | **可开工**，纯算术，不依赖 T9/T11 |
 
 **T1 已完成（2026-09-19）**，`lake build` exit 0、0 sorry、10 个文件全绿。
 剩下的建议顺序：**(T6 ∥ T7 ∥ T8 ∥ T13 ∥ T14 ∥ T15 ∥ T16) → T3 → (T4 ∥ T5) → 第二批。**
 T2 已完成（Cowork，CI #18 绿）。
 
-**队列现在有 6 条可立刻开工且文件两两不相交的工单**（T6、T7、T8、T13、T14、T15），
-足够两个 Claude Code 实例各取一条连着跑好几轮而不会撞车。
+**队列现在有 6 条可立刻开工且文件两两不相交的工单**（T6、T7、T8、T13、T15、T17；
+T14 已由 Cowork 认领并写完草稿），足够两个 Claude Code 实例各取一条连着跑好几轮而不会撞车。
 **T15 是其中唯一在关键路径上的**：T2 与 T16 都已完成，T15 一落地 T3 就只剩组装，
-T3 一通 T4 与 T5 就都能并行开工。
+T3 一通 T4 与 T5 就都能并行开工。T14 的草稿一旦 CI 绿，T4 与 T5 的前置就只剩 T3。
 
 T6/T7/T8 放在 T2 前面不是因为它们更重要，而是因为它们**互不相干且都短**，
 适合在 T1 刚打通、对本项目的 API 还不熟的时候练手；而 T2→T3→T4 是一条串行链。
@@ -632,6 +633,102 @@ theorem harmonic_detDom_one :
 ### 完成标准
 单文件编译 exit 0、0 sorry；第 4 条 `#print axioms` 干净；
 蓝图节点 `lem:harmonic` 补 `\lean{}` + `\leanok`。
+
+---
+
+## T17 — dyadic 几何级数 `(eq_dyadic_sum1)` `(eq_dyadic_sum2)`（`Propagator/GeomSum.lean`）
+
+T11 是全项目最硬的一块，但它其实是两件事拼起来的：
+`(eq_dyadic)` 那条逐环估计（难，要离散分部求和），和把各环加起来的**两条几何级数**（不难，纯算术）。
+`TASKS.md` 原文自己就写了「这两条是纯算术，可以先于 `(eq_dyadic)` 单独做掉」——
+这条工单就是把它兑现，放进独立文件，这样 **T11 即使卡死或降级成引用接口，这两条也已经落地**。
+
+依赖：只要 `Propagator/Elliptic.lean`（已绿，提供 `kappa`、`ellhat`、`kappa_mul_ellhat_le_one`）。
+**不依赖 T9、T11、T2、T3。可以立刻开工。全程实数，不碰格点、不碰 Fourier。**
+
+论文出处：`paper/tex/8_theta_properties.tex` 第 177–178 行。
+
+### 怎么把「dyadic 求和」写成 Lean
+
+论文的 `r` 跑遍 `L^{-1} ≲ r ≲ 1` 的二进值。在 Lean 里就取
+
+```lean
+noncomputable def dyad (j : ℕ) : ℝ := (2 : ℝ) ^ (-(j : ℤ))
+```
+
+求和范围是 `j ∈ Finset.range (J + 1)`，`J` 是参数（下游取 `J ≈ log₂ L`，
+但**这条工单对 `J` 一致成立，不需要知道 `J` 和 `L` 的关系**）。
+`dyad j ∈ (0, 1]`、`dyad` 单调减、`∑_{j<n} dyad j ^ k ≤ 2^k/(2^k − 1)`
+这三条是文件的地基，先写。
+
+### 固定 `M = 3`
+
+论文说 `M` 可任意大。下面的拆分只用到 `M = 3`（见第 3 步），所以**在 Lean 里把 `M` 写死为 3**，
+不引入额外参数。这是一处陈述与论文字面的偏差，落地时**记进 `docs/paper-deltas.md`**：
+论文的 `∀ M` 我们只取一个够用的 `M`，下游 `(eq_fd1)(eq_fd2)` 用的也只是某一个 `M`。
+
+### 要证的东西，按顺序
+
+1. **地基**：`dyad_pos`、`dyad_le_one`、`dyad_antitone`，以及
+```lean
+theorem sum_dyad_pow_le (k : ℕ) (hk : 1 ≤ k) (n : ℕ) :
+    ∑ j ∈ Finset.range n, (dyad j) ^ k ≤ 2
+```
+（`∑_{j≥0} 2^{-jk} = 1/(1−2^{-k}) ≤ 2`。走 `Finset.geom_sum_le` 一族，
+**名字先 grep**：`geom_sum_eq`、`Finset.geom_sum_le` 在 `Mathlib/Algebra/GeomSum.lean`。
+若形状难调，退而证 `≤ 2` 的归纳版：`∑_{j<n+1} = 1 + (1/2^k)∑_{j<n}`。）
+
+2. **第一次劈开：`r ≤ κ` 与 `r > κ`。** 把 `Finset.range (J+1)` 按
+`decide (dyad j ≤ kappa ξ)` 分成两块（`Finset.sum_filter_add_sum_filter_not`，已核对存在）。
+- `r ≤ κ` 那块：`κ² + r² ≥ κ²`，于是 `r³/(κ²+r²) ≤ r³/κ² ≤ r·(r/κ)² ≤ r ≤ κ`，
+  求和用第 1 步得 `≤ 2κ`。再由 **`1/ℓ̂ = max(κ, 1/L) ≥ κ`** 换成 `≤ 2/ℓ̂`。
+  （`ellhat = min(κ⁻¹, L)`，所以 `ellhat ≤ κ⁻¹`，即 `κ ≤ 1/ℓ̂`。
+  `Elliptic.lean` 的 `kappa_mul_ellhat_le_one` 就是这条，直接用，别重证。）
+- `r > κ` 那块：`κ² + r² ≥ r²`，于是被 `r·(1+rd)^{-3}` 控制。进第 3 步。
+
+3. **第二次劈开：`r ≤ 1/(d+1)` 与 `r > 1/(d+1)`。**
+- `r ≤ 1/(d+1)`：`(1+rd)^{-3} ≤ 1`，剩 `∑ r ≤ 2·max r ≤ 2/(d+1)`。
+- `r > 1/(d+1)`：**关键一步**是 `1 + r·d ≥ r·(d+1)`，它成立**当且仅当 `r ≤ 1`**
+  （`1 + rd − r(d+1) = 1 − r ≥ 0`），而 `dyad j ≤ 1` 正是第 1 步。
+  于是 `(1+rd)^{-3} ≤ r^{-3}(d+1)^{-3}`，被求和项 `≤ r^{-2}(d+1)^{-3}`。
+  这一块里 `r^{-1} < d+1`，`∑ r^{-2}` 在二进值上是递增几何级数，被最大项 `≤ (d+1)²` 的两倍控制，
+  合计 `≤ 2(d+1)²·(d+1)^{-3} = 2/(d+1)`。
+- **注意这里 `r^{-1} ≤ d+1` 这个上界是从 filter 条件 `dyad j > 1/(d+1)` 直接来的**，
+  不需要知道 `J`。递增几何级数的求和界写成
+  `∑_{j ∈ s} (dyad j)^{-2} ≤ 2 · (最大项)`，最大项由 filter 条件控制。
+
+4. **产出**（`d : ℕ`，`ξ : ℂ`，`‖ξ‖ < 1`，`J : ℕ`）：
+```lean
+theorem dyadic_sum_three_le (hξ : ‖ξ‖ < 1) (d J : ℕ) :
+    ∑ j ∈ Finset.range (J + 1),
+        (dyad j) ^ 3 / (kappa ξ ^ 2 + (dyad j) ^ 2) * (1 + dyad j * d) ^ (-3 : ℤ)
+      ≤ 8 * ((d : ℝ) + 1)⁻¹ + 8 * (ellhat ξ L)⁻¹
+
+theorem dyadic_sum_four_le (hξ : ‖ξ‖ < 1) (d J : ℕ) :
+    ∑ j ∈ Finset.range (J + 1),
+        (dyad j) ^ 4 / (kappa ξ ^ 2 + (dyad j) ^ 2) * (1 + dyad j * d) ^ (-3 : ℤ)
+      ≤ 8 * (((d : ℝ) ^ 2 + 1))⁻¹ + 8 * (ellhat ξ L) ^ (-2 : ℤ)
+```
+第二条的两次劈开与第一条逐字平行，只是幂次各加一：
+`r ≤ κ` 给 `∑ r⁴/κ² ≤ 2κ² ≤ 2/ℓ̂²`；`r ≤ 1/(d+1)` 给 `∑ r² ≤ 2/(d+1)²`；
+`r > 1/(d+1)` 给 `∑ r^{-1}(d+1)^{-3} ≤ 2(d+1)·(d+1)^{-3} = 2/(d+1)²`。
+**先把第一条做完再抄第二条**，不要并行写两条。
+
+### 陷阱
+- **常数一律写死**，不要 `∃ C`。上面 `8` 是随手放松的，能过就行。
+- `(1 + r*d) ^ (-3 : ℤ)` 是 `zpow`；底数 `1 + r*d > 0`（`positivity`），
+  所以 `zpow_neg`、`one_div`、`inv_le_inv₀` 这一族可用。
+  **`zpow` 与 `rpow` 不要混**，本文件全程 `zpow` 和 `Monoid.npow`，一个 `rpow` 都不要出现。
+- `d : ℕ` 而不是 `ℝ`，因为下游的 `d = zdist2 L (a-b)` 是 ℕ。`(d : ℝ) + 1 > 0` 用 `positivity`。
+- `kappa ξ > 0` 由 `Elliptic.lean` 的 `kappa_pos` 给（已绿），**需要 `ξ ≠ 1`**，
+  而 `‖ξ‖ < 1` 蕴含它 —— 照 `Elliptic.lean` 里现成的用法抄，不要自己推。
+- 这条工单**不碰 `(eq_dyadic)` 本身**。文件末尾留一条注释指向 T11，**不要写 `sorry`**。
+
+### 完成标准
+单文件编译 exit 0、0 sorry；第 4 步两条跑 `#print axioms` 干净；
+`docs/paper-deltas.md` 里记一条「`M` 固定为 3」；
+蓝图新增节点 `lem:dyadic-sums`（`\uses{lem:kappa-basic}`），补 `\lean{}` + `\leanok`。
+
 
 # 第二批（围道那条线，暂不开工）
 
