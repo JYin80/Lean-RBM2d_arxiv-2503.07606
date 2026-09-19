@@ -49,6 +49,73 @@ Cowork 侧应当做的是：规划、开工单、读论文、维护蓝图、以�
 
 ---
 
+## 2026-09-19 11:00 UTC：T16 草稿落地（Cowork 心跳）
+
+CI：`Lean Action CI #18`（`78f2459`）**Success**，`lake build exit 0`、3396 jobs、0 error。
+`Momentum.lean` 完整编过了 —— 上一节那张「不确定的地方」表里的四条战术风险
+**一条都没有触发**，`field_simp`/`linarith`/`nlinarith` 全部按预期走通。
+唯一残留是 `Momentum.lean:242` 的 `<;>` 风格警告，已由本机侧在 `d2923b7` 清掉。
+
+`Compile blueprint #10/#11` 之前红过，根因同样是 `Momentum.lean`
+（该 workflow 的 `Build project` 步骤就是 `lake build`），随 `#18` 一起自愈，**不是独立问题**。
+
+### 写了 T16 的 `RBM2D/Propagator/Harmonic.lean`（**未编译，按草稿对待**）
+
+队列 7 条、CI 绿，所以这一轮仍按分工规矩取链上的那条而不是叶子：
+T16 → T3 → T4/T5。落地 4 个声明，0 sorry：
+
+| 声明 | 内容 |
+|---|---|
+| `mul_log_le_rpow` | `τ · log x ≤ x^τ`（`x > 0`，τ 任意） |
+| `sum_inv_Icc_le_one_add_log` | `Σ_{k∈[1,n]} 1/k ≤ 1 + log n`，ℝ 版 |
+| `one_add_log_detDom_one` | `1 + log L ≺ 1` |
+| `harmonic_detDom_one` | `Σ_{k∈[1,L]} 1/k ≺ 1` ← **T3 最后一步要的就是这条** |
+
+另加两条非负性小引理（`sum_inv_Icc_nonneg`、`one_add_log_nonneg`），
+因为 `DetDom` 的闭包引理都把「被控量非负」写成显式假设。
+
+**工单里有一处写错了，已绕开**：T16 第 4 步说用 `DetDom.mono_left`。
+`Defs/Domination.lean` 里**没有** `DetDom.mono_left`，只有 `UnifDetDom.mono_left`。
+草稿改走 `detDom_iff` 展开后 `filter_upwards`，不依赖任何 `mono_left`。
+
+**一个刻意的选择**：第 2 步写成乘法形式 `τ · log x ≤ x^τ`，而不是工单里的
+`log x ≤ x^τ / τ`。这样全文件**一个除法引理都不需要** —— `le_div_iff₀` /
+`div_le_div_of_nonneg_right` 这一族正是跨 Mathlib 版本最容易改名的。
+我在 pinned 源码里 grep `le_div_iff₀` 确实没找到，绕开是对的。
+
+### 这份草稿里不确定的地方（CI 这一轮要盯的）
+
+所有 Mathlib 名字都在 `../RBM1D/.lake/packages/mathlib/`（同 rev）里逐条 grep 核对过：
+`harmonic_eq_sum_Icc`、`harmonic_le_one_add_log`、`Real.log_le_sub_one_of_pos`、
+`Real.log_rpow`、`Real.rpow_pos_of_pos`、`Real.log_natCast_nonneg`、
+`inv_div`、`eventually_ge_atTop`、`le_of_mul_le_mul_left`（`(a*b ≤ a*c) → 0 < a → b ≤ c`）。
+风险在战术不在名字：
+
+| 位置 | 风险 |
+|---|---|
+| `sum_inv_Icc_le_one_add_log` 的 `simpa only [harmonic_eq_sum_Icc, Rat.cast_sum, Rat.cast_inv, Rat.cast_natCast]` | 这三条 cast 引理是从 Mathlib 自己那条证明里**逐字抄**的 `simp_rw` 行，但我这里是 `simpa ... using h`，方向相反。不过就改成 `rw` 再 `exact` |
+| 收尾两处 `calc` 的最后一步 `_ = (L:ℝ)^τ * 1` | 目标里 `f`、`g` 还是 λ 形式没 β 归约，靠 `exact` 的 defeq 吃掉。若报 type mismatch，就在 `filter_upwards` 后加一句 `simp only []` 或 `show` |
+| `hmain` 里的 `nlinarith [mul_le_mul_of_nonneg_right hstep hA.le]` | 提示给够了应该纯线性（单项式 `τ·A²`、`τ·A`、`A` 当原子），真不行就换 `linarith` 同一个提示 |
+| `Harmonic.lean` 的 import | 显式加了 `Log/Basic` 与 `Pow/Real` 两行，就是为了不再重犯 CI 第 1 轮的作用域错 |
+
+### 蓝图
+
+`lem:harmonic` 补了 `\lean{}`（`render_artifact.py` 的 checkdecls 过了，4 个名字确实存在），
+**故意没给 `\leanok`** —— 没过 CI 就说「已形式化」是假的。
+
+顺带补了一个真正缺的节点：**`def:detdom`**。`Defs/Domination.lean` 从 T1 起就是绿的，
+但蓝图里**一个节点都没有**，依赖图一直在少算。现在 31 个节点：
+`done 10 / defn 8 / ready 5 / blocked 6 / cited 2`。
+
+### 给对面的话
+
+- `Harmonic.lean` 第一件事是拿到本机编译，别当定理用。
+- 队列仍是 7 条可立刻开工（T6、T7、T8、T13、T14、T15 + T16 已被 Cowork 认领 → 实际 6 条空闲），
+  文件两两不相交。**T15 建议优先**：它和 T16 一起就解锁 T3，T3 一通 T4/T5 就都能并行开。
+- 本轮新增 3 个本地提交，仍需本机 `git push`。
+
+---
+
 ## 2026-09-19 10:50 UTC：**T2 完成**（CI 绿）+ 队列补到 7 条（Cowork 心跳）
 
 CI：`Lean Action CI #12`（`2b5d11a`）**Success**。开工前 `git status` 干净、与 `origin/main` 同步。
