@@ -61,7 +61,6 @@ theorem stdAddChar_add_neg (p : ZMod L) :
     ← Complex.exp_neg, e₁, e₂]
   push_cast
   rw [h]
-  ring
 
 /-- The symbol in the form written in `(eq_symbol)`:
 `Ŝ(p) = (1 + 2 cos p₁ + 2 cos p₂)/5`.  In particular `Ŝ(p)` is real. -/
@@ -162,7 +161,7 @@ theorem inv_mul_sum_chr (u : Z2 L) :
     mul_mul_mul_comm, inv_mul_sum_stdAddChar L u.1, inv_mul_sum_stdAddChar L u.2]
   by_cases h1 : u.1 = 0 <;> by_cases h2 : u.2 = 0
   · have hu : u = 0 := Prod.ext_iff.mpr ⟨h1, h2⟩
-    simp [h1, h2, hu]
+    simp [hu]
   · have hu : u ≠ 0 := fun h => h2 (by rw [h]; rfl)
     simp [h1, h2, hu]
   · have hu : u ≠ 0 := fun h => h1 (by rw [h]; rfl)
