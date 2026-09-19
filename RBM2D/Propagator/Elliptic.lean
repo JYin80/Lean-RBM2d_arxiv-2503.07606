@@ -229,7 +229,7 @@ theorem norm_one_sub_mul_Shat_le {ξ : ℂ} (p : Z2 L) :
     ‖1 - ξ * Shat L p‖ ≤ qsym L p + ‖(1 : ℂ) - ξ‖ := by
   have hq0 := qsym_nonneg L p
   have hq1 := qsym_le L p
-  have h := norm_one_sub_mul_real_le (lam := 1 - qsym L p) (by linarith) (by linarith)
+  have h := norm_one_sub_mul_real_le (ξ := ξ) (lam := 1 - qsym L p) (by linarith) (by linarith)
   rw [Shat_eq_one_sub_qsym]
   calc ‖1 - ξ * ((1 - qsym L p : ℝ) : ℂ)‖
       ≤ (1 - (1 - qsym L p)) + ‖(1 : ℂ) - ξ‖ := h
