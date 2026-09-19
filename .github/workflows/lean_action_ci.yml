@@ -1,6 +1,13 @@
 # Fast build-only check.  Documentation and the blueprint are built and
 # deployed by blueprint.yml; running docgen-action here as well would both
 # double the work and race that workflow for the GitHub Pages deployment.
+#
+# The second step exists because GitHub's log viewer only renders the first
+# ~40 lines of a step without an interactive expand, which makes the build
+# output unreadable to anyone (or anything) reading the run over the web.
+# Re-running `lake build` is nearly free once the first one has populated
+# `.lake/build`, and writing the result to $GITHUB_STEP_SUMMARY puts every
+# error on the run's summary page in full.
 name: Lean Action CI
 
 on:
@@ -16,4 +23,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+
       - uses: leanprover/lean-action@v1
+        id: lean
+        continue-on-error: true
+        with:
+          build: true
+          lint: false
+          mk_all-check: false
+
+      - name: Build output to job summary
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          lake build > build.log 2>&1
+          code=$?
+          {
+            echo "## lake build (exit ${code})"
+            echo
+            echo '```'
+            grep -nE 'error|warning|✖|⚠|✔ .*Built RBM2D' build.log | head -n 400
+            echo '```'
+            echo
+            echo "<details><summary>Full output (last 400 lines)</summary>"
+            echo
+            echo '```'
+            tail -n 400 build.log
+            echo '```'
+            echo
+            echo "</details>"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $code

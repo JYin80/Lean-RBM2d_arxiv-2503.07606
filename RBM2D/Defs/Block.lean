@@ -130,7 +130,7 @@ theorem card_sbSupport (hL : 3 ≤ L) : (sbSupport L).card = 5 := by
   have h0m : (0 : ZMod L) ≠ -1 := zero_ne_neg_one_zmod L hL
   have h1m : (1 : ZMod L) ≠ -1 := one_ne_neg_one_zmod L hL
   rw [sbSupport,
-    Finset.card_insert_of_notMem (by simp [Prod.ext_iff, h01, h0m, h01.symm, h0m.symm]),
+    Finset.card_insert_of_notMem (by simp [Prod.ext_iff, h01, h0m]),
     Finset.card_insert_of_notMem (by simp [Prod.ext_iff, h1m, h01, h0m, h01.symm, h0m.symm]),
     Finset.card_insert_of_notMem (by simp [Prod.ext_iff, h0m, h0m.symm, h01, h01.symm]),
     Finset.card_insert_of_notMem (by simp [Prod.ext_iff, h1m]),
