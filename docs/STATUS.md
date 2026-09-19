@@ -11,9 +11,9 @@
 
 ### 1. 现在就开 Claude Code 做队列 —— 唯一的数量级差别
 
-队列里现在有 **7 条**可立刻开工、文件两两不相交的工单
-（**T6、T7、T8、T13、T14、T15、T16**），到目前为止**一条都没人动**。
-（T2 已由 Cowork 认领并写完草稿，见下面 2026-09-19 10:40 那节。）
+队列里现在有 **6 条**可立刻开工、文件两两不相交的工单
+（**T6、T7、T8、T13、T15、T17**）。T2、T16 已完成，T14 已由 Cowork 认领并写完草稿。
+到 11:55 为止这 6 条**一条都没人动** —— 这仍然是唯一的数量级差别。
 
 Cowork 侧编译不了 Lean（云端出口挡掉 Mathlib 的 olean cache，设备 VM 没有 Lean），
 它的回路是「写 → push → 读 CI 日志 → 改」，一轮 5 分钟起步，T1 那一批走了 6 轮。
@@ -25,8 +25,8 @@ Cowork 侧应当做的是：规划、开工单、读论文、维护蓝图、以�
 ### 2. 同时开两个 Claude Code 实例
 
 **T6**（`Propagator/Deriv.lean`）、**T7**（`Defs/Model.lean`）、**T8**（`Test/Numeric.lean`）、
-**T14**（`Propagator/ZeroMode.lean`）、**T15**（`Propagator/Shells.lean`）、
-**T16**（`Propagator/Harmonic.lean`）六条文件互斥、互不依赖。工单表里那条「一条工单独占一个文件」的规矩就是为这个写的：
+**T15**（`Propagator/Shells.lean`）、**T17**（`Propagator/GeomSum.lean`）五条文件互斥、互不依赖
+（T14、T16 已由 Cowork 取走）。工单表里那条「一条工单独占一个文件」的规矩就是为这个写的：
 两个实例同时跑不会冲突，合并永远是平凡的。T13 只动 `Defs/Dist.lean` 等已有文件，
 和这三条也不冲突，但它会碰别人正在读的文件，**建议先做完 T13 再并行**。
 
@@ -46,6 +46,84 @@ Cowork 侧应当做的是：规划、开工单、读论文、维护蓝图、以�
 如果 T11 卡死，备选是把 `(eq_dyadic)` 当作论文引用的既成结论挂成接口，
 在 `docs/paper-deltas.md` 里把代价写清楚，换性质 6 的其余部分先落地。
 **这是范围决定，需要 Jun 拍板，不要自行降级。**
+
+---
+
+## 2026-09-19 11:55 UTC：T14 草稿落地 + 队列补回 6 条（Cowork 心跳）
+
+CI：`Lean Action CI #24`（`727c14c`）**Success**。开工前 `git status` 干净、与 `origin/main` 同步，
+**没有未推的旧提交** —— 上一轮的四个本地提交都已由本机侧推上去了，回路没有卡。
+
+### 为什么这一轮取 T14 而不是 T15
+
+上一节把 T15 点名留给了本机侧（纯 `Finset` 记账，副目标形状要试几次，秒级迭代占便宜两个数量级）。
+45 分钟过去 T15 仍然空闲，但**抢过来是错的** —— 抢了它 Cowork 要走 5 轮 CI，本机侧 5 分钟。
+链上的另一条是 **T14**（`Propagator/ZeroMode.lean`）：它是代数改写，一次写对的概率高，
+正是 CI 回路擅长的那类。而且 T14 和 T15 文件互斥，两边可以真的并行。
+**T15 仍然留给本机侧，优先级不变。**
+
+### 写了 T14 的 `RBM2D/Propagator/ZeroMode.lean`（**未编译，按草稿对待**）
+
+落地 8 个声明，0 sorry：
+
+| 声明 | 内容 |
+|---|---|
+| `Shat_zero` | `Ŝ(0) = 1`（五项都是 1） |
+| `chr_zero_left` | `e_0(u) = 1` |
+| `one_sub_mul_Shat_zero` | `1 − ξŜ(0) = 1 − ξ` |
+| `norm_chr` | `‖e_p(u)‖ = 1` |
+| `norm_chr_div_one_sub_mul_Shat` | 单项的模就是 `‖1 − ξŜ(p)‖⁻¹` |
+| `norm_chr_sub_le` | `‖e_p(u) − e_p(v)‖ ≤ 2`（T5 的 Case 2 要的粗界） |
+| **`Theta_apply_eq_zero_mode_add`** | **§8.2 的零模分离**，T4 的第 1 步 |
+| **`Theta_apply_sub_eq_erase_sum`** | **§8.3 的零模消失**，T5 的第 1 步 |
+
+后三条是工单里没要求、但 T4/T5 立刻要用的配套，放这里省得两边各写一遍。
+
+### 这份草稿里不确定的地方（CI 这一轮要盯的）
+
+Mathlib 名字全部在 `../RBM1D/.lake/packages/mathlib/`（同 rev）里逐条 grep 核对过：
+`AddChar.map_zero_eq_one`（`Algebra/Group/AddChar.lean:111`，`@[simp]`）、
+`Circle.norm_coe`（`Analysis/Complex/Circle.lean:74`，`@[simp]`）、
+`ZMod.stdAddChar_apply`（`Symbol.lean` 里已经在用）、
+`Finset.add_sum_erase`（`prod_erase` 那族的 `to_additive`，方向是
+`f a + ∑_{s.erase a} = ∑_s`，所以要 `.symm`）、`Finset.sum_sub_distrib`（`@[simp]`）、
+`Prod.fst_zero` / `Prod.snd_zero`。**按上一轮的教训，四个模块全部显式 import 了一行。**
+
+| 位置 | 风险 |
+|---|---|
+| `norm_chr` 的 `exact Circle.norm_coe _` | `stdAddChar_apply` 的 RHS 用的是哪个 `Circle → ℂ` 陪域可能与 `Circle.norm_coe` 不同形。报 type mismatch 就换 `simp [chr, ZMod.stdAddChar_apply]`（两条都是 `@[simp]`） |
+| `Shat_zero` 收尾的 `norm_num` | 若前面的 `simp only` 自己就把 `(1+(1+1)+(1+1))/5` 算成 `1`，`norm_num` 会报 "no goals"。删掉即可 |
+| `Theta_apply_eq_zero_mode_add` 的 `hsplit` | `Finset.add_sum_erase` 的 `f 0` 是 λ 应用，靠 `have` 的 defeq β-归约吃掉；T16 那一轮同样的写法过了 |
+| `Theta_apply_sub_eq_erase_sum` 收尾的 `ring` | 要把两个 `∑` 当原子。`simp only [sub_div, Finset.sum_sub_distrib]` 之后两边的求和必须逐字同形；不同形就先 `rw [Finset.sum_congr rfl ...]` 显式对齐 |
+
+### 蓝图
+
+`lem:zero-mode` 补了 `\lean{}`（`render_artifact.py` 的 checkdecls 过了，5 个名字确实存在），
+**故意没给 `\leanok`**。新增节点 `lem:dyadic-sums`（T17，见下）。
+现在 32 个节点：`done 11 / defn 8 / ready 5 / blocked 6 / cited 2`，163 条 Lean 声明、0 sorry。
+蓝图工件已就地更新（v9）。
+
+### 队列：补了 T17，仍是 6 条
+
+认领 T14 之后空闲只剩 5 条，所以补了一条 **T17**（`Propagator/GeomSum.lean`）：
+`(eq_dyadic_sum1)` 与 `(eq_dyadic_sum2)`，论文 `8_theta_properties.tex` 第 177–178 行。
+
+`TASKS.md` 原文自己写过「这两条是纯算术，可以先于 `(eq_dyadic)` 单独做掉」。
+这一轮把它兑现成有自己文件的工单，价值在于**它把 T11 的风险切成两半**：
+即使 `(eq_dyadic)` 那条逐环估计卡死、被迫降级成引用接口（见本文件开头第 3 条杠杆），
+这两条求和也已经是定理。工单里把两次劈开（`r ∼ κ`、`r ∼ (d+1)^{-1}`）写全了，
+并核对出 **`M = 3` 对两条都够**，不需要论文的「`M` 任意大」。
+
+空闲且文件两两不相交：**T6、T7、T8、T13、T15、T17**。
+
+### 给对面的话
+
+- `ZeroMode.lean` 第一件事是拿到本机编译，别当定理用。
+- **T15 仍然是唯一在关键路径上的空闲工单，请优先做它。** T2、T16 已完成，
+  T15 一落地 T3 就只剩组装；T3 一通，T4 与 T5 就都能并行开工，而它们的另一个前置 T14
+  这一轮已经有草稿了。
+- T17 是新的，纯实数算术，和 T15 一样适合本机秒级迭代，但**不在关键路径上**。
+- 本轮新增 4 个本地提交，仍需本机 `git push`。
 
 ---
 
