@@ -11,7 +11,9 @@
 
 ### 1. 现在就开 Claude Code 做队列 —— 唯一的数量级差别
 
-队列里有 5 条可开工的工单（**T13、T6、T7、T8、T2**），到目前为止**一条都没人动**。
+队列里现在有 **7 条**可立刻开工、文件两两不相交的工单
+（**T6、T7、T8、T13、T14、T15、T16**），到目前为止**一条都没人动**。
+（T2 已由 Cowork 认领并写完草稿，见下面 2026-09-19 10:40 那节。）
 
 Cowork 侧编译不了 Lean（云端出口挡掉 Mathlib 的 olean cache，设备 VM 没有 Lean），
 它的回路是「写 → push → 读 CI 日志 → 改」，一轮 5 分钟起步，T1 那一批走了 6 轮。
@@ -22,8 +24,9 @@ Cowork 侧应当做的是：规划、开工单、读论文、维护蓝图、以�
 
 ### 2. 同时开两个 Claude Code 实例
 
-**T6**（`Propagator/Deriv.lean`）、**T7**（`Defs/Model.lean`）、**T8**（`Test/Numeric.lean`）
-三条文件互斥、互不依赖。工单表里那条「一条工单独占一个文件」的规矩就是为这个写的：
+**T6**（`Propagator/Deriv.lean`）、**T7**（`Defs/Model.lean`）、**T8**（`Test/Numeric.lean`）、
+**T14**（`Propagator/ZeroMode.lean`）、**T15**（`Propagator/Shells.lean`）、
+**T16**（`Propagator/Harmonic.lean`）六条文件互斥、互不依赖。工单表里那条「一条工单独占一个文件」的规矩就是为这个写的：
 两个实例同时跑不会冲突，合并永远是平凡的。T13 只动 `Defs/Dist.lean` 等已有文件，
 和这三条也不冲突，但它会碰别人正在读的文件，**建议先做完 T13 再并行**。
 
@@ -43,6 +46,69 @@ Cowork 侧应当做的是：规划、开工单、读论文、维护蓝图、以�
 如果 T11 卡死，备选是把 `(eq_dyadic)` 当作论文引用的既成结论挂成接口，
 在 `docs/paper-deltas.md` 里把代价写清楚，换性质 6 的其余部分先落地。
 **这是范围决定，需要 Jun 拍板，不要自行降级。**
+
+---
+
+## 2026-09-19 10:40 UTC：T2 草稿落地 + 队列补到 7 条（Cowork 心跳）
+
+CI：`Lean Action CI #12`（`2b5d11a`）**Success**。开工前 `git status` 干净、与 `origin/main` 同步。
+
+### 写了 T2 的 `RBM2D/Propagator/Momentum.lean`（**未编译，按草稿对待**）
+
+队列已经够深、CI 是绿的，所以这一轮按分工规矩取了**最深的那条**（T2 是
+T2→T3→T4 串行链的链头；T6/T7/T8/T13 短平快，留给本机秒级迭代的 Claude Code）。
+
+落地的声明：`pstar`、`pstar2`、`cos_eq_cos_pstar`、`pstar_le_pi`、
+`pstar_pos_of_ne_zero`、`pstar2_pos_of_ne_zero`、`one_sub_cos_le_sq`、
+`sq_le_one_sub_cos`、`qsym_le_pstar2`、`pstar2_le_qsym`、
+`four_div_le_one_div_nine`、`norm_one_sub_mul_Shat_le_pstar`、
+`norm_one_sub_mul_Shat_ge_pstar`。0 sorry。已加进 `RBM2D.lean` 的 import 列表。
+
+**一个意外的便宜**：工单里写的「Jordan 不等式 + 半角公式」这条路**不用走**。
+pinned Mathlib 的 `Analysis/SpecialFunctions/Trigonometric/Bounds.lean` 里直接有
+
+```
+Real.one_sub_sq_div_two_le_cos : 1 - x ^ 2 / 2 ≤ cos x            -- 无假设
+Real.cos_le_one_sub_mul_cos_sq (hx : |x| ≤ π) : cos x ≤ 1 - 2 / π ^ 2 * x ^ 2
+```
+
+合起来就是 `(2/π²)θ² ≤ 1 - cos θ ≤ θ²/2`，一个半角都不用推。
+（第二条的名字里的 `cos_sq` 有误导性，它讲的是 `x^2` 不是 `cos x ^ 2`。）
+
+### 这份草稿里**不确定的地方**（CI 第一轮要盯的就是这几处）
+
+所有 Mathlib 名字都在 `../RBM1D/.lake/packages/mathlib/Mathlib/`（同 rev `v4.34.0`）
+里逐条 grep 核对过，**没有一个是猜的**。真正的风险在战术，不在名字：
+
+| 位置 | 风险 |
+|---|---|
+| `cos_eq_cos_pstar` 的 `hval` | `field_simp [hLne] <;> ring`。用 `<;>` 是防 `field_simp` 自己关掉目标后 `ring` 报 "no goals"。若 `field_simp` 留下的形状 `ring` 收不掉，就手动 `rw [sub_div]` 再拆 |
+| `pstar2_le_qsym` 的 `key` | 同上。这一步存在的唯一理由是 `linarith` 把 `π` 当原子，必须让它**逐字**看到 `2/π^2 * (pstar ·)^2` 这个整体，不能指望它自己除以 `π²` |
+| `pstar_le_pi` 收尾的 `nlinarith [Real.pi_pos]` | 要 `π·(1-t) ≥ 0`，hint 不够就把 `h0`、`h1` 再显式喂一遍 |
+| `simp only [qsym, pstar2]` 之后的 `linarith` | 依赖 `qsym` 里的 `2 * Real.pi * ↑p.1.val / ↑L` 和我的引理逐字同形。cast 若被 `simp` 归一成别的样子就对不上，改用 `rw [qsym]` 或显式 `show` |
+
+**蓝图侧故意没有给 `lem:qcomp` 加 `\leanok`** —— 没过 CI 就说「已形式化」是假的。
+`\lean{}` 标签加了（`render_artifact.py` 的 checkdecls 过了，说明这 6 个名字确实存在于源码里）。
+
+### 队列：4 条 → 7 条
+
+原来 T3 是一条「什么都干」的大工单，而 T4 和 T5 的第一步**是同一条引理**
+（从 `(eq_Fourier_rep)` 里摘零模）—— 那两条工单其实并不文件互斥。拆成：
+
+| 新工单 | 文件 | 从哪拆出来的 |
+|---|---|---|
+| **T14** 零模分离 | `Propagator/ZeroMode.lean` | T4 步骤 1 = T5 步骤 1，提出来只证一次 |
+| **T15** `max`-壳层计数 | `Propagator/Shells.lean` | T3 的 Finset 记账（全程不碰实数） |
+| **T16** 调和和 → `≺` 的桥 | `Propagator/Harmonic.lean` | T3 的另一半；Mathlib 的 `NumberTheory/Harmonic/Bounds.lean` 已经有 `harmonic_le_one_add_log` |
+
+三条都只依赖已经绿的代码，**今天就能开工，且顺序随意**。
+
+### 给对面的话
+
+- `Momentum.lean` **第一件事是拿到本机编译**，别当定理用。
+- T14/T15/T16 的工单里凡是写「已核对存在」的 Mathlib 名字，是真在 pinned 源码里 grep 过的；
+  写「先 grep 确认」的（`Circle.norm_coe`、`Nat.max_eq_zero_iff`）是没核对的，别当真。
+- 本地提交仍然要靠 Mac 这边 `git push`：Cowork 侧没有凭据。本轮新增 4 个本地提交。
 
 ---
 
