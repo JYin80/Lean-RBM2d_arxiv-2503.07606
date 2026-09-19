@@ -71,7 +71,7 @@ theorem re_one_sub_mul_real (ξ : ℂ) (lam : ℝ) :
 theorem im_one_sub_mul_real (ξ : ℂ) (lam : ℝ) :
     (1 - ξ * (lam : ℂ)).im = lam * (1 - ξ).im := by
   simp only [Complex.sub_im, Complex.one_im, Complex.mul_im, Complex.ofReal_re,
-    Complex.ofReal_im, mul_zero, add_zero, zero_sub]
+    Complex.ofReal_im, mul_zero, zero_sub]
   ring
 
 theorem norm_one_sub_lt_two (hξ : ‖ξ‖ < 1) : ‖(1 : ℂ) - ξ‖ < 2 := by
@@ -97,9 +97,10 @@ theorem norm_one_sub_mul_real_le (hξ : ‖ξ‖ < 1) (h1 : -(3 / 5 : ℝ) ≤ l
       = ‖((1 - lam : ℝ) : ℂ) + (lam : ℂ) * (1 - ξ)‖ := by rw [one_sub_mul_real_eq]
     _ ≤ ‖((1 - lam : ℝ) : ℂ)‖ + ‖(lam : ℂ) * (1 - ξ)‖ := norm_add_le _ _
     _ = (1 - lam) + |lam| * ‖(1 : ℂ) - ξ‖ := by
+        have hn1 : ‖((1 - lam : ℝ) : ℂ)‖ = |1 - lam| := by simp
         rw [norm_mul, hnl]
         congr 1
-        simpa using h1l
+        rw [hn1, h1l]
     _ ≤ (1 - lam) + 1 * ‖(1 : ℂ) - ξ‖ := by
         have := mul_le_mul_of_nonneg_right habs (norm_nonneg ((1 : ℂ) - ξ))
         linarith
@@ -112,7 +113,7 @@ theorem norm_one_sub_mul_real_ge (hξ : ‖ξ‖ < 1) (h1 : -(3 / 5 : ℝ) ≤ l
     (1 / 9 : ℝ) * ((1 - lam) + ‖(1 : ℂ) - ξ‖) ≤ ‖1 - ξ * (lam : ℂ)‖ := by
   have hlt2 : ‖(1 : ℂ) - ξ‖ < 2 := norm_one_sub_lt_two hξ
   have hnn : (0 : ℝ) ≤ ‖(1 : ℂ) - ξ‖ := norm_nonneg _
-  rcases le_or_lt lam (1 / 2) with hcase | hcase
+  rcases lt_or_ge lam (1 / 2) with hcase | hcase
   · -- Regime `Ŝ(p) ≤ 1/2`: the multiplier is bounded away from `1` outright.
     have habs : |lam| ≤ 3 / 5 := abs_le.mpr ⟨by linarith, by linarith⟩
     have hnl : ‖((lam : ℝ) : ℂ)‖ = |lam| := by simp
@@ -148,7 +149,7 @@ theorem norm_one_sub_mul_real_ge (hξ : ‖ξ‖ < 1) (h1 : -(3 / 5 : ℝ) ≤ l
     have hkey : (1 - lam) + lam * ‖(1 : ℂ) - ξ‖ ≤ 2 * ‖1 - ξ * (lam : ℂ)‖ := by
       linarith
     have hhalf : (1 / 2 : ℝ) * ‖(1 : ℂ) - ξ‖ ≤ lam * ‖(1 : ℂ) - ξ‖ :=
-      mul_le_mul_of_nonneg_right hcase.le hnn
+      mul_le_mul_of_nonneg_right hcase hnn
     linarith
 
 end RealMultiplier
