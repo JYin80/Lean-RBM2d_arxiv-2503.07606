@@ -96,8 +96,14 @@ lake env lean RBM2D/Propagator/Xxx.lean   # 单文件，秒级 —— 默认用�
 | 蓝图渲染 / 依赖图 | 需本机装 plasTeX + graphviz | 工具链现成 |
 | git / CI / GitHub Pages | 都行 | 都行 |
 
-**要点：Cowork 那边无法编译。** 它写出来的 Lean 一律按「草稿」对待，
+**要点：Cowork 那边无法在本地编译。** 它写出来的 Lean 一律按「草稿」对待，
 第一件事是拿到本机编译。这就是 T1 存在的原因。
+
+**但 CI 可以当 Cowork 的编译器用。** GitHub 的 runner 拉得到 Mathlib 的 olean cache，
+`lean_action_ci.yml` 会跑 `lake exe cache get` + `lake build`，日志里有全部报错。
+所以 Cowork 侧的回路是「写 → push → 读 CI 日志 → 改」，一轮约 10 分钟。
+本机 `lake env lean 单文件` 是秒级，所以**高频试错仍然归 Claude Code**；
+CI 回路的用处是让 Cowork 写完的东西不至于原封不动地丢给对面去 debug。
 
 ### 任务队列
 

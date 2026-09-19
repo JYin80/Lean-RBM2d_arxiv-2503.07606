@@ -131,6 +131,25 @@ Cowork 所在的云端容器拉不到 Mathlib 的 olean cache（出口策略挡�
 **在 Mac 上直接 `rm -rf .git/_stale` 即可**，里面没有任何有用的东西。
 之后在本机跑 git 就不会再有这个问题（本机 git 权限正常）。
 
+## CI 第一次跑：`lake-manifest.json` 缺失（已修）
+
+第一次 push 之后 `Lean Action CI` 16 秒就红了，原因不是 Lean 代码，而是
+**`No lake-manifest.json found`** —— `lean-action` 在解析依赖之前就退出了。
+
+已从 RBM1D 复制一份（同 toolchain、同两条 require，解析出来的依赖集一致，
+只有 `name` 字段不同），mathlib 锁在 `5ed2965256`。这同时也是**共用
+`../RBM1D/.lake/packages` 的前提**：两边 rev 必须完全一致。
+
+`Compile blueprint` 那条在建分支的那次 push 上没有触发（`paths` 过滤器在新建分支时
+的行为），下一次 push 会带上它。
+
+### 顺带发现：**CI 可以当 Cowork 的编译器**
+
+GitHub runner 拉得到 olean cache，所以 `lake build` 的完整报错会出现在 CI 日志里。
+Cowork 侧的回路因此是「写 → push → 读 CI 日志 → 改」，一轮约 10 分钟。
+本机单文件编译是秒级，高频试错仍然归 Claude Code；CI 回路的用处是让 Cowork
+写完的草稿不至于原封不动丢给对面 debug。
+
 ## 还没做的两件事（需要在本机 / 需要 Jun 决定）
 
 1. **`git push`**：Cowork 侧没有 GitHub 凭据，所以只提交到了本地。
