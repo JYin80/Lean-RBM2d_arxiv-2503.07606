@@ -1,0 +1,19 @@
+.lake/
+/.lake
+build.log
+recon.txt
+.DS_Store
+**/.DS_Store
+
+# 论文 PDF 与 tex 源码不进版本库
+paper/*.pdf
+paper/**/*.tex
+paper/tex/
+
+.claude/
+
+# 蓝图的生成产物不进版本库，但 docs/ 下的手写 md 要留
+blueprint/print/
+blueprint/web/
+docs/*
+!docs/*.md

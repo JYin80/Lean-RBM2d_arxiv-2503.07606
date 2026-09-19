@@ -1,0 +1,19 @@
+# Fast build-only check.  Documentation and the blueprint are built and
+# deployed by blueprint.yml; running docgen-action here as well would both
+# double the work and race that workflow for the GitHub Pages deployment.
+name: Lean Action CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1

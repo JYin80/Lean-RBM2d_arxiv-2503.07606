@@ -1,0 +1,12 @@
+title: Lean-RBM2d
+description: Lean 4 formalization of the deterministic core of the two-dimensional random band matrix paper (arXiv:2503.07606)
+baseurl: ""
+url: "https://jyin80.github.io/Lean-RBM2d_arxiv-2503.07606"
+
+repository: JYin80/Lean-RBM2d_arxiv-2503.07606
+github_username: JYin80
+
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+  - jekyll-remote-theme
+  - jekyll-github-metadata
