@@ -8,7 +8,7 @@
 |---|---|---|---|---|
 | T1 | **把第一批草稿编译通过** | `RBM2D/**`（全部） | Cowork | **完成**（CI 绿，0 sorry） |
 | T2 | `(eq_qcomp)`：`q(p) ≍ \|p\|²_*` | `Propagator/Momentum.lean`（新建） | **Cowork** | **进行中**（草稿已写，待 CI 验证） |
-| T3 | 格点求和 `Σ_{p≠0} \|p\|_*^{-2} ≤ C L² log L` | `Propagator/LatticeSum.lean`（新建） | 空闲 | 待 T2 |
+| T3 | 格点求和 `Σ_{p≠0} \|p\|_*^{-2} ≤ C L² log L`（**现在只剩组装**） | `Propagator/LatticeSum.lean`（新建） | 空闲 | 待 T2、T15、T16 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean`（新建） | 空闲 | 待 T3 |
 | T5 | 性质 6 的 Case 2（`\|s\|_L > d/2`） | `Propagator/FiniteDiff.lean`（新建） | 空闲 | 待 T3 |
 | T6 | `(deri_Thxi)`：`∂_ξ Θ = Θ S Θ` | `Propagator/Deriv.lean`（新建） | 空闲 | **可开工**，与 T2–T5 完全独立 |
@@ -19,9 +19,16 @@
 | T11 | dyadic 分解 `(eq_dyadic)` + `(eq_dyadic_sum1/2)` | `Propagator/Dyadic.lean`（新建） | 空闲 | 第二批，待 T9 |
 | T12 | 蓝图上线 | `blueprint/src/`、GitHub 设置 | Cowork | **大部分完成**，见下 |
 | T13 | 扫掉剩下的 linter 警告 | `Defs/Dist.lean` 等 | 空闲 | **可开工，零风险** |
+| T14 | 零模分离：把 `(eq_Fourier_rep)` 的 `p = 0` 项拎出来 | `Propagator/ZeroMode.lean`（新建） | 空闲 | **可开工**，T4/T5 共用 |
+| T15 | `max`-壳层计数 `#{p : k(p) = k} ≤ 12k + 4` | `Propagator/Shells.lean`（新建） | 空闲 | **可开工**，不碰实数 |
+| T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | 空闲 | **可开工**，独立 |
 
 **T1 已完成（2026-09-19）**，`lake build` exit 0、0 sorry、10 个文件全绿。
-剩下的建议顺序：**(T6 ∥ T7 ∥ T8) → T2 → T3 → (T4 ∥ T5) → 第二批。**
+剩下的建议顺序：**(T6 ∥ T7 ∥ T8 ∥ T13 ∥ T14 ∥ T15 ∥ T16) → T3 → (T4 ∥ T5) → 第二批。**
+T2 已由 Cowork 认领（草稿已写，待 CI 验证）。
+
+**队列现在有 7 条可立刻开工且文件两两不相交的工单**（T6、T7、T8、T13、T14、T15、T16），
+足够两个 Claude Code 实例各取一条连着跑好几轮而不会撞车。
 
 T6/T7/T8 放在 T2 前面不是因为它们更重要，而是因为它们**互不相干且都短**，
 适合在 T1 刚打通、对本项目的 API 还不熟的时候练手；而 T2→T3→T4 是一条串行链。
@@ -191,6 +198,13 @@ theorem pstar2_le_qsym (p : Z2 L) : (4 / (5 * Real.pi ^ 2)) * pstar2 L p ≤ qsy
 
 新建 `RBM2D/Propagator/LatticeSum.lean`。依赖 T2 的 `pstar2`。
 
+> **2026-09-19 更新：这条已经被拆小了。** 分层记账现在是 **T15**（`Propagator/Shells.lean`），
+> 调和和到 `≺` 的桥现在是 **T16**（`Propagator/Harmonic.lean`），两条都能立刻开工。
+> 剩给 T3 的只有组装：T15 的 `sum_erase_zero_eq_sum_shells` 分层，逐层用
+> `pstar2 ≥ (2π k/L)²`（由 T2 的 `pstar` 定义直接算），套 T15 的 `card_shell_le`，
+> 最后接 T16 的 `harmonic_detDom_one`。**下面原文里关于分层和调和和的段落已经归 T15/T16，
+> 不要在 T3 里重写。**
+
 这是 §8.2（`κL < 1` 区制）和 §8.3（Case 2）**共用**的唯一非平凡引理，
 在论文里是一句「`≤ C log L`」带过的。
 
@@ -234,7 +248,11 @@ grep `Finset.sum_range_one_div_le` / `Real.add_pow_le_pow_mul_pow_of_sq_le_sq` �
 
 ## T4 — 性质 5 `(prop:ThfadC)` 在 `κL < 1` 区制
 
-新建 `RBM2D/Propagator/Decay.lean`。论文 §8.2 的最后一段。依赖 T2、T3。
+新建 `RBM2D/Propagator/Decay.lean`。论文 §8.2 的最后一段。依赖 T2、T3、**T14**。
+
+> **2026-09-19 更新：下面的「步骤 1 零模分离」已经独立成 T14**
+> （`Propagator/ZeroMode.lean`），因为 T5 的第一步是同一条引理。
+> T4 直接用 T14 的 `Theta_apply_eq_zero_mode_add` 和 `norm_chr`，不要自己再摘一遍零模。
 
 论文原文（照抄，不要改）：设 `κL < 1`，于是 `ℓ̂ = L`，
 ```
@@ -274,7 +292,10 @@ grep `Finset.sum_range_one_div_le` / `Real.add_pow_le_pow_mul_pow_of_sq_le_sq` �
 
 ## T5 — 性质 6 的 Case 2（`|s|_L > d/2`）
 
-新建 `RBM2D/Propagator/FiniteDiff.lean`。论文 §8.3 的 "Case 2"。依赖 T3。
+新建 `RBM2D/Propagator/FiniteDiff.lean`。论文 §8.3 的 "Case 2"。依赖 T3、**T14**。
+
+> **2026-09-19 更新：下面的「步骤 1 零模消掉」已经独立成 T14**
+> （`Propagator/ZeroMode.lean`）。T5 直接用 T14 的 `Theta_apply_sub_eq_erase_sum`。
 **与 T4 完全独立，可以并行。**
 
 论文的论证只有三行：零模是常数，从两个差分里都消掉，于是由 `(eq_elliptic)`
@@ -397,6 +418,211 @@ CI（`.github/workflows/blueprint.yml`）和首页（`home_page/`）是 `RBM1D` 
 灰 = 只在蓝图里（随机层）。
 
 ---
+
+---
+
+## T14 — 零模分离（`Propagator/ZeroMode.lean`，**T4 与 T5 共用**）
+
+论文 §8.2 和 §8.3 的第一步是同一件事：把 `(eq_Fourier_rep)` 里 `p = 0` 的那一项单独拎出来。
+原来 T4 的步骤 1 和 T5 的步骤 1 写的是同一条引理 —— 两条工单各写一遍，要么重复劳动，
+要么撞在同一个概念上。**提出来单独成一个文件，T4 和 T5 才真的文件互斥。**
+
+依赖：只要 `Propagator/Symbol.lean`（已绿）。**不依赖 T2。可以立刻开工。**
+
+### 要证的东西，按顺序
+
+1. `Shat_zero : Shat L 0 = 1`。
+   `Shat` 的定义是 `(1 + (χ(p₁) + χ(-p₁)) + (χ(p₂) + χ(-p₂)))/5`，`p = 0` 时五项都是 1。
+   用 `AddChar.map_zero_eq_one`（**已在 pinned Mathlib 里核对过，且是 `@[simp]`**，
+   在 `Mathlib/Algebra/Group/AddChar.lean:111`）。
+   坑：`(0 : Z2 L).1` 到 `(0 : ZMod L)` 是 `rfl`，但 `simp` 未必自己走这一步，
+   需要 `Prod.fst_zero` / `Prod.snd_zero`，以及 `neg_zero`。
+
+2. `chr_zero_left : chr L 0 u = 1`。同上，`chr L p u = stdAddChar (p.1 * u.1 + p.2 * u.2)`，
+   `p = 0` 时括号里 `zero_mul` 两次再 `add_zero` 就是 `0`。
+
+3. `one_sub_mul_Shat_zero : 1 - ξ * Shat L 0 = 1 - ξ`，由第 1 条 `rw` + `mul_one`。
+
+4. **零模分离**本体：
+```lean
+theorem Theta_apply_eq_zero_mode_add (hL : 3 ≤ L) {ξ : ℂ} (hξ : ‖ξ‖ < 1) (a b : Z2 L) :
+    Theta L ξ a b
+      = ((L : ℂ) ^ 2)⁻¹ * (1 - ξ)⁻¹
+        + ((L : ℂ) ^ 2)⁻¹ * ∑ p ∈ Finset.univ.erase (0 : Z2 L),
+            chr L p (a - b) / (1 - ξ * Shat L p)
+```
+从 `Theta_apply_fourier` 出发，把 `p = 0` 摘出来。`Finset.add_sum_erase` 与
+`Finset.sum_erase_add` **两个都存在、方向相反**（已核对），挑对的那个；
+`(0 : Z2 L) ∈ Finset.univ` 由 `Finset.mem_univ` 给。摘出来的那一项用第 2、3 条化成
+`1 / (1 - ξ) = (1 - ξ)⁻¹`（`one_div`）。最后 `mul_add` 把 `(L²)⁻¹` 分配进去。
+
+5. **差分版**（T5 要的），零模在差分里自己消失：
+```lean
+theorem Theta_apply_sub_eq_erase_sum (hL : 3 ≤ L) {ξ : ℂ} (hξ : ‖ξ‖ < 1) (u v : Z2 L) :
+    Theta L ξ u 0 - Theta L ξ v 0
+      = ((L : ℂ) ^ 2)⁻¹ * ∑ p ∈ Finset.univ.erase (0 : Z2 L),
+          (chr L p u - chr L p v) / (1 - ξ * Shat L p)
+```
+两边用第 4 条展开，常数项相减为 0；求和里用 `sub_div` 合并（**方向别搞反**）和
+`Finset.sum_sub_distrib`。陈述里固定 `b = 0` 是因为平移不变性
+`Theta_apply_add_right` 已把一般情形化归到这里；`u - 0 = u` 用 `sub_zero`。
+
+6. 范数侧的配套（T4、T5 都立刻要用，放这里省得两边各写一遍）：
+```lean
+theorem norm_chr (p u : Z2 L) : ‖chr L p u‖ = 1
+```
+`ZMod.stdAddChar : AddChar (ZMod N) ℂ` 定义为 `Circle.coeHom.compAddChar toCircle`
+（`Mathlib/Analysis/SpecialFunctions/Complex/CircleAddChar.lean:83`），所以值落在单位圆上；
+先 `rw [chr, ZMod.stdAddChar_apply]`，再找 `Circle` 的陪域范数引理
+（**`Circle.norm_coe` / `Circle.abs_coe` 名字先 grep 确认**）。
+这条万一卡住就**先跳过**，在 `docs/STATUS.md` 里写一句「norm_chr 未落地」，
+T4/T5 可以临时退到 `‖chr‖ ≤ 1` 的粗界（由 `Shat` 那边已有的手法）继续。
+**不要写 `sorry`。**
+
+### 完成标准
+`lake env lean RBM2D/Propagator/ZeroMode.lean` exit 0、0 sorry；
+第 4、5 条跑 `#print axioms` 只出现 `propext / Classical.choice / Quot.sound`；
+蓝图节点 `lem:zero-mode` 补 `\lean{}` + `\leanok`。
+
+---
+
+## T15 — `max`-壳层计数（`Propagator/Shells.lean`）
+
+T3 的成本原本几乎全在 Finset 记账上，和不等式无关。把记账单独拿出来做掉，
+T3 就只剩「把三条现成引理乘起来」。
+
+依赖：只要 `Defs/Dist.lean`（已绿）。**不依赖 T2，全程不碰实数**，所以能和 T2 并行。
+
+### 要证的东西，按顺序
+
+1. 壳层指标
+```lean
+def shellIndex (p : Z2 L) : ℕ := max (zdist L p.1) (zdist L p.2)
+```
+
+2. 一维层至多两个点：
+```lean
+theorem card_filter_zdist_eq_le (k : ℕ) :
+    (Finset.univ.filter (fun u : ZMod L => zdist L u = k)).card ≤ 2
+```
+`zdist L u = min u.val (L - u.val) = k` 蕴含 `u.val = k` 或 `u.val = L - k`，
+所以 filter 含于至多两元的 `{(k : ZMod L), ((L - k : ℕ) : ZMod L)}`；
+用 `Finset.card_le_card` + `Finset.card_insert_le` + `Finset.card_singleton`。
+**坑：`k ≥ L` 时 filter 是空的**（`zdist < L`），要先单独讨论，
+否则 `ZMod.val_cast_of_lt` 的边界条件不成立。
+
+3. 二维壳层：
+```lean
+theorem card_shell_le (k : ℕ) :
+    (Finset.univ.filter (fun p : Z2 L => shellIndex L p = k)).card ≤ 12 * k + 4
+```
+`shellIndex p = k` 迫使某个坐标的 `zdist` 恰为 `k`、另一个 `≤ k`。把壳层写成
+「第一坐标 `= k`」与「第二坐标 `= k`」两块的并（`Finset.card_union_le`，已核对存在），
+每块是乘积集，用 `Finset.card_product` / `Finset.filter_product`；
+每块 `≤ 2 * (2k + 1)`，合计 `≤ 8k + 4 ≤ 12k + 4`。
+**常数松一点无所谓**，下游只要一个 `C·k`；写成 `12k + 4` 是为了 `k ≥ 1` 时能一步放成 `16k`。
+
+4. 零壳层只有原点：`shellIndex L p = 0 ↔ p = 0`，由 `zdist_eq_zero_iff` 用两次
+   （加 `Nat.max_eq_zero_iff`，名字先确认）。
+
+5. 壳层指标的上界：`shellIndex L p ≤ L`。
+   由 `zdist L u = min u.val (L - u.val) ≤ u.val < L`，一行 `omega`。
+   **注意：`Propagator/Momentum.lean` 里有一条同类的 `two_mul_zdist_le`，那是 T2 的文件，
+   不要 import 它**（会把两条工单绑在一起）；这里重证一行即可。
+
+6. 分层求和的接口（T3 直接消费的那条）：
+```lean
+theorem sum_erase_zero_eq_sum_shells (f : Z2 L → ℝ) :
+    ∑ p ∈ Finset.univ.erase (0 : Z2 L), f p
+      = ∑ k ∈ Finset.Icc 1 L,
+          ∑ p ∈ Finset.univ.filter (fun p => shellIndex L p = k), f p
+```
+走 `Finset.sum_fiberwise_of_maps_to`（**已核对存在**；注意它和 `Finset.sum_fiberwise`
+签名不同，别拿错）。`maps_to` 的条件是「`p ≠ 0` ⟹ `shellIndex L p ∈ Finset.Icc 1 L`」，
+由第 4、5 条给。
+
+### 陷阱
+- `Finset.filter` 要 `DecidablePred`：`zdist L u = k` 是 ℕ 上的相等，没问题；
+  `Z2 L` 上还要 `DecidableEq (Z2 L)`，由 `Prod` 的实例给。撞到实例问题就在文件头
+  写 `open Classical in`，但**先试不加**，加了会让 `decide` 系的东西变慢。
+- 全程在 ℕ 和 `Finset` 里，一个实数都不出现。这就是它能和 T2 并行的原因。
+
+### 完成标准
+单文件编译 exit 0、0 sorry；第 3、6 条 `#print axioms` 干净；
+蓝图节点 `lem:shells` 补 `\lean{}` + `\leanok`。
+
+---
+
+## T16 — 调和和与 `≺` 的桥（`Propagator/Harmonic.lean`）
+
+T3 的产出里有一条 `Σ_{k ≤ L} 1/k ≺ 1`。它和格点毫无关系，是纯粹的
+「Mathlib 的调和和 + `DetDom` 的定义」，**可以完全独立地先做掉。**
+
+依赖：只要 `Defs/Domination.lean`（已绿）。**不依赖 T2、T3、T15。可以立刻开工。**
+
+### Mathlib 已经有的（已在 pinned v4.34.0 源码里逐条核对）
+
+`Mathlib/NumberTheory/Harmonic/Defs.lean`：
+```
+def harmonic : ℕ → ℚ := fun n => ∑ i ∈ Finset.range n, (↑(i + 1))⁻¹
+```
+`Mathlib/NumberTheory/Harmonic/Bounds.lean`：
+```
+lemma   harmonic_eq_sum_Icc {n : ℕ} : harmonic n = ∑ i ∈ Finset.Icc 1 n, (↑i)⁻¹   -- 在 ℚ 里
+theorem harmonic_le_one_add_log (n : ℕ)  : (harmonic n : ℝ) ≤ 1 + Real.log n
+theorem log_add_one_le_harmonic (n : ℕ)  : Real.log ↑(n + 1) ≤ harmonic n
+```
+所以 `import Mathlib.NumberTheory.Harmonic.Bounds` 就够，**不要自己造调和和**。
+
+### 要证的东西，按顺序
+
+1. 把 ℚ 版搬到 ℝ：
+```lean
+theorem sum_inv_Icc_le_one_add_log (n : ℕ) :
+    ∑ k ∈ Finset.Icc 1 n, (k : ℝ)⁻¹ ≤ 1 + Real.log n
+```
+由 `harmonic_eq_sum_Icc` + `harmonic_le_one_add_log`，中间推 cast 用
+`Rat.cast_sum` / `Rat.cast_inv` / `Rat.cast_natCast`
+（`harmonic_le_one_add_log` 自己的证明里就是这三个，照抄那一行 `simp_rw`）。
+
+2. `log` 被任意小的幂压住 —— 这就是 `≺` 的全部内容：
+```lean
+theorem log_le_rpow_div {τ : ℝ} (hτ : 0 < τ) {x : ℝ} (hx : 0 < x) :
+    Real.log x ≤ x ^ τ / τ
+```
+**不要去找现成的，三行自己证**：`Real.log_le_sub_one_of_pos`
+（`Log/Basic.lean:307`，已核对）用在 `x ^ τ` 上给 `log (x^τ) ≤ x^τ - 1`；
+`Real.log_rpow hx τ : log (x^τ) = τ * log x`（`Pow/Real.lean:494`，已核对）；
+于是 `τ * log x ≤ x^τ - 1 ≤ x^τ`，两边除以 `τ > 0`。
+
+3. 桥：
+```lean
+theorem one_add_log_detDom_one : (fun L : ℕ => 1 + Real.log L) ≺ (fun _ => (1 : ℝ))
+```
+按 `detDom_iff` 展开：给定 `τ > 0`，要找 `N₀` 使 `L ≥ N₀` 时 `1 + log L ≤ L^τ`。
+由第 2 条 `log L ≤ L^{τ/2} / (τ/2)`，再用 `Defs/Domination.lean` 里现成的
+`eventually_le_rpow`（`∀ᶠ N, C ≤ N^τ`）把常数 `1 + 2/τ` 吃掉，
+用 `rpow_half_mul_rpow_half`（同一个文件，`N^{τ/2} · N^{τ/2} = N^τ`）拼起来。
+**先读 `Defs/Domination.lean` 里 `trans` 的证明** —— 它就是这个套路的模板。
+
+4. 组合出 T3 真正要的那条：
+```lean
+theorem harmonic_detDom_one :
+    (fun L : ℕ => ∑ k ∈ Finset.Icc 1 L, (k : ℝ)⁻¹) ≺ (fun _ => (1 : ℝ))
+```
+由第 1 条 + 第 3 条 + `DetDom.mono_left`。
+
+### 陷阱
+- `Real.log 0 = 0`、`Real.log 1 = 0`，`n = 0, 1` 不用特判，但放缩里要显式喂
+  `Real.log_natCast_nonneg`（`Log/Basic.lean:225`，已核对）。
+- **`DetDom` 的序列参数在本项目里是 `L` 不是 `N`**，见 `Defs/Domination.lean` 文件头。
+- `rpow` 与 `pow` 不要混：`(L : ℝ) ^ (τ : ℝ)` 是 `Real.rpow`，`(L : ℝ) ^ (2 : ℕ)` 是
+  `Monoid.npow`，桥是 `Real.rpow_natCast`（`Pow/Real.lean:62`，已核对）。
+  `DetDom` 的定义里用的是 `rpow`。
+
+### 完成标准
+单文件编译 exit 0、0 sorry；第 4 条 `#print axioms` 干净；
+蓝图节点 `lem:harmonic` 补 `\lean{}` + `\leanok`。
 
 # 第二批（围道那条线，暂不开工）
 
