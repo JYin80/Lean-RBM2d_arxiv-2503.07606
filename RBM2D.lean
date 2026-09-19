@@ -6,4 +6,5 @@ import RBM2D.Propagator.Basic
 import RBM2D.Propagator.Bounds
 import RBM2D.Propagator.Symbol
 import RBM2D.Propagator.Elliptic
+import RBM2D.Propagator.Momentum
 import RBM2D.Delocalization
