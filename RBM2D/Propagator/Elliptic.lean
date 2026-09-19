@@ -41,6 +41,11 @@ open Finset
 
 section ComplexAux
 
+/-- `‖(r : ℂ)‖ = |r|`.  Stated for a bare variable: `simp` proves this shape, but
+pushes the cast inward on something like `((1 - lam : ℝ) : ℂ)` and then can no
+longer see that the argument is real. -/
+theorem norm_ofReal_aux (r : ℝ) : ‖((r : ℝ) : ℂ)‖ = |r| := by simp
+
 theorem re_le_norm_aux (z : ℂ) : z.re ≤ ‖z‖ :=
   le_trans (le_abs_self z.re) (Complex.abs_re_le_norm z)
 
@@ -97,10 +102,9 @@ theorem norm_one_sub_mul_real_le (hξ : ‖ξ‖ < 1) (h1 : -(3 / 5 : ℝ) ≤ l
       = ‖((1 - lam : ℝ) : ℂ) + (lam : ℂ) * (1 - ξ)‖ := by rw [one_sub_mul_real_eq]
     _ ≤ ‖((1 - lam : ℝ) : ℂ)‖ + ‖(lam : ℂ) * (1 - ξ)‖ := norm_add_le _ _
     _ = (1 - lam) + |lam| * ‖(1 : ℂ) - ξ‖ := by
-        have hn1 : ‖((1 - lam : ℝ) : ℂ)‖ = |1 - lam| := by simp
         rw [norm_mul, hnl]
         congr 1
-        rw [hn1, h1l]
+        rw [norm_ofReal_aux, h1l]
     _ ≤ (1 - lam) + 1 * ‖(1 : ℂ) - ξ‖ := by
         have := mul_le_mul_of_nonneg_right habs (norm_nonneg ((1 : ℂ) - ξ))
         linarith
