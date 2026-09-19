@@ -610,12 +610,19 @@ theorem one_add_log_detDom_one : (fun L : ℕ => 1 + Real.log L) ≺ (fun _ => (
 theorem harmonic_detDom_one :
     (fun L : ℕ => ∑ k ∈ Finset.Icc 1 L, (k : ℝ)⁻¹) ≺ (fun _ => (1 : ℝ))
 ```
-由第 1 条 + 第 3 条 + `DetDom.mono_left`。
+由第 1 条 + 第 3 条接起来。**订正（2026-09-19）：本工单原先写「用 `DetDom.mono_left`」，
+`Defs/Domination.lean` 里没有这条** —— `mono_left` 只在 `UnifDetDom` 命名空间里，
+`DetDom` 那边只转出了 `trans / add / mul / const_mul_*/ add_left / refl`。
+改走 `rw [detDom_iff]` 展开成 `∀ᶠ` 再 `filter_upwards`，不依赖 `mono_left`。
 
 ### 陷阱
 - `Real.log 0 = 0`、`Real.log 1 = 0`，`n = 0, 1` 不用特判，但放缩里要显式喂
   `Real.log_natCast_nonneg`（`Log/Basic.lean:225`，已核对）。
 - **`DetDom` 的序列参数在本项目里是 `L` 不是 `N`**，见 `Defs/Domination.lean` 文件头。
+- **不要用除法形式**。第 2 条若写成 `log x ≤ x^τ / τ`，收尾就需要
+  `le_div_iff₀` / `div_le_div_of_nonneg_right` 这一族 —— 我在 pinned 源码里
+  grep `le_div_iff₀` **没找到**，这族名字跨版本最不稳。写成乘法形式
+  `τ * log x ≤ x^τ`，全文件一个除法引理都不需要。
 - `rpow` 与 `pow` 不要混：`(L : ℝ) ^ (τ : ℝ)` 是 `Real.rpow`，`(L : ℝ) ^ (2 : ℕ)` 是
   `Monoid.npow`，桥是 `Real.rpow_natCast`（`Pow/Real.lean:62`，已核对）。
   `DetDom` 的定义里用的是 `rpow`。
