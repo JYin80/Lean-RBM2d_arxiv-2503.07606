@@ -169,7 +169,7 @@
 
 \begin{definition}[$|p|_*$ on the lattice]\label{def:pstar}
   \uses{def:dist}
-  \lean{RBM.pstar, RBM.pstar2}
+  \lean{RBM.pstar, RBM.pstar2}\leanok
   On $\TL$ the frequency in coordinate $i$ is $2\pi p_i/L$, and there
   $\operatorname{dist}(2\pi p_i/L,2\pi\mathbb Z)=2\pi\,\mathrm{zdist}(p_i)/L$
   \emph{exactly}.  So $|p|_*$ is defined straight from the cycle distance and
@@ -180,13 +180,20 @@
 \begin{lemma}[$q(p)\sim|p|_*^2$, \texttt{(eq\_qcomp)}]\label{lem:qcomp}
   \uses{def:q, def:pstar}
   \lean{RBM.qsym_le_pstar2, RBM.pstar2_le_qsym,
-        RBM.norm_one_sub_mul_Shat_le_pstar, RBM.norm_one_sub_mul_Shat_ge_pstar}
+        RBM.norm_one_sub_mul_Shat_le_pstar, RBM.norm_one_sub_mul_Shat_ge_pstar}\leanok
   $q(p)\sim|p|_*^2$, where $|p|_*^2=\operatorname{dist}(p_1,2\pi\mathbb Z)^2
   +\operatorname{dist}(p_2,2\pi\mathbb Z)^2$; equivalently
   $|1-\xi\widehat S(p)|\sim\kappa^2+|p|_*^2$, which is the form \S8.2 and \S8.3 use.
-  \emph{Work order T2 --- drafted, awaiting a CI round; no \texttt{\textbackslash leanok}
-  until it compiles.}
+  Explicitly $\tfrac{4}{5\pi^2}|p|_*^2\le q(p)\le\tfrac15|p|_*^2$.
 \end{lemma}
+\begin{proof}\leanok
+  By \texttt{RBM.cos\_eq\_cos\_pstar} the cosine does not see the difference
+  between $2\pi p_i/L$ and its distance to $2\pi\mathbb Z$, so each coordinate
+  reduces to the elementary two-sided bound
+  $\tfrac{2}{\pi^2}\theta^2\le1-\cos\theta\le\tfrac12\theta^2$ on $|\theta|\le\pi$,
+  the hypothesis being supplied by $\mathrm{zdist}\le L/2$.  Merging with
+  \eqref{lem:elliptic} costs only the numeric fact $4/(45\pi^2)\le1/9$, i.e.\ $\pi>3$.
+\end{proof}
 
 \begin{lemma}[Shell counting on $\TL$]\label{lem:shells}
   \uses{def:dist}

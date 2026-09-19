@@ -239,7 +239,8 @@ theorem four_div_le_one_div_nine : 4 / (45 * Real.pi ^ 2) ≤ (1 / 9 : ℝ) := b
   have heq : (1 / 9 : ℝ) - 4 / (45 * Real.pi ^ 2)
       = (5 * Real.pi ^ 2 - 4) / (45 * Real.pi ^ 2) := by
     have hpi : (Real.pi : ℝ) ≠ 0 := Real.pi_ne_zero
-    field_simp [hpi] <;> ring
+    field_simp [hpi]
+    ring
   have hnn : (0 : ℝ) ≤ (1 / 9 : ℝ) - 4 / (45 * Real.pi ^ 2) := by
     rw [heq]
     apply div_nonneg
