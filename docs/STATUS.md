@@ -118,3 +118,24 @@ Cowork 所在的云端容器拉不到 Mathlib 的 olean cache（出口策略挡�
 - `lake exe cache get` 在本机第一次会拉几个 GB。`../RBM1D/.lake/packages` 已有一份
   同 rev 的 Mathlib，理论上可以共用，但**没有验证过 lake 会不会写坏那边的树**，
   不确定就老实 `cache get`。
+
+---
+
+## 环境小坑：`.git/_stale/`
+
+这个仓库的第一批提交是从 Cowork 侧做的，那边的文件桥**不允许删除文件**，
+于是 `git` 每跑一次写操作就会留下一个 0 字节的 `.git/index.lock` 和一堆
+`.git/objects/**/tmp_obj_*`。我把它们挪进了 `.git/_stale/`（65 个文件），
+这样 git 能正常用。
+
+**在 Mac 上直接 `rm -rf .git/_stale` 即可**，里面没有任何有用的东西。
+之后在本机跑 git 就不会再有这个问题（本机 git 权限正常）。
+
+## 还没做的两件事（需要在本机 / 需要 Jun 决定）
+
+1. **`git push`**：Cowork 侧没有 GitHub 凭据，所以只提交到了本地。
+   远端已设好：`origin = https://github.com/JYin80/Lean-RBM2d_arxiv-2503.07606.git`，
+   分支 `main`。在 Mac 上 `git push -u origin main` 即可。
+2. **GitHub Pages**：仓库 Settings → Pages → Source 选 **GitHub Actions**。
+   开完并 push 之后，站点在
+   `https://jyin80.github.io/Lean-RBM2d_arxiv-2503.07606/`。
