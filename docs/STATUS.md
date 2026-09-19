@@ -11,7 +11,40 @@
 `paper-deltas.md` / `check.sh` / `watch.sh` / CI）全部沿用，数学路线另起 —— 见 `PLAN.md`
 的「与 d=1 的根本区别」。
 
-### ⚠️ 当前最重要的事实
+### ✅ 2026-09-19 晚：T1 完成，全部编译通过
+
+`lake build` **exit 0**，10 个文件全绿，`grep -rn sorry RBM2D/` 为空。
+CI: `Lean Action CI #7`（commit `8d27204`）Success。
+
+修复过程（全部由 Cowork 侧通过读 CI 日志完成，共 5 轮）：
+
+| 轮次 | 文件 | 问题 |
+|---|---|---|
+| 1 | — | 缺 `lake-manifest.json`，`lean-action` 在解析依赖前就退出 |
+| 2 | `Defs/Block` | `zero_ne_neg_one_zmod` 的 `linear_combination` 系数写成了 `-h`，应为 `h` |
+| 3 | — | 加了把 `lake build` 输出写进 `$GITHUB_STEP_SUMMARY` 的步骤（GitHub 不展开就只渲染前 40 行日志） |
+| 4 | `Propagator/Symbol` | `stdAddChar_add_neg` 从 RBM1D 的 `Shat_eq_cos` 拆出来后，`rw [h]` 自己就关掉了目标，尾巴上的 `ring` 没活干 |
+| 5 | `Propagator/Elliptic` | `le_or_lt` 在这版 Mathlib 里没了（用 `lt_or_ge`）；`simpa` 把 `\|1−lam\| = 1−lam` 经 `abs_eq_self` 化成 `lam ≤ 1`，对不上关于 ℂ 上范数的目标 |
+| 6 | `Propagator/Elliptic` | `simp` 在 `((1 - lam : ℝ) : ℂ)` 上会先把 cast 往里推，推完就看不出参数是实数 —— 抽成对裸变量陈述的 `norm_ofReal_aux` 再 `rw` |
+
+**一个意外收获**：linter 指出 `norm_one_sub_mul_real_le` 根本没用到 `‖ξ‖ < 1`。
+确实如此 —— `(eq_elliptic)` 的**上界**只是三角不等式，对任意 `ξ` 都成立，
+只有下界需要 `Re(1−ξ) > 0`。假设已删掉，记进 `paper-deltas.md` 第 9 条。
+
+### 剩下的警告（不挡编译，见 TASKS.md 的 T13）
+
+`Defs/Dist` 的 5 条 `show` 风格提示与 2 条 `if_neg` 弃用，
+以及 7 处没用上的 section 变量 `[NeZero L]`。
+
+### 蓝图
+
+`blueprint/src/content.tex` 里 15 个带 `\lean{}` 的节点全部补上了 `\leanok`
+（语句 + 证明各一处，共 29 个标记），41 个 `\lean{}` 标签逐一核对过都解析得到真实声明。
+没有 `\lean{}` 的节点就是 `TASKS.md` 里还没开工的工单。
+
+---
+
+### ⚠️ 历史记录：第一批草稿的状态（已过时）
 
 **下面列的所有 Lean 文件都是 Cowork 侧写的草稿，一行都没有编译过。**
 Cowork 所在的云端容器拉不到 Mathlib 的 olean cache（出口策略挡掉了

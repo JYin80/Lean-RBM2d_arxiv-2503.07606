@@ -14,6 +14,8 @@
 | 7 | `(eq_elliptic)` 的 `∼` | 论文写 `\|1-ξŜ(p)\| ∼ κ² + q(p)`，`∼` 是「相差绝对常数的双边界」 | 拆成两条：`norm_one_sub_mul_Shat_le`（上界，常数 1）与 `norm_one_sub_mul_Shat_ge`（下界，常数 `1/9`）。常数不求最优 | 无 |
 | 8 | Thm `MR:decol` 的证明 | 论文由局部半圆律 `MR:locSC` 以高概率给出 `G = O(1)` 再代入特征向量不等式 | 只形式化确定性部分：`sq_norm_eigenvector_le_im_green`，以及「若 `‖G_xx(λ_k+iη)‖ ≤ C` 则 `\|ψ_k(x)\|² ≤ Cη`」。`G` 的界作为假设。特征值按 Mathlib 的 `IsHermitian.eigenvalues` 编号（不保证论文的 `λ_1 ≤ … ≤ λ_N` 次序），陈述对每个 `k` 成立故无影响 | 概率部分待随机层 |
 
+| 9 | `(eq_elliptic)` 的上界 | 论文把 `∼` 的两半都放在 `\|ξ\| < 1` 之下陈述 | Lean 里 `norm_one_sub_mul_real_le` / `norm_one_sub_mul_Shat_le` **不带任何关于 ξ 的假设**：上界 `\|1−λξ\| ≤ (1−λ) + \|1−ξ\|` 只是对 `1−λξ = (1−λ) + λ(1−ξ)` 用三角不等式，`\|λ\| ≤ 1` 就够。只有下界需要 `Re(1−ξ) > 0`，即需要 `\|ξ\| < 1` | 无，是加强 |
+
 ## 待记录（做到时补）
 
 - `(deri_Thxi)` 在 Lean 里陈述成**逐元素**形式而非矩阵值 —— 原因是 Matrix 上 Pi 拓扑

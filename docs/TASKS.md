@@ -6,27 +6,44 @@
 
 | # | 任务 | 文件 | 认领 | 状态 |
 |---|---|---|---|---|
-| T1 | **把第一批草稿编译通过** | `RBM2D/**`（全部） | 空闲 | **最高优先，阻塞一切** |
-| T2 | `(eq_qcomp)`：`q(p) ≍ \|p\|²_*` | `Propagator/Momentum.lean`（新建） | 空闲 | 待 T1 |
+| T1 | **把第一批草稿编译通过** | `RBM2D/**`（全部） | Cowork | **完成**（CI 绿，0 sorry） |
+| T2 | `(eq_qcomp)`：`q(p) ≍ \|p\|²_*` | `Propagator/Momentum.lean`（新建） | 空闲 | **可开工** |
 | T3 | 格点求和 `Σ_{p≠0} \|p\|_*^{-2} ≤ C L² log L` | `Propagator/LatticeSum.lean`（新建） | 空闲 | 待 T2 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean`（新建） | 空闲 | 待 T3 |
 | T5 | 性质 6 的 Case 2（`\|s\|_L > d/2`） | `Propagator/FiniteDiff.lean`（新建） | 空闲 | 待 T3 |
-| T6 | `(deri_Thxi)`：`∂_ξ Θ = Θ S Θ` | `Propagator/Deriv.lean`（新建） | 空闲 | 待 T1，**与 T2–T5 完全独立** |
-| T7 | §2 模型层：`S = S^(B) ⊗ S_W`、`I^(2)_a`、`E_a` | `Defs/Model.lean`（新建） | 空闲 | 待 T1，**独立** |
-| T8 | 数值回归测试（`L = 3`，`ξ = 1/2`，在 ℚ 上） | `Test/Numeric.lean`（新建） | 空闲 | 待 T1，**独立** |
+| T6 | `(deri_Thxi)`：`∂_ξ Θ = Θ S Θ` | `Propagator/Deriv.lean`（新建） | 空闲 | **可开工**，与 T2–T5 完全独立 |
+| T7 | §2 模型层：`S = S^(B) ⊗ S_W`、`I^(2)_a`、`E_a` | `Defs/Model.lean`（新建） | 空闲 | **可开工**，独立 |
+| T8 | 数值回归测试（`L = 3`，`ξ = 1/2`，在 ℚ 上） | `Test/Numeric.lean`（新建） | 空闲 | **可开工**，独立 |
 | T9 | 无穷体积核 `(eq_Kinf)` + 围道平移 `(eq_shifted_lower)` | `Propagator/Contour.lean`（新建） | 空闲 | **第二批**，最硬 |
 | T10 | 周期化 `K_{ξ,L} = Σ_n K_{ξ,∞}(·+nL)` | `Propagator/Periodize.lean`（新建） | 空闲 | 第二批，待 T9 |
 | T11 | dyadic 分解 `(eq_dyadic)` + `(eq_dyadic_sum1/2)` | `Propagator/Dyadic.lean`（新建） | 空闲 | 第二批，待 T9 |
-| T12 | 蓝图上线：`checkdecls` 通过 + 补 `\leanok` + 开 Pages | `blueprint/src/`、GitHub 设置 | 空闲 | 待 T1（骨架已写好） |
+| T12 | 蓝图上线 | `blueprint/src/`、GitHub 设置 | Cowork | **大部分完成**，见下 |
+| T13 | 扫掉剩下的 linter 警告 | `Defs/Dist.lean` 等 | 空闲 | **可开工，零风险** |
 
-**建议顺序：T1 → (T6 ∥ T7 ∥ T8) → T2 → T3 → (T4 ∥ T5) → T12 → 第二批。**
+**T1 已完成（2026-09-19）**，`lake build` exit 0、0 sorry、10 个文件全绿。
+剩下的建议顺序：**(T6 ∥ T7 ∥ T8) → T2 → T3 → (T4 ∥ T5) → 第二批。**
 
 T6/T7/T8 放在 T2 前面不是因为它们更重要，而是因为它们**互不相干且都短**，
 适合在 T1 刚打通、对本项目的 API 还不熟的时候练手；而 T2→T3→T4 是一条串行链。
 
 ---
 
-## T1 — 把第一批草稿编译通过（**先做这个**）
+## T13 — 扫掉剩下的 linter 警告（**零风险，适合当练手**）
+
+`lake build` 现在是绿的，但还有一批风格警告。本机有编译器的话几分钟就能扫完：
+
+| 位置 | 警告 | 建议 |
+|---|---|---|
+| `Defs/Dist.lean` 118–122（5 处） | `show` 只该用来标注中间目标 | 把 `show zdist L a + zdist L b ≤ 1` 换成 `simp only [zdist2]`（它会顺带做投影归约），或者 `unfold zdist2` |
+| `Defs/Dist.lean` 80、125 | `if_neg` 已弃用，建议 `ite_eq_right` | 两者陈述不同，不是直接替换，**先确认再改**；`RBM1D` 那边同样写法 |
+| `Defs/Dist.lean` 32、67；`Propagator/Basic.lean` 43；`Propagator/Elliptic.lean` 181、189、206、212 | section 变量 `[NeZero L]` 没用上 | 按 linter 的提示在定理前加 `omit [NeZero L] in` |
+
+**都是警告不是错误**，不影响 `lake build` 的退出码；但这个项目的规矩是日志干净，所以值得清掉。
+清完在 `docs/STATUS.md` 里记一句。
+
+---
+
+## T1 — 把第一批草稿编译通过（**已完成**）
 
 第一批文件是 **Cowork 侧写的，一行都没有编译过**。Cowork 所在的云端容器拉不到
 Mathlib 的 olean cache（出口策略挡掉了 `lakecache.blob.core.windows.net`），

@@ -17,7 +17,7 @@ Formalization of the second half of Section 8.1 of the paper: the definitions
 The paper's `∼` is a two-sided bound up to absolute constants; here it is split
 into the explicit pair
 
-* `RBM.norm_one_sub_mul_Shat_le` : `|1 - ξ Ŝ(p)| ≤ q(p) + |1 - ξ|`
+* `RBM.norm_one_sub_mul_Shat_le` : `|1 - ξ Ŝ(p)| ≤ q(p) + |1 - ξ|` (no hypothesis on `ξ`)
 * `RBM.norm_one_sub_mul_Shat_ge` : `(1/9) (q(p) + |1 - ξ|) ≤ |1 - ξ Ŝ(p)|`
 
 The constants are not optimal and are not meant to be: the paper's argument
@@ -91,9 +91,12 @@ theorem re_one_sub_pos (hξ : ‖ξ‖ < 1) : 0 < ((1 : ℂ) - ξ).re := by
   simp only [Complex.sub_re, Complex.one_re]
   linarith
 
-/-- The upper half of `(eq_elliptic)`, for a real multiplier
-`λ ∈ [-3/5, 1]`. -/
-theorem norm_one_sub_mul_real_le (hξ : ‖ξ‖ < 1) (h1 : -(3 / 5 : ℝ) ≤ lam)
+/-- The upper half of `(eq_elliptic)`, for a real multiplier `λ ∈ [-3/5, 1]`.
+
+Unlike the lower half this needs **no** hypothesis on `ξ`: it is the triangle
+inequality applied to `1 - λξ = (1 - λ) + λ(1 - ξ)`.  The paper states both
+halves under `|ξ| < 1`; see `docs/paper-deltas.md`. -/
+theorem norm_one_sub_mul_real_le (h1 : -(3 / 5 : ℝ) ≤ lam)
     (h2 : lam ≤ 1) : ‖1 - ξ * (lam : ℂ)‖ ≤ (1 - lam) + ‖(1 : ℂ) - ξ‖ := by
   have hnl : ‖((lam : ℝ) : ℂ)‖ = |lam| := by simp
   have habs : |lam| ≤ 1 := abs_le.mpr ⟨by linarith, h2⟩
@@ -222,11 +225,11 @@ theorem Shat_eq_one_sub_qsym (p : Z2 L) : Shat L p = ((1 - qsym L p : ℝ) : ℂ
   ring
 
 /-- The upper half of `(eq_elliptic)`: `|1 - ξ Ŝ(p)| ≤ q(p) + |1 - ξ|`. -/
-theorem norm_one_sub_mul_Shat_le {ξ : ℂ} (hξ : ‖ξ‖ < 1) (p : Z2 L) :
+theorem norm_one_sub_mul_Shat_le {ξ : ℂ} (p : Z2 L) :
     ‖1 - ξ * Shat L p‖ ≤ qsym L p + ‖(1 : ℂ) - ξ‖ := by
   have hq0 := qsym_nonneg L p
   have hq1 := qsym_le L p
-  have h := norm_one_sub_mul_real_le (lam := 1 - qsym L p) hξ (by linarith) (by linarith)
+  have h := norm_one_sub_mul_real_le (lam := 1 - qsym L p) (by linarith) (by linarith)
   rw [Shat_eq_one_sub_qsym]
   calc ‖1 - ξ * ((1 - qsym L p : ℝ) : ℂ)‖
       ≤ (1 - (1 - qsym L p)) + ‖(1 : ℂ) - ξ‖ := h
