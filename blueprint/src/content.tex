@@ -242,10 +242,14 @@
 
 \begin{lemma}[Separating the zero mode]\label{lem:zero-mode}
   \uses{lem:fourier}
-  In \texttt{(eq\_Fourier\_rep)} the $p=0$ term is $L^{-2}(1-\xi)^{-1}$, and in a
-  difference $K_{\xi,L}(x)-K_{\xi,L}(y)$ it cancels outright.  Both Property 5
-  and Property 6 begin with exactly this step, so it is proved once.
-  \emph{Work order T14.}
+  \lean{RBM.Shat_zero, RBM.chr_zero_left, RBM.norm_chr,
+        RBM.Theta_apply_eq_zero_mode_add, RBM.Theta_apply_sub_eq_erase_sum}
+  In \texttt{(eq\_Fourier\_rep)} the $p=0$ term is $L^{-2}(1-\xi)^{-1}$, because
+  $\hat S(0)=1$ and $e_0\equiv1$; in a difference $K_{\xi,L}(x)-K_{\xi,L}(y)$ it
+  cancels outright.  Both Property 5 and Property 6 begin with exactly this step,
+  so it is proved once.  The companion $\|e_p(u)\|=1$ lives here too, so that
+  neither of the two consumers has to re-derive it.
+  \emph{Work order T14, drafted; no \texttt{\textbackslash leanok} until CI is green.}
 \end{lemma}
 
 \section{Property 5: exponential decay}
@@ -284,6 +288,16 @@
   Both differences are $O(\log L)\prec1$, while $|s|_L/(d+1)\ge c$ and
   $|s|_L^2/(d^2+1)\ge c$.
   \emph{Work order T5.}
+\end{lemma}
+
+\begin{lemma}[The two dyadic sums]\label{lem:dyadic-sums}
+  \uses{lem:kappa-basic}
+  Splitting at $r\sim\kappa$ and again at $r\sim(d+1)^{-1}$,
+  $\sum_{r}r^{3}(\kappa^{2}+r^{2})^{-1}(1+rd)^{-M}\le C\big((d+1)^{-1}+\lhat^{-1}\big)$
+  and $\sum_{r}r^{4}(\kappa^{2}+r^{2})^{-1}(1+rd)^{-M}\le C\big((d^{2}+1)^{-1}+\lhat^{-2}\big)$.
+  Pure arithmetic over dyadic $r=2^{-j}$: it needs neither \eqref{lem:dyadic} nor the
+  contour, so it can land even if the dyadic estimate stalls.  $M=3$ suffices.
+  \emph{Work order T17.}
 \end{lemma}
 
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}

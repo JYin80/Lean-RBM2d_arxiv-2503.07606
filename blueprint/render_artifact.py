@@ -50,7 +50,8 @@ def clean(t):
 TASK = {"lem:qcomp": "T2", "lem:latticesum": "T3", "lem:decay-small": "T4",
         "lem:zero-mode": "T14", "lem:shells": "T15", "lem:harmonic": "T16",
         "lem:bd-case2": "T5", "lem:contour": "T9", "lem:periodize": "T10",
-        "lem:dyadic": "T11", "lem:propTH-5": "T4+T10", "lem:propTH-6": "T5+T11"}
+        "lem:dyadic": "T11", "lem:propTH-5": "T4+T10", "lem:propTH-6": "T5+T11",
+        "lem:dyadic-sums": "T17"}
 
 def parse(tex):
     chapters, cur = [], None
