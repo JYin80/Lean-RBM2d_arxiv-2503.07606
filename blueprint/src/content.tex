@@ -219,14 +219,20 @@
 \begin{lemma}[Harmonic sum]\label{lem:harmonic}
   \uses{def:detdom}
   \lean{RBM.mul_log_le_rpow, RBM.sum_inv_Icc_le_one_add_log,
-        RBM.one_add_log_detDom_one, RBM.harmonic_detDom_one}
+        RBM.one_add_log_detDom_one, RBM.harmonic_detDom_one}\leanok
   $\sum_{k=1}^{L}k^{-1}\le1+\log L\prec1$, the Lean form of the paper's remark
-  that powers of $\log L$ are harmless.  Mathlib supplies the first inequality
-  over $\mathbb Q$ (\texttt{harmonic\_le\_one\_add\_log}); the domination is
-  $\tau\log x\le x^{\tau}$, itself $\log y\le y-1$ at $y=x^{\tau}$.
-  \emph{Work order T16 --- drafted, awaiting a CI round; no
-  \texttt{\textbackslash leanok} until it compiles.}
+  that powers of $\log L$ are harmless.
 \end{lemma}
+\begin{proof}\leanok
+  Mathlib has $\sum_{k=1}^{n}k^{-1}\le1+\log n$ over $\mathbb Q$
+  (\texttt{harmonic\_le\_one\_add\_log}), so the first inequality is a cast.
+  For the domination, $\log y\le y-1$ at $y=x^{\tau}$ together with
+  $\log(x^{\tau})=\tau\log x$ gives $\tau\log x\le x^{\tau}$; keeping that
+  multiplicative rather than dividing by $\tau$ avoids every division lemma.
+  Splitting $L^{\tau}=L^{\tau/2}\cdot L^{\tau/2}$ and using that $L^{\tau/2}$
+  eventually exceeds the constant $1+(\tau/2)^{-1}$ then gives
+  $1+\log L\le L^{\tau}$ for all large $L$, which is the definition of $\prec1$.
+\end{proof}
 
 \begin{lemma}[Lattice sum]\label{lem:latticesum}
   \uses{lem:qcomp, lem:shells, lem:harmonic}

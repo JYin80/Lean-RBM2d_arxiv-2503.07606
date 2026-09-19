@@ -8,7 +8,7 @@
 |---|---|---|---|---|
 | T1 | **把第一批草稿编译通过** | `RBM2D/**`（全部） | Cowork | **完成**（CI 绿，0 sorry） |
 | T2 | `(eq_qcomp)`：`q(p) ≍ \|p\|²_*` | `Propagator/Momentum.lean`（新建） | Cowork | **完成**（CI #18 绿，0 sorry） |
-| T3 | 格点求和 `Σ_{p≠0} \|p\|_*^{-2} ≤ C L² log L`（**现在只剩组装**） | `Propagator/LatticeSum.lean`（新建） | 空闲 | 待 T15、T16（T2 已完成） |
+| T3 | 格点求和 `Σ_{p≠0} \|p\|_*^{-2} ≤ C L² log L`（**现在只剩组装**） | `Propagator/LatticeSum.lean`（新建） | 空闲 | **只差 T15**（T2、T16 已完成） |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean`（新建） | 空闲 | 待 T3 |
 | T5 | 性质 6 的 Case 2（`\|s\|_L > d/2`） | `Propagator/FiniteDiff.lean`（新建） | 空闲 | 待 T3 |
 | T6 | `(deri_Thxi)`：`∂_ξ Θ = Θ S Θ` | `Propagator/Deriv.lean`（新建） | 空闲 | **可开工**，与 T2–T5 完全独立 |
@@ -21,14 +21,16 @@
 | T13 | 扫掉剩下的 linter 警告 | `Defs/Dist.lean` 等 | 空闲 | **可开工，零风险** |
 | T14 | 零模分离：把 `(eq_Fourier_rep)` 的 `p = 0` 项拎出来 | `Propagator/ZeroMode.lean`（新建） | 空闲 | **可开工**，T4/T5 共用 |
 | T15 | `max`-壳层计数 `#{p : k(p) = k} ≤ 12k + 4` | `Propagator/Shells.lean`（新建） | 空闲 | **可开工**，不碰实数 |
-| T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | **Cowork** | **进行中**（草稿已写，待 CI 验证） |
+| T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | Cowork | **完成**（CI #22 绿，0 sorry，0 warning） |
 
 **T1 已完成（2026-09-19）**，`lake build` exit 0、0 sorry、10 个文件全绿。
 剩下的建议顺序：**(T6 ∥ T7 ∥ T8 ∥ T13 ∥ T14 ∥ T15 ∥ T16) → T3 → (T4 ∥ T5) → 第二批。**
 T2 已完成（Cowork，CI #18 绿）。
 
-**队列现在有 7 条可立刻开工且文件两两不相交的工单**（T6、T7、T8、T13、T14、T15、T16），
+**队列现在有 6 条可立刻开工且文件两两不相交的工单**（T6、T7、T8、T13、T14、T15），
 足够两个 Claude Code 实例各取一条连着跑好几轮而不会撞车。
+**T15 是其中唯一在关键路径上的**：T2 与 T16 都已完成，T15 一落地 T3 就只剩组装，
+T3 一通 T4 与 T5 就都能并行开工。
 
 T6/T7/T8 放在 T2 前面不是因为它们更重要，而是因为它们**互不相干且都短**，
 适合在 T1 刚打通、对本项目的 API 还不熟的时候练手；而 T2→T3→T4 是一条串行链。

@@ -49,6 +49,36 @@ Cowork 侧应当做的是：规划、开工单、读论文、维护蓝图、以�
 
 ---
 
+## 2026-09-19 11:03 UTC：**T16 完成**（CI #22 绿，一轮过）
+
+`Lean Action CI #22`（`a29ec0b`）**Success**，`lake build exit 0`、3434 jobs、0 error、
+`Harmonic.lean` **一条 warning 都没有**。上一节那张「不确定的地方」表里的四条，
+**一条都没触发** —— `simpa only [harmonic_eq_sum_Icc, Rat.cast_sum, ...]` 的方向对了，
+两处 `calc` 的 β-归约靠 `exact` 的 defeq 吃掉了，`nlinarith` 的提示也够。
+
+连续两轮（T2 的 `Momentum.lean`、T16 的 `Harmonic.lean`）都是**导入改对之后一轮过**，
+这支持 CI 第 1 轮得出的那条结论：**Cowork 侧写 Lean 的真实失败模式是作用域，不是战术。**
+凡是从 Mathlib 深处取引理，就把它所在的模块显式 import 一行，代价是一行，收益是一整轮 CI。
+
+`lem:harmonic` 已补 `\leanok`（语句 + 证明各一处）。蓝图现在 31 个节点：
+`done 11 / defn 8 / ready 4 / blocked 6 / cited 2`，155 条 Lean 声明、0 sorry。
+蓝图工件已就地更新（v6）。
+
+### 队列：7 条 → 6 条，但关键路径只剩一条
+
+空闲且文件两两不相交：**T6、T7、T8、T13、T14、T15**。
+
+**T15（`Propagator/Shells.lean`）是唯一在关键路径上的那条。**
+T2 和 T16 都完成了，所以 `lem:latticesum`（T3）现在**只差 T15**；
+T3 一通，T4 与 T5 就都能并行开工，`lem_propTH` 的性质 5 和性质 6 就各有一半变成定理。
+T6/T7/T8/T13 是叶子，随时可做，但做完不解锁任何东西。
+
+**给对面的话**：如果只开一个 Claude Code 实例，请先做 T15。
+它全程在 ℕ 和 `Finset` 里，一个实数都不出现，正是本机秒级迭代最占便宜的那类活
+（`Finset.card_union_le` / `Finset.filter_product` 的副目标要试几次形状）。
+
+---
+
 ## 2026-09-19 11:00 UTC：T16 草稿落地（Cowork 心跳）
 
 CI：`Lean Action CI #18`（`78f2459`）**Success**，`lake build exit 0`、3396 jobs、0 error。
