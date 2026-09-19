@@ -15,8 +15,8 @@
 | 阶段 | 内容 | 依赖 | 状态 |
 |---|---|---|---|
 | 0 | 脚手架：lakefile、CI、`Z2 L` 索引层、`S^(B)`、`Θ`、性质 1–4、粗界、`≺`、谱论 | — | **草稿已写，未编译**（T1） |
-| 1 | §8.1：`(eq_symbol)`、`(eq_Fourier_rep)`、`(eq_qdef)`、`(eq_qcomp)`、`(eq_elliptic)` | 0 | 椭圆性草稿已写；`(eq_qcomp)` 待做（T2） |
-| 2 | §8.2 的 **κL < 1** 区制 + §8.3 的 **Case 2**：只用椭圆性 + 格点求和 `Σ_{p≠0}|p|_*^{-2} ≲ L² log L` | 1 | 未开始（T3、T4） |
+| 1 | §8.1：`(eq_symbol)`、`(eq_Fourier_rep)`、`(eq_qdef)`、`(eq_qcomp)`、`(eq_elliptic)` | 0 | **完成**（T1 + T2 均已 CI 绿，0 sorry） |
+| 2 | §8.2 的 **κL < 1** 区制 + §8.3 的 **Case 2**：只用椭圆性 + 格点求和 `Σ_{p≠0}|p|_*^{-2} ≲ L² log L` | 1 | 未开始（T14、T15、T16 可立刻开工 → T3 → T4 ∥ T5） |
 | 3 | §8.2 的 **κL ≥ 1** 区制：无穷体积核 `(eq_Kinf)`、围道平移 `(eq_shifted_lower)`、`(eq_Kinf_bound)`、Poisson 求和 | 1 | 未开始（T7–T9），**最硬** |
 | 4 | §8.3 的 Case 1：dyadic 分解 `(eq_dyadic)` 与两个求和 `(eq_dyadic_sum1/2)` | 3 | 未开始（T10） |
 | 5 | §2 的模型层：`S = S^(B) ⊗ S_W` on `Z_{WL}^2`、`I^(2)_a`、`E_a`、`(deri_Thxi)` | 0 | 未开始（T5、T6） |

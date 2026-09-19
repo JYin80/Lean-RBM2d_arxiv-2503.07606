@@ -49,7 +49,7 @@ Cowork 侧应当做的是：规划、开工单、读论文、维护蓝图、以�
 
 ---
 
-## 2026-09-19 10:40 UTC：T2 草稿落地 + 队列补到 7 条（Cowork 心跳）
+## 2026-09-19 10:50 UTC：**T2 完成**（CI 绿）+ 队列补到 7 条（Cowork 心跳）
 
 CI：`Lean Action CI #12`（`2b5d11a`）**Success**。开工前 `git status` 干净、与 `origin/main` 同步。
 
@@ -115,7 +115,22 @@ field_simp、弃用的 `push_neg`、以及 `pstar2_nonneg` 的 `omit [NeZero L] 
 
 上面那张「不确定的地方」表里的四条战术风险，**第一轮一条都没触发**
 （错误全集中在 import），但它们在这一轮里也还没被真正执行到 —— `Momentum.lean`
-在 `Unknown constant` 之后就没往下编了。**第二轮才是它们的第一次体检。**
+在 `Unknown constant` 之后就没往下编了。
+
+### CI 第二轮：绿。**T2 完成。**
+
+`Lean Action CI #18`（`78f2459`）**Success，`lake build` exit 0**。
+`Momentum.lean` 整份文件里只剩一条风格警告（`<;>` 应作 `;`），已在 `d2923b7` 修掉。
+
+那四条战术风险**全部一次通过**，没有一条需要改：`field_simp` 的两处、
+`pstar_le_pi` 的 `nlinarith`、以及 `simp only [qsym, pstar2]` 之后的 `linarith`
+（说明 cast 的形状确实对得上）。
+
+蓝图：`def:pstar` 与 `lem:qcomp` 已补 `\leanok`（语句 + 证明），节点统计
+从 15 已形式化 / 6 可开工 变成 **17 已形式化 / 5 可开工**，工件已就地更新。
+
+`lem_propTH` 性质 5、6 的前置里，**`(eq_qcomp)` 这一格从此是定理不是猜想**。
+T3 现在只差 T15、T16 两条（都可立刻开工）。
 
 ### 队列：4 条 → 7 条
 
