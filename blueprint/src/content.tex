@@ -167,23 +167,58 @@
   inequality and needs no hypothesis on $\xi$ at all.
 \end{proof}
 
+\begin{definition}[$|p|_*$ on the lattice]\label{def:pstar}
+  \uses{def:dist}
+  \lean{RBM.pstar, RBM.pstar2}
+  On $\TL$ the frequency in coordinate $i$ is $2\pi p_i/L$, and there
+  $\operatorname{dist}(2\pi p_i/L,2\pi\mathbb Z)=2\pi\,\mathrm{zdist}(p_i)/L$
+  \emph{exactly}.  So $|p|_*$ is defined straight from the cycle distance and
+  $\operatorname{dist}(\cdot,2\pi\mathbb Z)$ is never formalized; the single
+  identity carrying the periodicity is \texttt{RBM.cos\_eq\_cos\_pstar}.
+\end{definition}
+
 \begin{lemma}[$q(p)\sim|p|_*^2$, \texttt{(eq\_qcomp)}]\label{lem:qcomp}
-  \uses{def:q}
+  \uses{def:q, def:pstar}
+  \lean{RBM.qsym_le_pstar2, RBM.pstar2_le_qsym,
+        RBM.norm_one_sub_mul_Shat_le_pstar, RBM.norm_one_sub_mul_Shat_ge_pstar}
   $q(p)\sim|p|_*^2$, where $|p|_*^2=\operatorname{dist}(p_1,2\pi\mathbb Z)^2
-  +\operatorname{dist}(p_2,2\pi\mathbb Z)^2$.
-  \emph{Work order T2.}
+  +\operatorname{dist}(p_2,2\pi\mathbb Z)^2$; equivalently
+  $|1-\xi\widehat S(p)|\sim\kappa^2+|p|_*^2$, which is the form \S8.2 and \S8.3 use.
+  \emph{Work order T2 --- drafted, awaiting a CI round; no \texttt{\textbackslash leanok}
+  until it compiles.}
+\end{lemma}
+
+\begin{lemma}[Shell counting on $\TL$]\label{lem:shells}
+  \uses{def:dist}
+  With $k(p)=\max(\mathrm{zdist}(p_1),\mathrm{zdist}(p_2))$ one has
+  $\#\{p\in\TL: k(p)=k\}\le12k+4$, and every sum over $\TL\setminus\{0\}$
+  splits into the shells $k=1,\dots,L$.  Pure \texttt{Finset} accounting: no reals.
+  \emph{Work order T15.}
+\end{lemma}
+
+\begin{lemma}[Harmonic sum]\label{lem:harmonic}
+  $\sum_{k=1}^{L}k^{-1}\le1+\log L\prec1$.
+  \emph{Work order T16.}
 \end{lemma}
 
 \begin{lemma}[Lattice sum]\label{lem:latticesum}
-  \uses{lem:qcomp}
+  \uses{lem:qcomp, lem:shells, lem:harmonic}
   $\sum_{p\in\TL\setminus\{0\}}|p|_*^{-2}\le CL^2\log L$.
   \emph{Work order T3.}
+\end{lemma}
+
+\begin{lemma}[Separating the zero mode]\label{lem:zero-mode}
+  \uses{lem:fourier}
+  In \texttt{(eq\_Fourier\_rep)} the $p=0$ term is $L^{-2}(1-\xi)^{-1}$, and in a
+  difference $K_{\xi,L}(x)-K_{\xi,L}(y)$ it cancels outright.  Both Property 5
+  and Property 6 begin with exactly this step, so it is proved once.
+  \emph{Work order T14.}
 \end{lemma}
 
 \section{Property 5: exponential decay}
 
 \begin{lemma}[Decay in the regime $\kappa L<1$]\label{lem:decay-small}
-  \uses{lem:fourier, lem:elliptic, lem:latticesum}
+  \uses{lem:fourier, lem:elliptic, lem:latticesum, lem:zero-mode}
   If $\kappa L<1$, so that $\lhat=L$, then separating the zero mode gives
   $|K_{\xi,L}(x)|\le\kappa^{-2}L^{-2}+C\log L\prec\kappa^{-2}L^{-2}$, which is
   \texttt{(prop:ThfadC)} because $|x|_L\le CL=C\lhat$.
@@ -212,7 +247,7 @@
 \section{Property 6: derivative bounds}
 
 \begin{lemma}[Case 2: $|s|_L>d/2$]\label{lem:bd-case2}
-  \uses{lem:fourier, lem:elliptic, lem:latticesum}
+  \uses{lem:fourier, lem:elliptic, lem:latticesum, lem:zero-mode}
   Both differences are $O(\log L)\prec1$, while $|s|_L/(d+1)\ge c$ and
   $|s|_L^2/(d^2+1)\ge c$.
   \emph{Work order T5.}
