@@ -21,7 +21,7 @@
 | T13 | 扫掉剩下的 linter 警告 | `Defs/Dist.lean` 等 | 空闲 | **可开工，零风险** |
 | T14 | 零模分离：把 `(eq_Fourier_rep)` 的 `p = 0` 项拎出来 | `Propagator/ZeroMode.lean`（新建） | 空闲 | **可开工**，T4/T5 共用 |
 | T15 | `max`-壳层计数 `#{p : k(p) = k} ≤ 12k + 4` | `Propagator/Shells.lean`（新建） | 空闲 | **可开工**，不碰实数 |
-| T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | 空闲 | **可开工**，独立 |
+| T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | **Cowork** | **进行中**（草稿已写，待 CI 验证） |
 
 **T1 已完成（2026-09-19）**，`lake build` exit 0、0 sorry、10 个文件全绿。
 剩下的建议顺序：**(T6 ∥ T7 ∥ T8 ∥ T13 ∥ T14 ∥ T15 ∥ T16) → T3 → (T4 ∥ T5) → 第二批。**
