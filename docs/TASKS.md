@@ -19,7 +19,7 @@
 | T11 | dyadic 分解 `(eq_dyadic)` + `(eq_dyadic_sum1/2)` | `Propagator/Dyadic.lean`（新建） | 空闲 | 第二批，待 T9 |
 | T12 | 蓝图上线 | `blueprint/src/`、GitHub 设置 | Cowork | **大部分完成**，见下 |
 | T13 | 扫掉剩下的 linter 警告 | `Defs/Dist.lean` 等 | 空闲 | **可开工，零风险** |
-| T14 | 零模分离：把 `(eq_Fourier_rep)` 的 `p = 0` 项拎出来 | `Propagator/ZeroMode.lean`（新建） | 空闲 | **可开工**，T4/T5 共用 |
+| T14 | 零模分离：把 `(eq_Fourier_rep)` 的 `p = 0` 项拎出来 | `Propagator/ZeroMode.lean`（新建） | Cowork | **进行中**（草稿待 CI） |
 | T15 | `max`-壳层计数 `#{p : k(p) = k} ≤ 12k + 4` | `Propagator/Shells.lean`（新建） | 空闲 | **可开工**，不碰实数 |
 | T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | Cowork | **完成**（CI #22 绿，0 sorry，0 warning） |
 
