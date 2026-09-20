@@ -55,7 +55,7 @@ TASK = {"lem:qcomp": "T2", "lem:latticesum": "T3", "lem:decay-small": "T4",
         "lem:zero-mode": "T14", "lem:shells": "T15", "lem:harmonic": "T16",
         "lem:bd-case2": "T5", "lem:contour": "T26+T27", "lem:periodize": "T25+T28",
         "lem:dyadic": "T19+T20+T21+T22", "lem:dyadic-case1": "T18", "lem:propTH-5": "T24+T30", "lem:propTH-6": "T23",
-        "lem:dyadic-sums": "T17", "def:model": "T7+S4", "def:stochdom": "S0",
+        "lem:dyadic-sums": "T17", "def:model": "T7 ★ 最优先", "def:stochdom": "S0",
         "lem:envelope": "S1", "lem:stein": "S2+S3", "lem:bootstrap": "S8",
         "lem:generator": "S5", "lem:bridge-prec": "S6", "lem:bridge-moment": "S7",
         "lem:gronwall": "S9", "lem:discharge": "S10"}

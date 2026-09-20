@@ -14,6 +14,7 @@
 | T16 | 调和和与 `≺` 的桥 | `Propagator/Harmonic.lean` | Cowork | **完成** |
 | T17 | 两条 dyadic 几何级数 | `Propagator/GeomSum.lean` | Cowork | **完成** |
 | T18 | `(eq_dyadic)` 接口 + §8.3 Case 1 组装 | `Propagator/Dyadic.lean` | Cowork | **完成** |
+| **T7** | §2 模型层：`S = S^(B)⊗S_W` on `Z_{WL}²`、`I^(2)_a`、`E_a` | `Defs/Model.lean` | 空闲 | **⭐ 全队最高优先级**：随机层整条线（S4→S5→S9→S10）的唯一入口，它不落地整个第四批都动不了 |
 | **T3** | 格点求和 `Σ_{p≠0}\|p\|_*^{-2} ≤ CL²log L` | `Propagator/LatticeSum.lean` | 空闲 | **可开工**，只剩把 T2/T15/T16 乘起来 |
 | **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 空闲 | **可开工**，纯实多项式不等式 |
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 空闲 | **可开工**，纯 `Finset`/`ZMod` 记账 |
@@ -23,7 +24,6 @@
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 空闲 | **可开工** |
 | **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
 | **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 空闲 | **可开工**，独立 |
-| **T7** | §2 模型层 | `Defs/Model.lean` | 空闲 | **可开工**，独立 |
 | **T8** | 数值回归测试 | `Test/Numeric.lean` | 空闲 | **可开工**，独立 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | 空闲 | 待 T3 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 空闲 | 待 T3（**全强度**） |
@@ -34,7 +34,7 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**可立刻开工、文件两两不相交的有 10 条**：T3、T19、T20、T21、T24、T25、T26、T29、T6、T7、T8。
+**可立刻开工、文件两两不相交的有 14 条**：**T7（最高优先级）**、T3、T19、T20、T21、T24、T25、T26、T29、T6、T8，以及随机层的 S0、S2、S8（见第四批）。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
 
