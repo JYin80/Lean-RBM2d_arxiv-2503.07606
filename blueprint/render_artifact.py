@@ -4,7 +4,8 @@
     python3 blueprint/render_artifact.py <repo-root> <out.html>
 
 Reads `blueprint/src/content.tex` for the node graph and `RBM2D/**/*.lean` for
-the declarations, groups the nodes by \\chapter, lays each chapter out with the
+the declarations, draws one global graph holding every node, then lays each
+\\chapter out on its own with the
 graphviz `dot` binary, and inlines the SVG.  Needs only graphviz + python3 — no
 plasTeX, no LaTeX, no WebAssembly in the output.
 
@@ -145,8 +146,47 @@ def dot_for(ch, by):
     lines.append("}")
     return "\n".join(lines)
 
-def svg_for(ch, by):
-    out = subprocess.run(["dot", "-Tsvg"], input=dot_for(ch, by), capture_output=True, text=True)
+def gshort(n):
+    """Compact label for the global graph: the part of the tag after the colon."""
+    s = n["label"].split(":", 1)[-1]
+    tag = TASK.get(n["label"])
+    return s + (f"\\n{tag}" if tag else "")
+
+def cluster_label(t):
+    return t.split("——")[0].strip()
+
+def global_dot(chapters, by):
+    """One digraph holding EVERY node of EVERY chapter, grouped by chapter.
+
+    No `→前章` stubs here: since every node is present, every `\\uses` edge is
+    drawn in full, so this is the only picture that shows the whole proof at once.
+    """
+    lines = ['digraph G { graph [bgcolor=transparent,rankdir=TB,nodesep=.22,ranksep=.38];',
+             ' node [fontname="Helvetica",fontsize=10,penwidth=1.3,margin="0.09,0.05"];',
+             ' edge [color="#aeb6bf",penwidth=1.0,arrowsize=.6];']
+    for i, ch in enumerate(chapters):
+        if not ch["nodes"]:
+            continue
+        lines.append(f' subgraph cluster_{i} {{')
+        lines.append(f'  label="{cluster_label(ch["title"])}"; labelloc="t"; labeljust="l";')
+        lines.append('  fontname="Helvetica"; fontsize=11; fontcolor="#6d7883";')
+        lines.append('  color="#ccd4dc"; style="rounded"; penwidth=1.1; margin=10;')
+        for n in ch["nodes"]:
+            f, st, tc = C[n["status"]]
+            shape = 'shape=box,style="rounded,filled"' if n["kind"] == "definition" else 'shape=ellipse,style=filled'
+            lines.append(f'  "{n["label"]}" [{shape},fillcolor="{f}",color="{st}",'
+                         f'fontcolor="{tc}",label="{gshort(n)}"];')
+        lines.append(' }')
+    for ch in chapters:
+        for n in ch["nodes"]:
+            for u in n["uses"]:
+                if u in by:
+                    lines.append(f' "{u}" -> "{n["label"]}";')
+    lines.append("}")
+    return "\n".join(lines)
+
+def svg_from_dot(src):
+    out = subprocess.run(["dot", "-Tsvg"], input=src, capture_output=True, text=True)
     if out.returncode:
         raise SystemExit(out.stderr)
     s = out.stdout[out.stdout.index("<svg"):]
@@ -154,6 +194,18 @@ def svg_for(ch, by):
     s = re.sub(r'width="\d+pt"\s+height="\d+pt"\s*', "", s, count=1)
     w = re.search(r'viewBox="0\.00 0\.00 ([\d.]+)', s)
     return s, float(w.group(1)) if w else 800.0
+
+def svg_for(ch, by):
+    return svg_from_dot(dot_for(ch, by))
+
+def figure_html(cap, svg, w):
+    return (f'<figure class="graph" data-basew="{w:.0f}"><div class="gbar">'
+            f'<span class="gcap">{html.escape(cap)}</span>'
+            '<div class="gtools"><button type="button" data-act="out" aria-label="缩小">&minus;</button>'
+            '<button type="button" data-act="fit">适应宽度</button>'
+            '<button type="button" data-act="in" aria-label="放大">+</button>'
+            '<span class="gpct" aria-live="polite">100%</span></div></div>'
+            f'<div class="plate">{svg}</div></figure>')
 
 def main(root, out):
     root = pathlib.Path(root)
@@ -170,18 +222,23 @@ def main(root, out):
     thms = len(decls)
 
     body = []
+    gsvg, gw = svg_from_dot(global_dot(chapters, by))
+    # graphviz writes "-" as "&#45;" inside <title>, so unescape before checking
+    seen = set(re.findall(r"<title>([^<]*)</title>", gsvg.replace("&#45;", "-")))
+    missing = [n["label"] for n in allnodes if n["label"] not in seen]
+    if missing:
+        raise SystemExit("global graph is missing nodes: " + ", ".join(missing))
+    edges = sum(1 for n in allnodes for u in n["uses"] if u in by)
+    body.append('<h2>全局依赖图</h2>')
+    body.append('<p class="sub">下面各章的每一个节点都在这张图里，按章分组；箭头方向是'
+                '“被用到的引理 → 用到它的结论”。节点上的 T□ 是 <code>docs/TASKS.md</code> 里的工单号。</p>')
+    body.append(figure_html(f'全局 · {len(allnodes)} 个节点 · {edges} 条依赖', gsvg, gw))
     for ch in chapters:
         if not ch["nodes"]:
             continue
         svg, w = svg_for(ch, by)
         body.append(f'<h2>{html.escape(ch["title"])}</h2>')
-        body.append(f'<figure class="graph" data-basew="{w:.0f}"><div class="gbar">'
-                    f'<span class="gcap">{html.escape(ch["title"])} · {len(ch["nodes"])} 个节点</span>'
-                    '<div class="gtools"><button type="button" data-act="out" aria-label="缩小">&minus;</button>'
-                    '<button type="button" data-act="fit">适应宽度</button>'
-                    '<button type="button" data-act="in" aria-label="放大">+</button>'
-                    '<span class="gpct" aria-live="polite">100%</span></div></div>'
-                    f'<div class="plate">{svg}</div></figure>')
+        body.append(figure_html(f'{ch["title"]} · {len(ch["nodes"])} 个节点', svg, w))
         rows = []
         for n in ch["nodes"]:
             st = n["status"]

@@ -17,3 +17,5 @@ blueprint/print/
 blueprint/web/
 docs/*
 !docs/*.md
+
+__pycache__/
