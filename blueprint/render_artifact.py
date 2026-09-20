@@ -28,10 +28,13 @@ C = {  # fill, stroke, text
   "blocked": ("#ffffff", "#b9c1c9", "#55606b"),
   "cited":   ("#fdf3e0", "#d8b877", "#6b4e16"),
 }
+DECL = re.compile(r"^(?:noncomputable\s+)?(theorem|def|abbrev|lemma|structure)\s+([A-Za-z_][\w.'!?₀-₉]*)")
+
 PILL = {"done": "已证", "defn": "已形式化", "ready": "可开工", "blocked": "待解锁", "cited": "引用论文"}
 
 # Chinese chapter headings, keyed by a distinctive fragment of the \chapter{} title.
-CHAPTER = [("Section 8", "第 2 章 · §8 —— Lemma lem_propTH 的证明"),
+CHAPTER = [("replacement stack", "第 4 章 · 随机层 —— Itô 替代栈"),
+           ("Section 8", "第 2 章 · §8 —— Lemma lem_propTH 的证明"),
            ("model and the propagator", "第 1 章 · 模型与传播子 Θ_ξ"),
            ("Delocalization", "第 3 章 · 退局域化"),
            ("Not formalized", "不形式化的部分")]
@@ -45,14 +48,17 @@ def chapter_title(raw):
 def clean(t):
     t = re.sub(r"\\texorpdfstring\{(.*?)\}\{.*?\}", r"\1", t, flags=re.S)
     t = re.sub(r"\\(eqref|ref|texttt|emph|text|mathrm)\{([^{}]*)\}", r"\2", t)
-    return t.replace("\\", "").replace("$", "").replace("{", "").replace("}", "").strip()
+    return t.replace("\\", "").replace("$", "").replace("{", "").replace("}", "").replace('"', "").strip()
 
 # which work order each not-yet-formalized node belongs to
 TASK = {"lem:qcomp": "T2", "lem:latticesum": "T3", "lem:decay-small": "T4",
         "lem:zero-mode": "T14", "lem:shells": "T15", "lem:harmonic": "T16",
         "lem:bd-case2": "T5", "lem:contour": "T26+T27", "lem:periodize": "T25+T28",
         "lem:dyadic": "T19+T20+T21+T22", "lem:dyadic-case1": "T18", "lem:propTH-5": "T24+T30", "lem:propTH-6": "T23",
-        "lem:dyadic-sums": "T17"}
+        "lem:dyadic-sums": "T17", "def:model": "T7+S4", "def:stochdom": "S0",
+        "lem:envelope": "S1", "lem:stein": "S2+S3", "lem:bootstrap": "S8",
+        "lem:generator": "S5", "lem:bridge-prec": "S6", "lem:bridge-moment": "S7",
+        "lem:gronwall": "S9", "lem:discharge": "S10"}
 
 def parse(tex):
     chapters, cur = [], None
@@ -214,17 +220,32 @@ def figure_html(cap, svg, w):
 def main(root, out):
     root = pathlib.Path(root)
     tex = (root / "blueprint/src/content.tex").read_text(encoding="utf-8")
+    # Fully-qualified declaration names, tracking `namespace`/`end` so that a tag
+    # like RBM.Gauss.norm_green_le resolves exactly and a typo still fails.
+    def qualified(text):
+        stack, out = [], []
+        for ln in text.split("\n"):
+            if ln.startswith("namespace "):
+                stack.append(ln.split()[1].strip())
+            elif ln.startswith("end ") and stack and ln.split()[1].strip() == stack[-1]:
+                stack.pop()
+            else:
+                m = DECL.match(ln)
+                if m:
+                    out.append((m.group(1), ".".join(stack + [m.group(2)])))
+        return out
     src = "\n".join(p.read_text(encoding="utf-8") for p in root.glob("RBM2D/**/*.lean"))
     # The SET validates \lean{} tags and must accept every kind of declaration,
     # since a node may well point at a `def` (RBM.SB, RBM.shellIndex).  The
     # headline COUNT is theorems only -- `def`s are bookkeeping, not mathematics,
     # and counting them inflates the number the reader cares about.
-    found = re.findall(r"^(?:noncomputable\s+)?(theorem|def|abbrev|lemma|structure)\s+([A-Za-z_][\w.'!?₀-₉]*)", src, re.M)
+    found = [kn for p in root.glob("RBM2D/**/*.lean")
+                for kn in qualified(p.read_text(encoding="utf-8"))]
     decls = {n for _, n in found}
     n_thm = sum(1 for k, _ in found if k in ("theorem", "lemma"))
     chapters = parse(tex)
     allnodes = [n for ch in chapters for n in ch["nodes"]]
-    bad = [d for n in allnodes for d in n["lean"] if d.removeprefix("RBM.") not in decls]
+    bad = [d for n in allnodes for d in n["lean"] if d not in decls]
     if bad:
         raise SystemExit("\\lean{} tags with no declaration: " + ", ".join(bad))
     by = classify(allnodes)

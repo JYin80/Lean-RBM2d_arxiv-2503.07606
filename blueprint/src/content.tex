@@ -385,11 +385,113 @@
   $\eta\operatorname{Im}G_{xx}$.
 \end{proof}
 
+\chapter{Stochastic layer: the It\^o replacement stack}
+
+Mathlib has no It\^o calculus for matrix-valued Brownian motion, no matrix SDEs
+and no Dyson Brownian motion --- and this development needs none of them.  An
+audit of the paper (\texttt{docs/random-layer.md}) found that it never uses a
+filtration, the Markov property, a two-time joint law, or Doob: the single
+occurrence of ``filtration'' is a quantifier in the hypothesis of Lemma~5.5 and
+its proof never touches it.  The whole of \S5--\S7 therefore goes through with
+one-time marginals only, and the paper itself already writes
+$G_s=(\sqrt sH-z_s)^{-1}$.
+
+\begin{definition}[The model as a Gaussian matrix]\label{def:model}
+  $S=\SB\otimes S_W$ on $\Z_{WL}^2$, the blocks $I^{(2)}_a$ and the matrices
+  $E_a$.  The flow is $H_u:=\sqrt u\,X$ for one fixed Gaussian band matrix $X$,
+  which has the same one-time marginal as the matrix Brownian motion.
+  \emph{Work orders T7 and S4.}
+\end{definition}
+
+\begin{definition}[Stochastic domination]\label{def:stochdom}
+  Definition \texttt{stoch\_domination} (i) itself, as a statement about a
+  measure: for every $\tau,D>0$ the bad set has probability $\le N^{-D}$
+  eventually.  The deterministic \texttt{def:detdom} already in this blueprint is
+  its pointwise shadow.  \emph{Work order S0.}
+\end{definition}
+
+\begin{lemma}[The deterministic envelope]\label{lem:envelope}
+  \uses{def:Theta}
+  \lean{RBM.Gauss.norm_green_le, RBM.Gauss.norm_iteratedDeriv_green_le,
+        RBM.Gauss.abs_im_mul_norm_le_norm_sub_smul_one,
+        RBM.Gauss.iteratedDeriv_lineInverse, RBM.Gauss.norm_lineInversePow_le}\leanok
+  For Hermitian $H$ and $|\Im z|\ge\eta>0$, $\|(H-z)^{-1}\|\le\eta^{-1}$, and the
+  $k$-th derivative along a line is bounded by $k!\,\|A\|^k\eta^{-(k+1)}$.
+\end{lemma}
+\begin{proof}\leanok
+  $|\Im z|\,\|v\|\le\|(H-z)v\|$ by Cauchy--Schwarz against $v$, using that
+  $\langle v,Hv\rangle$ is real.  The derivative bound follows from
+  $\frac{d}{dt}(M+tA)^{-1}=-RAR$ iterated, giving $(-1)^kk!\,(RA)^kR$.
+  What matters downstream is that both hold on the \emph{whole space}, not on a
+  good event: that is what lets the reverse bridge dominate the bad event with no
+  mollifying cutoff.  \emph{Work order S1, closed.}
+\end{proof}
+
+\begin{lemma}[Gaussian integration by parts]\label{lem:stein}
+  Stein's identity, replacing $\omega_\alpha$ by
+  $\mathrm{Var}_\alpha\cdot\partial_\alpha$, in three layers: real scalar,
+  complex scalar, matrix.  The matrix layer goes through a resampling identity
+  (``replacing one coordinate by an independent copy does not change the
+  measure'') rather than through Fubini on a product measure; independence is
+  used at that one point only.  \emph{Work orders S2, S3.}
+\end{lemma}
+
+\begin{lemma}[Continuous induction]\label{lem:bootstrap}
+  If $\varphi$ is continuous and $\varphi\le C\Rightarrow\varphi\le B$, then
+  $\varphi\le B$.  This replaces the stopping time of the paper's Step~2, and
+  with it the only place where a stopping time enters a \emph{statement}
+  (equation \texttt{(105)}, which is then simply not stated).
+  \emph{Work order S8.}
+\end{lemma}
+
+\begin{lemma}[The generator identity]\label{lem:generator}
+  \uses{lem:envelope, lem:stein, def:model}
+  $\partial_u\,\E[\Phi(H_u)]=\tfrac12\sum_{ij}S_{ij}\,\E[\partial_{ij}\partial_{ji}\Phi(H_u)]$.
+  Differentiate under the integral, then apply Stein once per coordinate; the
+  $\sqrt u$ it produces cancels the $(2\sqrt u)^{-1}$ from the chain rule.  Past
+  this node It\^o is off the critical path.  \emph{Work order S5.}
+\end{lemma}
+
+\begin{lemma}[Bridge: moments $\Rightarrow\prec$]\label{lem:bridge-prec}
+  \uses{def:stochdom}
+  Markov's inequality, with the $\varepsilon$ quantifier outside $p$ so that the
+  conclusion holds for every $\tau>0$.  Also the time net that turns the
+  uncountable union of \texttt{def:stochdom} into $N^{C}$ net points plus a
+  deterministic Lipschitz bound.  \emph{Work order S6.}
+\end{lemma}
+
+\begin{lemma}[Bridge: $\prec\Rightarrow$ moments]\label{lem:bridge-moment}
+  \uses{def:stochdom, lem:envelope}
+  The converse, whose entire weight rests on the envelope holding globally: on
+  the bad event the quantity is bounded by $\eta^{-1}$ outright.
+  \emph{Work order S7.}
+\end{lemma}
+
+\begin{lemma}[Gr\"onwall on moments]\label{lem:gronwall}
+  \uses{lem:generator}
+  \emph{Work order S9.}
+\end{lemma}
+
+\begin{lemma}[Discharging the martingale bound]\label{lem:discharge}
+  \uses{lem:generator, lem:gronwall}
+  The hinge of the whole route: the second-order term the generator produces on
+  $|F|^{2p}$, namely $|F|^{2p-2}\sum_\alpha S_\alpha|\partial_\alpha F|^2$, is
+  \emph{verbatim} the quadratic variation on the right of the paper's
+  equation~\texttt{(108)}.  The counting checks: $\partial_{H(x,y)}$ cuts one $G$
+  edge, $S_{xy}=W^{-2}\SB_{[x][y]}$, and $W^4\cdot W^{-2}=W^2$ is the prefactor
+  of \texttt{(106)}.  So the paper's long estimate from \texttt{(125)} onwards is
+  kept untouched and only its producer changes.  The one identity the paper never
+  writes down --- $\sum_\alpha S_\alpha\,\partial_\alpha L\,\overline{\partial_\alpha L}=(E\otimes E)$
+  --- has to be proved here, and is the only genuinely new work in the stack.
+  \emph{Work order S10.}
+\end{lemma}
+
 \chapter{Not formalized}
 
-\begin{remark}[The random layer]\label{rem:random}
-  Mathlib has no It\^o calculus for matrix-valued Brownian motion, no matrix SDEs
-  and no Dyson Brownian motion.  The loop hierarchy of \S5--\S7 and the inductive
-  scheme \texttt{lem:main\_ind} are therefore out of scope; they are to be carried
-  as \texttt{axiom} interfaces if and when the logical skeleton needs them.
+\begin{remark}[What is still out of scope]\label{rem:random}
+  The combinatorial layer of \S3--\S4 (canonical partitions and non-crossing
+  pairings) is planar geometry whose formalization cost is out of proportion to
+  its value, and the two-dimensional version is not the same notion; it is taken
+  from the paper.  Everything else in \S5--\S7 is in scope through the
+  replacement stack above.
 \end{remark}
