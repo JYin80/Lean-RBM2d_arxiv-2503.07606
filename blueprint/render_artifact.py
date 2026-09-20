@@ -215,7 +215,11 @@ def main(root, out):
     root = pathlib.Path(root)
     tex = (root / "blueprint/src/content.tex").read_text(encoding="utf-8")
     src = "\n".join(p.read_text(encoding="utf-8") for p in root.glob("RBM2D/**/*.lean"))
-    decls = set(re.findall(r"^(?:noncomputable\s+)?(?:theorem|def|abbrev|lemma)\s+([A-Za-z_][\w.'!?₀-₉]*)", src, re.M))
+    # two different things: the SET is for validating \lean{} tags, the COUNT is
+    # every declaration.  Counting len(set) hid 8 declarations whose names repeat
+    # across namespaces (DetDom.add and UnifDetDom.add are both real theorems).
+    found = re.findall(r"^(?:noncomputable\s+)?(?:theorem|def|abbrev|lemma)\s+([A-Za-z_][\w.'!?₀-₉]*)", src, re.M)
+    decls = set(found)
     chapters = parse(tex)
     allnodes = [n for ch in chapters for n in ch["nodes"]]
     bad = [d for n in allnodes for d in n["lean"] if d.removeprefix("RBM.") not in decls]
@@ -223,7 +227,7 @@ def main(root, out):
         raise SystemExit("\\lean{} tags with no declaration: " + ", ".join(bad))
     by = classify(allnodes)
     counts = {k: sum(1 for n in allnodes if n["status"] == k) for k in C}
-    thms = len(decls)
+    thms = len(found)
 
     body = []
     gsvg, gw = svg_from_dot(global_dot(chapters, by))
