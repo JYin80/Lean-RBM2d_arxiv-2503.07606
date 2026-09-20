@@ -22,7 +22,7 @@
 | T14 | 零模分离：把 `(eq_Fourier_rep)` 的 `p = 0` 项拎出来 | `Propagator/ZeroMode.lean`（新建） | Cowork | **完成**（CI #25 绿，0 sorry） |
 | T15 | `max`-壳层计数 `#{p : k(p) = k} ≤ 12k + 4` | `Propagator/Shells.lean`（新建） | Cowork | **完成**（本机编译通过，0 sorry，0 warning，`#print axioms` 干净） |
 | T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | Cowork | **完成**（CI #22 绿，0 sorry，0 warning） |
-| T17 | dyadic 几何级数 `(eq_dyadic_sum1)(eq_dyadic_sum2)` | `Propagator/GeomSum.lean`（新建） | **Cowork** | **进行中**：算术地基已交草稿；两条正题（在 `r ≤ κ`、`r ≤ 1/(d+1)` 处劈开）待写 |
+| T17 | dyadic 几何级数 `(eq_dyadic_sum1)(eq_dyadic_sum2)` | `Propagator/GeomSum.lean`（新建） | Cowork | **完成**（本机编译通过，0 sorry，0 warning，`#print axioms` 干净） |
 
 **T1 已完成（2026-09-19）**，`lake build` exit 0、0 sorry、10 个文件全绿。
 剩下的建议顺序：**(T6 ∥ T7 ∥ T8 ∥ T13 ∥ T14 ∥ T15 ∥ T16) → T3 → (T4 ∥ T5) → 第二批。**
