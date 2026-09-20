@@ -129,7 +129,7 @@ def dot_for(ch, by):
     for n in ch["nodes"]:
         f, s, tc = C[n["status"]]
         shape = 'shape=box,style="rounded,filled"' if n["kind"] == "definition" else 'shape=ellipse,style=filled'
-        tag = TASK.get(n["label"])
+        tag = open_task(n)
         lbl = short(n) + (f"   {tag}" if tag else "")
         lines.append(f' "{n["label"]}" [{shape},fillcolor="{f}",color="{s}",fontcolor="{tc}",label="{lbl}"];')
         for u in n["uses"]:
@@ -149,8 +149,12 @@ def dot_for(ch, by):
 def gshort(n):
     """Compact label for the global graph: the part of the tag after the colon."""
     s = n["label"].split(":", 1)[-1]
-    tag = TASK.get(n["label"])
+    tag = open_task(n)
     return s + (f"\\n{tag}" if tag else "")
+
+def open_task(n):
+    """The work order number, but only while the node is still open."""
+    return None if n["status"] in ("done", "defn", "cited") else TASK.get(n["label"])
 
 def cluster_label(t):
     return t.split("——")[0].strip()
@@ -242,7 +246,7 @@ def main(root, out):
         rows = []
         for n in ch["nodes"]:
             st = n["status"]
-            tag = TASK.get(n["label"])
+            tag = open_task(n)
             names = " · ".join(d.removeprefix("RBM.") for d in n["lean"][:4]) + (" …" if len(n["lean"]) > 4 else "")
             side = f'<span class="pill {st}">{PILL[st]}</span>'
             side += f'<code>{html.escape(names)}</code>' if names else (f'<code>工单 {tag}</code>' if tag else "")
