@@ -14,6 +14,7 @@ import RBM2D.Propagator.Dyadic
 import RBM2D.Propagator.ZeroMode
 import RBM2D.Propagator.Harmonic
 import RBM2D.Delocalization
+import RBM2D.Gauss.Envelope
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms
