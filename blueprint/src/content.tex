@@ -336,10 +336,30 @@
   \emph{Work order T17, closed.}
 \end{proof}
 
+\begin{lemma}[Case 1 of the derivative bounds, given \texttt{(eq\_dyadic)}]\label{lem:dyadic-case1}
+  \uses{lem:dyadic-sums, lem:zero-mode, lem:kappa-basic}
+  \lean{RBM.DyadicDecomp, RBM.norm_Theta_fd1_le, RBM.norm_Theta_fd2_le,
+        RBM.norm_Theta_fd1_le_paper, RBM.norm_Theta_fd2_le_paper}\leanok
+  Carrying \texttt{(eq\_dyadic)} as the interface \texttt{DyadicDecomp} --- a
+  \texttt{structure} field, never an \texttt{axiom} --- Case 1 of
+  \texttt{(prop:BD1)} and \texttt{(prop:BD2)} is already a theorem: sum the
+  per-annulus estimate against the two dyadic sums.
+\end{lemma}
+\begin{proof}\leanok
+  The zero mode cancels in both differences, so the difference is the sum over
+  annuli; bound each by the interface and sum with \texttt{lem:dyadic-sums}.
+  The paper's second right-hand term is recovered from $\kappa\lhat\le1$.
+  \emph{Work order T18, closed.}
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:elliptic}
-  $|\nabla^mK_r(x)|\le C_M\,r^{m+2}(\kappa^2+r^2)^{-1}(1+r|x|_L)^{-M}$, $m=0,1,2$.
-  \emph{Work order T11.}
+  The per-annulus estimate itself, which produces a \texttt{DyadicDecomp}.  The
+  only thing Mathlib genuinely lacks here is a scale-uniform derivative bound for
+  a cutoff: \texttt{ContDiffBump} carries no bound on \texttt{iteratedFDeriv}.
+  Split into an explicit smoothstep (T19), periodic summation by parts (T20),
+  the multiplier's difference bound (T21) and the assembly (T22); T19--T21 are
+  independent of each other.
 \end{lemma}
 
 \begin{lemma}[Property 6, \texttt{(prop:BD1)}--\texttt{(prop:BD2)}]\label{lem:propTH-6}

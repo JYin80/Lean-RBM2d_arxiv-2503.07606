@@ -50,8 +50,8 @@ def clean(t):
 # which work order each not-yet-formalized node belongs to
 TASK = {"lem:qcomp": "T2", "lem:latticesum": "T3", "lem:decay-small": "T4",
         "lem:zero-mode": "T14", "lem:shells": "T15", "lem:harmonic": "T16",
-        "lem:bd-case2": "T5", "lem:contour": "T9", "lem:periodize": "T10",
-        "lem:dyadic": "T11", "lem:propTH-5": "T4+T10", "lem:propTH-6": "T5+T11",
+        "lem:bd-case2": "T5", "lem:contour": "T26+T27", "lem:periodize": "T25+T28",
+        "lem:dyadic": "T19+T20+T21+T22", "lem:dyadic-case1": "T18", "lem:propTH-5": "T24+T30", "lem:propTH-6": "T23",
         "lem:dyadic-sums": "T17"}
 
 def parse(tex):
