@@ -61,11 +61,13 @@ theorem natCast_sub_val (u : ZMod L) : ((L - u.val : ℕ) : ZMod L) = -u := by
   rw [natCast_val_self, ZMod.natCast_self] at hsum
   linear_combination hsum
 
+omit [NeZero L] in
 /-- `zdist` is a `min`, so it is one of its two arguments.  Having this as a
 disjunction of plain naturals is what lets `omega` finish every count below. -/
 theorem zdist_eq_val_or (u : ZMod L) : zdist L u = u.val ∨ zdist L u = L - u.val :=
   min_choice _ _
 
+omit [NeZero L] in
 theorem zdist_le_val (u : ZMod L) : zdist L u ≤ u.val :=
   min_le_left _ _
 
@@ -123,6 +125,7 @@ variable (L : ℕ) [NeZero L]
 what the lattice sum of Section 8.2 is grouped by. -/
 def shellIndex (p : Z2 L) : ℕ := max (zdist L p.1) (zdist L p.2)
 
+omit [NeZero L] in
 @[simp] theorem shellIndex_zero : shellIndex L (0 : Z2 L) = 0 := by
   simp [shellIndex]
 
@@ -158,7 +161,9 @@ theorem card_shell_le (k : ℕ) :
         ((Finset.univ.filter (fun u : ZMod L => zdist L u ≤ k)) ×ˢ
           (Finset.univ.filter (fun u : ZMod L => zdist L u = k))) := by
     intro p hp
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, shellIndex] at hp
+    have hk : max (zdist L p.1) (zdist L p.2) = k := by
+      have h := (Finset.mem_filter.mp hp).2
+      rwa [shellIndex] at h
     simp only [Finset.mem_union, Finset.mem_product, Finset.mem_filter, Finset.mem_univ,
       true_and]
     rcases (by omega : (zdist L p.1 = k ∧ zdist L p.2 ≤ k) ∨
@@ -202,12 +207,14 @@ theorem sum_erase_zero_eq_sum_shells (f : Z2 L → ℝ) :
     rw [Finset.mem_Icc] at hk
     refine Finset.sum_congr ?_ (fun _ _ => rfl)
     ext p
-    simp only [Finset.mem_filter, Finset.mem_erase, Finset.mem_univ, true_and]
     constructor
-    · exact fun h => h.2
-    · refine fun h => ⟨?_, h⟩
+    · intro hp
+      exact Finset.mem_filter.mpr ⟨Finset.mem_univ p, (Finset.mem_filter.mp hp).2⟩
+    · intro hp
+      have hs : shellIndex L p = k := (Finset.mem_filter.mp hp).2
+      refine Finset.mem_filter.mpr ⟨Finset.mem_erase.mpr ⟨?_, Finset.mem_univ p⟩, hs⟩
       intro hp0
-      rw [hp0, shellIndex_zero] at h
+      rw [hp0, shellIndex_zero] at hs
       omega
   rw [← Finset.sum_fiberwise_of_maps_to hmaps f]
   exact Finset.sum_congr rfl hfilter

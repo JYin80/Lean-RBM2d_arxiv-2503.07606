@@ -29,6 +29,7 @@ variable (L : ℕ) [NeZero L]
 /-- Graph distance from `u` to `0` on the cycle `ZMod L`. -/
 def zdist (u : ZMod L) : ℕ := min u.val (L - u.val)
 
+omit [NeZero L] in
 @[simp] theorem zdist_zero : zdist L 0 = 0 := by
   simp [zdist]
 
@@ -44,6 +45,7 @@ theorem zdist_eq_zero_iff {u : ZMod L} : zdist L u = 0 ↔ u = 0 := by
   · rintro rfl
     simp
 
+omit [NeZero L] in
 theorem ne_zero_of_zdist_ne_zero {u : ZMod L} (h : zdist L u ≠ 0) : u ≠ 0 := by
   intro hu
   rw [hu, zdist_zero] at h
@@ -64,6 +66,7 @@ theorem zdist_add_le (u v : ZMod L) : zdist L (u + v) ≤ zdist L u + zdist L v 
     simp only [zdist, hadd]
     omega
 
+omit [NeZero L] in
 theorem zdist_one_le (hL : 3 ≤ L) : zdist L (1 : ZMod L) ≤ 1 := by
   have hval : (1 : ZMod L).val = 1 := by
     have : ((1 : ℕ) : ZMod L).val = 1 := ZMod.val_cast_of_lt (by omega)
@@ -77,7 +80,7 @@ theorem zdist_neg_one_le (hL : 3 ≤ L) : zdist L (-1 : ZMod L) ≤ 1 := by
     have : ((1 : ℕ) : ZMod L).val = 1 := ZMod.val_cast_of_lt (by omega)
     simpa using this
   have hneg : (-1 : ZMod L).val = L - 1 := by
-    rw [ZMod.neg_val, if_neg h1, hval]
+    rw [ZMod.neg_val, ite_eq_right h1, hval]
   simp only [zdist, hneg]
   omega
 
@@ -90,6 +93,7 @@ variable (L : ℕ) [NeZero L]
 /-- The periodic `L^1` norm on `Z_L^2`, written `|x|_L` in Section 8. -/
 def zdist2 (u : Z2 L) : ℕ := zdist L u.1 + zdist L u.2
 
+omit [NeZero L] in
 @[simp] theorem zdist2_zero : zdist2 L (0 : Z2 L) = 0 := by
   simp [zdist2]
 
@@ -122,7 +126,7 @@ theorem zdist2_le_one_of_mem_sbSupport (hL : 3 ≤ L) {u : Z2 L} (h : u ∈ sbSu
   · rw [h]; show zdist L 0 + zdist L (-1) ≤ 1; simp only [zdist_zero]; omega
 
 theorem sbKernel_eq_zero (hL : 3 ≤ L) {u : Z2 L} (h : 1 < zdist2 L u) : sbKernel L u = 0 := by
-  rw [sbKernel, if_neg]
+  rw [sbKernel, ite_eq_right]
   intro hmem
   exact absurd (zdist2_le_one_of_mem_sbSupport L hL hmem) (by omega)
 

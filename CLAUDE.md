@@ -47,6 +47,35 @@ lake build
 
 Mathlib 源码在 `.lake/packages/mathlib/Mathlib/` —— 找 API 就 grep 这里。
 
+### Cowork 侧也有编译器了（2026-09-20）
+
+在此之前 Cowork 只能「写 → 等 push → 读 CI」，一轮十几分钟，这是它产出慢的主因。
+现在那个 Linux 沙箱 VM 里已经能跑 `lean`，一轮 **1–3 秒**：
+
+```bash
+# 一次性装好（VM 是 aarch64，$HOME 在 mnt/ 外面，用户看不到，会话结束即消失）
+curl -sSL -C - -o ~/tc/lean.zip \
+  https://github.com/leanprover/lean4/releases/download/v4.34.0/lean-4.34.0-linux_aarch64.zip
+python3 -c "import zipfile;zipfile.ZipFile('$HOME/tc/lean.zip').extractall('$HOME/tc')"
+# 只把 ../RBM1D 已编译好的四类产物拷到本地盘（约 6 GB）：
+#   *.olean  *.olean.server  *.olean.private  *.ir  *.ir.sig
+# 直接用 mnt/ 下的会「Too many open files」——桥接挂载扛不住 import Mathlib 的并发句柄数
+```
+
+要点：
+
+- **`ulimit -n 65536`**，否则 `import Mathlib` 直接挂。
+- 不用 `lake`，直接 `lean -o <out>.olean <file>.lean`，`LEAN_PATH` 指到
+  `~/pkgs/*` 加自己的 `~/build`。按依赖序编，全仓 14 个文件约 **23 秒**。
+- 输出写 `~/build`，**不要写进用户的文件夹**。
+- 判红看 `": error:"`，别看 stderr 非空 —— 警告也走 stderr。
+- 磁盘只有 9.8 G，Mathlib 那六类产物占 5.6 G，删掉 toolchain 里的 `*.a`（链接用，
+  类型检查不需要）能腾出 0.46 G。
+- 脚本落在 `~/build.sh`（VM 本地，不进版本库）。**这套东西每个会话都要重装一次。**
+
+CI 仍然是唯一的权威（那边是 `lake build`，会查到本机 `LEAN_PATH` 拼法掩盖不了的问题），
+但本机这一轮把「名字猜错、tactic 不收敛」这类错误在 push 之前就清掉了。
+
 ## 构建回路
 
 ```bash

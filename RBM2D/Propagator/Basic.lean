@@ -40,6 +40,7 @@ section Norm
 
 variable (L : ℕ) [NeZero L]
 
+omit [NeZero L] in
 theorem nnnorm_sbKernel (u : Z2 L) :
     ‖sbKernel L u‖₊ = if u ∈ sbSupport L then (5 : ℝ≥0)⁻¹ else 0 := by
   rw [sbKernel]

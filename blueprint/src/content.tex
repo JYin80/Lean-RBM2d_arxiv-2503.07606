@@ -214,12 +214,22 @@
 \begin{lemma}[Shell counting on $\TL$]\label{lem:shells}
   \uses{def:dist}
   \lean{RBM.shellIndex, RBM.card_filter_zdist_eq_le, RBM.card_filter_zdist_le_le,
-        RBM.card_shell_le, RBM.sum_erase_zero_eq_sum_shells}
+        RBM.card_shell_le, RBM.sum_erase_zero_eq_sum_shells}\leanok
   With $k(p)=\max(\mathrm{zdist}(p_1),\mathrm{zdist}(p_2))$ one has
   $\#\{p\in\TL: k(p)=k\}\le12k+4$, and every sum over $\TL\setminus\{0\}$
   splits into the shells $k=1,\dots,L$.  Pure \texttt{Finset} accounting: no reals.
-  \emph{Work order T15, drafted; no \texttt{\textbackslash leanok} until CI is green.}
 \end{lemma}
+\begin{proof}\leanok
+  A point of the shell has one coordinate at periodic distance exactly $k$ and
+  the other at distance at most $k$, so the shell is covered by two products
+  sphere $\times$ ball.  The sphere has at most two points because
+  $\min(u.\mathrm{val},L-u.\mathrm{val})=k$ pins $u.\mathrm{val}$ to $k$ or to
+  $L-k$; the ball has at most $2k+1$ because its points are the representatives
+  $0,\dots,k$ together with $-1,\dots,-k$.  Hence $\le8k+4$.  The fibrewise
+  rewriting is \texttt{Finset.sum\_fiberwise\_of\_maps\_to}, whose hypothesis is
+  exactly $k(p)\in[1,L]$ for $p\ne0$.
+  \emph{Work order T15, closed.}
+\end{proof}
 
 \begin{lemma}[Harmonic sum]\label{lem:harmonic}
   \uses{def:detdom}

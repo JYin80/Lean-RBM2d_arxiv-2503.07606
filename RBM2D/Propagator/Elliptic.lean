@@ -181,6 +181,7 @@ theorem kappa_pos {ξ : ℂ} (hξ : ‖ξ‖ < 1) : 0 < kappa ξ := by
 theorem kappa_sq (ξ : ℂ) : (kappa ξ) ^ 2 = ‖(1 : ℂ) - ξ‖ :=
   Real.sq_sqrt (norm_nonneg _)
 
+omit [NeZero L] in
 theorem ellhat_pos {ξ : ℂ} (hL : 3 ≤ L) (hξ : ‖ξ‖ < 1) : 0 < ellhat L ξ := by
   have h1 : (0 : ℝ) < (kappa ξ)⁻¹ := inv_pos.mpr (kappa_pos hξ)
   have h2 : (0 : ℝ) < (L : ℝ) := by
@@ -188,6 +189,7 @@ theorem ellhat_pos {ξ : ℂ} (hL : 3 ≤ L) (hξ : ‖ξ‖ < 1) : 0 < ellhat L
     exact_mod_cast this
   exact lt_min h1 h2
 
+omit [NeZero L] in
 /-- `κ ℓ̂(ξ) ≤ 1`, used throughout Section 8.3. -/
 theorem kappa_mul_ellhat_le_one {ξ : ℂ} (hξ : ‖ξ‖ < 1) : kappa ξ * ellhat L ξ ≤ 1 := by
   have hk : 0 < kappa ξ := kappa_pos hξ
@@ -206,12 +208,14 @@ noncomputable def qsym (p : Z2 L) : ℝ :=
   2 / 5 * ((1 - Real.cos (2 * Real.pi * p.1.val / L))
     + (1 - Real.cos (2 * Real.pi * p.2.val / L)))
 
+omit [NeZero L] in
 theorem qsym_nonneg (p : Z2 L) : 0 ≤ qsym L p := by
   have h1 := Real.cos_le_one (2 * Real.pi * p.1.val / L)
   have h2 := Real.cos_le_one (2 * Real.pi * p.2.val / L)
   simp only [qsym]
   linarith
 
+omit [NeZero L] in
 theorem qsym_le (p : Z2 L) : qsym L p ≤ 8 / 5 := by
   have h1 := Real.neg_one_le_cos (2 * Real.pi * p.1.val / L)
   have h2 := Real.neg_one_le_cos (2 * Real.pi * p.2.val / L)
