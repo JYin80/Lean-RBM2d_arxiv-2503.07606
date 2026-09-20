@@ -243,14 +243,23 @@
 \begin{lemma}[Separating the zero mode]\label{lem:zero-mode}
   \uses{lem:fourier}
   \lean{RBM.Shat_zero, RBM.chr_zero_left, RBM.norm_chr,
-        RBM.Theta_apply_eq_zero_mode_add, RBM.Theta_apply_sub_eq_erase_sum}
+        RBM.Theta_apply_eq_zero_mode_add, RBM.Theta_apply_sub_eq_erase_sum}\leanok
   In \texttt{(eq\_Fourier\_rep)} the $p=0$ term is $L^{-2}(1-\xi)^{-1}$, because
   $\hat S(0)=1$ and $e_0\equiv1$; in a difference $K_{\xi,L}(x)-K_{\xi,L}(y)$ it
   cancels outright.  Both Property 5 and Property 6 begin with exactly this step,
   so it is proved once.  The companion $\|e_p(u)\|=1$ lives here too, so that
   neither of the two consumers has to re-derive it.
-  \emph{Work order T14, drafted; no \texttt{\textbackslash leanok} until CI is green.}
 \end{lemma}
+\begin{proof}\leanok
+  $\hat S(0)=1$ is the five-point average of $e_0\equiv1$, so the $p=0$ summand of
+  \texttt{(eq\_Fourier\_rep)} is $L^{-2}(1-\xi)^{-1}$ and the rest is a sum over
+  $\TL\setminus\{0\}$ (\texttt{Theta\_apply\_eq\_zero\_mode\_add}).  Subtracting two
+  such expansions cancels it (\texttt{Theta\_apply\_sub\_eq\_erase\_sum}); in Lean the
+  cancellation is \texttt{Finset.sum\_erase} rather than a limit, which is why the
+  whole step stays algebraic.  $\|e_p(u)\|=1$ comes from
+  \texttt{ZMod.stdAddChar} being unitary.
+  \emph{Work order T14, closed by CI \#25.}
+\end{proof}
 
 \section{Property 5: exponential decay}
 
