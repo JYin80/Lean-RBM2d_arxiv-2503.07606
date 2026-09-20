@@ -219,7 +219,7 @@ def main(root, out):
     # since a node may well point at a `def` (RBM.SB, RBM.shellIndex).  The
     # headline COUNT is theorems only -- `def`s are bookkeeping, not mathematics,
     # and counting them inflates the number the reader cares about.
-    found = re.findall(r"^(?:noncomputable\s+)?(theorem|def|abbrev|lemma)\s+([A-Za-z_][\w.'!?₀-₉]*)", src, re.M)
+    found = re.findall(r"^(?:noncomputable\s+)?(theorem|def|abbrev|lemma|structure)\s+([A-Za-z_][\w.'!?₀-₉]*)", src, re.M)
     decls = {n for _, n in found}
     n_thm = sum(1 for k, _ in found if k in ("theorem", "lemma"))
     chapters = parse(tex)
