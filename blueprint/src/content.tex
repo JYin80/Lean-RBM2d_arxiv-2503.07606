@@ -213,10 +213,12 @@
 
 \begin{lemma}[Shell counting on $\TL$]\label{lem:shells}
   \uses{def:dist}
+  \lean{RBM.shellIndex, RBM.card_filter_zdist_eq_le, RBM.card_filter_zdist_le_le,
+        RBM.card_shell_le, RBM.sum_erase_zero_eq_sum_shells}
   With $k(p)=\max(\mathrm{zdist}(p_1),\mathrm{zdist}(p_2))$ one has
   $\#\{p\in\TL: k(p)=k\}\le12k+4$, and every sum over $\TL\setminus\{0\}$
   splits into the shells $k=1,\dots,L$.  Pure \texttt{Finset} accounting: no reals.
-  \emph{Work order T15.}
+  \emph{Work order T15, drafted; no \texttt{\textbackslash leanok} until CI is green.}
 \end{lemma}
 
 \begin{lemma}[Harmonic sum]\label{lem:harmonic}
