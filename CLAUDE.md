@@ -129,6 +129,14 @@ CI 回路的用处是让 Cowork 写完的东西不至于原封不动地丢给对
 2. **git index.lock 争用** —— 撞到就等几秒重试。
 3. **绝不用 `git add -A`** —— 只按文件名 `git add` 自己的那几个。
 4. **`build.log` 是共用的** —— 读日志时按文件名过滤自己那部分。
+5. **push 归 Claude Code**。Cowork 跑在一个沙箱 Linux VM 里，只挂载了这个文件夹，
+   没有 keychain / `~/.ssh` / `gh`，`git push` 必定得到
+   `could not read Username for 'https://github.com'`。所以 Cowork 只提交不推送。
+   **Claude Code 每次进这个仓库，第一件事和最后一件事都是 `git push`** ——
+   先 `git log --oneline origin/main..HEAD` 看 Cowork 攒了什么，推掉再开工；
+   收工前再推一次。不要让未推的提交跨会话累积，CI 看不到的代码等于没写。
+6. **提交身份统一为 `Jun Yin <321276894+JYin80@users.noreply.github.com>`**
+   （已写进 `.git/config` 的 local 配置）。两边都不要用 `-c user.name=...` 覆盖它。
 
 ### 常设授权
 
