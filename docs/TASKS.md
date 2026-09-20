@@ -6,23 +6,37 @@
 
 | # | 任务 | 文件 | 认领 | 状态 |
 |---|---|---|---|---|
-| T1 | **把第一批草稿编译通过** | `RBM2D/**`（全部） | Cowork | **完成**（CI 绿，0 sorry） |
-| T2 | `(eq_qcomp)`：`q(p) ≍ \|p\|²_*` | `Propagator/Momentum.lean`（新建） | Cowork | **完成**（CI #18 绿，0 sorry） |
-| T3 | 格点求和 `Σ_{p≠0} \|p\|_*^{-2} ≤ C L² log L`（**现在只剩组装**） | `Propagator/LatticeSum.lean`（新建） | 空闲 | **可开工**（T2、T15、T16 全部完成，只剩把三条乘起来） |
-| T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean`（新建） | 空闲 | 待 T3 |
-| T5 | 性质 6 的 Case 2（`\|s\|_L > d/2`） | `Propagator/FiniteDiff.lean`（新建） | 空闲 | 待 T3 |
-| T6 | `(deri_Thxi)`：`∂_ξ Θ = Θ S Θ` | `Propagator/Deriv.lean`（新建） | 空闲 | **可开工**，与 T2–T5 完全独立 |
-| T7 | §2 模型层：`S = S^(B) ⊗ S_W`、`I^(2)_a`、`E_a` | `Defs/Model.lean`（新建） | 空闲 | **可开工**，独立 |
-| T8 | 数值回归测试（`L = 3`，`ξ = 1/2`，在 ℚ 上） | `Test/Numeric.lean`（新建） | 空闲 | **可开工**，独立 |
-| T9 | 无穷体积核 `(eq_Kinf)` + 围道平移 `(eq_shifted_lower)` | `Propagator/Contour.lean`（新建） | 空闲 | **第二批**，最硬 |
-| T10 | 周期化 `K_{ξ,L} = Σ_n K_{ξ,∞}(·+nL)` | `Propagator/Periodize.lean`（新建） | 空闲 | 第二批，待 T9 |
-| T11 | dyadic 分解 `(eq_dyadic)` + `(eq_dyadic_sum1/2)` | `Propagator/Dyadic.lean`（新建） | 空闲 | 第二批，待 T9 |
-| T12 | 蓝图上线 | `blueprint/src/`、GitHub 设置 | Cowork | **大部分完成**，见下 |
-| T13 | 扫掉剩下的 linter 警告 | `Defs/Dist.lean` 等 | Cowork | **完成**（全仓 0 warning） |
-| T14 | 零模分离：把 `(eq_Fourier_rep)` 的 `p = 0` 项拎出来 | `Propagator/ZeroMode.lean`（新建） | Cowork | **完成**（CI #25 绿，0 sorry） |
-| T15 | `max`-壳层计数 `#{p : k(p) = k} ≤ 12k + 4` | `Propagator/Shells.lean`（新建） | Cowork | **完成**（本机编译通过，0 sorry，0 warning，`#print axioms` 干净） |
-| T16 | 调和和 `Σ_{k≤L} 1/k ≤ 1 + log L` 与 `≺ 1` 的桥 | `Propagator/Harmonic.lean`（新建） | Cowork | **完成**（CI #22 绿，0 sorry，0 warning） |
-| T17 | dyadic 几何级数 `(eq_dyadic_sum1)(eq_dyadic_sum2)` | `Propagator/GeomSum.lean`（新建） | Cowork | **完成**（本机编译通过，0 sorry，0 warning，`#print axioms` 干净） |
+| T1 | 第一批草稿编译通过 | `RBM2D/**` | Cowork | **完成** |
+| T2 | `(eq_qcomp)`：`q(p) ≍ \|p\|²_*` | `Propagator/Momentum.lean` | Cowork | **完成** |
+| T13 | 扫掉 linter 警告 | 多文件 | Cowork | **完成**（全仓 0 warning） |
+| T14 | 零模分离 | `Propagator/ZeroMode.lean` | Cowork | **完成** |
+| T15 | `max`-壳层计数 | `Propagator/Shells.lean` | Cowork | **完成** |
+| T16 | 调和和与 `≺` 的桥 | `Propagator/Harmonic.lean` | Cowork | **完成** |
+| T17 | 两条 dyadic 几何级数 | `Propagator/GeomSum.lean` | Cowork | **完成** |
+| T18 | `(eq_dyadic)` 接口 + §8.3 Case 1 组装 | `Propagator/Dyadic.lean` | Cowork | **完成** |
+| **T3** | 格点求和 `Σ_{p≠0}\|p\|_*^{-2} ≤ CL²log L` | `Propagator/LatticeSum.lean` | 空闲 | **可开工**，只剩把 T2/T15/T16 乘起来 |
+| **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 空闲 | **可开工**，纯实多项式不等式 |
+| **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 空闲 | **可开工**，纯 `Finset`/`ZMod` 记账 |
+| **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
+| **T24** | §8.2 的两个 structure 接口 + 性质 5 显式版 | `Propagator/ContourInterface.lean` | 空闲 | **可开工** |
+| **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 空闲 | **可开工**，只 import Mathlib |
+| **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 空闲 | **可开工** |
+| **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
+| **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 空闲 | **可开工**，独立 |
+| **T7** | §2 模型层 | `Defs/Model.lean` | 空闲 | **可开工**，独立 |
+| **T8** | 数值回归测试 | `Test/Numeric.lean` | 空闲 | **可开工**，独立 |
+| T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | 空闲 | 待 T3 |
+| T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 空闲 | 待 T3（**全强度**） |
+| T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
+| T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 空闲 | 待 T18+T5 |
+| T27 | 围道平移 `(eq_shifted_lower)(eq_Kinf_bound)` | `Propagator/Contour.lean` | 空闲 | 待 T26 |
+| T28 | 周期化 + 兑现 `ContourInput` | `Propagator/Periodize.lean` | 空闲 | 待 T26+T25 |
+| T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
+| T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
+
+**可立刻开工、文件两两不相交的有 10 条**：T3、T19、T20、T21、T24、T25、T26、T29、T6、T7、T8。
+原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
+
 
 **T1 已完成（2026-09-19）**，`lake build` exit 0、0 sorry、10 个文件全绿。
 剩下的建议顺序：**(T6 ∥ T7 ∥ T8 ∥ T13 ∥ T14 ∥ T15 ∥ T16) → T3 → (T4 ∥ T5) → 第二批。**
@@ -781,3 +795,238 @@ Mathlib 侧要先确认的零件（**先 grep，不要假设**）：
 > 规则照 `CLAUDE.md`：不留 sorry、不发明 Mathlib 引理名（先 grep 或 `#check`）、
 > 每条主定理跑 `#print axioms`、`decide` 不用 `native_decide`、
 > 只 `git add` 自己的文件名。
+
+---
+
+# 第三批：§8.2 / §8.3 的重排（2026-09-20 审计后）
+
+两轮论文审计（§8.2 第 80–153 行、§8.3 第 154–203 行）把原来的 T9/T10/T11 三块「最硬的」
+拆成了十条，其中 **7 条可以立刻并行开工**。关键发现有三条，都写在各自工单里：
+
+1. **`(eq_dyadic)` 在 Mathlib 里缺的不是「分部求和」**（`fwdDiff` 在库里，`M := Z2 L`、
+   `G := ℂ` 直接可用；有限交换群上分部求和退化成移位重标号），而是
+   **`ContDiffBump` 没有任何 `iteratedFDeriv` 的定量界** —— 于是 dyadic 族 `χ(2^j ·)`
+   每个 `j` 有一个常数、没有对 `j` 一致的常数，而一致性正是 `(eq_dyadic)` 的全部内容。
+   T19 用显式七次 smoothstep 绕开它，把问题变成多项式不等式。
+2. **周期化不需要二维 Poisson 求和**（Mathlib 只有一维）**也不需要二维 Fourier 反演**
+   （不存在）。走**逆的唯一性**：令 `P(x) = Σ_n K_∞(x+nL)`，证它在 `Z_L²` 上解
+   `(1−ξS)P = δ₀`，再用已经是定理的 `eq_Theta_of_mul` 收口。T28 因此从 L 降到 M，
+   而且**不再依赖 T27**。
+3. **性质 5 的三个 ξ 里有两个不需要围道**。§3–§4 消费性质 5 的地方只在 `|1−ξ| ≥ c`
+   的区制（`ξ = tm²`、`t m̄²`），那里一个有限维的 Combes–Thomas 共轭就够 —— 不碰积分、
+   不碰 Cauchy 定理、不碰周期化。T29，与一切独立，今天就能开工。
+
+---
+
+## T19 — 显式 `C³` dyadic 单位分解（`Propagator/Cutoff.lean`）· 难度 M · 可开工
+
+**覆盖**：§8.3 第 156 行「using a smooth partition of unity」，以及 `(eq_dyadic)` 里
+「每次对截断求导付一个 `r^{-1}`」。
+
+**可复用（不要重证，import 即可）**：`RBM.dyad`、`RBM.dyad_pos`、`RBM.dyad_le_one`、
+`RBM.dyad_antitone`、`RBM.dyad_le_dyad_of_le`、`RBM.inv_dyad`（`Propagator/GeomSum.lean`）。
+
+**要证什么**：
+
+- `S₃(x) = 35x⁴ − 84x⁵ + 70x⁶ − 20x⁷`（`S₃(0)=0`、`S₃(1)=1`，两端前三阶导数全为 0）；
+- `θ t = 1` (`t ≤ 1`)、`= 1 − S₃(t−1)` (`1 ≤ t ≤ 2`)、`= 0` (`t ≥ 2`)；
+- `χ_j t = θ (2^j t) − θ (2^{j+1} t)`；
+- (a) `Σ_{j ≤ J} χ_j t = 1` 当 `2^{-J} ≤ t ≤ 1`（望远镜，`Finset.sum_range_succ`）；
+- (b) `supp χ_j ⊆ [2^{-j-1}, 2^{-j+1}]`；
+- (c) 三阶差分界 `|Δ³_h χ_j| ≤ C |h|³ 2^{3j}`。
+
+**Mathlib**：只要实多项式算术 —— `nlinarith`、`positivity`、`Finset.sum_range_succ`、
+`pow_le_pow_left₀`。**明确不要用 `ContDiffBump`**：它没有任何导数界，见本节开头第 1 条。
+
+**坑**：分段函数用 `if … then … else`，不要 `Set.piecewise`；**连续性、可微性一条都不用证**，
+只要差分界 —— 这是绕开 Mathlib 缺口的全部要点。
+
+**依赖**：只 `GeomSum.lean`（已绿）。与 T20、T21 三路并行。
+
+---
+
+## T20 — `Z_L²` 上的周期分部求和（`Propagator/AbelSum.lean`）· 难度 M · 可开工
+
+**覆盖**：§8.3 第 161–162 行「each summation by parts produces a factor `(1+r|x|_L)^{-1}`」。
+
+**可复用（不要重证）**：`RBM.chr`、`RBM.chr_add_e1/e2`、`RBM.chr_sub_e1/e2`、
+`RBM.inv_mul_sum_chr`（`Propagator/Symbol.lean`）；`RBM.norm_chr`（`Propagator/ZeroMode.lean`）；
+`RBM.zdist`、`RBM.zdist2`（`Defs/Dist.lean`）；`RBM.pstar`（`Propagator/Momentum.lean`）。
+
+**要证什么**：
+
+- (a) 周期分部求和 `Σ_p (f(p+e) − f p) * g p = − Σ_p f p * (g p − g (p−e))` ——
+  就是 `Fintype.sum_equiv (Equiv.addRight e)`，边界项因周期性自动没有；
+- (b) `‖chr p e − 1‖ ≍ zdist L p₁ / L`，上下界各一条。
+
+**Mathlib（都核过存在）**：`fwdDiff`、`fwdDiff_iter_eq_sum_shift`
+（`Mathlib/Algebra/Group/ForwardDiff.lean`，`M := Z2 L`、`G := ℂ` 直接可用）；
+`Equiv.addRight`、`Fintype.sum_equiv`、`Finset.sum_nbij'`；
+`Complex.norm_exp_I_mul_ofReal_sub_one`（**恒等式** `‖exp(I·x) − 1‖ = ‖2 sin(x/2)‖`，核心零件）；
+`Real.norm_exp_I_mul_ofReal_sub_one_le`；`Real.mul_abs_le_abs_sin`（Jordan）、`Real.abs_sin_le_abs`。
+
+**坑**：
+
+1. `Real.norm_exp_I_mul_ofReal_sub_one_le` 在 **`Real`** 命名空间；
+   `Complex.norm_exp_I_mul_ofReal_sub_one_le` **不存在**，别写。
+2. `Finset.sum_range_by_parts` 只吃 ℕ-区间，**对 `ZMod L` 用不上**，不要硬套。
+3. Jordan 要求 `|θ| ≤ π/2`，而 `pstar L p ≤ π`，所以要走半角 `sin(θ/2)`。
+
+**依赖**：`Symbol.lean`、`Momentum.lean`、`Defs/Dist.lean`（全已绿）。
+
+---
+
+## T21 — 乘子在环上的差分界（`Propagator/SymbolDiff.lean`）· 难度 L · 可开工
+
+**覆盖**：§8.3 第 161–162 行「each differentiation of the multiplier costs one power of
+`r^{-1}`」，以及「its multiplier is `O((κ²+r²)^{-1})` by `(eq_elliptic)`」。
+
+**可复用（不要重证，`(eq_elliptic)` 两边都已经证好了）**：
+`RBM.Shat`、`RBM.Shat_eq_cos`、`RBM.Shat_eq_one_sub_qsym`、`RBM.norm_Shat_le_one`、
+`RBM.one_sub_mul_Shat_ne_zero`（`Symbol.lean`）；`RBM.qsym`、`RBM.qsym_nonneg`、`RBM.qsym_le`、
+`RBM.norm_one_sub_mul_Shat_ge_kappa`（`Elliptic.lean`）；`RBM.pstar`、`RBM.pstar2`、
+`RBM.qsym_le_pstar2`、`RBM.pstar2_le_qsym`、`RBM.norm_one_sub_mul_Shat_ge_pstar`、
+`RBM.norm_one_sub_mul_Shat_le_pstar`、`RBM.cos_eq_cos_pstar`（`Momentum.lean`）。
+
+**要证什么**：环 `|p|_* ∼ r` 上 `|Δ_e Ŝ(p)| ≲ r/L` —— 关键是 `Ŝ` 的差分展开出 `sin`，
+而 `|sin p_i| ≤ |p|_* ∼ r`，**这就是「只赔 `r^{-1}` 不赔 `r^{-2}`」的全部来源**；
+再由 `Δ(1/D) = −ΔD/(D · D∘shift)` 与 `(eq_elliptic)` 下界推到一、二、三阶差分。
+
+**坑**：
+
+1. **千万别对 `Ŝ` 用粗界 `|ΔŜ| ≤ 2‖Ŝ‖ ≤ 2`** —— 那样 `(eq_dyadic)` 的 `r^{m+2}`
+   退化成 `r^m`，整条 §8.3 崩掉。
+2. 下界常数本项目是 `1/9`（`Elliptic.lean`）/ `4/(45π²)`（`Momentum.lean`），
+   三阶差分会把它立方，常数会很难看，**不要试图优化**。
+3. 差分点 `p + e` 可能跨出环，界要对 `|p|_* ∈ [r/4, 4r]` 的闭包成立，留余量。
+
+**依赖**：`Symbol.lean`、`Elliptic.lean`、`Momentum.lean`（全已绿）。
+
+---
+
+## T24 — §8.2 的接口 + 性质 5 显式版（`Propagator/ContourInterface.lean`）· 难度 S · 可开工
+
+**覆盖**：两个 `structure`（`LogIntegral` = `(eq_log_int)`，`ContourInput` = 围道链已搬回环面的产出），
+以及 `(prop:ThfadC)` 的显式（非 `≺`）版本，两个区制一起组装。
+
+**关键设计**：区制 `κL < 1` **一条都不进 structure** —— 它没有 Mathlib 缺口，必须是定理（T4）。
+`ContourInput` 的陈述里**不出现无穷体积核**，只出现 `RBM.Theta`，这样接口只提到已经存在的对象。
+
+**可复用**：`RBM.kappa_sq`、`RBM.kappa_pos`、`RBM.ellhat_pos`、`RBM.kappa_mul_ellhat_le_one`
+（`Elliptic.lean`）；`RBM.two_mul_zdist_le`（`Momentum.lean`）；`RBM.one_add_log_nonneg`（`Harmonic.lean`）。
+
+**Mathlib（核过）**：`Real.exp_pos`、`Real.exp_le_exp`、`Real.exp_neg`、`min_eq_left`/`min_eq_right`、
+`inv_pos`、`div_le_div_of_nonneg_left`。
+
+**坑**：
+
+1. `ellhat L ξ = min (kappa ξ)⁻¹ (L:ℝ)`，两个区制各要一次 `min_eq_left`/`min_eq_right`，
+   **条件是 `κ⁻¹ ≤ L` 不是 `1 ≤ κL`**，中间要换算一次。
+2. `zdist2 L u ≤ L`：`two_mul_zdist_le` 两次 + `omega`。
+3. **别漏论文那句「`exp(−c|x|_L/ℓ̂)` 有正下界」** —— `κL<1` 支里 `d ≤ L = ℓ̂`，
+   所以指数因子 `≥ e^{−c}`，要乘回去。
+4. structure 字段里写 `∀ (L : ℕ) [NeZero L], …` 是本文件唯一的语法风险；
+   报错就退成 `∀ (L : ℕ) (inst : NeZero L), …` 并在使用处显式传。
+
+**依赖**：只要 T3/T4 的**陈述**（证明先挂成参数）。
+
+---
+
+## T25 — `(eq_log_int)`（`Propagator/LogIntegral.lean`）· 难度 M · 可开工
+
+**覆盖**：`∫_{[−π,π]²} dp/(κ²+|p|_*²) ≤ C log(2+κ⁻¹)`。**一行 RBM 代码都不 import。**
+
+**Mathlib（核过）**：`intervalIntegral.integral_congr`、
+`intervalIntegral.norm_integral_le_of_norm_le_const`、`intervalIntegral.integral_comp_add_right`。
+`Real.arctan` / `Real.arsinh` 的导数引理名**没核对，开工前必须 grep**。
+
+**坑**：
+
+1. 内层 `∫_{−π}^{π} ds/(A²+s²)`，`A² = κ²+t²`：**别求精确值**，直接放成 `≤ π/A`（`arctan ≤ π/2`）。
+2. 外层 `∫ π dt/√(κ²+t²)`：**推荐走退路**，按 `|t| ≤ κ` 与 `|t| > κ` 劈两段 ——
+   前段 `≤ κ⁻¹` 长度 `2κ` 贡献 `≤ 2`，后段 `≤ |t|⁻¹` 得 `log(π/κ)`。**完全避开 `arsinh`。**
+3. **下游只需要 `≺ 1` 的粗形**（`κL ≥ 1` 区制里 `κ⁻¹ ≤ L`，`≺` 吃得下任意 log 多项式），
+   所以不必证出对数。**但不能放松成 `κ^{-δ}`**：那在 `κ ≍ 1/L` 时是 `L^δ`，`≺` 吃不下。
+4. 常数写死，不要 `∃ C`。
+
+---
+
+## T26 — 连续层（`Propagator/ContinuumSymbol.lean`）· 难度 M · 可开工
+
+**覆盖**：`(eq_symbol)`、`(eq_qdef)`、`(eq_elliptic)` 的 `ℝ²` 版；`(eq_Kinf)` 的定义与可积性。
+
+**本次审计最大的一笔现成资产**：`RBM.norm_one_sub_mul_real_le` 与
+`RBM.norm_one_sub_mul_real_ge`（`Elliptic.lean` 的 `section RealMultiplier`）
+**是对裸实变量 `lam : ℝ` 陈述的，和格点毫无关系** —— 连续版椭圆性就是拿
+`lam := (1 + 2cos p₁ + 2cos p₂)/5` 代进去，**一行**。
+同样地 `RBM.one_sub_cos_le_sq`、`RBM.sq_le_one_sub_cos`（`Momentum.lean` 的 `section Elementary`）
+也是裸 `θ : ℝ` 版，连续版 `q(p) ∼ |p|²` 直接用。
+
+**Mathlib（核过）**：`Real.cos_le_one`、`Real.neg_one_le_cos`、`Complex.norm_exp`、
+`ContinuousOn.intervalIntegrable`（签名待确认）。
+
+**坑**：
+
+1. **必须显式 import** `Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds`、
+   `Mathlib.Analysis.Complex.Trigonometric`、`Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic`。
+   **名字存在 ≠ 在作用域里** —— CI 第 1 轮就栽在这上面。
+2. `Ŝ_ℝ` 要定义成 `((… : ℝ) : ℂ)` 的实数嵌入形式，否则 `norm_one_sub_mul_real_*` 对不上；
+   照抄 `RBM.Shat_eq_one_sub_qsym` 的写法。
+3. `K_∞` 用**迭代** `intervalIntegral`，不要一上来就上乘积测度。
+
+---
+
+## T29 — Combes–Thomas 旁路（`Propagator/CombesThomas.lean`）· 难度 M · 可开工 · **不在原路线图上**
+
+**覆盖**：`(prop:ThfadC)` 在 `|1−ξ| ≥ c₁` 时的全部内容，即 §3–§4 实际消费的那两个 ξ
+（`tm²`、`t m̄²`）。**不碰积分、不碰 Cauchy 定理、不碰周期化。**
+
+**路线**：
+
+1. `⟨v, S^{(B)}v⟩ = μ‖v‖²`，`μ ∈ [−3/5, 1]` 实数（AM-GM，十行；**不要走 Fourier 对角化、
+   不要 Schur test**）；
+2. 于是 `|⟨v,(1−ξS)v⟩| ≥ (κ²/9)‖v‖²` —— **这正是已经证好的 `RBM.norm_one_sub_mul_real_ge`**，
+   `−3/5 ≤ lam ≤ 1` 这个区间正好对上；
+3. ⟹ `‖Θ_ξ‖_{2→2} ≤ 9/|1−ξ|`。**这比 `Bounds.lean` 现有的 `(1−‖ξ‖)⁻¹` 强得多**
+   （后者在 `|ξ| → 1` 时发散，这个不发散），**本身就值得单独落地**；
+4. Combes–Thomas 共轭 `W_λ = diagonal (fun y => exp (λ * zdist2 L (y − b)))`，
+   `‖E_λ‖₂ ≤ 2|λ|`（band 宽 1）；取 `|λ| ≤ κ²/36` 得可逆性与 `≤ 18/κ²`；
+5. 读回矩阵元：`|Θ_{ab}| ≤ (18/κ²) e^{−λ|a−b|_L}`。
+
+**坑（重要）**：
+
+1. **范数实例冲突**：`Basic.lean`/`Bounds.lean` 开的是 `Matrix.Norms.Operator`（ℓ^∞），
+   本文件要开 `Matrix.Norms.L2Operator`，**两者不能同时开**。`RBM.Theta` 的定义与
+   `isUnit_one_sub_smul_SB` 的陈述都与范数无关，所以 import 安全；但
+   `RBM.norm_SB`、`RBM.norm_Theta_le` 这些**陈述里带范数**的定理在本文件里指的仍是 ℓ^∞，
+   **不要用**。
+2. 得到 `μ` 之后直接套 `norm_one_sub_mul_real_ge`。
+3. **本工单只做 `|1−ξ| ≥ c₁`**。衰减率是 `κ²/36` 而不是 `κ`，在 `κ → 0` 时不够
+   （`κ⁻² ≤ L²` 不是 `≺ 1`，几何插值也救不回来，因为 `≺` 的量词序是先定 `c` 再取 `ε`）。
+   **所以 T27+T28 对 `1/L ≤ κ ≪ 1` 仍然必需，T29 不能替代它们。**
+   文件末尾留注释指向 T27/T28，**不要写 `sorry`**。
+
+**Mathlib（核过）**：`Matrix.l2_opNorm_mul`、`Matrix.l2_opNorm_mulVec`、`Matrix.l2_opNorm_def`
+（`Analysis/CStarAlgebra/Matrix.lean`）；scoped 实例命名空间是 `Matrix.Norms.L2Operator`；
+`EuclideanSpace.inner_eq_star_dotProduct`；`Matrix.diagonal`；`Real.add_one_le_exp`。
+
+**依赖**：无。**今天就能开工，且与所有其它工单文件不相交。**
+
+---
+
+## T22 / T23 / T27 / T28 / T30（被挡住，先不开）
+
+- **T22** `Propagator/DyadicBound.lean`：兑现 `DyadicDecomp`，`J := Nat.log 2 L`。
+  待 T19+T20+T21。**最容易出错的一处**是 `J` 要保证 `2^{-J} ≲ 1/L`，否则最细的环漏掉动量、
+  `theta_eq` 不成立 —— 先把「`Σ_{j≤J} χ_j = 1` 对所有 `p ≠ 0`」单独证成一条引理。
+- **T23** `Propagator/DerivBounds.lean`：两个 case 合并 + `≺`。待 T18+T5。
+  `≺` 用 `UnifDetDom`（论文的性质 6 是**对格点一致**的），参数集 `U L := Z2 L × Z2 L × Z2 L`。
+- **T27** `Propagator/Contour.lean`：待 T26。**只在一个变量里做围道平移**（另一个始终是实参数），
+  所以**不需要多复变**，`Complex.integral_boundary_rect_eq_zero_of_differentiableOn` 的一元版就够。
+  竖边抵消要逐点相等再 `integral_congr`，**不是**周期积分引理。
+  `K_∞` 的坐标对称需要**一次** Fubini，别让它扩散。
+- **T28** `Propagator/Periodize.lean`：待 T26+T25（**不待 T27**）。走逆的唯一性，见本节开头第 2 条。
+  注意 `Shells.lean` 的 `card_shell_le` 是 `ZMod L` 上的，这里要的是 `ℤ²` 版，要重写（同样只是 `omega`）。
+- **T30** `≺` 包装：待 T24。**踩到一个真坑**：`UnifDetDom` 对**所有** `L : ℕ` 量化（含 `L = 0`），
+  而 `Theta` 要 `[NeZero L]`，所以 `fun L u => ‖Theta L …‖` 写不出来。
+  修法是加一条补零延拓 `ThetaEntry`，并把这条记进 `paper-deltas.md`。

@@ -88,20 +88,48 @@ lake env lean RBM2D/Propagator/Xxx.lean   # 单文件，秒级 —— 默认用�
 
 ## 硬性规则
 
-1. **不留 `sorry`。** 证不出来就停下说「卡在 X」，不要 sorry 占位然后继续往下写。
-2. **不许发明 Mathlib 引理名。** 先 `grep -rn "circulant_mul" .lake/packages/mathlib/Mathlib/`，
-   或新建一个临时 `RBM2D/Probe.lean` 加 `#check @foo` 编译看签名。
-   `exact?` / `apply?` / `rw?` / `aesop` 鼓励用。
-3. **公理审计。** 每条主定理证完跑 `#print axioms RBM.xxx`，只允许出现
-   `propext` / `Classical.choice` / `Quot.sound`。出现 `sorryAx` 就是没做完。
-   **不用 `native_decide`。**
-4. **陈述逐字对应论文。** 不得不加假设（如 `3 ≤ L`）或换陈述形式，必须写进 `docs/paper-deltas.md`。
-5. **小步提交。** 一次只动一条引理 / 一个文件；绿了就 `git commit`，不要攒一大坨再一起编译。
-6. **不碰随机层**（Itô、Dyson Brownian motion、loop hierarchy、universality）。
-   Mathlib 没有随机分析，那部分只写 `axiom` 接口，而且现在还不到时候。
-7. **常数不求最优。** 统一写成 `∃ C > 0, ∃ c > 0, ∀ ...`；`≺` 用 `DetDom` 封装。
-   §8 里所有 `∼` 都拆成显式的上界 + 下界两条，常数写死即可（现在 `(eq_elliptic)`
-   的下界常数取的是 `1/9`，论文的论证给的是 `1/4`，无所谓）。
+**每个 agent 开工前先读这一节。** 这些不是习惯，是防返工的结构。
+
+| 规则 | 为什么 |
+|---|---|
+| **不留 `sorry`**。证不出来就停下说「卡在 X」 | 共享工作树里一个 `sorry` 会让所有人的构建变红，而且**现在会直接编译失败**（见下一条） |
+| **不许发明 Mathlib 引理名**。先 `grep -rn "foo" ~/Lean_proof/RBM1D/.lake/packages/mathlib/Mathlib/`，或 `#check @foo` 看签名 | 版本漂移是这类项目最大的时间黑洞。已核实的名字记进 `docs/mathlib-api.md`；**核实过不存在的也要记** |
+| **公理审计写进了构建**：`RBM2D.lean` 末尾的 `#assert_rbm_axioms` 对整个 `RBM` 命名空间做硬检查 | 违规即**编译失败**。靠人记得跑 `#print axioms` 是靠不住的 —— 已用一个故意的 `sorry` 验证过它真的会挂 |
+| **绝不写 `axiom`**。Mathlib 缺的东西写成 `structure` 字段或定理参数 | 这样下游立刻能编译、能并行；等基础设施到位**原地把字段换成定理，签名一个字不改**，依赖它的工单一张都不用返工。`axiom` 做不到，而且会污染公理审计。范例：`Propagator/Dyadic.lean` 的 `DyadicDecomp` |
+| **陈述逐字对应论文**；任何偏离记进 `docs/paper-deltas.md` | 要写明**论文第几处、改哪一段** —— 这样「论文要改多少」随时可以算出来 |
+| **只按文件名 `git add`**，绝不 `git add -A` | `-A` 会把别人正在写的文件暂存进你的提交 |
+| **小步提交**，一次一条引理；绿了就 commit | 攒一大坨再一起编译，错了无法二分 |
+| **造轮子之前先查仓库** | `grep -rn "theorem.*sum_" RBM2D/` 比重证快得多 |
+| **常数不求最优**，写死，不要 `∃ C` | `(eq_elliptic)` 下界现在取 `1/9`，论文给 `1/4`，无所谓 |
+| **共享文件只做点插入，绝不整体重排** | 唯一的共享文件是根 import 列表 `RBM2D.lean` 和 `docs/*.md`。用 `sorted(set(lines))` 去重会把末尾的 `#assert_rbm_axioms` 搅进 import 块 |
+| **不用 `native_decide`** | 它把编译器信任基扩大到整个 Lean 运行时 |
+
+### 永不停工规则
+
+**队列见底 = 全员停工，这是这个项目里唯一不可接受的状态。**
+`docs/TASKS.md` 的队列**永远要比 agent 多**。如果你发现没有「空闲且可开工」的工单了，
+**不要停下来等指令**，按这个顺序自己挑活，并在表里补一行说明你在做什么：
+
+1. **储备工单** —— `docs/TASKS.md` 第三批里被挡住的那些，看依赖是不是已经解开了；
+2. **维护** —— linter 警告、重复引理合并、把某个文件里通用的引理提到 `Defs/`；
+3. **审计** —— 挑论文的一节逐处核对，产出下一批工单（这类工作产出过本项目最大的两笔减负）。
+
+### 分工：Cowork 只 commit，终端 agent 负责 push
+
+**别指望 Cowork 侧 `git push`**，它跑在一个没有 keychain、没有 credential helper 的沙箱里：
+
+```
+$ git push --dry-run origin main
+fatal: could not read Username for 'https://github.com': No such device or address
+```
+
+`git add` / `git commit` 只动本地 `.git`，不需要凭据，所以照常做。
+**在 Mac 终端里常驻一个 Claude Code agent 负责 `git push`**（顺带跑 `lake build`）。
+两边在同一个工作树上，它一 push 就把两边的 commit 一起推上去了。
+**Claude Code 每次进这个仓库，第一件事和最后一件事都是 `git push`。**
+
+提交身份统一为 `Jun Yin <321276894+JYin80@users.noreply.github.com>`（已在 `.git/config` 的
+local 配置里），两边都不要用 `-c user.name=...` 覆盖。
 
 ## 命名与风格
 
@@ -158,14 +186,8 @@ CI 回路的用处是让 Cowork 写完的东西不至于原封不动地丢给对
 2. **git index.lock 争用** —— 撞到就等几秒重试。
 3. **绝不用 `git add -A`** —— 只按文件名 `git add` 自己的那几个。
 4. **`build.log` 是共用的** —— 读日志时按文件名过滤自己那部分。
-5. **push 归 Claude Code**。Cowork 跑在一个沙箱 Linux VM 里，只挂载了这个文件夹，
-   没有 keychain / `~/.ssh` / `gh`，`git push` 必定得到
-   `could not read Username for 'https://github.com'`。所以 Cowork 只提交不推送。
-   **Claude Code 每次进这个仓库，第一件事和最后一件事都是 `git push`** ——
-   先 `git log --oneline origin/main..HEAD` 看 Cowork 攒了什么，推掉再开工；
-   收工前再推一次。不要让未推的提交跨会话累积，CI 看不到的代码等于没写。
-6. **提交身份统一为 `Jun Yin <321276894+JYin80@users.noreply.github.com>`**
-   （已写进 `.git/config` 的 local 配置）。两边都不要用 `-c user.name=...` 覆盖它。
+5. **push 归终端的 Claude Code agent**，提交身份统一为 `Jun Yin` ——
+   两条都在「硬性规则 → 分工」一节，不在这里重复。
 
 ### 常设授权
 
