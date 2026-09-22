@@ -621,11 +621,24 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 
 \begin{lemma}[Bridge: moments $\Rightarrow\prec$]\label{lem:bridge-prec}
   \uses{def:stochdom}
+  \lean{RBM.Gauss.meas_gt_le_of_moment,
+        RBM.Gauss.stochDom_of_momentDom,
+        RBM.Gauss.stochDomAt_of_momentDomAt,
+        RBM.Gauss.stochDom_Icc_of_holder_on_good,
+        RBM.Gauss.stochDomAt_Icc_of_holder_on_good}\leanok
   Markov's inequality, with the $\varepsilon$ quantifier outside $p$ so that the
-  conclusion holds for every $\tau>0$.  Also the time net that turns the
-  uncountable union of \texttt{def:stochdom} into $N^{C}$ net points plus a
-  deterministic Lipschitz bound.  \emph{Work order S6.}
+  conclusion holds for every $\tau>0$.  A polynomial time net reduces the
+  uncountable union of \texttt{def:stochdom} to finitely many points; between
+  points a H\"older bound is required only on a high-probability good event.
+  Both ordinary $N$ and admissible physical-size formulations are proved.
+  \emph{Work order S6, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  Apply Markov's inequality to a sufficiently high even moment, union bound
+  over polynomially many parameters, and absorb the net error with the
+  good-event H\"older modulus.  The actual flow's random modulus is a
+  downstream input; it is not assumed bounded on every sample.
+\end{proof}
 
 \begin{lemma}[Bridge: $\prec\Rightarrow$ moments]\label{lem:bridge-moment}
   \uses{def:stochdom, lem:envelope}

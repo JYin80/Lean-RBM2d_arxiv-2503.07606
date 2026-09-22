@@ -27,6 +27,7 @@ import RBM2D.Gauss.Stein
 import RBM2D.Gauss.SteinMatrix
 import RBM2D.Gauss.Model
 import RBM2D.Gauss.SteinConcrete
+import RBM2D.Gauss.Domination
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms
