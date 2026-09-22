@@ -326,9 +326,15 @@
 \begin{definition}[Continuous symbol and infinite-volume kernel, \texttt{(eq\_Kinf)}]
   \label{def:continuum}
   \uses{lem:elliptic, lem:qcomp}
-  The continuous counterpart of $\widehat S$, its ellipticity, and the
-  integrable kernel $K_{\xi,\infty}$ on $\mathbb Z^2$.
-  \emph{Work order T26.}
+  \lean{RBM.ScontReal, RBM.qcont, RBM.Dcont,
+        RBM.norm_Dcont_ge_pnorm2, RBM.norm_Dcont_le_pnorm2,
+        RBM.Kinf, RBM.KinfIntegrand_integrableOn,
+        RBM.Kinf_eq_square_integral, RBM.Kinf_zero_zero}\leanok
+  The continuous counterpart of $\widehat S$ obeys the two-sided elliptic
+  bound on $[-\pi,\pi]^2$.  The infinite-volume Fourier kernel is defined as
+  a genuine integrable function; Fubini identifies its iterated and square
+  integrals.  At $\xi=0$ and $x=0$ the normalized kernel equals $1$.
+  \emph{Work order T26, closed.}
 \end{definition}
 
 \begin{lemma}[Infinite-volume kernel and the contour shift]\label{lem:contour}

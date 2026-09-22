@@ -23,7 +23,7 @@
 | **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
 | **T24** | §8.2 的两个 structure 接口 + 性质 5 显式版 | `Propagator/ContourInterface.lean` | 空闲 | **可开工** |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
-| **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **进行中**；独占该文件 |
+| **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
 | **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
 | **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 空闲 | **可开工**，独立 |
 | **T8** | 数值回归测试 | `Test/Numeric.lean` | 空闲 | **可开工**，独立 |
@@ -35,13 +35,13 @@
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
-| T27 | 围道平移 `(eq_shifted_lower)(eq_Kinf_bound)` | `Propagator/Contour.lean` | 空闲 | 待 T26 |
-| T28 | 周期化 + 兑现 `ContourInput` | `Propagator/Periodize.lean` | 空闲 | 待 T26+T25 |
+| T27 | 围道平移 `(eq_shifted_lower)(eq_Kinf_bound)` | `Propagator/Contour.lean` | 当前对话内代理 | **进行中**；独占该文件 |
+| T28 | 周期化 + 兑现 `ContourInput` | `Propagator/Periodize.lean` | 空闲 | **可开工**，T25/T26 已有 |
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**S4 已通过主分支全量验收；T19、T26、S6 在当前对话内代理中；T25、T23 的条件版、T5、S3、T4、S2、T7、S0、T3 已完成。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
-T20、T21、T24、T29、T6、T8、S6、S8、T31；队列深度足够。
+**S4 已通过主分支全量验收；T19、T27、S6 在当前对话内代理中；T26、T25、T23 的条件版、T5、S3、T4、S2、T7、S0、T3 已完成。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+T20、T21、T24、T28、T29、T6、T8、S8、T31；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
 **当前优先顺序**：S4 + S3 → S5；T19/T20/T21 → T22 → Property 6 无条件版；T25 + T26 → T27/T28（并将 S7/S8 保留在储备队列）。

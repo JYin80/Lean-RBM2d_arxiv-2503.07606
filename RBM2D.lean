@@ -17,6 +17,7 @@ import RBM2D.Propagator.ZeroMode
 import RBM2D.Propagator.Harmonic
 import RBM2D.Propagator.LatticeSum
 import RBM2D.Propagator.LogIntegral
+import RBM2D.Propagator.ContinuumSymbol
 import RBM2D.Propagator.Decay
 import RBM2D.Propagator.FiniteDiff
 import RBM2D.Propagator.DerivBounds
