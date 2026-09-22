@@ -292,11 +292,21 @@
 
 \begin{lemma}[Decay in the regime $\kappa L<1$]\label{lem:decay-small}
   \uses{lem:fourier, lem:elliptic, lem:latticesum, lem:zero-mode}
+  \lean{RBM.norm_Theta_apply_le_small_kappa_log,
+        RBM.small_kappa_prefactor_detDom_one,
+        RBM.ellhat_eq_L_of_kappa_mul_L_lt_one}\leanok
   If $\kappa L<1$, so that $\lhat=L$, then separating the zero mode gives
   $|K_{\xi,L}(x)|\le\kappa^{-2}L^{-2}+C\log L\prec\kappa^{-2}L^{-2}$, which is
   \texttt{(prop:ThfadC)} because $|x|_L\le CL=C\lhat$.
-  \emph{Work order T4.}
+  \emph{Work order T4, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  The zero-mode decomposition and elliptic denominator bound reduce the
+  punctured sum to T3's two-dimensional harmonic bound.  Since
+  $\kappa L<1$, its logarithmic correction is subpolynomial relative to the
+  zero-mode scale.  Also $|x|_L\le L=\lhat$, so the exponential factor costs
+  at most a fixed factor $e$.
+\end{proof}
 
 \begin{lemma}[Two-dimensional logarithmic integral, \texttt{(eq\_log\_int)}]
   \label{lem:log-integral}

@@ -16,9 +16,9 @@
   `propext`、`Classical.choice`、`Quot.sound`。
 - **非阻塞维护项**：构建有 10 条 linter warning，位于 `Defs/Dist.lean` 与
   `Gauss/Envelope.lean`；旧表中“T13 后全仓 0 warning”已过时。
-- **在飞工单**：T4（小 $\kappa L$ 衰减）、S4（一时刻高斯模型）
-  各在独立工作树；S3（矩阵 Stein）在当前对话内代理中；
-  T3、T7、S0、S2 已集成。不再新建项目对话条。
+- **在飞工单**：S4（一时刻高斯模型）在独立工作树；S3（矩阵 Stein）
+  与 T5（性质 6 的 Case 2）在当前对话内代理中；
+  T3、T7、S0、S2、T4 已集成。不再新建项目对话条。
   协调任务持有共享文档与蓝图。
   T3 原规格的 `3/π²`
   与现有粗壳层界不直接相符，
@@ -56,6 +56,12 @@
   公理审计 580 个 `RBM` 声明仅用标准三项。Blueprint 将原 S2/S3
   合并节点拆为标绿的标量 S2 与仍开放的矩阵 S3；现有 51 节点、103
   个声明引用，XeLaTeX 完整生成 11 页 PDF。
+- **T4 集成（2026-09-22）**：`Decay.lean` 在 $\kappa L<1$ 下证明
+  $\hat\ell=L$、零模与格点和的显式界、带指数因子的
+  `norm_Theta_apply_le_small_kappa_log`，并证明归一化前因子 `≺1`。
+  $L=3,\xi=35/36$ 是非空区制探针。主分支 `./check.sh` 全量通过：
+  3596 jobs、errors 0；公理审计 597 个 `RBM` 声明仍只用标准三项。
+  Blueprint T4 节点标绿；静态检查 51 节点、106 个声明引用。
 
 ---
 
