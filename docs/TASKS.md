@@ -30,7 +30,8 @@
 | T31 | 清理当前 10 条 linter warning | `Defs/Dist.lean`、`Gauss/Envelope.lean` | 空闲 | **可开工，低优先级**；不改声明结论 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | Codex T4 | **进行中**；T3/T14 已有 |
 | S4 | 一时刻高斯模型与坐标分解 | `Gauss/Model.lean` | Codex S4 | **进行中**；T7/S0 已有 |
-| S2 | 实与复高斯 Stein 分部积分 | `Gauss/Stein.lean` | Codex S2 | **进行中**；解锁 S3 |
+| S2 | 实与复高斯 Stein 分部积分 | `Gauss/Stein.lean` | Codex S2 | **完成，主分支全量验收通过**；S3 已解锁 |
+| S3 | 矩阵版 Stein 重采样测度不变式 | `Gauss/SteinMatrix.lean` | 当前对话内代理 | **进行中**；独占该文件，不新建项目对话 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 空闲 | **可开工**；T3/T14 已有 |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 空闲 | 待 T18+T5 |
@@ -39,7 +40,7 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**T4、S4、S2 在三个独立工作树；T7、S0、T3 已完成并通过主分支全量验收。** 其余可立刻开工且文件不重叠的储备有
+**T4、S4 在独立工作树；S3 在当前对话内代理中；S2、T7、S0、T3 已完成。** 其余可立刻开工且文件不重叠的储备有
 T19、T20、T21、T24、T25、T26、T29、T6、T8、S6、S8、T31；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 

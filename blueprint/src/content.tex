@@ -497,13 +497,26 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   mollifying cutoff.  \emph{Work order S1, closed.}
 \end{proof}
 
-\begin{lemma}[Gaussian integration by parts]\label{lem:stein}
-  Stein's identity, replacing $\omega_\alpha$ by
-  $\mathrm{Var}_\alpha\cdot\partial_\alpha$, in three layers: real scalar,
-  complex scalar, matrix.  The matrix layer goes through a resampling identity
+\begin{lemma}[Scalar Gaussian Stein identities]\label{lem:stein-scalar}
+  \lean{RBM.integral_mul_gaussianPDF, RBM.integral_mul_gaussianReal,
+        RBM.integral_mul_gaussianReal_of_bdd,
+        RBM.integral_mul_gaussianReal_complex}\leanok
+  For positive variance, integration by parts against the real Gaussian density
+  gives $\mathbb E[Xf(X)]=v\mathbb E[f'(X)]$, first for real and then for
+  complex-valued bounded differentiable functions.  \emph{Work order S2, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Differentiate the Gaussian density, integrate the product derivative over
+  the whole real line, then use real and imaginary parts for complex tests.
+\end{proof}
+
+\begin{lemma}[Matrix Gaussian Stein identity]\label{lem:stein}
+  \uses{lem:stein-scalar}
+  Stein's identity, replacing a matrix coordinate by
+  its variance times the corresponding derivative.  The matrix layer goes through a resampling identity
   (``replacing one coordinate by an independent copy does not change the
   measure'') rather than through Fubini on a product measure; independence is
-  used at that one point only.  \emph{Work orders S2, S3.}
+  used at that one point only.  \emph{Work order S3.}
 \end{lemma}
 
 \begin{lemma}[Continuous induction]\label{lem:bootstrap}

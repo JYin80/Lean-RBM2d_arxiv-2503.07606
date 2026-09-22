@@ -18,6 +18,7 @@ import RBM2D.Propagator.Harmonic
 import RBM2D.Propagator.LatticeSum
 import RBM2D.Delocalization
 import RBM2D.Gauss.Envelope
+import RBM2D.Gauss.Stein
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms

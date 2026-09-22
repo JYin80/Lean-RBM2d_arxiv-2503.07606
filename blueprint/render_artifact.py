@@ -59,7 +59,7 @@ TASK = {"lem:qcomp": "T2", "lem:latticesum": "T3", "lem:decay-small": "T4",
         "lem:dyadic": "T22", "lem:dyadic-case1": "T18", "lem:propTH-5": "T30", "lem:propTH-6": "T23",
         "lem:dyadic-sums": "T17", "def:block-model": "T7 ★ 最优先",
         "def:model": "S4", "def:stochdom": "S0",
-        "lem:envelope": "S1", "lem:stein": "S2+S3", "lem:bootstrap": "S8",
+        "lem:envelope": "S1", "lem:stein-scalar": "S2", "lem:stein": "S3", "lem:bootstrap": "S8",
         "lem:generator": "S5", "lem:bridge-prec": "S6", "lem:bridge-moment": "S7",
         "lem:gronwall": "S9", "lem:discharge": "S10"}
 
