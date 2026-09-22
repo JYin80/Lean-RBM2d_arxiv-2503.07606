@@ -999,6 +999,43 @@
   twice.
 \end{proof}
 
+\begin{lemma}[Normalized radius second difference away from a fold]
+  \label{lem:normalized-radius-second-diff}
+  \uses{lem:normalized-cutoff-diff}
+  \lean{RBM.abs_normalizedFrequency_second_diff_e1_le_of_affine,
+        RBM.abs_normalizedFrequency_second_diff_e2_le_of_affine,
+        RBM.normalizedFrequency_antipodal_fold_example}\leanok
+  If the shifted coordinate of the periodic radial distance is affine over
+  two steps and the middle normalized radius is at least $\rho>0$, its
+  second difference is at most $L^{-2}/\rho$ in either coordinate. The
+  affine hypothesis is necessary: an even-$L$ antipodal triple gives a
+  second difference of $2/L$ while every radius stays positive.
+  \emph{T22 no-fold radius checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the exact squared-radius identity and the first-step Lipschitz bound;
+  the affine coordinate hypothesis removes the linear fold term.
+\end{proof}
+
+\begin{lemma}[A checkable no-fold branch for the normalized radius]
+  \label{lem:normalized-radius-no-fold}
+  \uses{lem:normalized-radius-second-diff}
+  \lean{RBM.noFoldTwo,
+        RBM.pstar_second_diff_eq_zero_of_noFoldTwo,
+        RBM.abs_normalizedFrequency_second_diff_e1_le_of_noFoldTwo,
+        RBM.abs_normalizedFrequency_second_diff_e2_le_of_noFoldTwo}\leanok
+  If three consecutive representatives lie entirely on one affine branch
+  of the periodic distance, the physical radius has zero second difference.
+  This decidable condition supplies the affine hypothesis of the sharp
+  normalized-radius estimates in either coordinate. It is nonempty at
+  $L=8$, starting from coordinate $1$; crossing points remain separate.
+  \emph{T22 no-fold branch checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Evaluate the periodic distance on the lower or upper half of the cycle,
+  then invoke the already proved Euclidean-radius curvature estimate.
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
   Assemble the three ingredients into the per-annulus estimate and produce
@@ -1728,6 +1765,45 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   with the samplewise generator identity.
 \end{proof}
 
+\begin{lemma}[Finite expected loop hierarchy in cut form]
+  \label{lem:loop-hierarchy-generator}
+  \uses{lem:loop-expectation-derivative,
+         lem:loop-second-expected-cuts,
+         lem:loop-spectral-drift-expectation}
+  \lean{RBM.Gauss.expectedSameEdgeCuts,
+        RBM.Gauss.expectedPairCuts,
+        RBM.Gauss.expectedSpectralCuts,
+        RBM.Gauss.deriv_expected_gloop_eq_hierarchyCuts}\leanok
+  For $|E|<2$, $0<u<1$ and a well-formed finite loop, its expected time
+  derivative is $W^2$ times the expected same-edge cuts plus $W^2$ times
+  the expected distinct-edge cuts, together with the signed expected
+  spectral cuts. The $1/(2u)$ flow factor cancels the $2u$ Gaussian
+  contraction factor. Tree expansion and moment bounds remain open.
+  \emph{S5 finite hierarchy checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Substitute the expected Hessian and spectral cut identities into the
+  expectation derivative formula and simplify the two coefficients.
+\end{proof}
+
+\begin{lemma}[Deterministic initial value of an expected finite loop]
+  \label{lem:loop-initial-value}
+  \uses{lem:loop-expectation-derivative,
+         def:loops}
+  \lean{RBM.Gauss.initialLoopValue,
+        RBM.Gauss.initialLoopValue_eq_trace_product,
+        RBM.Gauss.gloop_HflowBlock_zero,
+        RBM.Gauss.integral_gloop_HflowBlock_zero}\leanok
+  At $u=0$ the Gaussian matrix flow vanishes samplewise. Every finite loop
+  therefore starts at the deterministic zero-matrix resolvent trace with
+  the normalized block projectors already present. Simplifying this product
+  into scalar Green coefficients and equality indicators is a separate step.
+  \emph{S5 initial-value checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Substitute $\sqrt0=0$ in the matrix flow and integrate a constant loop.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
   \uses{lem:generator, lem:moment-closing-base, lem:moment-time-cont,
          lem:flow-time-cont, lem:green-time-cont, lem:loop-time-cont,
@@ -2148,6 +2224,26 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Insert the fixed-position contraction identities into the global weighted
   trace position sum and use the multiplicity two for distinct pairs.
+\end{proof}
+
+\begin{lemma}[Expected second loop derivative as cut expectations]
+  \label{lem:loop-second-expected-cuts}
+  \uses{lem:loop-second-all-cuts,
+         lem:loop-coordinate-integrable}
+  \lean{RBM.Gauss.integrable_gloop_product,
+        RBM.Gauss.integral_coordinateSecondWordDeriv_allCuts,
+        RBM.Gauss.integral_actual_gloopSecondCoordinate_allCuts}\leanok
+  At fixed $u>0$ and nonreal spectral parameter, the actual second
+  coordinate derivative is integrable under the Gaussian law. Its expected
+  variance sum is $2uW^2$ times the finite sum of expected same-edge
+  cut-loop products plus $2uW^2$ times the analogous pair-cut sum.
+  The spectral drift and final hierarchy ODE remain separate.
+  \emph{S5 expected Hessian cuts, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound each loop product uniformly by the resolvent gap, exchange the
+  finite coordinate, position and block sums with integration, and use
+  the actual second coordinate derivative identity.
 \end{proof}
 
 \begin{lemma}[Single-edge second derivative covariance contraction]
