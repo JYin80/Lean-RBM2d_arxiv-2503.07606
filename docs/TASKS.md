@@ -36,6 +36,8 @@
 | T22c | 物理壳上三个逆符号分母的共同下界 | `Propagator/PhysicalShellDenominator.lean` | 当前对话内代理 | **完成，本地全量验收通过**；分子界与求和仍开放 |
 | T22d | 物理壳上两个坐标方向的倒数差分分子界 | `Propagator/PhysicalShellNumerator.lean` | 当前对话内代理 | **完成，本地全量验收通过**；cutoff 接口与求和仍开放 |
 | T22e | 非零归一化 cutoff 的低频／物理壳差分界分支 | `Propagator/NormalizedCutoffSecondDiff.lean` | 当前对话内代理 | **完成，本地全量验收通过**；cutoff 自身差分与求和仍开放 |
+| T22f | 归一化 cutoff 的全局粗差分界 | `Propagator/NormalizedCutoffDiff.lean` | 当前对话内代理 | **完成，本地全量验收通过**；二阶仅为一阶网格尺度，sharp 界仍开放 |
+| T22g | cutoff 在内外支撑之外的两步平坦性 | `Propagator/NormalizedCutoffFlat.lean`、`NormalizedCutoffOuterFlat.lean` | 当前对话内代理 | **完成，本地全量验收通过**；过渡区的 sharp 差分仍开放 |
 | **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
@@ -101,6 +103,13 @@
 | S5ac | 有限 loop 期望的实际时间导数公式 | `Gauss/LoopExpectationDerivative.lean` | 当前对话内代理 | **完成，本地全量验收通过**；代数生成元对应仍开放 |
 | S5ad | 任意有限词二阶导数的同边／异边位置和 | `Hierarchy/ContractionSecondDerivativePositionSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；方差收缩与 cut-loop 汇总仍开放 |
 | S5ae | 二阶导数的加权 trace 位置和 | `Hierarchy/ContractionSecondDerivativeTraceSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；逐位置 cut-loop 汇总仍开放 |
+| S5af | 位置切分片段与 loop 乘积一致 | `Hierarchy/ContractionPositionLoopBridge.lean` | 当前对话内代理 | **完成，本地全量验收通过**；固定位置收缩需汇总 |
+| S5ag | 固定同边与双边位置的 cut-loop 收缩 | `Hierarchy/ContractionSameEdgePositionCut.lean`、`ContractionPairPositionCut.lean` | 当前对话内代理 | **完成，本地全量验收通过**；所有位置汇总仍开放 |
+| S5ah | 谱漂移逐边展开为 cut-loop | `Gauss/LoopSpectralDriftCuts.lean` | 当前对话内代理 | **完成，本地全量验收通过**；期望对应与完整生成元仍开放 |
+| S5ai | 谱漂移的期望 cut-loop 公式 | `Gauss/LoopSpectralDriftExpectation.lean` | 当前对话内代理 | **完成，本地全量验收通过**；与二阶项合并仍开放 |
+| S5aj | 全部二阶 Gaussian 收缩的 cut-loop 公式 | `Hierarchy/ContractionSecondLoopAllCuts.lean` | 当前对话内代理 | **完成，本地全量验收通过**；期望合并仍开放 |
+| S5ak | 样本级 cut-loop 生成元系数化简 | `Gauss/LoopGeneratorSamplewise.lean` | 当前对话内代理 | **完成，本地全量验收通过**；期望与论文算子对应仍开放 |
+| S5al | 期望 loop 的导数等于 cut 生成元的期望 | `Gauss/LoopGeneratorExpectation.lean` | 当前对话内代理 | **完成，本地全量验收通过**；逐项期望及最终算子对应仍开放 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |

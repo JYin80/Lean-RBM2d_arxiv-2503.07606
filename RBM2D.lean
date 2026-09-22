@@ -40,6 +40,9 @@ import RBM2D.Propagator.NormalizedCutoffShell
 import RBM2D.Propagator.PhysicalShellDenominator
 import RBM2D.Propagator.PhysicalShellNumerator
 import RBM2D.Propagator.NormalizedCutoffSecondDiff
+import RBM2D.Propagator.NormalizedCutoffDiff
+import RBM2D.Propagator.NormalizedCutoffFlat
+import RBM2D.Propagator.NormalizedCutoffOuterFlat
 import RBM2D.Propagator.PeriodizeShells
 import RBM2D.Propagator.PeriodizeTail
 import RBM2D.Propagator.PeriodizeConvergence
@@ -86,6 +89,10 @@ import RBM2D.Gauss.LoopFlowCoordinateChain
 import RBM2D.Gauss.LoopFlowSteinExpectation
 import RBM2D.Gauss.LoopFlowDerivativeEnvelope
 import RBM2D.Gauss.LoopExpectationDerivative
+import RBM2D.Gauss.LoopSpectralDriftCuts
+import RBM2D.Gauss.LoopSpectralDriftExpectation
+import RBM2D.Gauss.LoopGeneratorSamplewise
+import RBM2D.Gauss.LoopGeneratorExpectation
 import RBM2D.Analysis.Bootstrap
 import RBM2D.Analysis.MomentGronwallBase
 import RBM2D.Analysis.MomentClosing
@@ -112,6 +119,10 @@ import RBM2D.Hierarchy.ContractionPairSplits
 import RBM2D.Hierarchy.ContractionFirstDerivativePositionSum
 import RBM2D.Hierarchy.ContractionSecondDerivativePositionSum
 import RBM2D.Hierarchy.ContractionSecondDerivativeTraceSum
+import RBM2D.Hierarchy.ContractionPositionLoopBridge
+import RBM2D.Hierarchy.ContractionSameEdgePositionCut
+import RBM2D.Hierarchy.ContractionPairPositionCut
+import RBM2D.Hierarchy.ContractionSecondLoopAllCuts
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms

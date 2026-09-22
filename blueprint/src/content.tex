@@ -945,6 +945,60 @@
   separated physical-shell estimate in each branch.
 \end{proof}
 
+\begin{lemma}[Coarse differences of the normalized cutoff]
+  \label{lem:normalized-cutoff-diff}
+  \uses{def:normalized-frequency,
+         lem:cutoff}
+  \lean{RBM.abs_normalizedFrequency_shift_e1_le,
+        RBM.abs_normalizedFrequency_shift_e2_le,
+        RBM.abs_dyadicCutoff_sub_le,
+        RBM.abs_normalizedDyadicCutoff_second_diff_e1_le,
+        RBM.abs_normalizedDyadicCutoff_second_diff_e2_le}\leanok
+  The normalized frequency changes by at most $1/L$ in either coordinate.
+  The cutoff is Lipschitz with constant $420\,2^j$, yielding first
+  differences at scale $420\,2^j/L$ and a global second-difference bound
+  $840\,2^j/L$, even at zero momentum. This second bound is coarse; the
+  quadratic grid scale needed downstream remains open.
+  \emph{T22 cutoff-difference checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Combine the frequency shift bound with the smooth cutoff's global
+  derivative bound; use the triangle inequality for the second difference.
+\end{proof}
+
+\begin{lemma}[Inner flat region of the normalized cutoff]
+  \label{lem:normalized-cutoff-flat}
+  \uses{lem:normalized-cutoff-diff}
+  \lean{RBM.normalizedGridStep_eq_inv,
+        RBM.normalizedDyadicCutoff_eq_zero_of_le_inner,
+        RBM.normalizedDyadicCutoff_eq_zero_e1_triple,
+        RBM.normalizedDyadicCutoff_eq_zero_e2_triple}\leanok
+  The normalized cutoff vanishes below its inner radius. If a momentum and
+  its two coordinate shifts remain below that radius with a $2/L$ buffer,
+  all three cutoff values are exactly zero. The transition zone still needs
+  a sharp second-difference argument. \emph{T22 inner flatness, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the cutoff's exact support and the normalized frequency's step
+  Lipschitz bound twice.
+\end{proof}
+
+\begin{lemma}[Outer flat region of the normalized cutoff]
+  \label{lem:normalized-cutoff-outer-flat}
+  \uses{lem:normalized-cutoff-flat}
+  \lean{RBM.normalizedDyadicCutoff_eq_zero_of_outer_le,
+        RBM.normalizedDyadicCutoff_eq_zero_e1_outer_triple,
+        RBM.normalizedDyadicCutoff_eq_zero_e2_outer_triple}\leanok
+  The normalized cutoff vanishes at and beyond its outer radius. If the
+  starting frequency exceeds it by at least $2/L$, the cutoff also vanishes
+  at both successive coordinate shifts. The transition annulus remains.
+  \emph{T22 outer flatness, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the cutoff's outer support and the one-step normalized frequency bound
+  twice.
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
   Assemble the three ingredients into the per-annulus estimate and produce
@@ -1604,6 +1658,76 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   then substitute the second-level Stein expectation identity.
 \end{proof}
 
+\begin{lemma}[Spectral drift as a sum of single-edge cuts]
+  \label{lem:loop-spectral-drift-cuts}
+  \uses{lem:loop-flow-coordinate-chain,
+         lem:loop-contraction-drift}
+  \lean{RBM.Gauss.spectralWordDeriv_eq_sum_edgeTerms,
+        RBM.Gauss.trace_spectralEdgeTerm_eq_cutGlue,
+        RBM.Gauss.trace_spectralWordDeriv_eq_sum_original_cuts}\leanok
+  The trace of the actual spectral drift word is a finite sum over original
+  signed Green edges. Each term has coefficient
+  $-m(\sigma)W^2$ and is a single-edge cut-loop sum over its inserted block.
+  Expectation and combination with the Gaussian second-coordinate term
+  remain separate. \emph{S5 spectral drift cut checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Expand the recursive spectral word derivative by edge position and apply
+  the general single-edge drift insertion identity to each summand.
+\end{proof}
+
+\begin{lemma}[Expected spectral drift as expected single-edge cuts]
+  \label{lem:loop-spectral-drift-expectation}
+  \uses{lem:loop-spectral-drift-cuts,
+         lem:loop-envelope}
+  \lean{RBM.Gauss.integrable_spectral_cut_loop,
+        RBM.Gauss.integral_trace_spectralWordDeriv_eq_sum_expected_cuts}\leanok
+  Every original-loop single-edge cut is integrable under the Gaussian
+  law. The expected spectral drift is the finite signed edge sum with its
+  exact $-m(\sigma)W^2$ coefficient and expected cut loop at each block.
+  The coordinate Hessian contribution remains separate.
+  \emph{S5 expected spectral drift checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the uniform resolvent envelope for each cut loop, then exchange
+  the finite edge and block sums with integration.
+\end{proof}
+
+\begin{lemma}[Samplewise loop generator in cut-loop form]
+  \label{lem:loop-generator-samplewise}
+  \uses{lem:loop-second-all-cuts,
+         lem:loop-spectral-drift-cuts}
+  \lean{RBM.Gauss.samplewiseLoopGeneratorCuts,
+        RBM.Gauss.samplewise_loop_generator_eq_cuts}\leanok
+  At each sample and $0<u<1$, the second-coordinate generator term divided
+  by $2u$ plus the spectral drift equals a finite cut-loop expression.
+  The Hessian factor $2uW^2$ cancels to $W^2$ in both same-edge and pair
+  families; the signed spectral drift retains its exact coefficient.
+  Expectation and the paper hierarchy operator remain to be connected.
+  \emph{S5 samplewise generator checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Substitute the full Hessian cut identity and spectral drift edge expansion,
+  then cancel the positive time parameter in the Hessian coefficient.
+\end{proof}
+
+\begin{lemma}[Expected finite loop derivative equals expected cut generator]
+  \label{lem:loop-generator-expectation}
+  \uses{lem:loop-expectation-derivative,
+         lem:loop-generator-samplewise}
+  \lean{RBM.Gauss.integrable_samplewiseLoopGeneratorCuts,
+        RBM.Gauss.deriv_integral_gloop_eq_integral_samplewiseLoopGeneratorCuts}\leanok
+  For $|E|<2$ and $0<u<1$, the derivative of the expected finite loop is
+  the expectation of its integrable samplewise cut-loop generator. Finite
+  cut sums have not yet been pulled outside expectation, and the explicit
+  paper hierarchy operator remains to be matched.
+  \emph{S5 expectation-generator checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Combine the proved interchange of time derivative and Gaussian integral
+  with the samplewise generator identity.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
   \uses{lem:generator, lem:moment-closing-base, lem:moment-time-cont,
          lem:flow-time-cont, lem:green-time-cont, lem:loop-time-cont,
@@ -1950,6 +2074,80 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Use trace linearity and exchange the two finite sums over Gaussian
   coordinates and list positions.
+\end{proof}
+
+\begin{lemma}[Position-split segments are finite loop products]
+  \label{lem:loop-position-segment-bridge}
+  \uses{lem:loop-second-trace-sum,
+         def:loops}
+  \lean{RBM.Gauss.segmentLoopIdx_WF,
+        RBM.Gauss.coordinateWordProduct_eq_gloopProd,
+        RBM.Gauss.edgeSplit_segment_products,
+        RBM.Gauss.pairSplit_segment_products}\leanok
+  Projecting any signed edge segment to its sign and block lists yields a
+  well-formed loop index, and its ordered matrix word is exactly the
+  corresponding finite loop product. This bridges both one-edge and
+  two-edge position splits to the established cut-loop contractions.
+  \emph{S5 segment bridge checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  The paired projections zip back to the original segment, so the two
+  finite word definitions agree term by term.
+\end{proof}
+
+\begin{lemma}[Fixed same-edge position contracts to cut loops]
+  \label{lem:loop-same-edge-position-cut}
+  \uses{lem:loop-position-segment-bridge,
+         lem:loop-contraction-second-same-edge-cut}
+  \lean{RBM.Gauss.sum_coordinateSameEdgeTerm_cutLoops,
+        RBM.Gauss.sum_coordinateSameEdgeTerm_cutLoops_of_mem}\leanok
+  At any chosen one-edge split of a finite loop word, the variance-weighted
+  second derivative contribution is exactly $2uW^2$ times the covariance
+  double sum of the repeated-edge loop and one-edge loop. Membership in the
+  split enumeration ensures the cut reconstructs the original word.
+  Summation over all positions remains open.
+  \emph{S5 fixed same-edge cut checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Replace the prefix and suffix coordinate products by their projected loop
+  products and apply the chosen-edge contraction theorem.
+\end{proof}
+
+\begin{lemma}[Fixed pair of edges contracts to left and right cut loops]
+  \label{lem:loop-pair-position-cut}
+  \uses{lem:loop-position-segment-bridge,
+         lem:loop-contraction-second}
+  \lean{RBM.Gauss.sum_coordinatePairTerm_cutLoops,
+        RBM.Gauss.sum_coordinatePairTerm_cutLoops_of_mem}\leanok
+  At any chosen ordered pair of distinct edges, the variance-weighted
+  derivative term is $uW^2$ times the covariance double sum of its left and
+  right cut loops. Pair membership reconstructs the original finite word.
+  The second-derivative position formula supplies the factor two when all
+  pairs are assembled. \emph{S5 fixed pair cut checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Replace all three segment products by their projected loop products and
+  apply the two-edge coordinate contraction theorem.
+\end{proof}
+
+\begin{lemma}[Full samplewise second loop derivative as cut sums]
+  \label{lem:loop-second-all-cuts}
+  \uses{lem:loop-second-trace-sum,
+         lem:loop-same-edge-position-cut,
+         lem:loop-pair-position-cut}
+  \lean{RBM.Gauss.sameEdgeCutValue,
+        RBM.Gauss.pairCutValue,
+        RBM.Gauss.sum_coordinateSecondWordDeriv_allCuts,
+        RBM.Gauss.sum_gloopSecondWordDeriv_allCuts}\leanok
+  For every well-formed finite loop and $u\ge0$, the full variance-weighted
+  second coordinate derivative is the sum over all same-edge cuts plus the
+  sum over all distinct-edge pair cuts, both with exact coefficient
+  $2uW^2$. This is samplewise; expectation and spectral drift are separate.
+  \emph{S5 complete Hessian cut checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Insert the fixed-position contraction identities into the global weighted
+  trace position sum and use the multiplicity two for distinct pairs.
 \end{proof}
 
 \begin{lemma}[Single-edge second derivative covariance contraction]
