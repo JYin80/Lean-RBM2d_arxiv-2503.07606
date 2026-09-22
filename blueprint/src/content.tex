@@ -288,23 +288,46 @@
   \emph{Work order T4.}
 \end{lemma}
 
+\begin{lemma}[Two-dimensional logarithmic integral, \texttt{(eq\_log\_int)}]
+  \label{lem:log-integral}
+  $\int_{[-\pi,\pi]^2}(\kappa^2+|p|_*^2)^{-1}\,\mathrm dp
+   \le C\log(2+\kappa^{-1})$.
+  \emph{Work order T25.}
+\end{lemma}
+
+\begin{definition}[Continuous symbol and infinite-volume kernel, \texttt{(eq\_Kinf)}]
+  \label{def:continuum}
+  \uses{lem:elliptic, lem:qcomp}
+  The continuous counterpart of $\widehat S$, its ellipticity, and the
+  integrable kernel $K_{\xi,\infty}$ on $\mathbb Z^2$.
+  \emph{Work order T26.}
+\end{definition}
+
 \begin{lemma}[Infinite-volume kernel and the contour shift]\label{lem:contour}
-  \uses{lem:elliptic}
+  \uses{def:continuum}
   $|D_\xi(p+\mathrm{i}\eta)|\ge c(\kappa^2+|p|_*^2)$ for $|\eta|\le c_0\kappa$, and
   hence $|K_{\xi,\infty}(x)|\le C\log(2+\kappa^{-1})e^{-c\kappa|x|}$.
-  \emph{Work orders T26 and T27.}
+  \emph{Work order T27.}
 \end{lemma}
 
 \begin{lemma}[Periodization]\label{lem:periodize}
-  \uses{lem:contour, lem:fourier}
+  \uses{def:continuum, lem:log-integral, lem:fourier}
   $K_{\xi,L}(x)=\sum_{n\in\mathbb Z^2}K_{\xi,\infty}(x+nL)$, by showing that the
   periodized kernel solves $(1-\xi S)P=\delta_0$ and using uniqueness of the
   inverse.  This does not depend on T27's contour estimate.
-  \emph{Work orders T25, T26 and T28.}
+  \emph{Work order T28.}
+\end{lemma}
+
+\begin{lemma}[Explicit decay through the contour interface]\label{lem:decay-interface}
+  \uses{def:kappa}
+  The two regimes of Property~5 are assembled with an explicit
+  \texttt{ContourInput} interface.  The small-$\kappa L$ branch remains a
+  theorem; the interface is a named obligation for the large-$\kappa L$ branch.
+  \emph{Work order T24.}
 \end{lemma}
 
 \begin{lemma}[Property 5, \texttt{(prop:ThfadC)}]\label{lem:propTH-5}
-  \uses{lem:decay-small, lem:periodize}
+  \uses{lem:decay-small, lem:contour, lem:periodize, lem:decay-interface}
   $(\Th^{(B)}_\xi)_{ab}\prec e^{-c|a-b|_L/\lhat(\xi)}\big/\big(|1-\xi|\lhat(\xi)^2\big)$.
 \end{lemma}
 
@@ -355,14 +378,31 @@
   \emph{Work order T18, closed.}
 \end{proof}
 
+\begin{lemma}[Explicit dyadic cutoff]\label{lem:cutoff}
+  A scale-uniform third finite-difference bound for an explicit polynomial
+  cutoff, together with the partition of unity.  This avoids an unquantified
+  derivative bound for \texttt{ContDiffBump}.
+  \emph{Work order T19.}
+\end{lemma}
+
+\begin{lemma}[Periodic summation by parts]\label{lem:abel}
+  Reindex finite sums on $\Z_L^2$ to transfer lattice differences from a
+  multiplier to a character, with no boundary term.
+  \emph{Work order T20.}
+\end{lemma}
+
+\begin{lemma}[Multiplier differences on an annulus]\label{lem:symbol-diff}
+  \uses{lem:elliptic, lem:qcomp}
+  Bound the first three lattice differences of the inverse symbol uniformly
+  on a dyadic annulus, retaining the gain from $|\sin p_i|\lesssim|p|_*$.
+  \emph{Work order T21.}
+\end{lemma}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
-  \uses{lem:elliptic}
-  The per-annulus estimate itself, which produces a \texttt{DyadicDecomp}.  The
-  only thing Mathlib genuinely lacks here is a scale-uniform derivative bound for
-  a cutoff: \texttt{ContDiffBump} carries no bound on \texttt{iteratedFDeriv}.
-  Split into an explicit smoothstep (T19), periodic summation by parts (T20),
-  the multiplier's difference bound (T21) and the assembly (T22); T19--T21 are
-  independent of each other.
+  \uses{lem:cutoff, lem:abel, lem:symbol-diff}
+  Assemble the three ingredients into the per-annulus estimate and produce
+  a witness of \texttt{DyadicDecomp}.
+  \emph{Work order T22.}
 \end{lemma}
 
 \begin{lemma}[Property 6, \texttt{(prop:BD1)}--\texttt{(prop:BD2)}]\label{lem:propTH-6}
