@@ -3,8 +3,8 @@
 
     python3 blueprint/render_artifact.py <repo-root> <out.html>
 
-Reads `blueprint/src/content.tex` for the node graph and `RBM2D/**/*.lean` for
-the declarations, draws one global graph holding every node, then lays each
+Reads `blueprint/src/content.tex` for the node graph and the modules imported
+by `RBM2D.lean` for the declarations, draws one global graph holding every node, then lays each
 \\chapter out on its own with the
 graphviz `dot` binary, and inlines the SVG.  Needs only graphviz + python3 — no
 plasTeX, no LaTeX, no WebAssembly in the output.
@@ -318,6 +318,22 @@ def figure_html(cap, svg, w):
 def main(root, out):
     root = pathlib.Path(root)
     tex = (root / "blueprint/src/content.tex").read_text(encoding="utf-8")
+    # Workers can create untracked Lean files while the coordinator renders the
+    # blueprint. Count only modules reachable from the audited root import list.
+    def imported_sources():
+        todo = [root / "RBM2D.lean"]
+        seen = set()
+        while todo:
+            path = todo.pop()
+            if path in seen:
+                continue
+            seen.add(path)
+            for mod in re.findall(r"^import (RBM2D(?:\.[A-Za-z_][\w]*)+)$",
+                                  path.read_text(encoding="utf-8"), re.M):
+                child = root / (mod.replace(".", "/") + ".lean")
+                if child.is_file():
+                    todo.append(child)
+        return sorted(path for path in seen if path != root / "RBM2D.lean")
     # Fully-qualified declaration names, tracking `namespace`/`end` so that a tag
     # like RBM.Gauss.norm_green_le resolves exactly and a typo still fails.
     def qualified(text):
@@ -332,12 +348,11 @@ def main(root, out):
                 if m:
                     out.append((m.group(1), ".".join(stack + [m.group(2)])))
         return out
-    src = "\n".join(p.read_text(encoding="utf-8") for p in root.glob("RBM2D/**/*.lean"))
     # The SET validates \lean{} tags and must accept every kind of declaration,
     # since a node may well point at a `def` (RBM.SB, RBM.shellIndex).  The
     # headline COUNT is theorems only -- `def`s are bookkeeping, not mathematics,
     # and counting them inflates the number the reader cares about.
-    found = [kn for p in root.glob("RBM2D/**/*.lean")
+    found = [kn for p in imported_sources()
                 for kn in qualified(p.read_text(encoding="utf-8"))]
     decls = {n for _, n in found}
     n_thm = sum(1 for k, _ in found if k in ("theorem", "lemma"))

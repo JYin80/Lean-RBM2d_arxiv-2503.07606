@@ -68,6 +68,21 @@
   computation $B=B\,(1-\xi\SB)\,\Th_\xi=\Th_\xi$.
 \end{proof}
 
+\begin{lemma}[Derivative of the block propagator, \texttt{(deri\_Thxi)}]
+  \label{lem:Theta-deriv}
+  \uses{def:Theta, lem:Theta-unique}
+  \lean{RBM.Theta_sub_Theta, RBM.continuousAt_Theta,
+        RBM.hasDerivAt_Theta_apply}\leanok
+  For every block pair $a,b$, the complex derivative of
+  $(\Th^{(B)}_\xi)_{ab}$ equals $(\Th^{(B)}_\xi\SB\Th^{(B)}_\xi)_{ab}$.
+  This is the finite-dimensional, entrywise form of the paper's matrix identity.
+  \emph{Work order T6, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Subtract the inverses at two parameters, factor the resolvent identity, and
+  pass to the limit using continuity of matrix inversion and evaluation.
+\end{proof}
+
 \begin{lemma}[Properties 1--4 of Lemma \texttt{lem\_propTH}]\label{lem:propTH-1234}
   \lean{RBM.Theta_transpose, RBM.Theta_apply_add_right, RBM.Theta_commute_SB,
     RBM.Theta_commute, RBM.Theta_eq_tsum, RBM.sum_Theta_row}\leanok
@@ -338,11 +353,29 @@
 \end{definition}
 
 \begin{lemma}[Infinite-volume kernel and the contour shift]\label{lem:contour}
-  \uses{def:continuum}
+  \uses{def:continuum, lem:contour-first}
   $|D_\xi(p+\mathrm{i}\eta)|\ge c(\kappa^2+|p|_*^2)$ for $|\eta|\le c_0\kappa$, and
   hence $|K_{\xi,\infty}(x)|\le C\log(2+\kappa^{-1})e^{-c\kappa|x|}$.
-  \emph{Work order T27.}
+  The first-coordinate Cauchy shift is proved below; its shifted-integral
+  estimate and the second-coordinate step remain open. \emph{Work order T27.}
 \end{lemma}
+
+\begin{lemma}[First-coordinate zero-free strip and Cauchy shift]\label{lem:contour-first}
+  \uses{def:continuum}
+  \lean{RBM.contourWidth, RBM.norm_Dfirst_shift_ge,
+        RBM.contourIntegrand_differentiableOn,
+        RBM.contour_integral_shift_first}\leanok
+  For $|\eta|\le\kappa/10000$ and real frequencies in the Fourier square,
+  the actual denominator is zero-free after shifting the first coordinate.
+  Holomorphy, cancellation of the vertical sides, and Cauchy's theorem give
+  equality of the original and shifted first-coordinate integrals.
+  \emph{T27 intermediate result.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound the change of the cosine symbol by the quadratic and linear terms in
+  the strip width, then apply the rectangular contour theorem to the periodic
+  integrand. The integer spatial coordinate cancels the vertical sides.
+\end{proof}
 
 \begin{lemma}[Periodization]\label{lem:periodize}
   \uses{def:continuum, lem:log-integral, lem:fourier}
@@ -424,17 +457,32 @@
 \end{proof}
 
 \begin{lemma}[Explicit dyadic cutoff]\label{lem:cutoff}
+  \lean{RBM.contDiff_dyadicCutoff_three, RBM.sum_dyadicCutoff_eq_one,
+        RBM.dyadicCutoff_support, RBM.dyadicCutoff_nonneg,
+        RBM.abs_dyadicCutoff_thirdForwardDiff_le}\leanok
   A scale-uniform third finite-difference bound for an explicit polynomial
-  cutoff, together with the partition of unity.  This avoids an unquantified
-  derivative bound for \texttt{ContDiffBump}.
-  \emph{Work order T19.}
+  cutoff, together with an exact partition on the normalized interval
+  $2^{-J}\le t\le1$. T22 must normalize its frequency and cover the smallest
+  nonzero mode when choosing $J$. \emph{Work order T19, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  Use a degree-seven smoothstep with three flat derivatives at both endpoints;
+  the dyadic differences telescope, and the third derivative bounds the third
+  forward difference.
+\end{proof}
 
 \begin{lemma}[Periodic summation by parts]\label{lem:abel}
+  \lean{RBM.sum_fwdDiff_mul, RBM.norm_stdAddChar_sub_one_sq,
+        RBM.chr_e1_distance_bounds, RBM.chr_e2_distance_bounds}\leanok
   Reindex finite sums on $\ZL$ to transfer lattice differences from a
-  multiplier to a character, with no boundary term.
-  \emph{Work order T20.}
+  multiplier to a character, with no boundary term. The phase loss in each
+  coordinate is quantitatively comparable to its periodic graph distance.
+  \emph{Work order T20, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  Reindex by translation on the finite torus and apply the exact complex
+  exponential phase identity, followed by the half-angle trigonometric bounds.
+\end{proof}
 
 \begin{lemma}[Multiplier differences on an annulus]\label{lem:symbol-diff}
   \uses{lem:elliptic, lem:qcomp}
@@ -606,12 +654,19 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \end{proof}
 
 \begin{lemma}[Continuous induction]\label{lem:bootstrap}
+  \lean{RBM.le_of_bootstrap, RBM.le_of_bootstrap_prefix,
+        RBM.le_of_bootstrap_two_mul, RBM.bootstrap_nonconstant_example}\leanok
   If $\varphi$ is continuous and $\varphi\le C\Rightarrow\varphi\le B$, then
   $\varphi\le B$.  This replaces the stopping time of the paper's Step~2, and
   with it the only place where a stopping time enters a \emph{statement}
   (equation \texttt{(105)}, which is then simply not stated).
-  \emph{Work order S8.}
+  The concrete moment functional's continuity and self-improvement are still
+  needed downstream. \emph{Work order S8, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  The improved sublevel set is both open and closed in the time interval.
+  A supremum argument also proves the prefix form used in Step~2.
+\end{proof}
 
 \begin{lemma}[The generator identity]\label{lem:generator}
   \uses{lem:envelope, lem:stein, def:model}
@@ -644,14 +699,41 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 
 \begin{lemma}[Bridge: $\prec\Rightarrow$ moments]\label{lem:bridge-moment}
   \uses{def:stochdom, lem:envelope}
-  The converse, whose entire weight rests on the envelope holding globally: on
-  the bad event the quantity is bounded by $\eta^{-1}$ outright.
-  \emph{Work order S7.}
+  \lean{RBM.Gauss.integrable_abs_evenPow_of_envelope,
+        RBM.Gauss.momentDom_of_stochDom,
+        RBM.Gauss.momentDomAt_of_stochDomAt,
+        RBM.Gauss.momentDom_green_of_stochDom}\leanok
+  Under a global polynomial envelope and a polynomial lower bound on the
+  positive scale, stochastic domination gives all even-moment bounds. The
+  bad-event contribution uses the global envelope; the Green-function version
+  uses the established resolvent bound. \emph{Work order S7, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  Split the moment integral into the high-probability good event and its
+  complement; choose the domination exponent to absorb the polynomial
+  envelope on the latter.
+\end{proof}
 
-\begin{lemma}[Gr\"onwall on moments]\label{lem:gronwall}
+\begin{lemma}[A generic Gr\"onwall comparison]\label{lem:gronwall-base}
+  \lean{RBM.Gauss.le_gronwallBound_of_hasDerivWithinAt_le,
+        RBM.Gauss.gronwall_linear_example}\leanok
+  A continuous real function whose right derivative is bounded by
+  $K\varphi+\varepsilon$ lies below the Gr\"onwall comparison function.
+  This dimension-free Mathlib bridge is available; whether its exponential
+  factor has the scale needed for the paper is checked at the actual moment
+  inequality. \emph{S9 auxiliary result.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply Mathlib's one-sided slope form of the Gr\"onwall comparison theorem.
+\end{proof}
+
+\begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
   \uses{lem:generator}
-  \emph{Work order S9.}
+  Derive the required moment bound from the specific generator and quadratic
+  variation estimates while preserving its $\eta$ scale.  The d=1 proof's
+  integrate--supremum--quadratic argument is the analytic bridge; the generic
+  Gr\"onwall comparison above has an unsuitable loss if used naively here.
+  \emph{Work orders S9b/S9, still open.}
 \end{lemma}
 
 \begin{lemma}[Discharging the martingale bound]\label{lem:discharge}

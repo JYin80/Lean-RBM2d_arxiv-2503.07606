@@ -119,11 +119,11 @@ theorem zdist2_le_one_of_mem_sbSupport (hL : 3 ≤ L) {u : Z2 L} (h : u ∈ sbSu
   have hm1 := zdist_neg_one_le L hL
   simp only [sbSupport, Finset.mem_insert, Finset.mem_singleton] at h
   rcases h with h | h | h | h | h
-  · rw [h]; show zdist L 0 + zdist L 0 ≤ 1; simp only [zdist_zero]; omega
-  · rw [h]; show zdist L 1 + zdist L 0 ≤ 1; simp only [zdist_zero]; omega
-  · rw [h]; show zdist L (-1) + zdist L 0 ≤ 1; simp only [zdist_zero]; omega
-  · rw [h]; show zdist L 0 + zdist L 1 ≤ 1; simp only [zdist_zero]; omega
-  · rw [h]; show zdist L 0 + zdist L (-1) ≤ 1; simp only [zdist_zero]; omega
+  · rw [h]; change zdist L 0 + zdist L 0 ≤ 1; simp only [zdist_zero]; omega
+  · rw [h]; change zdist L 1 + zdist L 0 ≤ 1; simp only [zdist_zero]; omega
+  · rw [h]; change zdist L (-1) + zdist L 0 ≤ 1; simp only [zdist_zero]; omega
+  · rw [h]; change zdist L 0 + zdist L 1 ≤ 1; simp only [zdist_zero]; omega
+  · rw [h]; change zdist L 0 + zdist L (-1) ≤ 1; simp only [zdist_zero]; omega
 
 theorem sbKernel_eq_zero (hL : 3 ≤ L) {u : Z2 L} (h : 1 < zdist2 L u) : sbKernel L u = 0 := by
   rw [sbKernel, ite_eq_right]

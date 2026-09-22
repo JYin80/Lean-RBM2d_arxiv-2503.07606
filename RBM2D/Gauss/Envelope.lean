@@ -119,7 +119,7 @@ theorem norm_green_le {H : Matrix n n ℂ} (hH : H.IsHermitian) {z : ℂ} {η : 
   set A : Matrix n n ℂ := H - z • (1 : Matrix n n ℂ) with hA
   have hAu : IsUnit A := isUnit_sub_smul_one_of_im_ne_zero hH hzim
   have hdet : IsUnit A.det := (Matrix.isUnit_iff_isUnit_det A).mp hAu
-  show ‖A⁻¹‖ ≤ η⁻¹
+  change ‖A⁻¹‖ ≤ η⁻¹
   rw [Matrix.cstar_norm_def]
   refine ContinuousLinearMap.opNorm_le_bound _ (by positivity) fun v ↦ ?_
   set w := Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ) A⁻¹ v with hw
@@ -137,7 +137,10 @@ theorem norm_green_le {H : Matrix n n ℂ} (hH : H.IsHermitian) {z : ℂ} {η : 
   rw [inv_mul_eq_div, le_div_iff₀ hη]
   linarith [hfin]
 
-/-- The affine line `s ↦ M + s • A` has derivative `A`. -/
+set_option linter.unusedFintypeInType false in
+set_option linter.unusedDecidableInType false in
+/-- The affine line `s ↦ M + s • A` has derivative `A`.
+The unused matrix instances are retained in the declaration type for compatibility. -/
 theorem hasDerivAt_line (M A : Matrix n n ℂ) (t : ℝ) :
     HasDerivAt (fun s : ℝ => M + (s : ℂ) • A) A t := by
   have h : HasDerivAt (fun s : ℝ => (s : ℂ) • A) A t := by
@@ -265,7 +268,7 @@ omit [Fintype n] [DecidableEq n] in
 theorem isHermitian_add_realSmul {M A : Matrix n n ℂ} (hM : M.IsHermitian)
     (hA : A.IsHermitian) (s : ℝ) : (M + (s : ℂ) • A).IsHermitian := by
   refine hM.add ?_
-  show Matrix.conjTranspose ((s : ℂ) • A) = (s : ℂ) • A
+  change Matrix.conjTranspose ((s : ℂ) • A) = (s : ℂ) • A
   rw [Matrix.conjTranspose_smul, hA, Complex.star_def, Complex.conj_ofReal]
 
 /-- **The global derivative bound, in the form every later file needs.**
@@ -283,7 +286,7 @@ theorem norm_iteratedDeriv_green_le {M A : Matrix n n ℂ} (hM : M.IsHermitian)
   have hgr : (fun s : ℝ => green (M + (s : ℂ) • A) z)
       = fun s : ℝ => Ring.inverse (M - z • (1 : Matrix n n ℂ) + (s : ℂ) • A) := by
     funext s
-    show (M + (s : ℂ) • A - z • (1 : Matrix n n ℂ))⁻¹ = _
+    change (M + (s : ℂ) • A - z • (1 : Matrix n n ℂ))⁻¹ = _
     rw [Matrix.nonsing_inv_eq_ringInverse]
     congr 1
     abel

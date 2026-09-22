@@ -18,35 +18,43 @@
 | **T7** | §2 模型层：`S = S^(B)⊗S_W` on `Z_{WL}²`、`I^(2)_a`、`E_a` | `Defs/Model.lean` | Codex T7 | **完成，主分支全量验收通过**；S4 已解锁 |
 | **T3** | 格点求和 `Σ_{p≠0}\|p\|_*^{-2} ≤ CL²log L` | `Propagator/LatticeSum.lean` | Codex T3 | **完成，已集成推送**；显式常数 `4/π²`，T4/T5 可开工 |
 | **S0** | Def 2.1 随机版 `≺` 与闭包引理 | `Defs/StochDom.lean` | Codex S0 | **完成，主分支全量验收通过**；S4/S6/S7 的此前置已解除 |
-| **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 当前对话内代理 | **进行中**；独占该文件 |
-| **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 空闲 | **可开工**，纯 `Finset`/`ZMod` 记账 |
+| **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；精确分解在归一化区间 `[2⁻ᴶ,1]` |
+| **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；相位损失双边界已证 |
 | **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
 | **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
 | **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
-| **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 空闲 | **可开工**，独立 |
+| **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；逐元素形式，从 RBM1D 只读移植 |
 | **T8** | 数值回归测试 | `Test/Numeric.lean` | 空闲 | **可开工**，独立 |
-| T31 | 清理当前 10 条 linter warning | `Defs/Dist.lean`、`Gauss/Envelope.lean` | 空闲 | **可开工，低优先级**；不改声明结论 |
+| T31 | 清理当前 10 条 linter warning | `Defs/Dist.lean`、`Gauss/Envelope.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；10 条已清、声明类型保持 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | Codex T4 | **完成，主分支全量验收通过**；T24 可复用 |
 | S4 | 一时刻高斯模型与坐标分解 | `Gauss/Model.lean` | Codex S4 | **完成，主分支全量验收通过**；含 `Sizes.seqP_map_slice` 共同概率空间 |
 | S2 | 实与复高斯 Stein 分部积分 | `Gauss/Stein.lean` | Codex S2 | **完成，主分支全量验收通过**；S3 已解锁 |
 | S3 | 矩阵版 Stein 重采样测度不变式 | `Gauss/SteinMatrix.lean`、`Gauss/SteinConcrete.lean` | 当前对话内代理 | **乘积高斯与 Hermitian 矩阵实例化完成，主分支全量验收通过**；S5 可消费 |
 | S6 | 矩到随机支配与连续时间网格 | `Gauss/Domination.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；实际矩估计与流的高概率模数由下游提供 |
-| S7 | 随机支配到矩的逆桥 | `Gauss/MomentBridge.lean` | 当前对话内代理 | **进行中**；独占该文件 |
+| S7 | 随机支配到矩的逆桥 | `Gauss/MomentBridge.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；全局多项式包络与正尺度下界 |
+| S8 | 连续归纳与前缀自改进 | `Analysis/Bootstrap.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；具体矩函数前提仍由下游证明 |
+| S9a | 通用单侧导数 Grönwall 比较 | `Analysis/MomentGronwallBase.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；具体矩函数的尺度仍需审计 |
+| S9b | 保尺度积分—上确界—二次收口 | `Analysis/MomentClosing.lean` | 当前对话内代理 | **进行中**；从 RBM1D 只读移植 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
-| T27 | 围道平移 `(eq_shifted_lower)(eq_Kinf_bound)` | `Propagator/Contour.lean` | 当前对话内代理 | **进行中**；独占该文件 |
+| T27 | 围道平移 `(eq_shifted_lower)(eq_Kinf_bound)` | `Propagator/Contour.lean` | 当前对话内代理 | **第一坐标条带与 Cauchy 移位已验收**；核衰减仍开放 |
 | T28 | 周期化 + 兑现 `ContourInput` | `Propagator/Periodize.lean` | 空闲 | **可开工**，T25/T26 已有 |
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**S4 已通过主分支全量验收；T19、T27、S7 在当前对话内代理中；S6、T26、T25、T23 的条件版、T5、S3、T4、S2、T7、S0、T3 已完成。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
-T20、T21、T28、T29、T6、T8、S8、T31；队列深度足够。
+**T19、T20、T27 第一坐标阶段、S7、S8、S9a、T6、T31 已通过主分支全量验收；T8、T21 单步差分与 S9b 保尺度收口正在做。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+T21、T28、T29、T8；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
-**当前优先顺序**：S4 + S3 → S5；T19/T20/T21 → T22 → Property 6 无条件版；T25 + T26 → T27/T28（并将 S7/S8 保留在储备队列）。
+**当前派发顺序**：先验收在飞的 **T8（独立数值回归）**，并把 T21 限定为
+`Shat` 的单步差分基础引理。另做一次只读核对：d=1 的
+`Analysis/MomentClosing.lean` 指出粗 Grönwall 会损失 $\eta$ 的幂，S9 必须对照
+d=2 的实际矩不等式，不能因 S9a 已证就宣称完整矩估计完成。
+下一轮优先选 d=1 已证的短引理和明确的维护单；T21/T22、S5、T27/T28
+的较难部分先核对 d=1 代码和精确接口，再决定分段范围。绝不改动 RBM1D。
 任何新结论先复查下游实际缺口，不能仅凭此顺序宣布解锁。
 
 **整篇论文的后段工单储备**（尚未派发，均为蓝图开放节点）：
@@ -1058,7 +1066,9 @@ Mathlib 侧要先确认的零件（**先 grep，不要假设**）：
 
 **先读 `docs/random-layer.md`。** 对 §3–7 的 loop 估计，审计显示可避开适应性、
 Markov 性与两时刻联合律，故可走 d=1 的替代栈：
-`H_u := √u·X` + Stein + 生成元恒等式 + 对矩的 Grönwall + 连续归纳。
+`H_u := √u·X` + Stein + 生成元恒等式 + 保持 $\eta$ 尺度的
+积分—上确界—二次不等式收口 + 连续归纳。粗 Grönwall 的损失由
+RBM1D `Analysis/MomentClosing.lean:21–35` 精确解释，不能直接替代此步。
 §2 的 bulk universality 另用短时 OU/DBM 及外部定理，见 U0–U2。
 
 政策不变：**永不写 `axiom` 或 `sorry`**。可证明诚实的条件引理，但不能把
@@ -1077,9 +1087,11 @@ Markov 性与两时刻联合律，故可走 d=1 的替代栈：
 | **S5** | `Gauss/Generator.lean` | 生成元恒等式 `∂_u E[Φ] = ½Σ S_{ij}E[∂_{ij}∂_{ji}Φ]` | ~900 | S1+S3+S4 | 主体逐字 |
 | **S6** | `Gauss/Domination.lean` | 桥 A（矩 ⟹ `≺`，Markov）+ 时间网 | ~400 | S0 | **逐字** |
 | **S7** | `Gauss/MomentBridge.lean` | 桥 B（`≺` ⟹ 矩，承重全在 S1 的全空间包络） | ~250 | S0+S1 | **逐字** |
-| **S9** | `Gauss/MomentGronwall.lean` | 对矩的 Grönwall | ~1200 | S5 | 主体逐字 |
-| **S10** | `Gauss/DischargeBDG.lean` | **`Σ_α S_α ∂_αL·conj(∂_αL) = (E⊗E)` 的 d=2 版**，卸掉 (108) | ~900 | S5+S9 | **必须重写**（`Z_L²` 分块 + 5 点 `S^{(B)}`） |
-| **S11** | `Hierarchy/Step2Moment.lean` | Step 2：(124) 停时 → 连续归纳，(125) 的估计原样保留 | ~700 | S8+S10 | 结构照搬，估计重算 |
+| **S9a** | `Analysis/MomentGronwallBase.lean` | 通用 Grönwall 比较，已证但不能单独收口本文尺度 | ~35 | — | **逐字，只作辅助** |
+| **S9b** | `Analysis/MomentClosing.lean` | 积分—上确界—二次不等式，保持 $\eta$ 尺度 | ~180 | — | **从 d=1 只读移植中** |
+| **S9** | `Gauss/MomentEstimate.lean` | 把具体生成元与二次变差估计代入 S9b，得到论文矩界 | 待拆 | S5+S9b+S10 | **模型层须重写** |
+| **S10** | `Gauss/DischargeBDG.lean` | **`Σ_α S_α ∂_αL·conj(∂_αL) = (E⊗E)` 的 d=2 版**，卸掉 (108) | ~900 | S5 | **必须重写**（`Z_L²` 分块 + 5 点 `S^{(B)}`） |
+| **S11** | `Hierarchy/Step2Moment.lean` | Step 2：(124) 停时 → 连续归纳，(125) 的估计原样保留 | ~700 | S8+S9 | 结构照搬，估计重算 |
 
 **立刻可并行的三条：S0、S2（→S3）、S8** —— 互不相交，全部近乎逐字可搬。
 **S4 不能与 T7 并行**（它要 `Defs/Model.lean` 的 `S = S^{(B)}⊗S_W`、`I^{(2)}_a`、`E_a`），
