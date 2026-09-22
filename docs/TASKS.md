@@ -1,14 +1,15 @@
 # 任务队列（RBM2D）
 
-两边共用的工单。**认领前先改 `认领` 一栏并单独提交这一行**，避免重复劳动。
+协调任务维护的工单队列。证明任务在独立工作树认领指定工单；协调任务统一更新此表、
+审计、集成和推送。**状态以代码与实际构建为准，旧工单描述可能过时。**
 
-分工原则：**按文件切分，不按难度切分**。同一时间两边不碰同一个文件，合并就永远是平凡的。
+分工原则：**按文件切分，不按难度切分**。同一时间不派两张写同一个 Lean 文件的单。
 
 | # | 任务 | 文件 | 认领 | 状态 |
 |---|---|---|---|---|
 | T1 | 第一批草稿编译通过 | `RBM2D/**` | Cowork | **完成** |
 | T2 | `(eq_qcomp)`：`q(p) ≍ \|p\|²_*` | `Propagator/Momentum.lean` | Cowork | **完成** |
-| T13 | 扫掉 linter 警告 | 多文件 | Cowork | **完成**（全仓 0 warning） |
+| T13 | 扫掉当时的 linter 警告 | 多文件 | Cowork | **完成旧批次**；2026-09-21 本机全量构建仍发现新警告，另排维护单 |
 | T14 | 零模分离 | `Propagator/ZeroMode.lean` | Cowork | **完成** |
 | T15 | `max`-壳层计数 | `Propagator/Shells.lean` | Cowork | **完成** |
 | T16 | 调和和与 `≺` 的桥 | `Propagator/Harmonic.lean` | Cowork | **完成** |
@@ -16,6 +17,7 @@
 | T18 | `(eq_dyadic)` 接口 + §8.3 Case 1 组装 | `Propagator/Dyadic.lean` | Cowork | **完成** |
 | **T7** | §2 模型层：`S = S^(B)⊗S_W` on `Z_{WL}²`、`I^(2)_a`、`E_a` | `Defs/Model.lean` | 空闲 | **⭐ 全队最高优先级**：随机层整条线（S4→S5→S9→S10）的唯一入口，它不落地整个第四批都动不了 |
 | **T3** | 格点求和 `Σ_{p≠0}\|p\|_*^{-2} ≤ CL²log L` | `Propagator/LatticeSum.lean` | 空闲 | **可开工**，只剩把 T2/T15/T16 乘起来 |
+| **S0** | Def 2.1 随机版 `≺` 与闭包引理 | `Defs/StochDom.lean` | 空闲 | **可开工**；完成后解锁 S4、S6、S7 |
 | **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 空闲 | **可开工**，纯实多项式不等式 |
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 空闲 | **可开工**，纯 `Finset`/`ZMod` 记账 |
 | **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
@@ -25,6 +27,7 @@
 | **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
 | **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 空闲 | **可开工**，独立 |
 | **T8** | 数值回归测试 | `Test/Numeric.lean` | 空闲 | **可开工**，独立 |
+| T31 | 清理当前 10 条 linter warning | `Defs/Dist.lean`、`Gauss/Envelope.lean` | 空闲 | **可开工，低优先级**；不改声明结论 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | 空闲 | 待 T3 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 空闲 | 待 T3（**全强度**） |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
@@ -34,25 +37,25 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**可立刻开工、文件两两不相交的有 14 条**：**T7（最高优先级）**、T3、T19、T20、T21、T24、T25、T26、T29、T6、T8，以及随机层的 S0、S2、S8（见第四批）。
+**首批派 T7、T3、S0，三个独立工作树。** 其余可立刻开工且文件不重叠的储备有
+T19、T20、T21、T24、T25、T26、T29、T6、T8、S2、S8、T31；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
-
-**T1 已完成（2026-09-19）**，`lake build` exit 0、0 sorry、10 个文件全绿。
-剩下的建议顺序：**(T6 ∥ T7 ∥ T8 ∥ T13 ∥ T14 ∥ T15 ∥ T16) → T3 → (T4 ∥ T5) → 第二批。**
-T2 已完成（Cowork，CI #18 绿）。
-
-**队列现在有 6 条可立刻开工且文件两两不相交的工单**（T6、T7、T8、T13、T15、T17；
-T14 已由 Cowork 认领并写完草稿），足够两个 Claude Code 实例各取一条连着跑好几轮而不会撞车。
-**T15 是其中唯一在关键路径上的**：T2 与 T16 都已完成，T15 一落地 T3 就只剩组装，
-T3 一通 T4 与 T5 就都能并行开工。T14 的草稿一旦 CI 绿，T4 与 T5 的前置就只剩 T3。
-
-T6/T7/T8 放在 T2 前面不是因为它们更重要，而是因为它们**互不相干且都短**，
-适合在 T1 刚打通、对本项目的 API 还不熟的时候练手；而 T2→T3→T4 是一条串行链。
+**当前优先顺序**：T7 → S4；T3 → T4/T5；S0 → S2/S3 → S5（并将 S6/S7 保留在储备队列）。
+任何新结论先复查下游实际缺口，不能仅凭此顺序宣布解锁。
 
 ---
 
-## T13 — 扫掉剩下的 linter 警告（**零风险，适合当练手**）
+## T31 — 清理 2026-09-21 基线中的 10 条 linter warning
+
+`./check.sh` 通过，但 `Defs/Dist.lean:122–126` 有五条 `show` 风格警告，
+`Gauss/Envelope.lean` 有三条 `show` 警告及两条未使用 typeclass 假设警告。
+只做不改变定理陈述与结论的局部清理；模块及全量构建通过后，以两份声明类型的
+编译探针核对没有意外变更。此单不在首批三条主链任务之内。
+
+---
+
+## 历史 T13 — 扫掉当时的 linter 警告（已完成，以下行号已过时）
 
 `lake build` 现在是绿的，但还有一批风格警告。本机有编译器的话几分钟就能扫完：
 
@@ -221,6 +224,9 @@ theorem pstar2_le_qsym (p : Z2 L) : (4 / (5 * Real.pi ^ 2)) * pstar2 L p ≤ qsy
 > `pstar2 ≥ (2π k/L)²`（由 T2 的 `pstar` 定义直接算），套 T15 的 `card_shell_le`，
 > 最后接 T16 的 `harmonic_detDom_one`。**下面原文里关于分层和调和和的段落已经归 T15/T16，
 > 不要在 T3 里重写。**
+> **2026-09-21 核算**：已证的粗界是 `card_shell_le ≤ 12k+4`；对 `k≥1` 直接得
+> `≤16k`，相应常数为 `4/π²`。下面旧规格的 `3/π²` 需要更尖锐计数，
+> T3 可交付 `4/π²`，不要为守住旧常数修改结论的其他部分。
 
 这是 §8.2（`κL < 1` 区制）和 §8.3（Case 2）**共用**的唯一非平凡引理，
 在论文里是一句「`≤ C log L`」带过的。
@@ -230,12 +236,10 @@ theorem pstar2_le_qsym (p : Z2 L) : (4 / (5 * Real.pi ^ 2)) * pstar2 L p ≤ qsy
 令 `k(p) := max(zdist L p.1, zdist L p.2)`。则
 
 1. `pstar2 L p ≥ (2π k(p) / L)²`（两个分量里大的那个就够了）
-2. `#{p : k(p) = k} ≤ 8k`（边长 `2k+1` 的方框减去边长 `2k-1` 的方框；
-   `(2k+1)² - (2k-1)² = 8k`。在 `ZMod L` 上 `zdist = k` 的点至多 2 个，所以
-   `#{p : k(p) = k} ≤ 2·2·(2k+1) ≤ 8k + 4`，取 `≤ 12k` 之类的松界即可）
+2. 使用现有 `card_shell_le ≤ 12k+4 ≤ 16k`（`k≥1`），无需重新证明精确壳层计数。
 3. 于是
    ```
-   Σ_{p ≠ 0} 1/pstar2 ≤ Σ_{k=1}^{L} 12k · L²/(4π² k²) = (3L²/π²) Σ_{k=1}^{L} 1/k
+   Σ_{p ≠ 0} 1/pstar2 ≤ Σ_{k=1}^{L} 16k · L²/(4π² k²) = (4L²/π²) Σ_{k=1}^{L} 1/k
    ```
 
 ### 产出
@@ -243,7 +247,7 @@ theorem pstar2_le_qsym (p : Z2 L) : (4 / (5 * Real.pi ^ 2)) * pstar2 L p ≤ qsy
 ```lean
 theorem sum_inv_pstar2_le (hL : 3 ≤ L) :
     ∑ p ∈ Finset.univ.erase (0 : Z2 L), (pstar2 L p)⁻¹
-      ≤ (3 / Real.pi ^ 2) * (L : ℝ) ^ 2 * ∑ k ∈ Finset.Icc 1 L, (k : ℝ)⁻¹
+      ≤ (4 / Real.pi ^ 2) * (L : ℝ) ^ 2 * ∑ k ∈ Finset.Icc 1 L, (k : ℝ)⁻¹
 ```
 
 再加一条把调和和接到 `≺` 上的桥：
@@ -257,9 +261,8 @@ grep `Finset.sum_range_one_div_le` / `Real.add_pow_le_pow_mul_pow_of_sq_le_sq` �
 
 分层求和在 Lean 里用 `Finset.sum_le_sum_of_subset` + `Finset.sum_fiberwise`（或
 `Finset.sum_biUnion`）。**这条工单的成本主要在分层的 Finset 记账，不在不等式。**
-如果卡住，先把结论减弱成 `≤ C L^3`（把 1/k 换成 1）也可以 —— 对 T4 的
-`κ²L² < 1` 区制**不够**，但对 T5（Case 2 只要 `≺ 1`，而 `C log L ≺ 1`）够。
-真要减弱就在 `docs/STATUS.md` 里写清楚减弱了什么。
+若只能证到 `≤ C L³`，应报告为**中间结果，T3 尚未完成**：T4 与 T5
+都需要对数级（或同样属于 `≺ 1` 的）界，不能据此宣布解锁。
 
 ---
 
