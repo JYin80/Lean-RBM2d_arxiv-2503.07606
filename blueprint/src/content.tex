@@ -381,7 +381,8 @@
   \uses{def:continuum, lem:log-integral, lem:fourier,
          lem:periodize-shells, lem:periodize-tail,
          lem:periodize-convergence, lem:periodize-shift,
-         lem:periodize-descend}
+         lem:periodize-descend, lem:periodize-stencil,
+         lem:periodize-delta}
   $K_{\xi,L}(x)=\sum_{n\in\mathbb Z^2}K_{\xi,\infty}(x+nL)$, by showing that the
   periodized kernel solves $(1-\xi S)P=\delta_0$ and using uniqueness of the
   inverse. Finite shell counting and a generic geometric comparison criterion
@@ -459,6 +460,35 @@
 \begin{proof}\leanok
   Coordinatewise equality modulo $L$ yields an $L\mathbb Z^2$ shift, then
   apply periodization invariance.
+\end{proof}
+
+\begin{lemma}[Five-point stencil commutes with periodization]
+  \label{lem:periodize-stencil}
+  \uses{lem:periodize-descend, lem:periodize-convergence}
+  \lean{RBM.latticeFivePoint, RBM.latticeFiveAverage,
+        RBM.periodizeKernel_latticeFiveAverage}\leanok
+  Under explicit summability of each of the five shifted kernel families,
+  periodization commutes with the origin-and-four-neighbours average.
+  A finitely supported point mass gives a nonzero example. The actual
+  infinite-volume Green kernel's summability and resolvent equation remain
+  open. \emph{T28f, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Move the finite stencil sum through the absolutely convergent lattice sum.
+\end{proof}
+
+\begin{lemma}[Point mass periodizes to the torus delta]
+  \label{lem:periodize-delta}
+  \uses{lem:periodize-descend, lem:periodize-stencil}
+  \lean{RBM.torusLatticeLift_add_smul_eq_zero_iff,
+        RBM.periodizedTorusKernel_latticePointMass}\leanok
+  For positive $L$, periodizing the point mass at the origin of $\mathbb Z^2$
+  gives the Kronecker delta at the origin of $\mathbb Z_L^2$. This is the
+  right-hand side of the intended periodized resolvent equation.
+  \emph{T28g, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  The canonical representative $x+Ln$ is zero precisely when $x=0$ and $n=0$.
 \end{proof}
 
 \begin{lemma}[Combining the two decay regimes]\label{lem:decay-interface}
@@ -936,10 +966,29 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   measurability and the deterministic loop envelope in dominated convergence.
 \end{proof}
 
+\begin{lemma}[Bulk spectral path and loop-moment window]
+  \label{lem:spectral-window}
+  \uses{lem:loop-moment-cont}
+  \lean{RBM.Gauss.spectralM, RBM.Gauss.spectralZ,
+        RBM.Gauss.spectralZ_window_gap_of_bulk,
+        RBM.Gauss.continuousOn_integral_norm_gloop_pow_spectralZ}\leanok
+  For $|E|\le2-\kappa$ with $\kappa>0$ and a window ending at $t<1$,
+  the explicit bulk path $z_u=E+(1-u)m^{(E)}$ has
+  $|\operatorname{Im}z_u|\ge(1-t)\operatorname{Im}m^{(E)}>0$.
+  Thus its finite bare-loop moments are continuous on the window.
+  The identification of this explicit $m^{(E)}$ with the boundary limit
+  used to define it in the paper is still to be formalized.
+  \emph{S9g, closed at the explicit bulk formula.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the positive square-root formula for the bulk semicircle transform and
+  the minimum of $1-u$ on the window, then apply the loop-moment theorem.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
   \uses{lem:generator, lem:moment-closing-base, lem:moment-time-cont,
          lem:flow-time-cont, lem:green-time-cont, lem:loop-time-cont,
-         lem:loop-envelope, lem:loop-moment-cont}
+         lem:loop-envelope, lem:loop-moment-cont, lem:spectral-window}
   Derive the required moment bound from the specific generator and quadratic
   variation estimates while preserving its $\eta$ scale.  The d=1 proof's
   integrate--supremum--quadratic argument is the analytic bridge; the generic
@@ -993,8 +1042,42 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   matrix trace, and the already proved $\sum_a E_a=W^{-2}I$.
 \end{proof}
 
+\begin{lemma}[Single-edge cut-and-glue on loop indices]
+  \label{lem:loop-cut-one}
+  \uses{def:loops, lem:loop-basic}
+  \lean{RBM.LoopIdx.cutGlue, RBM.LoopIdx.cutGlue_split,
+        RBM.LoopIdx.length_cutGlue, RBM.LoopIdx.WF.cutGlue,
+        RBM.gloopProd_cutGlue_split}\leanok
+  Inserting a block label at any valid edge duplicates that edge's sign,
+  increases length by one and preserves matching sign and label lists. The
+  resulting finite matrix word has the two corresponding $GE$ factors.
+  Two-edge splitting and generator identities remain open.
+  \emph{C2 single-edge checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Split the sign and label lists at the chosen edge, then expand the finite
+  product and check the lengths of both lists.
+\end{proof}
+
+\begin{lemma}[Two-edge cut-and-glue indices]
+  \label{lem:loop-cut-pair}
+  \uses{lem:loop-cut-one}
+  \lean{RBM.LoopIdx.cutGlueL, RBM.LoopIdx.cutGlueR,
+        RBM.LoopIdx.length_cutGlueL, RBM.LoopIdx.length_cutGlueR,
+        RBM.LoopIdx.length_cutGlueL_add_length_cutGlueR,
+        RBM.LoopIdx.WF.cutGlueL, RBM.LoopIdx.WF.cutGlueR}\leanok
+  Cutting two valid edges gives left and right index lists whose total length
+  is $n+2$; both preserve the matching of signs and block labels. The matrix
+  product semantics and generator correspondence remain open.
+  \emph{C2 pair-index checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Partition the finite sign and block-label lists at the two cut positions,
+  then count the duplicated entries and verify each side has equal lengths.
+\end{proof}
+
 \begin{definition}[Cut-and-glue operations, \texttt{Def:oper\_loop}]\label{def:loop-ops}
-  \uses{def:loops}
+  \uses{def:loops, lem:loop-cut-one, lem:loop-cut-pair}
   The one-edge insertion and two-edge splitting operations act on sign and
   block-indexed loops.  Their exact index changes must be verified in d=2.
 \end{definition}

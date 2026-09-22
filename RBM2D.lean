@@ -30,6 +30,8 @@ import RBM2D.Propagator.PeriodizeTail
 import RBM2D.Propagator.PeriodizeConvergence
 import RBM2D.Propagator.PeriodizeShift
 import RBM2D.Propagator.PeriodizeDescend
+import RBM2D.Propagator.PeriodizeStencil
+import RBM2D.Propagator.PeriodizeDelta
 import RBM2D.Propagator.FiniteDiff
 import RBM2D.Propagator.DerivBounds
 import RBM2D.Delocalization
@@ -47,12 +49,15 @@ import RBM2D.Gauss.LoopTimeCont
 import RBM2D.Gauss.LoopSampleCont
 import RBM2D.Gauss.LoopEnvelope
 import RBM2D.Gauss.LoopMomentCont
+import RBM2D.Gauss.SpectralWindow
 import RBM2D.Analysis.Bootstrap
 import RBM2D.Analysis.MomentGronwallBase
 import RBM2D.Analysis.MomentClosing
 import RBM2D.Analysis.MomentClosingSup
 import RBM2D.Hierarchy.Loops
 import RBM2D.Hierarchy.WardResolvent
+import RBM2D.Hierarchy.Operations
+import RBM2D.Hierarchy.OperationsPair
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms
