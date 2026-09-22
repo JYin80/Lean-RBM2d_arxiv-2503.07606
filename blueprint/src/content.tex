@@ -378,12 +378,88 @@
 \end{proof}
 
 \begin{lemma}[Periodization]\label{lem:periodize}
-  \uses{def:continuum, lem:log-integral, lem:fourier}
+  \uses{def:continuum, lem:log-integral, lem:fourier,
+         lem:periodize-shells, lem:periodize-tail,
+         lem:periodize-convergence, lem:periodize-shift,
+         lem:periodize-descend}
   $K_{\xi,L}(x)=\sum_{n\in\mathbb Z^2}K_{\xi,\infty}(x+nL)$, by showing that the
   periodized kernel solves $(1-\xi S)P=\delta_0$ and using uniqueness of the
-  inverse.  This does not depend on T27's contour estimate.
+  inverse. Finite shell counting and a generic geometric comparison criterion
+  are proved below; the bound for the actual kernel and its resolvent identity
+  remain open. This does not depend on T27's contour estimate.
   \emph{Work order T28.}
 \end{lemma}
+
+\begin{lemma}[Integer-square shells for periodization]\label{lem:periodize-shells}
+  \lean{RBM.periodizationBox, RBM.periodizationShell,
+        RBM.card_periodizationBox, RBM.existsUnique_mem_periodizationShell,
+        RBM.card_periodizationShell_pos, RBM.card_periodizationShell_le}\leanok
+  In $\mathbb Z^2$ the square of max-radius $r$ has $(2r+1)^2$ points, and the
+  positive-radius shell has exactly $8r$. Every lattice point belongs to a
+  unique shell. \emph{T28a finite-counting step, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the integer interval cardinality and Mathlib's two-dimensional
+  box-shell partition.
+\end{proof}
+
+\begin{lemma}[Summable geometric tails on $\mathbb Z^2$]
+  \label{lem:periodize-tail}
+  \uses{lem:periodize-shells}
+  \lean{RBM.sum_periodizationShell_pow, RBM.summable_shell_weights,
+        RBM.summable_latticeMaxRadius_pow}\leanok
+  For $0\le\rho<1$, the weight $\rho^{\|n\|_\infty}$ is summable over
+  $n\in\mathbb Z^2$. This is the scalar convergence ingredient for T28;
+  a matching bound for the actual $K_{\xi,\infty}$ is still required.
+  \emph{T28b, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Partition $\mathbb Z^2$ into max-radius shells and sum the exact $8r$
+  multiplicity against a geometric factor.
+\end{proof}
+
+\begin{lemma}[Complex kernels under a geometric majorant]
+  \label{lem:periodize-convergence}
+  \uses{lem:periodize-tail}
+  \lean{RBM.summable_complex_lattice_of_geometric_bound,
+        RBM.summable_complex_lattice_translate_of_geometric_bound}
+  \leanok
+  A complex kernel on $\mathbb Z^2$ is summable if its norm is bounded by
+  $C\rho^{\|n\|_\infty}$ with $C\ge0$ and $0\le\rho<1$; the same holds for
+  a translated kernel with such a bound. This comparison criterion does not
+  itself establish decay for $K_{\xi,\infty}$. \emph{T28c, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the summable scalar majorant from the shell calculation.
+\end{proof}
+
+\begin{lemma}[Lattice-shift invariance of periodization]
+  \label{lem:periodize-shift}
+  \uses{lem:periodize-convergence}
+  \lean{RBM.periodizeKernel, RBM.periodizeKernel_add_smul}\leanok
+  The formal sum $\sum_{n\in\mathbb Z^2}K(x+Ln)$ is unchanged when $x$ is
+  replaced by $x+Lk$. This is the algebraic periodicity step; the actual
+  kernel's convergence and resolvent equation remain separate.
+  \emph{T28d, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Reindex the sum by translation on $\mathbb Z^2$.
+\end{proof}
+
+\begin{lemma}[Periodization descends to the discrete torus]
+  \label{lem:periodize-descend}
+  \uses{lem:periodize-shift}
+  \lean{RBM.torusLatticeLift, RBM.periodizedTorusKernel,
+        RBM.periodizedTorusKernel_eq_of_cast}\leanok
+  The periodized kernel gives a well-defined function on $\mathbb Z_L^2$:
+  evaluating it at any integer representative of a torus point gives the
+  same value. Actual $K_{\xi,\infty}$ summability and the resolvent equation
+  remain open. \emph{T28e, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Coordinatewise equality modulo $L$ yields an $L\mathbb Z^2$ shift, then
+  apply periodization invariance.
+\end{proof}
 
 \begin{lemma}[Combining the two decay regimes]\label{lem:decay-interface}
   \uses{lem:decay-small, lem:contour, lem:periodize, lem:log-integral,
@@ -765,8 +841,105 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   resulting quadratic inequality for its square root.
 \end{proof}
 
+\begin{lemma}[Time continuity of bounded moments]\label{lem:moment-time-cont}
+  \lean{RBM.Gauss.continuousOn_integral_abs_pow_of_envelope,
+        RBM.Gauss.continuousOn_regularized_momentRoot_of_envelope}\leanok
+  A whole-space deterministic envelope, measurable time slices and continuous
+  sample paths imply continuity of every absolute moment and its positive
+  regularized root. The finite bare loop now has these inputs under a uniform
+  nonreal spectral window; convolved observables still require work.
+  \emph{S9c analytic interface, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply dominated convergence with the fixed polynomial envelope and then
+  continuity of positive real powers.
+\end{proof}
+
+\begin{lemma}[Samplewise time continuity of the matrix flow]
+  \label{lem:flow-time-cont}
+  \uses{def:model}
+  \lean{RBM.Gauss.continuous_Hflow_time,
+        RBM.Gauss.continuous_Hflow_entry_time,
+        RBM.Gauss.Sizes.continuous_seqHflow_time}\leanok
+  For each Gaussian sample, $u\mapsto H_u=\sqrt u\,X$ is continuous as a
+  matrix, also under the common probability-space coupling. Continuity of a
+  moving-spectral-parameter resolvent loop is a separate step.
+  \emph{S9c model interface, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Compose continuity of the real square root and complex scalar multiplication
+  with the fixed sample matrix.
+\end{proof}
+
+\begin{lemma}[Resolvent continuity along Hermitian paths]
+  \label{lem:green-time-cont}
+  \uses{lem:flow-time-cont, lem:envelope}
+  \lean{RBM.Gauss.continuous_green_of_isHermitian,
+        RBM.Gauss.continuous_green_of_isHermitian_moving,
+        RBM.Gauss.continuous_green_Hflow_moving_time}\leanok
+  If a finite Hermitian matrix and the spectral parameter vary continuously
+  while the imaginary part stays nonzero, their resolvent varies continuously.
+  This applies samplewise to $H_u$; the paper's specific $z_u$ and loop product
+  remain to be connected. \emph{S9c resolvent interface, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  At each parameter, the shifted Hermitian matrix is a unit; use continuity of
+  matrix inversion locally and compose with the two continuous paths.
+\end{proof}
+
+\begin{lemma}[Time and sample continuity of resolvent loops]
+  \label{lem:loop-time-cont}
+  \uses{def:loops, lem:green-time-cont, def:model}
+  \lean{RBM.Gauss.HflowBlock, RBM.Gauss.continuous_gloop_Hflow_time,
+        RBM.Gauss.continuous_gloop_HflowBlock_sample,
+        RBM.Gauss.measurable_gloop_HflowBlock_sample}\leanok
+  Relabel the fine-lattice Gaussian flow by the block-site equivalence.
+  For a continuous nonreal spectral path, every well-formed finite loop is
+  continuous in time at a fixed sample; at a fixed time it is continuous and
+  measurable in the Gaussian sample. \emph{S9d, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Compose the matrix reindexing with resolvent continuity, multiply the finite
+  list of Green and block factors, and take the continuous matrix trace.
+\end{proof}
+
+\begin{lemma}[Deterministic envelope for finite Gaussian loops]
+  \label{lem:loop-envelope}
+  \uses{def:loops, lem:loop-time-cont, lem:envelope}
+  \lean{RBM.Gauss.norm_gloop_le_crude,
+        RBM.Gauss.norm_gloop_HflowBlock_le_crude_on_Icc}\leanok
+  If $0<\eta\le|\operatorname{Im}z|$, a loop of length $n$ obeys
+  $|\mathcal L|\le(LW)^2(\eta^{-1}W^{-2})^n$. A uniform lower bound on the
+  imaginary part over a time interval gives this same deterministic envelope
+  for every sample and time. It suffices for bare-loop dominated convergence;
+  the paper's sharper normalization and convolved terms remain open.
+  \emph{S9e, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound the finite product in operator norm and its trace by matrix size.
+\end{proof}
+
+\begin{lemma}[Continuity of bare-loop moments on a spectral window]
+  \label{lem:loop-moment-cont}
+  \uses{lem:moment-time-cont, lem:loop-time-cont, lem:loop-envelope}
+  \lean{RBM.Gauss.continuousOn_gloop_HflowBlock_window,
+        RBM.Gauss.continuousOn_integral_norm_gloop_pow}\leanok
+  On a compact time interval where a continuous spectral path obeys
+  $|\operatorname{Im}z_u|\ge\eta>0$, every finite moment
+  $u\mapsto\mathbb E|\mathcal L_u|^q$ is continuous. This supplies the
+  actual bare-loop case of the dominated-continuity interface; the paper's
+  specific spectral path and convolved observables remain to be checked.
+  \emph{S9f, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Clamp the spectral path to the time interval, then use samplewise continuity,
+  measurability and the deterministic loop envelope in dominated convergence.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
-  \uses{lem:generator, lem:moment-closing-base}
+  \uses{lem:generator, lem:moment-closing-base, lem:moment-time-cont,
+         lem:flow-time-cont, lem:green-time-cont, lem:loop-time-cont,
+         lem:loop-envelope, lem:loop-moment-cont}
   Derive the required moment bound from the specific generator and quadratic
   variation estimates while preserving its $\eta$ scale.  The d=1 proof's
   integrate--supremum--quadratic argument is the analytic bridge; the generic
@@ -792,10 +965,33 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 
 \begin{definition}[Resolvent loops, \texttt{Def:G\_loop}]\label{def:loops}
   \uses{def:model, def:block-model}
+  \lean{RBM.LoopIdx, RBM.LoopIdx.WF, RBM.Gsig,
+        RBM.gloopProd, RBM.gloop}\leanok
   For signs $\boldsymbol\sigma$ and blocks $\boldsymbol a$, the loop is the
   trace of the cyclic product of $G_t(\sigma_i)E_{a_i}$.  Its normalization is
-  the paper's $W^{-2}$ block normalization.
+  the paper's $W^{-2}$ block normalization. Matching sign and block lists are
+  recorded by \texttt{LoopIdx.WF}; random-flow specialization comes later.
 \end{definition}
+
+\begin{lemma}[Elementary loop identities and block normalization]
+  \label{lem:loop-basic}
+  \uses{def:loops, def:block-model}
+  \lean{RBM.Gsig_conjTranspose, RBM.gloopProd_cons,
+        RBM.gloopProd_append, RBM.gloop_rotate,
+        RBM.gloop_two_plus_minus_eq, RBM.sum_gloop_head,
+        RBM.gloop_two_plus_minus_entries,
+        RBM.gloop_two_plus_minus_nonneg}\leanok
+  The sign-flipped Green function is the adjoint for Hermitian $H$; products
+  concatenate and the trace is cyclic for well-formed lists. Summing the
+  first block insertion gives the exact $W^{-2}$ factor. The two-loop trace
+  has its expected $G E_a G^* E_b$ form, an explicit squared-entry sum with
+  coefficient $W^{-4}$, and is nonnegative for Hermitian $H$.
+  \emph{C1 basic package, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the resolvent adjoint identity, fold over matching lists, cyclicity of
+  matrix trace, and the already proved $\sum_a E_a=W^{-2}I$.
+\end{proof}
 
 \begin{definition}[Cut-and-glue operations, \texttt{Def:oper\_loop}]\label{def:loop-ops}
   \uses{def:loops}
@@ -836,12 +1032,41 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \end{lemma}
 
 \begin{lemma}[Ward identity for loops, \texttt{(WI\_calL)}]\label{lem:ward-loop}
-  \uses{def:loops, def:block-model}
-  Sum one block label using $\sum_a E_a=W^{-2}I$ and the resolvent Ward identity.
+  \uses{def:loops, def:block-model, lem:ward-two}
+  \lean{RBM.sum_gloop_ward_last, RBM.sum_gloop_ward_last_div}\leanok
+  Sum one block label using $\sum_a E_a=W^{-2}I$ and
+  $G(z)G(\bar z)=(G(z)-G(\bar z))/(2\mathrm{i}\eta)$.
+  The corrected paper coefficient is $1/(2\mathrm{i}W^2\eta)$.
+  For arbitrary well-formed sign and label lists beginning with $+$ and ending
+  with $-$, the divided identity holds when $\operatorname{Im}z\ne0$ and both
+  resolvents are invertible. \emph{C1 loop Ward, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  Rotate the last insertion to the front, sum its block projector, apply the
+  traced resolvent identity, then divide by the nonzero $2\mathrm{i}\eta$.
+\end{proof}
+
+\begin{lemma}[Corrected Ward identity for two loops]\label{lem:ward-two}
+  \uses{def:loops, lem:loop-basic, def:block-model}
+  \lean{RBM.green_sub_green, RBM.green_sub_green_conj',
+        RBM.trace_green_sub_trace_green_conj',
+        RBM.sum_gloop_two_ward}\leanok
+  Under the two explicit resolvent invertibility hypotheses,
+  $2\mathrm{i}\operatorname{Im}z\sum_b\mathcal L_{(+,-),(a,b)}
+   =W^{-2}\bigl(\operatorname{Tr}(G(z)E_a)
+                -\operatorname{Tr}(G(\bar z)E_a)\bigr)$.
+  The Hermitian nonreal case satisfies those hypotheses. The tree Ward
+  statement remains open. \emph{C1 Ward $n=2$, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the resolvent identity with $z-\bar z=2\mathrm{i}\operatorname{Im}z$,
+  rotate the two-loop trace, and sum its last block projector using
+  $\sum_b E_b=W^{-2}I$.
+\end{proof}
 
 \begin{lemma}[Ward identity for trees, \texttt{(WI\_calK)}]\label{lem:ward-tree}
   \uses{def:ktree, lem:ktree2, rem:yy25}
+  Use the same corrected coefficient $1/(2\mathrm{i}W^2\eta)$.
   Prove the corresponding tree identity, including the $n\ge4$ inductive case.
 \end{lemma}
 

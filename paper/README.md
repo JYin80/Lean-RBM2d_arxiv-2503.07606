@@ -1,7 +1,7 @@
 # 论文
 
-- `2503.07606-aop-submission.pdf` —— 提交版 PDF（68 页），**唯一真相来源**
-- `tex/` —— 同一版本的 LaTeX 源码，给 `grep` 用
+- `2503.07606-aop-submission.pdf` —— 提交版 PDF（68 页），原始论文版本
+- `tex/` —— 提交版的 LaTeX 源码，供检索与已裁定的局部勘误使用；勘误逐项记录在 `docs/paper-deltas.md`
 - `tex/_stale/` —— 旧副本与模板，**不要读**（`3-4_properties-k-g-chains.tex` 是
   `3-4_properties-k-g.tex` 的过时重复，`8_theta_properties_OLD_backup.tex` 是
   Lemma `lem_propTH` 被 Fourier 证明替换之前的旧证明）

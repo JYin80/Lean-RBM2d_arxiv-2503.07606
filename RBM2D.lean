@@ -1,5 +1,6 @@
 import RBM2D.Basic
 import RBM2D.Test.Axioms
+import RBM2D.Test.Numeric
 import RBM2D.Defs.Block
 import RBM2D.Defs.Dist
 import RBM2D.Defs.Domination
@@ -24,6 +25,11 @@ import RBM2D.Propagator.Decay
 import RBM2D.Propagator.Cutoff
 import RBM2D.Propagator.AbelSum
 import RBM2D.Propagator.SymbolDiff
+import RBM2D.Propagator.PeriodizeShells
+import RBM2D.Propagator.PeriodizeTail
+import RBM2D.Propagator.PeriodizeConvergence
+import RBM2D.Propagator.PeriodizeShift
+import RBM2D.Propagator.PeriodizeDescend
 import RBM2D.Propagator.FiniteDiff
 import RBM2D.Propagator.DerivBounds
 import RBM2D.Delocalization
@@ -34,10 +40,19 @@ import RBM2D.Gauss.Model
 import RBM2D.Gauss.SteinConcrete
 import RBM2D.Gauss.Domination
 import RBM2D.Gauss.MomentBridge
+import RBM2D.Gauss.MomentTimeCont
+import RBM2D.Gauss.FlowTimeCont
+import RBM2D.Gauss.GreenTimeCont
+import RBM2D.Gauss.LoopTimeCont
+import RBM2D.Gauss.LoopSampleCont
+import RBM2D.Gauss.LoopEnvelope
+import RBM2D.Gauss.LoopMomentCont
 import RBM2D.Analysis.Bootstrap
 import RBM2D.Analysis.MomentGronwallBase
 import RBM2D.Analysis.MomentClosing
 import RBM2D.Analysis.MomentClosingSup
+import RBM2D.Hierarchy.Loops
+import RBM2D.Hierarchy.WardResolvent
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms

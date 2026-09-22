@@ -28,7 +28,8 @@ C = {  # fill, stroke, text
   "blocked": ("#ffffff", "#b9c1c9", "#55606b"),
   "cited":   ("#fdf3e0", "#d8b877", "#6b4e16"),
 }
-DECL = re.compile(r"^(?:noncomputable\s+)?(theorem|def|abbrev|lemma|structure)\s+([A-Za-z_][\w.'!?₀-₉]*)")
+DECL = re.compile(r"^(?:@\[[^\]]+\]\s*)*(?:noncomputable\s+)?"
+                  r"(theorem|def|abbrev|lemma|structure)\s+([A-Za-z_][\w.'!?₀-₉]*)")
 
 PILL = {"done": "已证", "defn": "已形式化", "ready": "可开工", "blocked": "待解锁", "cited": "引用论文"}
 

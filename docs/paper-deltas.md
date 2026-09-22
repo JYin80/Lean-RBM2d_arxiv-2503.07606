@@ -35,6 +35,7 @@
 | 24 | Def 2.1 的按 `N` 分布族 | 论文对每个维数叙述随机量族，没有指定共同样本空间 | S0 在同一个 `(Ω,P)` 上承载所有尺寸；S4 已构造 `Sizes.seqP` 并证明每个尺寸投影 `seqP_map_slice = P L W`，可用于 `StochDomAt`。具体带宽增长假设和后续随机估计另证 | 共同样本空间义务已解除；渐近尺度仍须在后续定理中核对 |
 | 25 | §2 `Thm: B_Univ` | 此主结果的证明除了局部律、QUE、退局域化，还使用短时矩阵 OU 过程、`[LANDON20191137]` Thm. 2.2、`[erdHos2017dynamical]` Thm. 15.3、`[Xu:2024aa]` Prop. 4.17/Lem. 4.20 和 `[YY_25]` 的比较步骤；原 §3–7 一时刻高斯替代栈不能覆盖这些外部输入 | 蓝图增加短时比较与 bulk universality 节点，引用均显式保持开放；须核对原结果精确假设后决定如何在 Lean 中补证或封装 | 主结果尚未完成；不能因 loop 证明完成就宣称整篇文章完成 |
 | 26 | §2 `(deri_Thxi)` | 论文用矩阵等式表述 $\partial_\xi\Theta=\Theta S\Theta$ | Lean 的 `hasDerivAt_Theta_apply` 对每个二维块指标 `a,b` 证明逐元素导数公式；`Theta_sub_Theta` 仍给出完整矩阵预解式恒等式。逐元素陈述避免 `Matrix` 的 Pi 拓扑与矩阵范数拓扑实例冲突，有限维下数学内容相同 | 无；下游需逐元素引用 |
+| 27 | §3 Lemma `lem_WI_K` 的 `(WI_calL)`、`(WI_calK)` 及其证明说明 | 原稿系数 $1/(2W^2\eta_t)$ 和 $GG^\dagger=(G-G^\dagger)/(2\eta)$ 漏了虚数单位：由 $G(z)-G(\bar z)=2\mathrm{i}\eta\,G(z)G(\bar z)$ 可见右端应除以 $2\mathrm{i}\eta$。d=1 已证 `sum_gloop_two_ward` 也使用 $2\mathrm{i}\eta$ | Jun 已裁定：将三处原文修正为 $1/(2\mathrm{i}W^2\eta_t)$、$1/(2\mathrm{i}\eta)$；Lean 先证 d=2 两环代数情形，再推广一般 loop 与树 | 这是原稿公式的实质笔误；相关 Ward 节点在推广证明完成前仍开放 |
 
 ## 待记录（做到时补）
 

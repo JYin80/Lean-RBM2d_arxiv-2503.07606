@@ -26,7 +26,12 @@
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
 | **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
 | **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；逐元素形式，从 RBM1D 只读移植 |
-| **T8** | 数值回归测试 | `Test/Numeric.lean` | 当前对话内代理 | **独立五点核与三类逆矩阵条目已证；完整 9×9 逆仍在做** |
+| **T8** | 数值回归测试 | `Test/Numeric.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；独立 9×9 有理双侧逆、`Theta 3 (1/2)` 与行和 2 |
+| T28a | `ℤ²` 周期化壳层计数 | `Propagator/PeriodizeShells.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；正半径精确 `8r` |
+| T28b | 指数尾项求和 | `Propagator/PeriodizeTail.lean` | 当前对话内代理 | **完成，本地全量验收通过**；实际核界仍开放 |
+| T28c | 复核的几何上界推出二维绝对可和 | `Propagator/PeriodizeConvergence.lean` | 当前对话内代理 | **完成，本地全量验收通过**；实际核界仍开放 |
+| T28d | 周期化核的格点平移不变 | `Propagator/PeriodizeShift.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
+| T28e | 周期化核下降到 `Z2 L` | `Propagator/PeriodizeDescend.lean` | 当前对话内代理 | **完成，本地全量验收通过**；实际核界与 resolvent 恒等式仍开放 |
 | T31 | 清理当前 10 条 linter warning | `Defs/Dist.lean`、`Gauss/Envelope.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；10 条已清、声明类型保持 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | Codex T4 | **完成，主分支全量验收通过**；T24 可复用 |
 | S4 | 一时刻高斯模型与坐标分解 | `Gauss/Model.lean` | Codex S4 | **完成，主分支全量验收通过**；含 `Sizes.seqP_map_slice` 共同概率空间 |
@@ -37,7 +42,10 @@
 | S8 | 连续归纳与前缀自改进 | `Analysis/Bootstrap.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；具体矩函数前提仍由下游证明 |
 | S9a | 通用单侧导数 Grönwall 比较 | `Analysis/MomentGronwallBase.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；具体矩函数的尺度仍需审计 |
 | S9b | 保尺度积分—上确界—二次收口 | `Analysis/MomentClosing.lean`、`Analysis/MomentClosingSup.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；有界或连续时间窗口版本 |
-| S9c | 时间矩连续性辅助引理 | `Gauss/MomentTimeCont.lean` | 当前对话内代理 | **进行中**；从 RBM1D 只读移植 |
+| S9c | 时间矩、矩阵流和 resolvent 连续性 | `Gauss/MomentTimeCont.lean`、`Gauss/FlowTimeCont.lean`、`Gauss/GreenTimeCont.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；具体 loop 连续性在下一阶段 |
+| S9d | loop 的时间/样本连续性 | `Gauss/LoopTimeCont.lean`、`Gauss/LoopSampleCont.lean` | 当前对话内代理 | **完成，本地全量验收通过**；全空间统一包络另排小单 |
+| S9e | 裸 loop 的确定性全空间包络 | `Gauss/LoopEnvelope.lean` | 当前对话内代理 | **完成，本地全量验收通过**；卷积项仍开放 |
+| S9f | 统一谱窗内裸 loop 矩时间连续性 | `Gauss/LoopMomentCont.lean` | 当前对话内代理 | **完成，本地全量验收通过**；论文具体谱路径与生成元不等式仍开放 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
@@ -46,23 +54,23 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**T19、T20、T21 `Shat` 差分阶段、T27 第一坐标阶段、S7、S8、S9a/S9b、T6、T31 已通过主分支全量验收；T8 与 S9 时间连续性辅助引理在做。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
-T21、T28、T29、T8；队列深度足够。
+**T6/T8/T19/T20/T28a–e、T21 `Shat` 差分阶段、T27 第一坐标阶段、S7/S8/S9a–f、C1 基础及完整 loop Ward、T31 已通过本地全量验收。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+T21、T22、T28、T29；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
-**当前派发顺序**：先验收在飞的 **T8（独立数值回归）**，并把 T21 限定为
-`Shat` 的单步差分基础引理。另做一次只读核对：d=1 的
-`Analysis/MomentClosing.lean` 指出粗 Grönwall 会损失 $\eta$ 的幂，S9 必须对照
-d=2 的实际矩不等式，不能因 S9a 已证就宣称完整矩估计完成。
-下一轮优先选 d=1 已证的短引理和明确的维护单；T21/T22、S5、T27/T28
-的较难部分先核对 d=1 代码和精确接口，再决定分段范围。绝不改动 RBM1D。
+**当前派发顺序**：验收 T28c/d/e、S9e 与一般 loop Ward；三个代理分别推进
+T28 的有限 stencil 代数步、C2 的基本 loop 操作、S9 的具体裸 loop 矩连续性。
+S9 的具体矩不等式仍须保留 $\eta$ 尺度，不能因通用 Grönwall 引理已证就宣称
+完整矩估计完成。下一轮优先选 d=1 已证的短引理和明确的维护单；
+T21/T22、S5、T27/T28 的较难部分先核对 d=1 代码和精确接口，再决定分段范围。
+绝不改动 RBM1D。
 任何新结论先复查下游实际缺口，不能仅凭此顺序宣布解锁。
 
 **整篇论文的后段工单储备**（尚未派发，均为蓝图开放节点）：
 
 | 单号 | 交付范围 | 起步条件 |
 |---|---|---|
-| C1 | `Hierarchy/Loops.lean`：论文 `Def:G_loop` 与维度正确的归一化；基础定义和首块求和在做 | S4 与 T7 的矩阵/块接口验收 |
+| C1 | `Hierarchy/Loops.lean`：论文 `Def:G_loop`、维度正确的归一化、两环平方条目式及修正后一般 `(WI_calL)` 均已本地全量验收 | S4 与 T7 的矩阵/块接口验收 |
 | C2 | `Hierarchy/Operations.lean`：`Def:oper_loop` 的切割、胶合及指标映射 | C1 |
 | C3 | `Hierarchy/Tree.lean`：`Def_Ktza`、`(Kn2sol)` 的初值/演化/唯一性 | C1、T6、传播子基本性质 |
 | C4 | `[YY_25]` 引用审计：Ward、`(KKpi)`、短程组合结构的精确假设与证明责任 | 论文及被引版本核对；需要 Jun 裁定外部引用的形式化边界 |
