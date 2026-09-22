@@ -55,11 +55,17 @@ import RBM2D.Propagator.NormalizedCutoffLowGridCount
 import RBM2D.Propagator.NormalizedCutoffLowGridSum
 import RBM2D.Propagator.NormalizedCutoffLowGridScales
 import RBM2D.Propagator.NormalizedCutoffShellSplitSum
+import RBM2D.Propagator.NormalizedCutoffFoldSupport
+import RBM2D.Propagator.NormalizedCutoffSeparatedShellSum
+import RBM2D.Propagator.NormalizedCutoffSeparatedSupport
 import RBM2D.Propagator.CombesThomasConjugation
 import RBM2D.Propagator.CombesThomasPerturbation
 import RBM2D.Propagator.CombesThomasDistanceWeight
 import RBM2D.Propagator.CombesThomasExponentialWeight
 import RBM2D.Propagator.CombesThomasWeightedInverse
+import RBM2D.Propagator.CombesThomasKernelDecay
+import RBM2D.Propagator.CombesThomasFixedGap
+import RBM2D.Propagator.CombesThomasGapParameter
 import RBM2D.Propagator.PeriodizeShells
 import RBM2D.Propagator.PeriodizeTail
 import RBM2D.Propagator.PeriodizeConvergence
@@ -168,6 +174,9 @@ import RBM2D.Hierarchy.LoopHierarchyDerivativeBound
 import RBM2D.Hierarchy.LoopHierarchyIntegralBound
 import RBM2D.Hierarchy.LoopHierarchyFromInitialBound
 import RBM2D.Hierarchy.LoopHierarchyInitialAverageBound
+import RBM2D.Hierarchy.LoopHierarchyEnvelopeLabelSum
+import RBM2D.Hierarchy.LoopHierarchyLengthEnvelopeSmall
+import RBM2D.Hierarchy.LoopHierarchyLengthEnvelopeMonotone
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms

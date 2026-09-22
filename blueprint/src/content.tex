@@ -1251,6 +1251,77 @@
   $2/L$, use the low-grid sum, and apply the separated-shell local bound.
 \end{proof}
 
+\begin{lemma}[Finite support of the cutoff fold defect]
+  \label{lem:normalized-cutoff-fold-support}
+  \uses{lem:normalized-cutoff-shell-split-sum}
+  \lean{RBM.foldCandidateSet,
+        RBM.foldCandidateSet_val_localized,
+        RBM.pstarFoldDefect_ne_zero_mem_foldCandidateSet,
+        RBM.card_foldCandidateSet_le_six,
+        RBM.foldStripE1,
+        RBM.card_foldStripE1_le,
+        RBM.foldStripE2,
+        RBM.card_foldStripE2_le,
+        RBM.sum_abs_pstarFoldDefect_e1_le,
+        RBM.sum_abs_pstarFoldDefect_e2_le}\leanok
+  Nonzero two-step fold defects can occur in a candidate set of at most
+  six cyclic representatives. Either two-dimensional coordinate strip
+  has at most $6L$ points, and the raw absolute fold-defect sum is at
+  most $24\pi$ for $L\geq3$. This coarse bound has not yet been
+  localized to shell support or weighted by the dyadic coefficient.
+  \emph{T22 fold-support checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Localize representatives near the antipode or wrap point, count
+  their product with the unrestricted coordinate, and use the defect bound.
+\end{proof}
+
+\begin{lemma}[Explicit coarse separated-shell sum]
+  \label{lem:normalized-cutoff-separated-shell-sum}
+  \uses{lem:normalized-cutoff-fold-support,
+         lem:normalized-cutoff-shell-split-sum}
+  \lean{RBM.card_Z2_eq_sq,
+        RBM.cutoffSecondDiffE1ShellRemainder_le_explicit,
+        RBM.cutoffSecondDiffE2ShellRemainder_le_explicit,
+        RBM.sum_cutoffSecondDiffMass_e1_finite_shells_le_explicit,
+        RBM.sum_cutoffSecondDiffMass_e2_finite_shells_le_explicit}\leanok
+  The unlocalized separated-shell remainder is at most
+  $5040\,2^j+3780\,4^j$ in either coordinate. Thus a finite shell sum
+  is bounded by $4608$ plus the sum of these explicit terms over its
+  separated indices. This grows with shell frequency and does not yet
+  give the sharp T22 multiplier estimate.
+  \emph{T22 coarse separated-shell checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Sum the raw $24\pi$ fold bound and the affine term over $L^2$
+  lattice points, then apply the finite-shell split.
+\end{proof}
+
+\begin{lemma}[Physical-annulus support of separated cutoff shells]
+  \label{lem:normalized-cutoff-separated-support}
+  \uses{lem:normalized-cutoff-separated-shell-sum}
+  \lean{RBM.dyadicPhysicalAnnulus,
+        RBM.normalizedDyadicCutoff_mem_dyadicPhysicalAnnulus,
+        RBM.cutoff_second_diff_has_annulus_sample,
+        RBM.lowGridTwoStepStarts_subset_annulus_translates,
+        RBM.card_lowGridTwoStepStarts_le_three_annulus,
+        RBM.dyadicOuterGridRadius,
+        RBM.dyadicPhysicalAnnulus_zdist_le_outerGridRadius,
+        RBM.card_dyadicPhysicalAnnulus_le_outerGridRadius,
+        RBM.card_lowGridTwoStepStarts_le_outerGridRadius}\leanok
+  A nonzero three-point cutoff difference samples the actual physical
+  dyadic annulus at one of its three points. Thus its starting set lies
+  in three translates of that annulus. With
+  $R=\lceil2L\,2^{-j}\rceil$, the annulus contains at most $(2R+1)^2$
+  points and the starting set at most $3(2R+1)^2$. This support count
+  does not yet control the fold-defect-weighted multiplier sum.
+  \emph{T22 separated-support checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use cutoff support at one sampled momentum and count the enclosing
+  cyclic coordinate ball with the existing lattice-counting lemma.
+\end{proof}
+
 \begin{lemma}[Diagonal conjugation of the block walk]
   \label{lem:combes-thomas-conjugation}
   \uses{def:model}
@@ -1323,8 +1394,8 @@
   The weight $w_{c,t}(a)=\exp(t\,d(a,c))$ never vanishes. On a
   nonzero $S_B$ edge, its ratio differs from one by at most $e^t-1$
   for $t\geq0$. The same bound holds for the operator norm of the
-  conjugated-walk perturbation. Invertibility of the weighted resolvent
-  and decay of its kernel remain open.
+  conjugated-walk perturbation. Weighted inversion and kernel decay
+  are supplied below under an explicit smallness condition.
   \emph{T29 exponential-weight checkpoint, closed.}
 \end{lemma}
 \begin{proof}\leanok
@@ -1346,12 +1417,66 @@
   conjugated block walk has norm at most $e^t$. Its weighted denominator
   is invertible, with inverse norm at most $(1-\|\xi\|e^t)^{-1}$, and
   that inverse equals the conjugate of the original block propagator.
-  Entrywise kernel decay still requires extracting matrix entries.
+  The next checkpoint extracts an entrywise kernel bound.
   \emph{T29 weighted-inverse checkpoint, closed.}
 \end{lemma}
 \begin{proof}\leanok
   Apply the Neumann-series smallness criterion and the explicit
   diagonal conjugation identity.
+\end{proof}
+
+\begin{lemma}[Block propagator kernel decay under a weighted gap]
+  \label{lem:combes-thomas-kernel-decay}
+  \uses{lem:combes-thomas-weighted-inverse}
+  \lean{RBM.norm_Theta_apply_le_exp_zdist2}\leanok
+  If $L\geq3$, $t\geq0$, and $\|\xi\|e^t<1$, then every block
+  propagator entry obeys
+  $|\Theta_\xi(a,b)|\leq
+  e^{-t d(a,b)}(1-\|\xi\|e^t)^{-1}$.
+  This is an actual exponential kernel estimate in the stated
+  smallness regime; choosing the parameters for the paper's full
+  Property 5 remains open.
+  \emph{T29 weighted-kernel checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Center the diagonal weight at the column, extract the corresponding
+  matrix entry, and use the weighted operator-norm bound.
+\end{proof}
+
+\begin{lemma}[Concrete geometric block-kernel decay]
+  \label{lem:combes-thomas-fixed-gap}
+  \uses{lem:combes-thomas-kernel-decay}
+  \lean{RBM.norm_Theta_apply_le_geometric,
+        RBM.norm_Theta_apply_le_two_geometric}\leanok
+  Choosing $t=\log2$ yields
+  $|\Theta_\xi(a,b)|\leq 2^{-d(a,b)}(1-2\|\xi\|)^{-1}$
+  for $\|\xi\|<1/2$. If $\|\xi\|\leq1/4$, this is at most
+  $2\cdot2^{-d(a,b)}$. This concrete small-$\xi$ regime is narrower
+  than the paper's full Property 5.
+  \emph{T29 fixed-gap checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Substitute $t=\log2$ into the weighted kernel bound and simplify
+  the exponential; then bound the denominator for $\|\xi\|\leq1/4$.
+\end{proof}
+
+\begin{lemma}[Gap-dependent block-kernel decay]
+  \label{lem:combes-thomas-gap-parameter}
+  \uses{lem:combes-thomas-kernel-decay}
+  \lean{RBM.gap_parameter_weighted_gate,
+        RBM.gap_parameter_inverse_prefactor_le,
+        RBM.norm_Theta_apply_le_gap_parameter}\leanok
+  For $0<\delta\leq1$ and $\|\xi\|\leq1-\delta$, choose
+  $t=\log(1+\delta/2)$. Then
+  $|\Theta_\xi(a,b)|\leq
+  (2/\delta)\exp[-t\,d(a,b)]$.
+  This covers the subunit-disk gap and does not assert the paper's
+  full Property 5.
+  \emph{T29 gap-parameter checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Verify the weighted Neumann gate and bound its inverse prefactor
+  by $2/\delta$.
 \end{proof}
 
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
@@ -2578,6 +2703,70 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Apply the per-loop initial-plus-increment bound and evaluate the
   initial label sum exactly.
+\end{proof}
+
+\begin{lemma}[Length-only finite-loop envelope and label sum]
+  \label{lem:loop-hierarchy-envelope-label-sum}
+  \uses{lem:loop-hierarchy-initial-average-bound}
+  \lean{RBM.Gauss.pair_cut_envelopes_eq_total_length,
+        RBM.Gauss.loopHierarchyLengthEnvelope,
+        RBM.Gauss.loopHierarchyUniformEnvelope_eq_lengthEnvelope,
+        RBM.Gauss.sum_loopHierarchyUniformEnvelope_ofFn,
+        RBM.Gauss.sum_norm_expected_gloop_ofFn_le_lengthEnvelope}\leanok
+  In the crude resolvent envelope, the two factors from any pair cut
+  multiply to the same total length power. Thus the full envelope
+  depends only on loop length; its pair count is $\binom n2$.
+  Summing over labels gives exactly $|Z_L^2|^n$ times the length-only
+  envelope. The resulting finite-time bound still has this large
+  cardinality factor, so the sharper moment closure remains open.
+  \emph{S5 length-envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the pair-split length identity, count positions, and sum a
+  constant envelope over all label assignments.
+\end{proof}
+
+\begin{lemma}[One- and two-edge length-envelope specializations]
+  \label{lem:loop-hierarchy-length-envelope-small}
+  \uses{lem:loop-hierarchy-envelope-label-sum}
+  \lean{RBM.Gauss.card_Z2_eq_sq,
+        RBM.Gauss.loopHierarchyLengthEnvelope_one,
+        RBM.Gauss.loopHierarchyLengthEnvelope_two,
+        RBM.Gauss.sum_norm_expected_gloop_one_edge_le,
+        RBM.Gauss.sum_norm_expected_gloop_two_edges_le}\leanok
+  At length one the coarse envelope contains one same-edge and one
+  spectral cut; at length two it contains two same-edge cuts, one
+  pair cut, and two spectral cuts. The exact initial label sums are
+  $L^2$ and $L^2W^{-2}$, respectively. The displayed finite-time errors
+  have extra high powers of $L$, confirming this crude envelope alone
+  does not yield the paper's uniform moment scale.
+  \emph{S5 small-length diagnostic checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Evaluate the finite split count and block cardinality at lengths
+  one and two, then specialize the general label-summed estimate.
+\end{proof}
+
+\begin{lemma}[Positive spectral-gap monotonicity of loop envelopes]
+  \label{lem:loop-hierarchy-length-envelope-monotone}
+  \uses{lem:loop-hierarchy-envelope-label-sum}
+  \lean{RBM.Gauss.cutResolventEnvelope_nonneg,
+        RBM.Gauss.cutResolventEnvelope_antitone_gap,
+        RBM.Gauss.loopHierarchyLengthEnvelope_nonneg,
+        RBM.Gauss.loopHierarchyLengthEnvelope_antitone_gap,
+        RBM.Gauss.loopHierarchyLengthEnvelope_on_window_le_minGap,
+        RBM.Gauss.norm_expected_gloop_increment_le_length_minGap}\leanok
+  For a positive spectral gap, each resolvent envelope and the full
+  length-only cut envelope are nonnegative and decrease as the gap
+  increases. On $[a,b]\subset[0,1)$, the endpoint gap
+  $(1-b)\operatorname{Im}m(E)$ therefore gives a uniform upper bound,
+  and the expected-loop increment has the corresponding length-only
+  envelope times $b-a$. The positivity assumption is essential.
+  \emph{S5 gap-monotonicity checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Compare inverse gap powers and use the exact path gap; substitute
+  the length-only envelope in the proved increment estimate.
 \end{proof}
 
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
