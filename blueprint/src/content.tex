@@ -382,7 +382,8 @@
          lem:periodize-shells, lem:periodize-tail,
          lem:periodize-convergence, lem:periodize-shift,
          lem:periodize-descend, lem:periodize-stencil,
-         lem:periodize-delta}
+         lem:periodize-delta, lem:periodize-torus-stencil,
+         lem:periodize-resolvent-bridge, lem:periodize-fourier-delta}
   $K_{\xi,L}(x)=\sum_{n\in\mathbb Z^2}K_{\xi,\infty}(x+nL)$, by showing that the
   periodized kernel solves $(1-\xi S)P=\delta_0$ and using uniqueness of the
   inverse. Finite shell counting and a generic geometric comparison criterion
@@ -489,6 +490,56 @@
 \end{lemma}
 \begin{proof}\leanok
   The canonical representative $x+Ln$ is zero precisely when $x=0$ and $n=0$.
+\end{proof}
+
+\begin{lemma}[Periodized stencil equals the torus walk]
+  \label{lem:periodize-torus-stencil}
+  \uses{lem:periodize-stencil, lem:periodize-descend, def:SB}
+  \lean{RBM.periodizedTorusKernel_latticeFiveAverage,
+        RBM.summable_latticePointMass_periodized}\leanok
+  For the symmetric five-point walk and explicitly summable translates,
+  periodization of the integer-lattice stencil equals the action of $S^{(B)}$
+  on the descended torus kernel. The point mass at $L=3$ gives a nonzero
+  example. The actual infinite-volume resolvent equation remains open.
+  \emph{T28h, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Match the five shifted canonical representatives with the torus neighbours,
+  then use finite-stencil summation and representative independence.
+\end{proof}
+
+\begin{lemma}[Conditional periodized resolvent bridge]
+  \label{lem:periodize-resolvent-bridge}
+  \uses{lem:periodize-torus-stencil, lem:periodize-delta, def:Theta}
+  \lean{RBM.Theta_eq_circulant_periodized,
+        RBM.Theta_apply_periodized}\leanok
+  If an integer-lattice kernel satisfies the genuine five-point resolvent
+  equation and all five shifted lattice sums converge, its torus
+  periodization equals the finite-volume $\Theta_\xi$ kernel when
+  $\|\xi\|<1$. A nonzero point-mass example at $\xi=0$ satisfies the
+  hypotheses. The actual $K_{\xi,\infty}$ must still be shown to satisfy
+  them. \emph{T28 conditional bridge, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Periodize the lattice equation, identify the torus five-point stencil and
+  delta, then use uniqueness of the finite-volume inverse.
+\end{proof}
+
+\begin{lemma}[Two-dimensional Fourier inversion of the numerator]
+  \label{lem:periodize-fourier-delta}
+  \uses{def:continuum}
+  \lean{RBM.integral_exp_int_periodize,
+        RBM.normalized_integral_continuumNumerator}\leanok
+  The normalized iterated integral of the numerator of the infinite-volume
+  Fourier kernel over the two-dimensional frequency square equals the point
+  mass at the origin of $\mathbb Z^2$. This is the right-hand side of the
+  actual lattice resolvent equation; the left-hand side still requires an
+  integrand identity and passage through the integral.
+  \emph{T28j, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Factor the exponential into its two integer-frequency characters and use
+  the one-dimensional Fourier orthogonality integral in each coordinate.
 \end{proof}
 
 \begin{lemma}[Combining the two decay regimes]\label{lem:decay-interface}
@@ -949,6 +1000,23 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   Bound the finite product in operator norm and its trace by matrix size.
 \end{proof}
 
+\begin{lemma}[Sharp envelope for nonempty finite loops]
+  \label{lem:loop-envelope-sharp}
+  \uses{lem:loop-envelope, def:block-model}
+  \lean{RBM.Gauss.sum_blockWeight,
+        RBM.Gauss.norm_trace_mul_Eblk_le,
+        RBM.Gauss.norm_gloop_le_sharp}\leanok
+  For a nonempty $n$-loop and $0<\eta\le|\operatorname{Im}z|$,
+  $|\mathcal L|\le\eta^{-n}W^{-2(n-1)}$, with no volume factor $L^2$.
+  The final block projection has unit trace weight; bounding the preceding
+  factors in operator norm gives the stated normalization.
+  \emph{S9h, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Sum the $W^2$ diagonal block weights to one, then bound the remaining
+  Green and block factors by their operator norms.
+\end{proof}
+
 \begin{lemma}[Continuity of bare-loop moments on a spectral window]
   \label{lem:loop-moment-cont}
   \uses{lem:moment-time-cont, lem:loop-time-cont, lem:loop-envelope}
@@ -983,6 +1051,52 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Use the positive square-root formula for the bulk semicircle transform and
   the minimum of $1-u$ on the window, then apply the loop-moment theorem.
+\end{proof}
+
+\begin{lemma}[Algebraic identities for the explicit bulk value]
+  \label{lem:spectral-algebra}
+  \uses{lem:spectral-window}
+  \lean{RBM.Gauss.spectralM_mul,
+        RBM.Gauss.spectralM_quadratic,
+        RBM.Gauss.norm_spectralM}\leanok
+  For $|E|\le2$, the explicit bulk value satisfies
+  $(m^{(E)})^2+E m^{(E)}+1=0$ and $|m^{(E)}|=1$.
+  This algebraic characterization is separate from the still-open
+  upper-half-plane boundary-limit identification. \emph{S9i, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Square the explicit real and imaginary parts and use
+  $\bigl(\sqrt{4-E^2}\bigr)^2=4-E^2$.
+\end{proof}
+
+\begin{lemma}[Derivative of the moving spectral parameter]
+  \label{lem:spectral-derivative}
+  \uses{lem:spectral-window, lem:spectral-algebra}
+  \lean{RBM.Gauss.hasDerivAt_spectralZ,
+        RBM.Gauss.hasDerivAt_spectralZ_im}\leanok
+  For the explicit path $z_u=E+(1-u)m^{(E)}$,
+  $z'_u=-m^{(E)}$ and
+  $(\operatorname{Im}z_u)'=-\operatorname{Im}m^{(E)}$.
+  This is an algebraic chain-rule input for the later Green-flow calculation.
+  \emph{S5 spectral step, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Differentiate the affine path in the real parameter $u$.
+\end{proof}
+
+\begin{lemma}[Derivative of the one-sample Gaussian matrix flow]
+  \label{lem:flow-derivative}
+  \uses{def:model, lem:flow-time-cont}
+  \lean{RBM.Gauss.hasDerivAt_Hflow_time,
+        RBM.Gauss.hasDerivAt_Hflow_one}\leanok
+  At a fixed Gaussian sample and $u>0$, the surrogate one-time flow
+  $H_u=\sqrt u\,X$ has derivative $X/(2\sqrt u)$.
+  This is a pointwise chain-rule input; the paper's OU generator identity
+  remains open. \emph{S5 flow step, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Differentiate the positive real square root and multiply by the fixed
+  sampled matrix.
 \end{proof}
 
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
@@ -1076,8 +1190,28 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   then count the duplicated entries and verify each side has equal lengths.
 \end{proof}
 
+\begin{lemma}[Two-edge cut matrix words and traces]
+  \label{lem:loop-cut-pair-word}
+  \uses{lem:loop-cut-pair, lem:loop-basic}
+  \lean{RBM.LoopIdx.cutGlueL_split,
+        RBM.LoopIdx.cutGlueR_split,
+        RBM.gloopProd_cutGlueL_split,
+        RBM.gloopProd_cutGlueR_split,
+        RBM.gloop_cutGlueL_split,
+        RBM.gloop_cutGlueR_split}\leanok
+  At two valid split positions, the left and right cut indices have explicit
+  $GE$ matrix products; taking traces gives the corresponding loops.
+  Identifying the generator's derivative contractions with these terms is
+  still open. \emph{C2 pair matrix-word checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Split the lists at the two cut sites and expand the finite products, then
+  apply the trace definition.
+\end{proof}
+
 \begin{definition}[Cut-and-glue operations, \texttt{Def:oper\_loop}]\label{def:loop-ops}
-  \uses{def:loops, lem:loop-cut-one, lem:loop-cut-pair}
+  \uses{def:loops, lem:loop-cut-one, lem:loop-cut-pair,
+         lem:loop-cut-pair-word}
   The one-edge insertion and two-edge splitting operations act on sign and
   block-indexed loops.  Their exact index changes must be verified in d=2.
 \end{definition}

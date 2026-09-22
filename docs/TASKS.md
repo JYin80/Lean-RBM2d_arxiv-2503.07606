@@ -34,6 +34,9 @@
 | T28e | 周期化核下降到 `Z2 L` | `Propagator/PeriodizeDescend.lean` | 当前对话内代理 | **完成，本地全量验收通过**；实际核界与 resolvent 恒等式仍开放 |
 | T28f | 五点 stencil 与周期化交换 | `Propagator/PeriodizeStencil.lean` | 当前对话内代理 | **完成，本地全量验收通过**；实际核方程仍开放 |
 | T28g | 点质量周期化为环面 Kronecker delta | `Propagator/PeriodizeDelta.lean` | 当前对话内代理 | **完成，本地全量验收通过**；实际核方程仍开放 |
+| T28h | 周期化五点平均与环面 `SB` 对应 | `Propagator/PeriodizeTorusStencil.lean` | 当前对话内代理 | **完成，本地全量验收通过**；实际核方程仍开放 |
+| T28i | 周期化 resolvent 到 `Theta` 的条件桥 | `Propagator/PeriodizeResolventBridge.lean` | 当前对话内代理 | **完成，本地全量验收通过**；必须另证实际 `Kinf` 的可和性与格点方程 |
+| T28j | 二维 Fourier 分子反演为点质量 | `Propagator/PeriodizeFourierDelta.lean` | 当前对话内代理 | **完成，本地全量验收通过**；被积函数恒等式和积分线性步骤仍开放 |
 | T31 | 清理当前 10 条 linter warning | `Defs/Dist.lean`、`Gauss/Envelope.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；10 条已清、声明类型保持 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | Codex T4 | **完成，主分支全量验收通过**；T24 可复用 |
 | S4 | 一时刻高斯模型与坐标分解 | `Gauss/Model.lean` | Codex S4 | **完成，主分支全量验收通过**；含 `Sizes.seqP_map_slice` 共同概率空间 |
@@ -49,6 +52,10 @@
 | S9e | 裸 loop 的确定性全空间包络 | `Gauss/LoopEnvelope.lean` | 当前对话内代理 | **完成，本地全量验收通过**；卷积项仍开放 |
 | S9f | 统一谱窗内裸 loop 矩时间连续性 | `Gauss/LoopMomentCont.lean` | 当前对话内代理 | **完成，本地全量验收通过**；论文具体谱路径与生成元不等式仍开放 |
 | S9g | 论文显式 bulk 谱路径的统一非实窗口 | `Gauss/SpectralWindow.lean` | 当前对话内代理 | **完成，本地全量验收通过**；半圆变换的边界极限同一性仍开放 |
+| S9h | 非空 loop 的无体积损失包络 | `Gauss/LoopEnvelopeSharp.lean` | 当前对话内代理 | **完成，本地全量验收通过**；$\eta^{-n}W^{-2(n-1)}$ |
+| S9i | 显式 bulk `m` 的二次方程与单位范数 | `Gauss/SpectralAlgebra.lean` | 当前对话内代理 | **完成，本地全量验收通过**；边界极限同一性仍开放 |
+| S5a | 移动谱路径及虚部导数 | `Gauss/SpectralDerivative.lean` | 当前对话内代理 | **完成，本地全量验收通过**；矩阵 Green 流导数仍开放 |
+| S5b | 一时刻矩阵流的逐样本导数 | `Gauss/FlowDerivative.lean` | 当前对话内代理 | **完成，本地全量验收通过**；Green 与生成元链仍开放 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
@@ -57,7 +64,7 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**T6/T8/T19/T20/T28a–g、T21 `Shat` 差分阶段、T27 第一坐标阶段、S7/S8/S9a–g、C1 基础及完整 loop Ward、C2 单边操作与双边索引、T31 已通过本地全量验收。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+**T6/T8/T19/T20/T28a–j、T21 `Shat` 差分阶段、T27 第一坐标阶段、S5a/b、S7/S8/S9a–i、C1 基础及完整 loop Ward、C2 单边与双边矩阵词、T31 已通过本地全量验收。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
 T21、T22、T28、T29；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
@@ -74,7 +81,7 @@ T21/T22、S5、T27/T28 的较难部分先核对 d=1 代码和精确接口，再�
 | 单号 | 交付范围 | 起步条件 |
 |---|---|---|
 | C1 | `Hierarchy/Loops.lean`：论文 `Def:G_loop`、维度正确的归一化、两环平方条目式及修正后一般 `(WI_calL)` 均已本地全量验收 | S4 与 T7 的矩阵/块接口验收 |
-| C2 | `Hierarchy/Operations.lean`：单边任意位置 cut-and-glue 的指标与矩阵词已本地全量验收；`OperationsPair.lean` 双边指标、长度与良构性也已本地全量验收，矩阵语义及生成元对应仍开放 | C1 |
+| C2 | `Hierarchy/Operations.lean` 与 `OperationsPairWord.lean`：单边及双边任意位置的指标、矩阵词与迹公式均已本地全量验收；生成元收缩对应仍开放 | C1 |
 | C3 | `Hierarchy/Tree.lean`：`Def_Ktza`、`(Kn2sol)` 的初值/演化/唯一性 | C1、T6、传播子基本性质 |
 | C4 | `[YY_25]` 引用审计：Ward、`(KKpi)`、短程组合结构的精确假设与证明责任 | 论文及被引版本核对；需要 Jun 裁定外部引用的形式化边界 |
 | U0 | Bulk universality 外部输入审计：`LANDON20191137`、`erdHos2017dynamical`、`Xu:2024aa`、`YY_25` 的版本/假设 | 局部律与 OU 时间尺度对齐 |
