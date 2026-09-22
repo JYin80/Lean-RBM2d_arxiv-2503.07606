@@ -837,6 +837,114 @@
   three reciprocal denominators below by $D_0$.
 \end{proof}
 
+\begin{lemma}[Unnormalized dyadic cutoff support split]
+  \label{lem:symbol-cutoff-shell}
+  \uses{lem:symbol-low-shell,
+         lem:symbol-annulus-numerator}
+  \lean{RBM.dyadicCutoff_sqrt_pstar2_support,
+        RBM.dyadicCutoff_sqrt_pstar2_shell_cases}\leanok
+  For the existing cutoff evaluated on the unnormalized momentum radius,
+  nonzero weight places the radius between the exact inner and outer dyadic
+  bounds. It lies either in the low grid-scale region or in a separated
+  annulus at one of two neighboring indices. A normalized-frequency cutoff
+  and the full summation-by-parts argument remain open.
+  \emph{T21 cutoff-support checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Square the cutoff's real-radius support inequalities, then divide the
+  annular region at the midpoint dyadic radius.
+\end{proof}
+
+\begin{definition}[Normalized lattice frequency and dyadic cutoff]
+  \label{def:normalized-frequency}
+  \uses{lem:cutoff}
+  \lean{RBM.normalizedFrequency,
+        RBM.normalizedFrequency_nonneg,
+        RBM.normalizedFrequency_le_one,
+        RBM.normalizedDyadicCutoff,
+        RBM.normalizedDyadicCutoff_support,
+        RBM.normalizedDyadicCutoff_support_sq}\leanok
+  Put $\nu_L(p)=\sqrt{|p|_*^2}/(2\pi)\in[0,1]$ and evaluate the existing
+  dyadic cutoff at this frequency. Nonzero weight implies the exact
+  physical-radius support bounds with factor $2\pi$, both before and after
+  squaring. The scaled shell classification and partition remain open.
+  \emph{T22 normalized-frequency checkpoint, closed.}
+\end{definition}
+
+\begin{lemma}[Normalized cutoff support on physical shells]
+  \label{lem:normalized-cutoff-shell}
+  \uses{def:normalized-frequency}
+  \lean{RBM.physicalShellRadius_pos,
+        RBM.physicalShellRadius_succ,
+        RBM.normalizedDyadicCutoff_physical_support_sq,
+        RBM.normalizedDyadicCutoff_shell_cases}\leanok
+  The normalized cutoff places nonzero lattice momentum either below four
+  grid steps or in a separated physical shell at one of two neighboring
+  indices. All radii retain the exact factor $2\pi$. The per-shell symbol
+  estimate and finite partition remain open. \emph{T22 support checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Rescale the cutoff support to physical radius, then split its broad annulus
+  at the midpoint radius.
+\end{proof}
+
+\begin{lemma}[Inverse-symbol denominators on a physical shell]
+  \label{lem:physical-shell-denominator}
+  \uses{lem:normalized-cutoff-shell,
+         lem:symbol-shift-annulus}
+  \lean{RBM.physicalShellDenomScale_pos,
+        RBM.physicalShellDenomScale_le,
+        RBM.physicalShellDenomScale_le_e1_triple,
+        RBM.physicalShellDenomScale_le_e2_triple}\leanok
+  If a momentum lies beyond the explicit two-step grid margin and the inner
+  physical shell radius, all three denominators in either coordinate second
+  difference obey the same lower bound
+  $\frac{4}{45\pi^2}(\kappa(\xi)^2+R_{j+1}^2)$.
+  The physical-shell numerator and summation remain open.
+  \emph{T22 denominator checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the elliptic lower bound to the original and two shifted momenta,
+  using the common quarter-scale radius after each shift.
+\end{proof}
+
+\begin{lemma}[Second reciprocal differences on a physical shell]
+  \label{lem:physical-shell-numerator}
+  \uses{lem:physical-shell-denominator,
+         lem:symbol-annulus-numerator}
+  \lean{RBM.two_symbolGridStep_le_physicalShellRadius,
+        RBM.norm_invSymbolMultiplier_second_diff_e1_physical_le,
+        RBM.norm_invSymbolMultiplier_second_diff_e2_physical_le}\leanok
+  Under explicit inner, outer and grid-margin conditions at physical radius
+  $R_j=2\pi\,2^{-j}$, both coordinate second reciprocal differences have
+  the denominator-preserving annular bound with quadratic numerator
+  $(11/5)(gR_j)^2$. A nonempty lattice shell satisfies the hypotheses.
+  Connecting normalized cutoff support and summing the shells remain open.
+  \emph{T22 physical-shell numerator checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound the symbol increments by grid step times physical radius, then insert
+  the common lower bound for all three denominators.
+\end{proof}
+
+\begin{lemma}[Normalized cutoff selects a proved second-difference bound]
+  \label{lem:normalized-cutoff-second-diff}
+  \uses{lem:normalized-cutoff-shell,
+         lem:physical-shell-numerator,
+         lem:symbol-low-shell}
+  \lean{RBM.normalizedDyadicCutoff_second_diff_e1_cases,
+        RBM.normalizedDyadicCutoff_second_diff_e2_cases}\leanok
+  If the normalized cutoff is nonzero, each coordinate second reciprocal
+  difference obeys either the explicit low-grid bound or the physical-shell
+  bound at one of two neighboring indices. This is a branchwise statement;
+  cutoff differences and dyadic summation remain open.
+  \emph{T22 cutoff case interface, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the normalized support split and insert the corresponding low or
+  separated physical-shell estimate in each branch.
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
   Assemble the three ingredients into the per-annulus estimate and produce
@@ -1410,8 +1518,9 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
         RBM.Gauss.stein_gloop_HflowBlock_sum}\leanok
   The finite sum of Gaussian coordinate times the loop is integrable, and
   its expectation equals the expectation of the finite variance-weighted
-  sum of actual coordinate derivatives. The time-flow generator remains to
-  be identified. \emph{S5 finite Stein sum checkpoint, closed.}
+  sum of actual coordinate derivatives. The time-flow generator instead
+  requires Stein applied to the first coordinate derivative, proved below.
+  \emph{S5 finite Stein sum checkpoint, closed.}
 \end{lemma}
 \begin{proof}\leanok
   Use the Gaussian first moment and uniform loop envelope for integrability,
@@ -1435,6 +1544,64 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Expand the Gaussian matrix as a finite coordinate sum, use linearity of
   the word's matrix-direction derivative, and separate the spectral term.
+\end{proof}
+
+\begin{lemma}[Second-level Stein identity for the expected samplewise derivative]
+  \label{lem:loop-flow-stein-expectation}
+  \uses{lem:loop-flow-coordinate-chain,
+         lem:loop-coordinate-integrable,
+         lem:stein-product}
+  \lean{RBM.Gauss.stein_gloop_first_coordinate_derivative,
+        RBM.Gauss.stein_gloop_first_coordinate_derivative_sum,
+        RBM.Gauss.integrable_trace_spectralWordDeriv,
+        RBM.Gauss.expected_samplewise_loop_flow_derivative}\leanok
+  Applying Stein to the first coordinate derivative gives the exact
+  variance-weighted second coordinate derivative. The expected samplewise
+  time derivative is therefore $(2u)^{-1}$ times that finite second
+  derivative sum plus the expected spectral drift. Its integrability is
+  proved; identifying it with the time derivative of the expected loop
+  remains open. \emph{S5 expected-sample-derivative checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply product Gaussian Stein to each bounded first derivative, sum the
+  finite coordinate identities, and integrate the samplewise chain rule
+  with the separately bounded spectral drift.
+\end{proof}
+
+\begin{lemma}[Integrable envelope for the samplewise flow derivative]
+  \label{lem:loop-flow-derivative-envelope}
+  \uses{lem:loop-flow-stein-expectation,
+         lem:loop-coordinate-derivative-bounds}
+  \lean{RBM.Gauss.flowWindow_mem,
+        RBM.Gauss.flowWindow_subset_Ioo,
+        RBM.Gauss.integrable_flowDerivativeEnvelope,
+        RBM.Gauss.norm_samplewise_loop_flow_derivative_le_envelope}\leanok
+  Around each $0<u<1$, a closed subinterval of $(0,1)$ has a single
+  integrable envelope for the actual samplewise loop time derivative. The
+  envelope is a deterministic constant plus a finite weighted sum of
+  Gaussian coordinate magnitudes. Differentiation under the integral is
+  the remaining analytic step. \emph{S5 flow envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound Green factors uniformly on the time window, then use finite
+  Gaussian first moments to integrate the coordinate part.
+\end{proof}
+
+\begin{lemma}[Derivative of the expected finite loop]
+  \label{lem:loop-expectation-derivative}
+  \uses{lem:loop-flow-derivative-envelope,
+         lem:loop-flow-stein-expectation}
+  \lean{RBM.Gauss.hasDerivAt_integral_gloop_HflowBlock_spectralZ,
+        RBM.Gauss.deriv_integral_gloop_HflowBlock_spectralZ}\leanok
+  For $|E|<2$, $0<u<1$, and a well-formed finite loop, differentiation
+  passes through the Gaussian expectation. Its derivative is exactly the
+  variance-weighted second-coordinate term divided by $2u$ plus the
+  expected spectral drift. Identifying the algebraic terms with the paper's
+  full loop generator remains open. \emph{S5 expected-loop derivative, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply local dominated differentiation with the time-neighborhood envelope,
+  then substitute the second-level Stein expectation identity.
 \end{proof}
 
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
@@ -1688,6 +1855,101 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Expand the recursive second product rule for two factors and normalize the
   two equal cross terms by matrix associativity and addition.
+\end{proof}
+
+\begin{lemma}[Three-edge second-derivative position expansion]
+  \label{lem:loop-contraction-three-edges}
+  \uses{lem:loop-contraction-second-reverse,
+         lem:loop-coordinate-second}
+  \lean{RBM.Gauss.coordinateSecondWordDeriv_three_edges}\leanok
+  For a three-edge word, the recursive second derivative is exactly the
+  sum of three same-edge terms and three ordered distinct-edge pairs, each
+  pair with multiplicity two and the original matrix order. The arbitrary
+  finite-list enumerator remains open. \emph{S5 three-edge checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Expand the recursive second product rule and collect the two equal terms
+  for each pair of distinct positions.
+\end{proof}
+
+\begin{lemma}[Enumerating one edge of a finite loop word]
+  \label{lem:loop-edge-splits}
+  \lean{RBM.Gauss.edgeSplits_reconstruct,
+        RBM.Gauss.edgeSplits_prefix_lengths,
+        RBM.Gauss.edgeSplits_unique_position}\leanok
+  The finite edge-split list reconstructs the original word at every entry
+  and contains exactly one split for each valid position. This is the
+  combinatorial input for summing same-edge terms without duplication.
+  \emph{S5 one-edge enumeration checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Recurse through the list and track the prefix length of each split;
+  these lengths are exactly $0,\ldots,n-1$.
+\end{proof}
+
+\begin{lemma}[Enumerating two ordered edges of a finite word]
+  \label{lem:loop-pair-splits}
+  \uses{lem:loop-edge-splits}
+  \lean{RBM.Gauss.pairSplits_reconstruct,
+        RBM.Gauss.pairSplits_positions_valid,
+        RBM.Gauss.pairSplits_unique_positions}\leanok
+  Every ordered pair of distinct positions $i<j$ corresponds to exactly one
+  prefix/first/middle/second/suffix split, and each split reconstructs the
+  original word. \emph{S5 two-edge enumeration checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Enumerate the first edge, then enumerate the second edge in its suffix;
+  reconstruct and identify the two prefix lengths.
+\end{proof}
+
+\begin{lemma}[First coordinate derivative as a sum over edge positions]
+  \label{lem:loop-first-position-sum}
+  \uses{lem:loop-edge-splits,
+         lem:loop-coordinate-derivative}
+  \lean{RBM.Gauss.coordinateWordProduct,
+        RBM.Gauss.coordinateEdgeTerm,
+        RBM.Gauss.coordinateWordDeriv_eq_edgeSplits_sum}\leanok
+  For every finite matrix word, the recursive first coordinate derivative
+  equals the sum of its one-edge contributions over the unique edge splits,
+  preserving matrix order. The second derivative's same-edge and pair sums
+  remain open. \emph{S5 first position sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Induct on the list and match the head derivative with the first split and
+  the tail derivative with the remaining shifted splits.
+\end{proof}
+
+\begin{lemma}[Second coordinate derivative as same-edge and pair sums]
+  \label{lem:loop-second-position-sum}
+  \uses{lem:loop-first-position-sum,
+         lem:loop-pair-splits}
+  \lean{RBM.Gauss.coordinateSameEdgeSum,
+        RBM.Gauss.coordinatePairSum,
+        RBM.Gauss.coordinateSecondWordDeriv_eq_position_sums}\leanok
+  For every finite matrix word, its recursive second coordinate derivative
+  is the sum of all same-edge terms plus twice the sum over all ordered
+  distinct-edge pairs. The edge and pair enumerators prevent duplicate or
+  missing positions. Trace, covariance and cut-loop conversion remain open.
+  \emph{S5 general position expansion, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Induct on the word, using the first-derivative position sum and the cons
+  recursions of the one-edge and two-edge enumerators.
+\end{proof}
+
+\begin{lemma}[Weighted second-derivative trace as position sums]
+  \label{lem:loop-second-trace-sum}
+  \uses{lem:loop-second-position-sum}
+  \lean{RBM.Gauss.sum_coordinateSecondWordDeriv_trace_positions}\leanok
+  After taking the matrix trace and summing actual Gaussian coordinate
+  variances, the finite second derivative is exactly the sum of same-edge
+  weighted traces plus twice the sum of distinct-edge weighted traces.
+  Rewriting each fixed-position term as cut loops remains open.
+  \emph{S5 weighted position sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use trace linearity and exchange the two finite sums over Gaussian
+  coordinates and list positions.
 \end{proof}
 
 \begin{lemma}[Single-edge second derivative covariance contraction]

@@ -37,6 +37,7 @@
   .chip.done b{color:var(--done)}.chip.ready b{color:var(--ready)}.chip.todo b{color:var(--todo)}
   h2{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:21px;margin:38px 0 10px}
   .graph{margin:0}
+  .graph.global{width:min(96vw,2200px);margin-left:50%;transform:translateX(-50%)}
   .gbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;margin-bottom:8px}
   .gbar .gcap{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
   .gtools{display:flex;align-items:center;gap:6px}
@@ -47,6 +48,8 @@
   .gtools .gpct{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
   .plate{background:var(--plate);border:1px solid var(--plate-border);border-radius:8px;padding:12px;
     overflow:auto;max-height:76vh;overscroll-behavior:contain;cursor:grab}
+  .graph.global .plate{background:#fff;border-color:#d9e3ec;border-radius:14px;
+    padding:12px;max-height:none}
   .plate.dragging{cursor:grabbing}
   .plate svg.depgraph{display:block;height:auto;max-width:none;width:100%}
   .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:13px;color:var(--muted)}

@@ -5,14 +5,14 @@
 
 ---
 
-## 当前摘要（2026-09-22 07:41 UTC；以下旧条目是历史日志）
+## 当前摘要（2026-09-22 07:56 UTC；以下旧条目是历史日志）
 
 - **范围**：按 `docs/PLAN.md` 推进整篇 d=2 论文；§8 的确定性传播子与
   §3–7 的随机层替代路线都在范围内。
 - **基线**：主分支 `5d40557` 起步，Lean 4.34.0。两个仓库的十个依赖 commit
   逐项一致；早期从 RBM1D 的本机缓存建立了独立 copy-on-write 副本，
-  RBM1D 文件始终只读。最近一次 `./check.sh` 全量通过：3926 jobs、errors 0、
-  warning 0；`#assert_rbm_axioms` 报告 1585 个 `RBM` 声明，仅使用
+  RBM1D 文件始终只读。最近一次 `./check.sh` 全量通过：3941 jobs、errors 0、
+  warning 0；`#assert_rbm_axioms` 报告 1743 个 `RBM` 声明，仅使用
   `propext`、`Classical.choice`、`Quot.sound`。
 - **维护项**：T31 已清理 `Defs/Dist.lean` 与 `Gauss/Envelope.lean` 的十条旧
   linter warning，关键声明类型的前后编译探针一致。
@@ -35,11 +35,18 @@
 - **蓝图**：已补 §2–4 的 loop/卷积树、局部律、QUE、量子扩散以及
   Bulk universality 的完整主定理骨架；`[YY_25]` 及短时 OU/DBM 外部输入
   单列开放节点。S3 乘积高斯核心与实际矩阵实例化、T27 已证的第一坐标
-  移位与未证的核衰减分别标记。最新交互 HTML 静态检查为 134 节点、
-  266 条依赖；788 个 theorem/lemma、935 个声明中所有蓝图引用均可解析。
-  无 `dot` 时自动使用 SVG 布局。
+  移位与未证的核衰减分别标记。最新交互 HTML 静态检查为 149 节点、
+  293 条依赖；832 个 theorem/lemma、998 个声明中所有蓝图引用均可解析。
+  全局图已按用户参考图改为宽幅白底、无章节框的依赖层布局；无 `dot` 时
+  自动使用 SVG 布局。SVG 静态检查 149 节点、293 连线、0 重叠。
 - **下一轮解锁**：T28 的实际核空间衰减、T21 高阶逆符号环带界、S5
   坐标求和与 loop 导数链。新单以实际声明和编译探针核对。
+- **S5 精确 Stein 层级**：时间链中的随机项是
+  $\sum_c\omega_c\partial_c g$；生成元所需的 Stein 步骤必须是
+  $\mathbb E[\omega_c\partial_c g]
+  =v_c\mathbb E[\partial_c^2 g]$。
+  已证的 $\mathbb E[\omega_c g]=v_c\mathbb E[\partial_c g]$
+  对 $g$ 本身成立，但不能代替这个二阶步骤。
 - **T3 集成（2026-09-22 05:15 UTC）**：`LatticeSum.lean` 证明了
   `sum_inv_pstar2_le`（显式 `4/π²`）、归一化对数界与
   `normalizedPuncturedSum_detDom_one`；`L=3` 的非空正和例子已编译。

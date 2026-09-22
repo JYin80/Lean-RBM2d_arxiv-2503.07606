@@ -19,7 +19,7 @@ Node status comes from the blueprint itself, never from a hand-kept list:
 A `\\lean{}` tag naming a declaration that does not exist in the Lean sources is
 a hard error: the dependency graph must never claim more than the code does.
 """
-import re, subprocess, sys, html, pathlib, json, shutil
+import re, subprocess, sys, html, pathlib, json, shutil, textwrap
 
 C = {  # fill, stroke, text
   "done":    ("#1f9d6b", "#177a54", "#ffffff"),
@@ -167,6 +167,19 @@ def gshort(n):
     tag = open_task(n)
     return s + (f"\\n{tag}" if tag else "")
 
+def global_lines(n):
+    """Readable two-line labels for the wide overview."""
+    title = short(n)
+    lines = textwrap.wrap(title, width=22, break_long_words=False,
+                          break_on_hyphens=False)
+    if not lines:
+        lines = [n["label"]]
+    lines = lines[:2]
+    tag = open_task(n)
+    if tag:
+        lines[-1] = lines[-1][:17] + " · " + tag
+    return lines
+
 def open_task(n):
     """The work order number, but only while the node is still open."""
     return None if n["status"] in ("done", "defn", "cited") else TASK.get(n["label"])
@@ -175,27 +188,21 @@ def cluster_label(t):
     return t.split("——")[0].strip()
 
 def global_dot(chapters, by):
-    """One digraph holding EVERY node of EVERY chapter, grouped by chapter.
+    """A wide, unboxed overview holding every node and dependency.
 
     No `→前章` stubs here: since every node is present, every `\\uses` edge is
     drawn in full, so this is the only picture that shows the whole proof at once.
     """
-    lines = ['digraph G { graph [bgcolor=transparent,rankdir=TB,nodesep=.22,ranksep=.38];',
-             ' node [fontname="Helvetica",fontsize=10,penwidth=1.3,margin="0.09,0.05"];',
-             ' edge [color="#aeb6bf",penwidth=1.0,arrowsize=.6];']
-    for i, ch in enumerate(chapters):
-        if not ch["nodes"]:
-            continue
-        lines.append(f' subgraph cluster_{i} {{')
-        lines.append(f'  label="{cluster_label(ch["title"])}"; labelloc="t"; labeljust="l";')
-        lines.append('  fontname="Helvetica"; fontsize=11; fontcolor="#6d7883";')
-        lines.append('  color="#ccd4dc"; style="rounded"; penwidth=1.1; margin=10;')
+    lines = ['digraph G { graph [bgcolor=transparent,rankdir=TB,nodesep=.32,ranksep=.62,pad=.25];',
+             ' node [fontname="Helvetica",fontsize=10,penwidth=1.1,margin="0.13,0.07"];',
+             ' edge [color="#b7c3cd",penwidth=.65,arrowsize=.45];']
+    for ch in chapters:
         for n in ch["nodes"]:
             f, st, tc = C[n["status"]]
             shape = 'shape=box,style="rounded,filled"' if n["kind"] == "definition" else 'shape=ellipse,style=filled'
-            lines.append(f'  "{n["label"]}" [{shape},fillcolor="{f}",color="{st}",'
-                         f'fontcolor="{tc}",label="{gshort(n)}"];')
-        lines.append(' }')
+            label = "\\n".join(global_lines(n)).replace('"', '\\"')
+            lines.append(f' "{n["label"]}" [{shape},fillcolor="{f}",color="{st}",'
+                         f'fontcolor="{tc}",label="{label}"];')
     for ch in chapters:
         for n in ch["nodes"]:
             for u in n["uses"]:
@@ -223,15 +230,38 @@ def svg_fallback(chapters, by, global_view):
     here = {n["label"] for n in nodes}
     positions, boxes = {}, []
     if global_view:
-        for i, ch in enumerate(chapters):
-            if not ch["nodes"]:
-                continue
-            x = 20 + i * 290
-            boxes.append((x, 46, 268, 50 + len(ch["nodes"]) * 65, ch["title"]))
-            for j, n in enumerate(ch["nodes"]):
-                positions[n["label"]] = (x + 134, 99 + j * 65)
-        width = max(600, 30 + len(chapters) * 290)
-        height = max(320, 120 + max((len(c["nodes"]) for c in chapters), default=0) * 65)
+        chapter_order = {n["label"]: i for i, ch in enumerate(chapters)
+                         for n in ch["nodes"]}
+        source_order = {n["label"]: i for i, n in enumerate(nodes)}
+        rank, visiting = {}, set()
+        def level(label):
+            if label in rank:
+                return rank[label]
+            if label in visiting:
+                raise SystemExit("cycle in blueprint dependencies: " + label)
+            visiting.add(label)
+            rank[label] = 1 + max((level(u) for u in by[label]["uses"] if u in here),
+                                  default=-1)
+            visiting.remove(label)
+            return rank[label]
+        for n in nodes:
+            level(n["label"])
+        levels = {}
+        for label, row in rank.items():
+            levels.setdefault(row, []).append(label)
+        width = max(850, 140 + max((len(v) for v in levels.values()), default=1) * 150)
+        height = 110 + (max(levels, default=0) + 1) * 88
+        for row in sorted(levels):
+            labels = levels[row]
+            def key(label):
+                parents = [positions[u][0] for u in by[label]["uses"] if u in positions]
+                return (sum(parents) / len(parents) if parents else
+                        chapter_order[label] * width / max(1, len(chapters)),
+                        chapter_order[label], source_order[label])
+            labels.sort(key=key)
+            start = (width - (len(labels) - 1) * 150) / 2
+            for col, label in enumerate(labels):
+                positions[label] = (start + col * 150, 65 + row * 88)
     else:
         external = sorted({u for n in nodes for u in n["uses"] if u not in here and u in by})
         order = external + [n["label"] for n in nodes]
@@ -276,7 +306,11 @@ def svg_fallback(chapters, by, global_view):
             if source not in positions:
                 continue
             x1, y1 = positions[source]
-            if x2 > x1 + 30:
+            if global_view:
+                sy, ty = y1 + 19, y2 - 19
+                mid = (sy + ty) / 2
+                path = f'M {x1} {sy} C {x1} {mid}, {x2} {mid}, {x2} {ty}'
+            elif x2 > x1 + 30:
                 sx, tx = x1 + 112, x2 - 112
                 m = (sx + tx) / 2
                 path = f'M {sx} {y1} C {m} {y1}, {m} {y2}, {tx} {y2}'
@@ -287,28 +321,40 @@ def svg_fallback(chapters, by, global_view):
             else:
                 sx = x1 + 112
                 path = f'M {sx} {y1} C {sx + 70} {y1}, {sx + 70} {y2}, {x2 + 112} {y2}'
-            out.append(f'<path d="{path}" fill="none" stroke="#aeb6bf" '
-                       f'stroke-opacity=".48" stroke-width="1" marker-end="url(#{marker})"/>')
+            out.append(f'<path d="{path}" fill="none" stroke="#{"b9c4ce" if global_view else "aeb6bf"}" '
+                       f'stroke-opacity=".48" stroke-width="{.8 if global_view else 1}" '
+                       f'marker-end="url(#{marker})"/>')
     for label, (x, y) in positions.items():
         n = by[label]
         f, stroke, color = C[n["status"]] if label in here else ("#f1f3f5", "#b9c1c9", "#60707d")
         out.append(f'<g class="node"><title>{html.escape(label)}</title>')
+        rx, ry = (66, 18) if global_view else (112, 23)
         if n["kind"] == "definition" or label not in here:
-            out.append(f'<rect x="{x - 112}" y="{y - 23}" width="224" height="46" rx="9" '
+            out.append(f'<rect x="{x - rx}" y="{y - ry}" width="{2 * rx}" height="{2 * ry}" rx="9" '
                        f'fill="{f}" stroke="{stroke}" stroke-width="1.4"/>')
         else:
-            out.append(f'<ellipse cx="{x}" cy="{y}" rx="112" ry="23" '
+            out.append(f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{ry}" '
                        f'fill="{f}" stroke="{stroke}" stroke-width="1.4"/>')
-        title = (gshort(n) if global_view else short(n))[:30]
-        tag = open_task(n) if not global_view else None
-        out.append(f'<text x="{x}" y="{y + 4}" text-anchor="middle" '
-                   f'font-family="sans-serif" font-size="11" fill="{color}">'
-                   f'{html.escape(title + (" · " + tag if tag else ""))}</text></g>')
+        if global_view:
+            label_lines = global_lines(n)
+            baseline = y - (len(label_lines) - 1) * 5 + 3
+            out.append(f'<text x="{x}" y="{baseline}" text-anchor="middle" '
+                       f'font-family="sans-serif" font-size="9" fill="{color}">')
+            for i, line in enumerate(label_lines):
+                out.append(f'<tspan x="{x}" dy="{0 if i == 0 else 11}">{html.escape(line)}</tspan>')
+            out.append('</text></g>')
+        else:
+            title = short(n)[:30]
+            tag = open_task(n)
+            out.append(f'<text x="{x}" y="{y + 4}" text-anchor="middle" '
+                       f'font-family="sans-serif" font-size="11" fill="{color}">'
+                       f'{html.escape(title + (" · " + tag if tag else ""))}</text></g>')
     out.append('</svg>')
     return "".join(out), float(width)
 
-def figure_html(cap, svg, w):
-    return (f'<figure class="graph" data-basew="{w:.0f}"><div class="gbar">'
+def figure_html(cap, svg, w, global_view=False):
+    kind = ' global' if global_view else ''
+    return (f'<figure class="graph{kind}" data-basew="{w:.0f}"><div class="gbar">'
             f'<span class="gcap">{html.escape(cap)}</span>'
             '<div class="gtools"><button type="button" data-act="out" aria-label="缩小">&minus;</button>'
             '<button type="button" data-act="fit">适应宽度</button>'
@@ -376,9 +422,9 @@ def main(root, out):
         raise SystemExit("global graph is missing nodes: " + ", ".join(missing))
     edges = sum(1 for n in allnodes for u in n["uses"] if u in by)
     body.append('<h2>全文依赖图</h2>')
-    body.append('<p class="sub">下面各章的每一个节点都在这张图里，按章分组；箭头方向是'
+    body.append('<p class="sub">下面各章的每一个节点都在这张图里；箭头方向是'
                 '“被用到的引理 → 用到它的结论”。节点上的 T□ 是 <code>docs/TASKS.md</code> 里的工单号。</p>')
-    body.append(figure_html(f'全局 · {len(allnodes)} 个节点 · {edges} 条依赖', gsvg, gw))
+    body.append(figure_html(f'全局 · {len(allnodes)} 个节点 · {edges} 条依赖', gsvg, gw, True))
     for ch in chapters:
         if not ch["nodes"]:
             continue
