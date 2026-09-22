@@ -31,6 +31,7 @@ import RBM2D.Propagator.SymbolReciprocalDiff2Bound
 import RBM2D.Propagator.SymbolDenomAnnulus
 import RBM2D.Propagator.SymbolShiftAnnulus
 import RBM2D.Propagator.SymbolReciprocalAnnulusBound
+import RBM2D.Propagator.SymbolAnnulusNumerator
 import RBM2D.Propagator.PeriodizeShells
 import RBM2D.Propagator.PeriodizeTail
 import RBM2D.Propagator.PeriodizeConvergence
@@ -72,6 +73,7 @@ import RBM2D.Gauss.LoopCoordinateSecondDerivative
 import RBM2D.Gauss.LoopCoordinateDerivativeBounds
 import RBM2D.Gauss.LoopCoordinateIntegrability
 import RBM2D.Gauss.LoopCoordinateStein
+import RBM2D.Gauss.LoopCoordinateSteinSum
 import RBM2D.Analysis.Bootstrap
 import RBM2D.Analysis.MomentGronwallBase
 import RBM2D.Analysis.MomentClosing
@@ -88,6 +90,7 @@ import RBM2D.Hierarchy.ContractionUnused
 import RBM2D.Hierarchy.ContractionCutWords
 import RBM2D.Hierarchy.ContractionDrift
 import RBM2D.Hierarchy.ContractionSecondLoop
+import RBM2D.Hierarchy.ContractionSecondLoopReverse
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms

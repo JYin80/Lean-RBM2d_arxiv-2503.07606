@@ -797,6 +797,27 @@
   reciprocal second-difference norm estimate.
 \end{proof}
 
+\begin{lemma}[Numerator control on a separated dyadic shell]
+  \label{lem:symbol-annulus-numerator}
+  \uses{lem:symbol-reciprocal-annulus-bound,
+         lem:symbol-shift-annulus}
+  \lean{RBM.two_symbolGridStep_le_dyad,
+        RBM.reciprocalSymbolStepBound_e1_shell,
+        RBM.reciprocalSymbolStepBound_e2_shell,
+        RBM.norm_invSymbolMultiplier_second_diff_e1_shell_le,
+        RBM.norm_invSymbolMultiplier_second_diff_e2_shell_le}\leanok
+  Under explicit inner radius, outer radius and grid margin hypotheses, the
+  numerator in both coordinate second differences is bounded at grid-step
+  times shell-radius scale. A concrete nonempty shell satisfies all three
+  radius conditions. Connecting these hypotheses to normalized cutoff
+  support and treating low shells remain open. \emph{T21g, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound each coordinate increment of the symbol on the shell, insert the
+  two shifted denominator estimates, and collect the linear and quadratic
+  numerator terms.
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
   Assemble the three ingredients into the per-annulus estimate and produce
@@ -1363,6 +1384,21 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   deterministic derivative envelope to discharge the analytic hypotheses.
 \end{proof}
 
+\begin{lemma}[Finite coordinate sum of the loop Stein identities]
+  \label{lem:loop-coordinate-stein-sum}
+  \uses{lem:loop-coordinate-stein}
+  \lean{RBM.Gauss.integrable_coord_smul_gloop,
+        RBM.Gauss.stein_gloop_HflowBlock_sum}\leanok
+  The finite sum of Gaussian coordinate times the loop is integrable, and
+  its expectation equals the expectation of the finite variance-weighted
+  sum of actual coordinate derivatives. The time-flow generator remains to
+  be identified. \emph{S5 finite Stein sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the Gaussian first moment and uniform loop envelope for integrability,
+  then exchange each finite sum with integration and apply Stein coordinatewise.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
   \uses{lem:generator, lem:moment-closing-base, lem:moment-time-cont,
          lem:flow-time-cont, lem:green-time-cont, lem:loop-time-cont,
@@ -1592,14 +1628,28 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
         RBM.sum_twoEdge_mixed_deriv}\leanok
   For one ordered pair of distinct Green edges, the Gaussian variance sum
   of the cross term in the second coordinate derivative equals $uW^2$ times
-  the $S^{(B)}$-weighted left/right cut-loop double sum. The reverse ordering,
-  same-edge terms, and expectation-level assembly remain open.
+  the $S^{(B)}$-weighted left/right cut-loop double sum. General-length
+  product-rule assembly, same-edge terms, and expectation remain open.
   \emph{S5 two-edge contraction checkpoint, closed.}
 \end{lemma}
 \begin{proof}\leanok
   Rotate the trace to expose the two coordinate directions, apply the finite
   covariance contraction, and use $(\sqrt u)^2=u$; the two derivative signs
   cancel.
+\end{proof}
+
+\begin{lemma}[Reverse ordered term in a two-edge loop word]
+  \label{lem:loop-contraction-second-reverse}
+  \uses{lem:loop-contraction-second}
+  \lean{RBM.Gauss.coordinateSecondWordDeriv_two_edges}\leanok
+  For a two-edge word the two opposite orders of differentiating distinct
+  Green factors produce the same matrix word, hence twice the ordered cross
+  term. The arbitrary-length expansion and same-edge terms remain open.
+  \emph{S5 reverse two-edge checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Expand the recursive second product rule for two factors and normalize the
+  two equal cross terms by matrix associativity and addition.
 \end{proof}
 
 \begin{definition}[Cut-and-glue operations, \texttt{Def:oper\_loop}]\label{def:loop-ops}

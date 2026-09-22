@@ -20,13 +20,14 @@
 | **S0** | Def 2.1 随机版 `≺` 与闭包引理 | `Defs/StochDom.lean` | Codex S0 | **完成，主分支全量验收通过**；S4/S6/S7 的此前置已解除 |
 | **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；精确分解在归一化区间 `[2⁻ᴶ,1]` |
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；相位损失双边界已证 |
-| **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 当前对话内代理 | **前三阶 `Shat` 坐标差分已验收**；逆乘子与环内移位仍开放 |
+| **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` 等 | 当前对话内代理 | **`Shat` 前三阶、逆乘子二阶及分离环带估计已验收**；低频层、cutoff 支撑及高阶仍开放 |
 | T21a | 逆乘子的一阶精确差分与两个坐标界 | `Propagator/SymbolReciprocalDiff.lean` | 当前对话内代理 | **完成，本地全量验收通过**；二三阶与环带分母比较仍开放 |
 | T21b | 逆乘子的二阶精确差分公式 | `Propagator/SymbolReciprocalDiff2.lean` | 当前对话内代理 | **完成，本地全量验收通过**；二阶范数与环带分母比较仍开放 |
 | T21c | 逆乘子二阶差分的显式分母范数界 | `Propagator/SymbolReciprocalDiff2Bound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；平移环带比较仍开放 |
 | T21d | dyadic 环带上乘子分母的显式下界 | `Propagator/SymbolDenomAnnulus.lean` | 当前对话内代理 | **完成，本地全量验收通过**；需控制差分涉及的平移动量 |
 | T21e | 一二步平移动量保留环带分母尺度 | `Propagator/SymbolShiftAnnulus.lean` | 当前对话内代理 | **完成，本地全量验收通过**；最低频率层与 cutoff 接口仍开放 |
 | T21f | 分离环带上二阶逆乘子界 | `Propagator/SymbolReciprocalAnnulusBound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；cutoff 支撑与最低频率层仍开放 |
+| T21g | 分离 dyadic 壳上二阶逆乘子的分子界 | `Propagator/SymbolAnnulusNumerator.lean` | 当前对话内代理 | **完成，本地全量验收通过**；cutoff 支撑与最低频率层仍开放 |
 | **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
@@ -75,8 +76,10 @@
 | S5l | 谱漂移插入与单边切接的精确系数 | `Hierarchy/ContractionDrift.lean` | 当前对话内代理 | **完成，本地全量验收通过**；生成元组装仍开放 |
 | S5m | loop 一二阶坐标导数的样本一致包络 | `Gauss/LoopCoordinateDerivativeBounds.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
 | S5n | loop 一二阶坐标导数的可测性与可积性 | `Gauss/LoopCoordinateIntegrability.lean` | 当前对话内代理 | **完成，本地全量验收通过**；Stein/期望生成元仍开放 |
-| S5o | 有限 loop 的单坐标 Stein 恒等式 | `Gauss/LoopCoordinateStein.lean` | 当前对话内代理 | **完成，本地全量验收通过**；全坐标求和与生成元仍开放 |
-| S5p | 一个有序二边交叉项的方差收缩 | `Hierarchy/ContractionSecondLoop.lean` | 当前对话内代理 | **完成，本地全量验收通过**；反向及同边项仍开放 |
+| S5o | 有限 loop 的单坐标 Stein 恒等式 | `Gauss/LoopCoordinateStein.lean` | 当前对话内代理 | **完成，本地全量验收通过**；时间生成元仍开放 |
+| S5p | 一个有序二边交叉项的方差收缩 | `Hierarchy/ContractionSecondLoop.lean` | 当前对话内代理 | **完成，本地全量验收通过**；一般长度及同边项仍开放 |
+| S5q | 二边词反向交叉项相同 | `Hierarchy/ContractionSecondLoopReverse.lean` | 当前对话内代理 | **完成，本地全量验收通过**；一般长度及同边项仍开放 |
+| S5r | 有限 Gaussian 坐标 Stein 求和 | `Gauss/LoopCoordinateSteinSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；时间生成元对应仍开放 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
@@ -85,7 +88,7 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**T6/T8/T19/T20/T28a–k、T21 `Shat` 差分及 T21a–f 逆乘子阶段、T27 第一坐标阶段、S5a–n、S7/S8/S9a–i、C1 基础及完整 loop Ward、C2 单边与双边矩阵词、T31 已通过本地全量验收。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+**T6/T8/T19/T20/T28a–k、T21 `Shat` 差分及 T21a–g 逆乘子阶段、T27 第一坐标阶段、S5a–r、S7/S8/S9a–i、C1 基础及完整 loop Ward、C2 单边与双边矩阵词、T31 已通过本地全量验收。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
 T21、T22、T28、T29；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
