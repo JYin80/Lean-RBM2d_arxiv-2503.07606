@@ -18,6 +18,7 @@ import RBM2D.Propagator.Harmonic
 import RBM2D.Propagator.LatticeSum
 import RBM2D.Propagator.Decay
 import RBM2D.Propagator.FiniteDiff
+import RBM2D.Propagator.DerivBounds
 import RBM2D.Delocalization
 import RBM2D.Gauss.Envelope
 import RBM2D.Gauss.Stein

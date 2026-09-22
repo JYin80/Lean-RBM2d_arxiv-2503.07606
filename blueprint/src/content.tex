@@ -435,9 +435,28 @@
 \end{lemma}
 
 \begin{lemma}[Property 6, \texttt{(prop:BD1)}--\texttt{(prop:BD2)}]\label{lem:propTH-6}
-  \uses{lem:bd-case2, lem:dyadic, lem:kappa-basic}
-  The first- and second-difference bounds of Lemma \texttt{lem\_propTH}.
+  \uses{lem:propTH-6-conditional, lem:dyadic}
+  The unconditional first- and second-difference bounds of Lemma
+  \texttt{lem\_propTH}; T22 must construct the dyadic decomposition with one
+  scale-independent constant.
 \end{lemma}
+
+\begin{lemma}[Property 6 conditional on the dyadic decomposition]
+  \label{lem:propTH-6-conditional}
+  \uses{lem:bd-case2, lem:dyadic-case1, lem:kappa-basic}
+  \lean{RBM.norm_Theta_fd_all_le_paper,
+        RBM.derivativePrefactor_detDom_one,
+        RBM.norm_Theta_fd_all_le_rpow}\leanok
+  Given an actual \texttt{DyadicDecomp} witness $H$ with $H.C\le C_0$,
+  Case 1 and Case 2 imply both paper-scale inequalities for arbitrary
+  matrix indices, with a common coefficient
+  $8C_0+720(1+\log L)\prec1$.  \emph{Work order T23, conditional core closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Split at $2|s|_L\le|a-b|_L$, combine the two case bounds, and use
+  translation invariance to restore arbitrary matrix indices.  The dyadic
+  witness and its uniform constant remain obligations of T22.
+\end{proof}
 
 \chapter{Delocalization}
 

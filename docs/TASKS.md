@@ -18,7 +18,7 @@
 | **T7** | §2 模型层：`S = S^(B)⊗S_W` on `Z_{WL}²`、`I^(2)_a`、`E_a` | `Defs/Model.lean` | Codex T7 | **完成，主分支全量验收通过**；S4 已解锁 |
 | **T3** | 格点求和 `Σ_{p≠0}\|p\|_*^{-2} ≤ CL²log L` | `Propagator/LatticeSum.lean` | Codex T3 | **完成，已集成推送**；显式常数 `4/π²`，T4/T5 可开工 |
 | **S0** | Def 2.1 随机版 `≺` 与闭包引理 | `Defs/StochDom.lean` | Codex S0 | **完成，主分支全量验收通过**；S4/S6/S7 的此前置已解除 |
-| **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 空闲 | **可开工**，纯实多项式不等式 |
+| **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 当前对话内代理 | **进行中**；独占该文件 |
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 空闲 | **可开工**，纯 `Finset`/`ZMod` 记账 |
 | **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
 | **T24** | §8.2 的两个 structure 接口 + 性质 5 显式版 | `Propagator/ContourInterface.lean` | 空闲 | **可开工** |
@@ -34,17 +34,17 @@
 | S3 | 矩阵版 Stein 重采样测度不变式 | `Gauss/SteinMatrix.lean` | 当前对话内代理 | **乘积高斯核心完成，主分支全量验收通过**；实际 Hermitian 矩阵实例化仍待 S4 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
-| T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **进行中**；T18/T5 已有，独占该文件 |
+| T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
 | T27 | 围道平移 `(eq_shifted_lower)(eq_Kinf_bound)` | `Propagator/Contour.lean` | 空闲 | 待 T26 |
 | T28 | 周期化 + 兑现 `ContourInput` | `Propagator/Periodize.lean` | 空闲 | 待 T26+T25 |
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**S4 在原有独立工作树；T23、T25 在当前对话内代理中；T5、S3 的乘积高斯核心、T4、S2、T7、S0、T3 已完成。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
-T19、T20、T21、T24、T26、T29、T6、T8、S6、S8、T31；队列深度足够。
+**S4 在原有独立工作树；T19、T25 在当前对话内代理中；T23 的条件版、T5、S3 的乘积高斯核心、T4、S2、T7、S0、T3 已完成。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+T20、T21、T24、T26、T29、T6、T8、S6、S8、T31；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
-**当前优先顺序**：S4 + S3 乘积核心 → 实际矩阵 Stein 桥 → S5；T18 + T5 → T23；T25 + T26 → T27/T28（并将 S6/S7 保留在储备队列）。
+**当前优先顺序**：S4 + S3 乘积核心 → 实际矩阵 Stein 桥 → S5；T19/T20/T21 → T22 → Property 6 无条件版；T25 + T26 → T27/T28（并将 S6/S7 保留在储备队列）。
 任何新结论先复查下游实际缺口，不能仅凭此顺序宣布解锁。
 
 **整篇论文的后段工单储备**（尚未派发，均为蓝图开放节点）：
