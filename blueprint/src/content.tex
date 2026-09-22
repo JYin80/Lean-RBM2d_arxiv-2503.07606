@@ -352,12 +352,14 @@
   \emph{Work order T28.}
 \end{lemma}
 
-\begin{lemma}[Explicit decay through the contour interface]\label{lem:decay-interface}
-  \uses{def:kappa}
-  The two regimes of Property~5 are assembled with an explicit
-  \texttt{ContourInput} interface.  The small-$\kappa L$ branch remains a
-  theorem; the interface is a named obligation for the large-$\kappa L$ branch.
-  \emph{Work order T24.}
+\begin{lemma}[Combining the two decay regimes]\label{lem:decay-interface}
+  \uses{lem:decay-small, lem:contour, lem:periodize, lem:log-integral,
+         lem:kappa-basic}
+  Assemble Property~5 from the proved small-$\kappa L$ estimate and the
+  large-$\kappa L$ estimate obtained by contour shift and periodization.
+  This node remains open until those analytic bounds are actual Lean theorems;
+  no freely supplied proof field represents the missing regime.
+  \emph{Work order T24 after T27/T28.}
 \end{lemma}
 
 \begin{lemma}[Property 5, \texttt{(prop:ThfadC)}]\label{lem:propTH-5}

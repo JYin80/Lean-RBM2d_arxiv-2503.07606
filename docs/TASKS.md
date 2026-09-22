@@ -21,7 +21,7 @@
 | **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 当前对话内代理 | **进行中**；独占该文件 |
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 空闲 | **可开工**，纯 `Finset`/`ZMod` 记账 |
 | **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
-| **T24** | §8.2 的两个 structure 接口 + 性质 5 显式版 | `Propagator/ContourInterface.lean` | 空闲 | **可开工** |
+| **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
 | **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
@@ -43,7 +43,7 @@
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
 **S4 已通过主分支全量验收；T19、T27、S7 在当前对话内代理中；S6、T26、T25、T23 的条件版、T5、S3、T4、S2、T7、S0、T3 已完成。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
-T20、T21、T24、T28、T29、T6、T8、S8、T31；队列深度足够。
+T20、T21、T28、T29、T6、T8、S8、T31；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
 **当前优先顺序**：S4 + S3 → S5；T19/T20/T21 → T22 → Property 6 无条件版；T25 + T26 → T27/T28（并将 S7/S8 保留在储备队列）。
@@ -926,13 +926,12 @@ Mathlib 侧要先确认的零件（**先 grep，不要假设**）：
 
 ---
 
-## T24 — §8.2 的接口 + 性质 5 显式版（`Propagator/ContourInterface.lean`）· 难度 S · 可开工
+## T24 — §8.2 两区制合并（`Propagator/DecayAll.lean`）· 待 T27/T28
 
-**覆盖**：两个 `structure`（`LogIntegral` = `(eq_log_int)`，`ContourInput` = 围道链已搬回环面的产出），
-以及 `(prop:ThfadC)` 的显式（非 `≺`）版本，两个区制一起组装。
-
-**关键设计**：区制 `κL < 1` **一条都不进 structure** —— 它没有 Mathlib 缺口，必须是定理（T4）。
-`ContourInput` 的陈述里**不出现无穷体积核**，只出现 `RBM.Theta`，这样接口只提到已经存在的对象。
+**覆盖**：由 T4 的 $\kappa L<1$ 定理、T25 的真实 `(eq_log_int)`、T27 的
+围道估计和 T28 的周期化，证明 `(prop:ThfadC)` 的显式（非 `≺`）版本。
+此前工单里的 `LogIntegral`/`ContourInput` 两个自由证明字段方案已撤销；
+大 $\kappa L$ 分支必须由真正的 Lean 定理提供，不能以接口字段当作证明。
 
 **可复用**：`RBM.kappa_sq`、`RBM.kappa_pos`、`RBM.ellhat_pos`、`RBM.kappa_mul_ellhat_le_one`
 （`Elliptic.lean`）；`RBM.two_mul_zdist_le`（`Momentum.lean`）；`RBM.one_add_log_nonneg`（`Harmonic.lean`）。
@@ -947,8 +946,8 @@ Mathlib 侧要先确认的零件（**先 grep，不要假设**）：
 2. `zdist2 L u ≤ L`：`two_mul_zdist_le` 两次 + `omega`。
 3. **别漏论文那句「`exp(−c|x|_L/ℓ̂)` 有正下界」** —— `κL<1` 支里 `d ≤ L = ℓ̂`，
    所以指数因子 `≥ e^{−c}`，要乘回去。
-4. structure 字段里写 `∀ (L : ℕ) [NeZero L], …` 是本文件唯一的语法风险；
-   报错就退成 `∀ (L : ℕ) (inst : NeZero L), …` 并在使用处显式传。
+4. T27/T28 的结论须直接 import 并使用；若仍缺某个精确不等式，报告为
+   独立开放引理，不以定理参数或 `structure` 字段掩盖。
 
 **依赖**：只要 T3/T4 的**陈述**（证明先挂成参数）。
 
@@ -1057,12 +1056,15 @@ Mathlib 侧要先确认的零件（**先 grep，不要假设**）：
 
 # 第四批：随机层替代栈（S 系列）
 
-**先读 `docs/random-layer.md`。** 那份审计的结论是：本篇论文不用域流/适应性、不用 Markov 性、
-不用两时刻联合律、不用 Doob，所以 d=1 的替代栈整条适用 ——
-**不造随机分析，用 `H_u := √u·X` + Stein + 生成元恒等式 + 对矩的 Grönwall + 连续归纳。**
+**先读 `docs/random-layer.md`。** 对 §3–7 的 loop 估计，审计显示可避开适应性、
+Markov 性与两时刻联合律，故可走 d=1 的替代栈：
+`H_u := √u·X` + Stein + 生成元恒等式 + 对矩的 Grönwall + 连续归纳。
+§2 的 bulk universality 另用短时 OU/DBM 及外部定理，见 U0–U2。
 
-政策不变：**永不写 `axiom`**，做不了的写成 `structure` 字段或定理参数。
-`RBM2D.lean` 末尾的 `#assert_rbm_axioms` 对整个命名空间硬检查，没有 allow-list。
+政策不变：**永不写 `axiom` 或 `sorry`**。可证明诚实的条件引理，但不能把
+目标结论藏进可任意填充的 `structure` 证明字段或定理参数；未解除的义务
+留在工单与蓝图的开放节点。`RBM2D.lean` 末尾的 `#assert_rbm_axioms`
+对整个命名空间硬检查，没有 allow-list。
 
 | # | 文件 | 内容 | 估行 | 依赖 | 可搬性 |
 |---|---|---|---|---|---|
