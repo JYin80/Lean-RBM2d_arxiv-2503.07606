@@ -1057,6 +1057,29 @@
   first differences of the periodic distance.
 \end{proof}
 
+\begin{lemma}[Dyadic cutoff second difference with fold defect]
+  \label{lem:normalized-cutoff-fold-bound}
+  \uses{lem:normalized-radius-fold-correction,
+         lem:normalized-cutoff-diff}
+  \lean{RBM.affineFrequencyE1, RBM.affineFrequencyE2,
+        RBM.abs_normalizedFrequency_sub_affineFrequencyE1_le,
+        RBM.abs_normalizedFrequency_sub_affineFrequencyE2_le,
+        RBM.abs_normalizedDyadicCutoff_second_diff_e1_fold_le,
+        RBM.abs_normalizedDyadicCutoff_second_diff_e2_fold_le,
+        RBM.normalizedDyadicCutoff_second_diff_e1_eq_zero_of_flat,
+        RBM.normalizedDyadicCutoff_second_diff_e2_eq_zero_of_flat}\leanok
+  In either coordinate, compare the true third radius with affine
+  continuation of the first step. The cutoff second difference is bounded
+  by the affine-path remainder plus $420\,2^j|D|/(2\pi)$. The whole
+  difference vanishes in the proved inner or outer two-step flat regions.
+  A quadratic bound for the affine-path remainder remains to be proved.
+  \emph{T22 fold cutoff checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the cutoff Lipschitz bound to the radial comparison, then use the
+  triangle inequality and the existing flat-region identities.
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
   Assemble the three ingredients into the per-annulus estimate and produce
@@ -1823,6 +1846,28 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   Apply the fundamental theorem of calculus to the interior hierarchy ODE.
 \end{proof}
 
+\begin{lemma}[Continuity and unconditional interior loop Duhamel formula]
+  \label{lem:loop-hierarchy-cut-continuity}
+  \uses{lem:loop-hierarchy-integral,
+         lem:loop-envelope}
+  \lean{RBM.Gauss.continuousOn_integral_gloop_product_window,
+        RBM.Gauss.continuousOn_expectedSameEdgeCuts,
+        RBM.Gauss.continuousOn_expectedPairCuts,
+        RBM.Gauss.continuousOn_expectedSpectralCuts,
+        RBM.Gauss.continuousOn_expectedLoopCutRHS,
+        RBM.Gauss.expected_gloop_hierarchy_integral_unconditional}\leanok
+  The three cut families are continuous on any compact time window below
+  $u=1$, using deterministic resolvent envelopes for their Gaussian
+  integrands. Thus the finite-loop Duhamel formula holds for
+  $|E|<2$ and $0<a<b<1$ without an added integrability assumption.
+  The endpoint $a=0$ is treated separately.
+  \emph{S5 interior Duhamel checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply dominated continuity to each expected loop product and then to
+  finite cut sums; use the conditional fundamental-theorem step.
+\end{proof}
+
 \begin{lemma}[Deterministic initial value of an expected finite loop]
   \label{lem:loop-initial-value}
   \uses{lem:loop-expectation-derivative,
@@ -1860,6 +1905,43 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Reduce the zero-matrix resolvents to scalar identities and use the
   block-projector product formula inside the trace.
+\end{proof}
+
+\begin{lemma}[Arbitrary nonempty loop initial value in scalar form]
+  \label{lem:loop-initial-projection-words}
+  \uses{lem:loop-initial-scalar}
+  \lean{RBM.Gauss.blockProjectorWord,
+        RBM.Gauss.adjacentBlockWeight,
+        RBM.Gauss.blockProjectorWord_cons,
+        RBM.Gauss.trace_blockProjectorWord_cons,
+        RBM.Gauss.initial_green_word_eq_scalar_projectors,
+        RBM.Gauss.initialLoopValue_nonempty,
+        RBM.Gauss.adjacentBlockWeight_three}\leanok
+  For any nonempty well-formed finite loop, the zero-time value is the
+  product of its signed scalar Green factors and the adjacent block-label
+  weights. Each matching pair contributes $W^{-2}$; a mismatch makes the
+  initial value zero. The empty loop is handled separately.
+  \emph{S5 general initial-value checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Induct on the block-projector word, using the two-projector product
+  relation, then pull every scalar Green factor outside the trace.
+\end{proof}
+
+\begin{lemma}[Total scalar initial value, including the empty loop]
+  \label{lem:loop-initial-total}
+  \uses{lem:loop-initial-projection-words}
+  \lean{RBM.Gauss.initialLoopValue_empty,
+        RBM.Gauss.totalInitialLoopScalar,
+        RBM.Gauss.initialLoopValue_eq_total}\leanok
+  The empty loop has initial value $(LW)^2$, the full matrix dimension.
+  For every well-formed nonempty loop, the earlier signed-Green and
+  adjacent-block product gives the value. At $L=3,W=2$ the empty-loop
+  formula gives $36$. \emph{S5 total initial-value checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Split the block-label list into empty and nonempty cases and evaluate
+  the trace of the identity in the empty case.
 \end{proof}
 
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}

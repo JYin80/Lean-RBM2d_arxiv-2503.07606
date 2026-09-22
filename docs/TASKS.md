@@ -41,7 +41,8 @@
 | T22h | 周期归一化半径的无折叠二阶差分及对踵反例 | `Propagator/NormalizedRadiusSecondDiff.lean` | 当前对话内代理 | **完成，本地全量验收通过**；折叠处存在一阶网格误差 |
 | T22i | 可判定的两步无折叠代表元条件 | `Propagator/NormalizedRadiusNoFold.lean` | 当前对话内代理 | **完成，本地全量验收通过**；两坐标均给出 sharp 二阶界 |
 | T22j | 折叠点的离散修正项 | `Propagator/NormalizedRadiusFoldCorrection.lean` | 当前对话内代理 | **完成，本地全量验收通过**；一般界为两格，$L=8$ 对踵例达到界 |
-| T22k | 折叠点处 cutoff 的精确差分界 | `Propagator/NormalizedCutoffFoldBound.lean` | 当前对话内代理 | **进行中**；保留折叠缺陷，不声称全局二阶界 |
+| T22k | 折叠点处 cutoff 的精确差分界 | `Propagator/NormalizedCutoffFoldBound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；仿射路径余项仍需二阶界 |
+| T22l | 仿射路径 cutoff 二阶余项 | `Propagator/NormalizedCutoffAffineRemainder.lean` | 当前对话内代理 | **进行中** |
 | **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
@@ -119,8 +120,11 @@
 | S5ao | 有限 loop 在零时的确定性初值 | `Gauss/LoopInitialValue.lean` | 当前对话内代理 | **完成，本地全量验收通过**；标量化另排小单 |
 | S5ap | 零时一边／二边初值的标量公式 | `Gauss/LoopInitialValueScalar.lean` | 当前对话内代理 | **完成，本地全量验收通过**；任意长度公式另排 |
 | S5aq | cut 层级的有限时间积分形式 | `Hierarchy/LoopHierarchyIntegral.lean` | 当前对话内代理 | **条件版完成，本地全量验收通过**；cut RHS 的连续性仍须证明 |
-| S5ar | 任意长度 Eblk 词的零时标量初值 | `Gauss/LoopInitialValueProjectionWords.lean` | 当前对话内代理 | **进行中** |
-| S5as | cut RHS 在紧时间区间的连续性 | `Hierarchy/LoopHierarchyCutContinuity.lean` | 当前对话内代理 | **进行中** |
+| S5ar | 任意长度 Eblk 词的零时标量初值 | `Gauss/LoopInitialValueProjectionWords.lean` | 当前对话内代理 | **完成，本地全量验收通过**；任意非空 well-formed loop |
+| S5as | cut RHS 在紧时间区间的连续性 | `Hierarchy/LoopHierarchyCutContinuity.lean` | 当前对话内代理 | **完成，本地全量验收通过**；内部时间 Duhamel 无附加可积性假设 |
+| S5at | 空 loop 初值及统一公式 | `Gauss/LoopInitialValueEmpty.lean` | 当前对话内代理 | **完成，本地全量验收通过**；空 loop 为 $(LW)^2$ |
+| S5au | 初值块标签支持与精确归一化 | `Gauss/LoopInitialValueSupport.lean` | 当前对话内代理 | **进行中** |
+| S5av | 层级积分式延拓到零时间 | `Hierarchy/LoopHierarchyIntegralZero.lean` | 当前对话内代理 | **进行中** |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
