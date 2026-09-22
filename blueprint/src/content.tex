@@ -1,10 +1,11 @@
-% Every node carrying \lean{}\leanok below compiles: `lake build` is green at commit
-% 8d27204 with zero sorry, and every \lean{}\leanok tag resolves to a real declaration.
-% The nodes without \lean{}\leanok are the open work orders in docs/TASKS.md.
+% Every node carrying \lean{}\leanok below must resolve to a declaration and
+% survive a full `lake build`. The baseline of 2026-09-22 05:03 UTC passed
+% 3446 build jobs with zero errors and the namespace axiom audit.
+% Nodes without \leanok are open work orders in docs/TASKS.md.
 %
-% House rule: a node gets \leanok in the same commit as the declaration it
-% names, never later.  The dependency graph is this project's only record of
-% progress, so a \leanok that runs ahead of the code makes it lie.
+% House rule: the coordinator adds \leanok in the integration commit after
+% checking the corresponding declaration and full build. Never mark a node
+% green merely because a worker's isolated module compiled.
 
 \chapter{The model and the propagator}
 
@@ -225,7 +226,8 @@
   sphere $\times$ ball.  The sphere has at most two points because
   $\min(u.\mathrm{val},L-u.\mathrm{val})=k$ pins $u.\mathrm{val}$ to $k$ or to
   $L-k$; the ball has at most $2k+1$ because its points are the representatives
-  $0,\dots,k$ together with $-1,\dots,-k$.  Hence $\le8k+4$.  The fibrewise
+  $0,\dots,k$ together with $-1,\dots,-k$.  Lean keeps the looser bound
+  $\le12k+4$.  The fibrewise
   rewriting is \texttt{Finset.sum\_fiberwise\_of\_maps\_to}, whose hypothesis is
   exactly $k(p)\in[1,L]$ for $p\ne0$.
   \emph{Work order T15, closed.}
@@ -290,14 +292,15 @@
   \uses{lem:elliptic}
   $|D_\xi(p+\mathrm{i}\eta)|\ge c(\kappa^2+|p|_*^2)$ for $|\eta|\le c_0\kappa$, and
   hence $|K_{\xi,\infty}(x)|\le C\log(2+\kappa^{-1})e^{-c\kappa|x|}$.
-  \emph{Work order T9.}
+  \emph{Work orders T26 and T27.}
 \end{lemma}
 
 \begin{lemma}[Periodization]\label{lem:periodize}
   \uses{lem:contour, lem:fourier}
-  $K_{\xi,L}(x)=\sum_{n\in\mathbb Z^2}K_{\xi,\infty}(x+nL)$, by comparing Fourier
-  coefficients rather than by invoking Poisson summation.
-  \emph{Work order T10.}
+  $K_{\xi,L}(x)=\sum_{n\in\mathbb Z^2}K_{\xi,\infty}(x+nL)$, by showing that the
+  periodized kernel solves $(1-\xi S)P=\delta_0$ and using uniqueness of the
+  inverse.  This does not depend on T27's contour estimate.
+  \emph{Work orders T25, T26 and T28.}
 \end{lemma}
 
 \begin{lemma}[Property 5, \texttt{(prop:ThfadC)}]\label{lem:propTH-5}
@@ -396,11 +399,13 @@ its proof never touches it.  The whole of \S5--\S7 therefore goes through with
 one-time marginals only, and the paper itself already writes
 $G_s=(\sqrt sH-z_s)^{-1}$.
 
-\begin{definition}[The model as a Gaussian matrix]\label{def:model}
+\begin{definition}[Two-dimensional block model, \S2.1 and \texttt{(Def\_matE)}]
+  \label{def:block-model}
+  \uses{def:SB}
   $S=\SB\otimes S_W$ on $\Z_{WL}^2$, the blocks $I^{(2)}_a$ and the matrices
-  $E_a$.  The flow is $H_u:=\sqrt u\,X$ for one fixed Gaussian band matrix $X$,
-  which has the same one-time marginal as the matrix Brownian motion.
-  \emph{Work orders T7 and S4.}
+  $E_a$ from the paper.  In dimension two, $(S_W)_{ij}=W^{-2}$ and
+  $(E_a)_{xy}=\delta_{xy}W^{-2}\mathbf 1(x\in I_a^{(2)})$.
+  \emph{Work order T7.}
 \end{definition}
 
 \begin{definition}[Stochastic domination]\label{def:stochdom}
@@ -408,6 +413,13 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   measure: for every $\tau,D>0$ the bad set has probability $\le N^{-D}$
   eventually.  The deterministic \texttt{def:detdom} already in this blueprint is
   its pointwise shadow.  \emph{Work order S0.}
+\end{definition}
+
+\begin{definition}[The one-time Gaussian matrix model]\label{def:model}
+  \uses{def:block-model, def:stochdom}
+  The flow is $H_u:=\sqrt u\,X$ for one fixed Gaussian band matrix $X$,
+  which has the same one-time marginal as the matrix Brownian motion.
+  \emph{Work order S4.}
 \end{definition}
 
 \begin{lemma}[The deterministic envelope]\label{lem:envelope}
