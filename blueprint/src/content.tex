@@ -396,7 +396,7 @@
 \end{lemma}
 
 \begin{lemma}[Periodic summation by parts]\label{lem:abel}
-  Reindex finite sums on $\Z_L^2$ to transfer lattice differences from a
+  Reindex finite sums on $\ZL$ to transfer lattice differences from a
   multiplier to a character, with no boundary term.
   \emph{Work order T20.}
 \end{lemma}
@@ -456,7 +456,7 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
         RBM.split_bijective, RBM.Spaper_eq, RBM.sum_Spaper_row,
         RBM.Epaper_eq, RBM.Epaper_conjTranspose, RBM.sum_Epaper}
   \leanok
-  $S=\SB\otimes S_W$ on $\Z_{WL}^2$, the blocks $I^{(2)}_a$ and the matrices
+  $S=\SB\otimes S_W$ on $\mathbb Z_{WL}^2$, the blocks $I^{(2)}_a$ and the matrices
   $E_a$ from the paper.  In dimension two, $(S_W)_{ij}=W^{-2}$ and
   $(E_a)_{xy}=\delta_{xy}W^{-2}\mathbf 1(x\in I_a^{(2)})$.
   \emph{Work order T7.}
@@ -516,7 +516,7 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 
 \begin{lemma}[The generator identity]\label{lem:generator}
   \uses{lem:envelope, lem:stein, def:model}
-  $\partial_u\,\E[\Phi(H_u)]=\tfrac12\sum_{ij}S_{ij}\,\E[\partial_{ij}\partial_{ji}\Phi(H_u)]$.
+  $\partial_u\,\mathbb E[\Phi(H_u)]=\tfrac12\sum_{ij}S_{ij}\,\mathbb E[\partial_{ij}\partial_{ji}\Phi(H_u)]$.
   Differentiate under the integral, then apply Stein once per coordinate; the
   $\sqrt u$ it produces cancels the $(2\sqrt u)^{-1}$ from the chain rule.  Past
   this node It\^o is off the critical path.  \emph{Work order S5.}
@@ -556,12 +556,10 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   \emph{Work order S10.}
 \end{lemma}
 
-\chapter{Not formalized}
+\chapter{Open combinatorial dependency}
 
-\begin{remark}[What is still out of scope]\label{rem:random}
+\begin{remark}[Combinatorial work still to formalize]\label{rem:open-combinatorics}
   The combinatorial layer of \S3--\S4 (canonical partitions and non-crossing
-  pairings) is planar geometry whose formalization cost is out of proportion to
-  its value, and the two-dimensional version is not the same notion; it is taken
-  from the paper.  Everything else in \S5--\S7 is in scope through the
-  replacement stack above.
+  pairings) needs its own d=2 statement audit and proof tickets.  The current
+  deterministic and stochastic nodes do not discharge this part of the paper.
 \end{remark}
