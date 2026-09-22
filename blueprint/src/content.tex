@@ -1868,6 +1868,22 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   finite cut sums; use the conditional fundamental-theorem step.
 \end{proof}
 
+\begin{lemma}[Finite loop hierarchy from time zero]
+  \label{lem:loop-hierarchy-integral-zero}
+  \uses{lem:loop-hierarchy-cut-continuity}
+  \lean{RBM.Gauss.continuousOn_expected_gloop_spectralZ,
+        RBM.Gauss.expected_gloop_hierarchy_integral_of_nonneg,
+        RBM.Gauss.expected_gloop_hierarchy_integral_zero}\leanok
+  The expected finite loop is continuous at the zero-time endpoint. Its
+  explicit three-family Duhamel formula therefore holds for
+  $0\leq a<b<1$, including $a=0$, while the differential generator is
+  used only at interior times. \emph{S5 zero-endpoint checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use dominated continuity at both endpoints and the interior derivative
+  identity in the endpoint form of the fundamental theorem of calculus.
+\end{proof}
+
 \begin{lemma}[Deterministic initial value of an expected finite loop]
   \label{lem:loop-initial-value}
   \uses{lem:loop-expectation-derivative,
@@ -1942,6 +1958,23 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Split the block-label list into empty and nonempty cases and evaluate
   the trace of the identity in the empty case.
+\end{proof}
+
+\begin{lemma}[Support and exact normalization of the initial loop]
+  \label{lem:loop-initial-support}
+  \uses{lem:loop-initial-total}
+  \lean{RBM.Gauss.AdjacentMismatch,
+        RBM.Gauss.adjacentBlockWeight_zero_of_mismatch,
+        RBM.Gauss.adjacentBlockWeight_all_same,
+        RBM.Gauss.initialLoopValue_zero_of_adjacentMismatch,
+        RBM.Gauss.initialLoopValue_all_same}\leanok
+  A nonempty loop starts at zero if any adjacent block labels differ.
+  When all labels agree, its exact initial value is the product of signed
+  Green scalars times $W^{-2(n-1)}$ for length $n$. A three-edge mismatch
+  gives a nontrivial compiled probe. \emph{S5 initial support checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Induct over adjacent block-label comparisons in the projector word.
 \end{proof}
 
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}

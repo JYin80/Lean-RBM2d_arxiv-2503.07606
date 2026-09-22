@@ -123,8 +123,10 @@
 | S5ar | 任意长度 Eblk 词的零时标量初值 | `Gauss/LoopInitialValueProjectionWords.lean` | 当前对话内代理 | **完成，本地全量验收通过**；任意非空 well-formed loop |
 | S5as | cut RHS 在紧时间区间的连续性 | `Hierarchy/LoopHierarchyCutContinuity.lean` | 当前对话内代理 | **完成，本地全量验收通过**；内部时间 Duhamel 无附加可积性假设 |
 | S5at | 空 loop 初值及统一公式 | `Gauss/LoopInitialValueEmpty.lean` | 当前对话内代理 | **完成，本地全量验收通过**；空 loop 为 $(LW)^2$ |
-| S5au | 初值块标签支持与精确归一化 | `Gauss/LoopInitialValueSupport.lean` | 当前对话内代理 | **进行中** |
-| S5av | 层级积分式延拓到零时间 | `Hierarchy/LoopHierarchyIntegralZero.lean` | 当前对话内代理 | **进行中** |
+| S5au | 初值块标签支持与精确归一化 | `Gauss/LoopInitialValueSupport.lean` | 当前对话内代理 | **完成，本地全量验收通过**；失配为零，同块为 $W^{-2(n-1)}$ |
+| S5av | 层级积分式延拓到零时间 | `Hierarchy/LoopHierarchyIntegralZero.lean` | 当前对话内代理 | **完成，本地全量验收通过**；$0\leq a<b<1$ |
+| S5aw | 总初值代入第一步 Duhamel 公式 | `Hierarchy/LoopHierarchyFirstDuhamel.lean` | 当前对话内代理 | **进行中** |
+| S5ax | 初值的谱隙模长界 | `Gauss/LoopInitialValueBound.lean` | 当前对话内代理 | **进行中** |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
