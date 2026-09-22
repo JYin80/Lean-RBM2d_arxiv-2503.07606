@@ -25,6 +25,8 @@ import RBM2D.Propagator.Decay
 import RBM2D.Propagator.Cutoff
 import RBM2D.Propagator.AbelSum
 import RBM2D.Propagator.SymbolDiff
+import RBM2D.Propagator.SymbolReciprocalDiff
+import RBM2D.Propagator.SymbolReciprocalDiff2
 import RBM2D.Propagator.PeriodizeShells
 import RBM2D.Propagator.PeriodizeTail
 import RBM2D.Propagator.PeriodizeConvergence
@@ -35,6 +37,7 @@ import RBM2D.Propagator.PeriodizeDelta
 import RBM2D.Propagator.PeriodizeTorusStencil
 import RBM2D.Propagator.PeriodizeResolventBridge
 import RBM2D.Propagator.PeriodizeFourierDelta
+import RBM2D.Propagator.PeriodizeIntegrand
 import RBM2D.Propagator.FiniteDiff
 import RBM2D.Propagator.DerivBounds
 import RBM2D.Delocalization
@@ -57,6 +60,8 @@ import RBM2D.Gauss.SpectralWindow
 import RBM2D.Gauss.SpectralAlgebra
 import RBM2D.Gauss.SpectralDerivative
 import RBM2D.Gauss.FlowDerivative
+import RBM2D.Gauss.GreenDerivative
+import RBM2D.Gauss.LoopDerivative
 import RBM2D.Analysis.Bootstrap
 import RBM2D.Analysis.MomentGronwallBase
 import RBM2D.Analysis.MomentClosing
@@ -66,6 +71,8 @@ import RBM2D.Hierarchy.WardResolvent
 import RBM2D.Hierarchy.Operations
 import RBM2D.Hierarchy.OperationsPair
 import RBM2D.Hierarchy.OperationsPairWord
+import RBM2D.Hierarchy.ContractionBasic
+import RBM2D.Hierarchy.ContractionDirections
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms

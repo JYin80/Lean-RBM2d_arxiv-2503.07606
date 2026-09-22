@@ -383,12 +383,14 @@
          lem:periodize-convergence, lem:periodize-shift,
          lem:periodize-descend, lem:periodize-stencil,
          lem:periodize-delta, lem:periodize-torus-stencil,
-         lem:periodize-resolvent-bridge, lem:periodize-fourier-delta}
+         lem:periodize-resolvent-bridge, lem:periodize-fourier-delta,
+         lem:periodize-integrand}
   $K_{\xi,L}(x)=\sum_{n\in\mathbb Z^2}K_{\xi,\infty}(x+nL)$, by showing that the
   periodized kernel solves $(1-\xi S)P=\delta_0$ and using uniqueness of the
-  inverse. Finite shell counting and a generic geometric comparison criterion
-  are proved below; the bound for the actual kernel and its resolvent identity
-  remain open. This does not depend on T27's contour estimate.
+  inverse. Shell counting, the conditional bridge, and the actual integer
+  lattice resolvent equation are proved below. A spatial decay estimate for
+  the actual kernel is still required to justify every shifted lattice sum.
+  This does not depend on T27's contour estimate except for that decay input.
   \emph{Work order T28.}
 \end{lemma}
 
@@ -542,6 +544,24 @@
   the one-dimensional Fourier orthogonality integral in each coordinate.
 \end{proof}
 
+\begin{lemma}[Actual infinite-volume lattice resolvent equation]
+  \label{lem:periodize-integrand}
+  \uses{def:continuum, lem:periodize-fourier-delta}
+  \lean{RBM.latticeFiveAverage_continuumNumerator,
+        RBM.KinfIntegrand_sub_latticeFiveAverage,
+        RBM.Kinf_sub_latticeFiveAverage}\leanok
+  For $\|\xi\|<1$, the actual Fourier kernel satisfies
+  $K_{\xi,\infty}-\xi S_\infty K_{\xi,\infty}=\delta_0$ pointwise on
+  $\mathbb Z^2$. The proof includes the exact five-point symbol identity
+  and interchange of the finite stencil with both frequency integrals.
+  Spatial decay and shifted lattice summability remain open.
+  \emph{T28 actual lattice equation, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Cancel the Fourier denominator in the five-point integrand identity,
+  integrate termwise, and use two-dimensional Fourier orthogonality.
+\end{proof}
+
 \begin{lemma}[Combining the two decay regimes]\label{lem:decay-interface}
   \uses{lem:decay-small, lem:contour, lem:periodize, lem:log-integral,
          lem:kappa-basic}
@@ -642,11 +662,14 @@
 \end{proof}
 
 \begin{lemma}[Multiplier differences on an annulus]\label{lem:symbol-diff}
-  \uses{lem:elliptic, lem:qcomp, lem:symbol-diff-shat}
+  \uses{lem:elliptic, lem:qcomp, lem:symbol-diff-shat,
+         lem:symbol-diff-reciprocal-one,
+         lem:symbol-diff-reciprocal-two}
   Bound the first three lattice differences of the inverse symbol uniformly
   on a dyadic annulus, retaining the gain from $|\sin p_i|\lesssim|p|_*$.
   The first three differences of $\widehat S$ itself are proved below;
-  the reciprocal and shifted-annulus bounds remain open. \emph{Work order T21.}
+  the first reciprocal quotient is proved below. Higher reciprocal and
+  shifted-annulus bounds remain open. \emph{Work order T21.}
 \end{lemma}
 
 \begin{lemma}[First three coordinate differences of $\widehat S$]
@@ -663,6 +686,40 @@
 \begin{proof}\leanok
   Factor the positive and negative Fourier characters exactly, then bound
   each step factor by the phase estimates from periodic summation by parts.
+\end{proof}
+
+\begin{lemma}[First difference of the reciprocal Fourier multiplier]
+  \label{lem:symbol-diff-reciprocal-one}
+  \uses{lem:symbol-diff-shat, lem:elliptic}
+  \lean{RBM.invSymbolMultiplier,
+        RBM.invSymbolMultiplier_sub,
+        RBM.norm_invSymbolMultiplier_shift_e1_le,
+        RBM.norm_invSymbolMultiplier_shift_e2_le}\leanok
+  The first difference of $(1-\xi\widehat S)^{-1}$ has the exact quotient
+  $\xi(\widehat S(p)-\widehat S(q))/
+  [(1-\xi\widehat S(p))(1-\xi\widehat S(q))]$.
+  Both coordinate norm bounds retain the precise denominator product;
+  annular denominator comparisons remain open. \emph{T21a, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Subtract the two nonzero reciprocal factors and insert the proved
+  coordinate differences of $\widehat S$.
+\end{proof}
+
+\begin{lemma}[Exact second difference of the reciprocal multiplier]
+  \label{lem:symbol-diff-reciprocal-two}
+  \uses{lem:symbol-diff-reciprocal-one, lem:symbol-diff-shat}
+  \lean{RBM.invSymbolMultiplier_second_diff,
+        RBM.invSymbolMultiplier_second_diff_e1,
+        RBM.invSymbolMultiplier_second_diff_e2}\leanok
+  The exact second forward difference is the second difference of
+  $\widehat S$ divided by two denominators plus a quadratic product of
+  first differences divided by three denominators. Both coordinate
+  instances are proved; their annular norm bounds remain open.
+  \emph{T21b algebraic checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the first reciprocal difference formula twice and collect terms.
 \end{proof}
 
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
@@ -1099,6 +1156,41 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   sampled matrix.
 \end{proof}
 
+\begin{lemma}[Derivative of a moving resolvent along the sample flow]
+  \label{lem:green-derivative}
+  \uses{lem:flow-derivative, lem:spectral-derivative,
+         lem:green-time-cont}
+  \lean{RBM.Gauss.hasDerivAt_green_moving,
+        RBM.Gauss.hasDerivAt_HflowBlock_time,
+        RBM.Gauss.hasDerivAt_green_HflowBlock_spectralZ}\leanok
+  For $|E|<2$ and $0<u<1$, at each fixed sample,
+  $G'_u=-G_u\bigl(X/(2\sqrt u)+m^{(E)}I\bigr)G_u$.
+  The formula is a pointwise chain-rule input and does not assert the
+  expected loop generator identity. \emph{S5 Green step, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Differentiate the inverse matrix at the Hermitian nonreal resolvent and
+  insert the derivatives of $H_u$ and $z_u$.
+\end{proof}
+
+\begin{lemma}[Samplewise derivative of finite resolvent loops]
+  \label{lem:loop-derivative}
+  \uses{lem:green-derivative, def:loops}
+  \lean{RBM.Gauss.hasDerivAt_Gsig_HflowBlock_spectralZ,
+        RBM.Gauss.hasDerivAt_loopWord_HflowBlock_spectralZ,
+        RBM.Gauss.hasDerivAt_gloopProd_HflowBlock_spectralZ,
+        RBM.Gauss.hasDerivAt_gloop_HflowBlock_spectralZ}\leanok
+  At a fixed sample and $0<u<1$, the finite signed Green product and its
+  trace have the derivative given by the finite Leibniz sum. A nonconstant
+  one-edge loop verifies that the derivative formula is substantive.
+  Expected-value and generator identities remain open.
+  \emph{S5 loop derivative checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Differentiate each signed Green factor and recurse through the finite list,
+  then apply the linear matrix trace.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
   \uses{lem:generator, lem:moment-closing-base, lem:moment-time-cont,
          lem:flow-time-cont, lem:green-time-cont, lem:loop-time-cont,
@@ -1207,6 +1299,44 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Split the lists at the two cut sites and expand the finite products, then
   apply the trace definition.
+\end{proof}
+
+\begin{lemma}[Basic two-dimensional trace contraction]
+  \label{lem:loop-contraction-basic}
+  \uses{def:block-model, lem:loop-cut-pair-word}
+  \lean{RBM.trace_mul_single_mul_single,
+        RBM.trace_mul_Eblk,
+        RBM.sum_Svar_diag_mul}\leanok
+  Elementary matrix units contract a trace to explicit matrix entries.
+  Summing a pair of diagonal entries against the two-dimensional variance
+  profile gives the exact $W^2$ block factor multiplying
+  $\sum_{a,b}\operatorname{Tr}(AE_a)S^{(B)}_{ab}\operatorname{Tr}(CE_b)$.
+  Identifying the Gaussian direction derivatives with cut-loop words remains
+  open. \emph{S5 contraction checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Expand the matrix-unit trace, regroup fine sites into $W^2$-site blocks,
+  and use the explicit tensor-product variance profile.
+\end{proof}
+
+\begin{lemma}[Actual Gaussian coordinate contractions]
+  \label{lem:loop-contraction-directions}
+  \uses{lem:loop-contraction-basic, def:model}
+  \lean{RBM.Gauss.coordinateMatrix_real_eq,
+        RBM.Gauss.coordinateMatrix_imag_eq,
+        RBM.Gauss.coordinateMatrix_diag_eq,
+        RBM.Gauss.weighted_trace_coordinate_offDiag,
+        RBM.Gauss.weighted_trace_coordinate_diag}\leanok
+  The real and imaginary Hermitian directions at an off-diagonal site pair,
+  with their actual Gaussian variances, combine in
+  $\operatorname{Tr}(ABCB)$ to give
+  $S_{ij}(A_{ii}C_{jj}+A_{jj}C_{ii})$; the diagonal direction gives its
+  corresponding full-variance term. Summing all coordinates and identifying
+  cut-loop chains remain open. \emph{S5 direction checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Expand the three real coordinate matrices into matrix units and cancel
+  the off-diagonal cross terms between real and imaginary directions.
 \end{proof}
 
 \begin{definition}[Cut-and-glue operations, \texttt{Def:oper\_loop}]\label{def:loop-ops}

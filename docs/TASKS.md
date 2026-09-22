@@ -21,6 +21,8 @@
 | **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；精确分解在归一化区间 `[2⁻ᴶ,1]` |
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；相位损失双边界已证 |
 | **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 当前对话内代理 | **前三阶 `Shat` 坐标差分已验收**；逆乘子与环内移位仍开放 |
+| T21a | 逆乘子的一阶精确差分与两个坐标界 | `Propagator/SymbolReciprocalDiff.lean` | 当前对话内代理 | **完成，本地全量验收通过**；二三阶与环带分母比较仍开放 |
+| T21b | 逆乘子的二阶精确差分公式 | `Propagator/SymbolReciprocalDiff2.lean` | 当前对话内代理 | **完成，本地全量验收通过**；二阶范数与环带分母比较仍开放 |
 | **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
@@ -37,6 +39,7 @@
 | T28h | 周期化五点平均与环面 `SB` 对应 | `Propagator/PeriodizeTorusStencil.lean` | 当前对话内代理 | **完成，本地全量验收通过**；实际核方程仍开放 |
 | T28i | 周期化 resolvent 到 `Theta` 的条件桥 | `Propagator/PeriodizeResolventBridge.lean` | 当前对话内代理 | **完成，本地全量验收通过**；必须另证实际 `Kinf` 的可和性与格点方程 |
 | T28j | 二维 Fourier 分子反演为点质量 | `Propagator/PeriodizeFourierDelta.lean` | 当前对话内代理 | **完成，本地全量验收通过**；被积函数恒等式和积分线性步骤仍开放 |
+| T28k | 实际 `Kinf` 的整数格点 resolvent 方程 | `Propagator/PeriodizeIntegrand.lean` | 当前对话内代理 | **完成，本地全量验收通过**；周期化只剩实际核移位可和性 |
 | T31 | 清理当前 10 条 linter warning | `Defs/Dist.lean`、`Gauss/Envelope.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；10 条已清、声明类型保持 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | Codex T4 | **完成，主分支全量验收通过**；T24 可复用 |
 | S4 | 一时刻高斯模型与坐标分解 | `Gauss/Model.lean` | Codex S4 | **完成，主分支全量验收通过**；含 `Sizes.seqP_map_slice` 共同概率空间 |
@@ -56,6 +59,10 @@
 | S9i | 显式 bulk `m` 的二次方程与单位范数 | `Gauss/SpectralAlgebra.lean` | 当前对话内代理 | **完成，本地全量验收通过**；边界极限同一性仍开放 |
 | S5a | 移动谱路径及虚部导数 | `Gauss/SpectralDerivative.lean` | 当前对话内代理 | **完成，本地全量验收通过**；矩阵 Green 流导数仍开放 |
 | S5b | 一时刻矩阵流的逐样本导数 | `Gauss/FlowDerivative.lean` | 当前对话内代理 | **完成，本地全量验收通过**；Green 与生成元链仍开放 |
+| S5c | 移动 Green 函数的逐样本导数 | `Gauss/GreenDerivative.lean` | 当前对话内代理 | **完成，本地全量验收通过**；loop 导数与生成元链仍开放 |
+| S5d | 二维方差与块迹的基础收缩 | `Hierarchy/ContractionBasic.lean` | 当前对话内代理 | **完成，本地全量验收通过**；坐标方向与切接链仍需连接 |
+| S5e | 真实高斯实/虚坐标方向的加权迹收缩 | `Hierarchy/ContractionDirections.lean` | 当前对话内代理 | **完成，本地全量验收通过**；坐标求和与切接链仍需连接 |
+| S5f | 有限 loop 的逐样本导数 | `Gauss/LoopDerivative.lean` | 当前对话内代理 | **完成，本地全量验收通过**；期望与生成元仍开放 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
@@ -64,7 +71,7 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**T6/T8/T19/T20/T28a–j、T21 `Shat` 差分阶段、T27 第一坐标阶段、S5a/b、S7/S8/S9a–i、C1 基础及完整 loop Ward、C2 单边与双边矩阵词、T31 已通过本地全量验收。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+**T6/T8/T19/T20/T28a–k、T21 `Shat` 差分及 T21a/b 逆乘子一二阶代数阶段、T27 第一坐标阶段、S5a–f、S7/S8/S9a–i、C1 基础及完整 loop Ward、C2 单边与双边矩阵词、T31 已通过本地全量验收。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
 T21、T22、T28、T29；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
