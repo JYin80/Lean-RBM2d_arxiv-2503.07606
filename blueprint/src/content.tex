@@ -355,10 +355,19 @@
 
 \begin{lemma}[Case 2: $|s|_L>d/2$]\label{lem:bd-case2}
   \uses{lem:fourier, lem:elliptic, lem:latticesum, lem:zero-mode}
-  Both differences are $O(\log L)\prec1$, while $|s|_L/(d+1)\ge c$ and
-  $|s|_L^2/(d^2+1)\ge c$.
-  \emph{Work order T5.}
+  \lean{RBM.norm_Theta_fd_case2_le_paper,
+        RBM.case2_log_prefactor_detDom_one}\leanok
+  Both differences satisfy the two exact paper-scale bounds with common
+  deterministic prefactor $720(1+\log L)\prec1$ whenever $L\ge3$,
+  $\|\xi\|<1$ and $d<2|s|_L$.  The ratios $|s|_L/(d+1)$ and
+  $|s|_L^2/(d^2+1)$ are bounded below by $1/2$ and $1/4$.
+  \emph{Work order T5, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  The zero mode cancels.  Ellipticity bounds the remaining terms by the
+  punctured inverse-square lattice sum, and the Case 2 geometry absorbs the
+  resulting $O(\log L)$ into each paper-scale ratio.
+\end{proof}
 
 \begin{lemma}[The two dyadic sums]\label{lem:dyadic-sums}
   \uses{lem:kappa-basic}
@@ -520,13 +529,26 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   the whole real line, then use real and imaginary parts for complex tests.
 \end{proof}
 
-\begin{lemma}[Matrix Gaussian Stein identity]\label{lem:stein}
+\begin{lemma}[Product Gaussian Stein identity]\label{lem:stein-product}
   \uses{lem:stein-scalar}
-  Stein's identity, replacing a matrix coordinate by
-  its variance times the corresponding derivative.  The matrix layer goes through a resampling identity
-  (``replacing one coordinate by an independent copy does not change the
-  measure'') rather than through Fubini on a product measure; independence is
-  used at that one point only.  \emph{Work order S3.}
+  \lean{RBM.Gauss.GaussianProduct.map_update,
+        RBM.Gauss.GaussianProduct.stein}\leanok
+  Replacing one real coordinate of a countable product Gaussian law by an
+  independent copy preserves the law.  For bounded continuously differentiable
+  complex tests, this yields the coordinatewise Stein identity, including
+  zero variance.  \emph{Work order S3, generic core closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Check the product law on measurable cylinders, apply the scalar identity
+  along each resampled fibre, and integrate over the remaining coordinates.
+\end{proof}
+
+\begin{lemma}[Matrix Gaussian Stein identity]\label{lem:stein}
+  \uses{lem:stein-product, def:model}
+  Instantiate the product identity for the actual Hermitian matrix coordinates
+  and their variances.  The independent real coordinates include diagonal
+  entries and the real and imaginary parts of off-diagonal entries.
+  \emph{S3--S4 interface remains open.}
 \end{lemma}
 
 \begin{lemma}[Continuous induction]\label{lem:bootstrap}
@@ -579,10 +601,141 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   \emph{Work order S10.}
 \end{lemma}
 
-\chapter{Open combinatorial dependency}
+\chapter{Loop hierarchy and convolution tree, \S2--\S4}
 
-\begin{remark}[Combinatorial work still to formalize]\label{rem:open-combinatorics}
-  The combinatorial layer of \S3--\S4 (canonical partitions and non-crossing
-  pairings) needs its own d=2 statement audit and proof tickets.  The current
-  deterministic and stochastic nodes do not discharge this part of the paper.
+\begin{definition}[Resolvent loops, \texttt{Def:G\_loop}]\label{def:loops}
+  \uses{def:model, def:block-model}
+  For signs $\boldsymbol\sigma$ and blocks $\boldsymbol a$, the loop is the
+  trace of the cyclic product of $G_t(\sigma_i)E_{a_i}$.  Its normalization is
+  the paper's $W^{-2}$ block normalization.
+\end{definition}
+
+\begin{definition}[Cut-and-glue operations, \texttt{Def:oper\_loop}]\label{def:loop-ops}
+  \uses{def:loops}
+  The one-edge insertion and two-edge splitting operations act on sign and
+  block-indexed loops.  Their exact index changes must be verified in d=2.
+\end{definition}
+
+\begin{definition}[Convolution tree, \texttt{Def\_Ktza}]\label{def:ktree}
+  \uses{def:loop-ops, def:Theta}
+  Define $\mathcal K$ by the paper's triangular evolution equation and initial
+  data $W^{-2(n-1)}\prod_i m(\sigma_i)\mathbf 1(a_1=\cdots=a_n)$.
+  Existence and uniqueness are proof obligations.
+\end{definition}
+
+\begin{lemma}[Loop hierarchy, \texttt{lem:SE\_basic}]\label{lem:loop-hierarchy}
+  \uses{def:loop-ops, lem:generator}
+  Derive the loop evolution identity, including its $W^2$ factor, from the
+  one-time Gaussian generator rather than an It\^o SDE.
+\end{lemma}
+
+\begin{lemma}[Two-loop tree formula, \texttt{(Kn2sol)}]\label{lem:ktree2}
+  \uses{def:ktree, def:Theta}
+  For $n=2$, show $\mathcal K=W^{-2}m_1m_2\Theta^{(B)}_{tm_1m_2}$ and verify
+  its initial data and evolution equation.
+\end{lemma}
+
+\begin{remark}[Results cited from \texttt{[YY\_25]}]\label{rem:yy25}
+  The paper invokes, without reproducing their full proofs, the convolution
+  tree partition formula and parts of its Ward identity and short-range
+  combinatorics from \texttt{[YY\_25]}.  These are explicit open dependencies
+  until their precise hypotheses and Lean proofs have been audited.
 \end{remark}
+
+\begin{lemma}[Pure-loop decay, \texttt{lem\_pureloop}]\label{lem:pureloop}
+  \uses{def:ktree, lem:propTH-5, rem:yy25}
+  The all-plus tree decays exponentially in the maximum periodic separation
+  of its block indices.
+\end{lemma}
+
+\begin{lemma}[Ward identity for loops, \texttt{(WI\_calL)}]\label{lem:ward-loop}
+  \uses{def:loops, def:block-model}
+  Sum one block label using $\sum_a E_a=W^{-2}I$ and the resolvent Ward identity.
+\end{lemma}
+
+\begin{lemma}[Ward identity for trees, \texttt{(WI\_calK)}]\label{lem:ward-tree}
+  \uses{def:ktree, lem:ktree2, rem:yy25}
+  Prove the corresponding tree identity, including the $n\ge4$ inductive case.
+\end{lemma}
+
+\begin{lemma}[Convolution-tree partition formula, \texttt{(KKpi)}]\label{lem:tree-decomp}
+  \uses{def:ktree, rem:yy25}
+  Identify the admissible partitions and the $\Sigma^{(\emptyset)}$ factors,
+  including their sum-zero, short-range and reflection properties.
+\end{lemma}
+
+\begin{lemma}[Tree bounds, \texttt{ML:Kbound} and \texttt{ML:Kbound+pi}]\label{lem:tree-bound}
+  \uses{lem:pureloop, lem:ward-tree, lem:tree-decomp,
+         lem:propTH-5, lem:propTH-6}
+  Bound $\mathcal K$ at the paper's scale
+  $M_t^{-n+1}$, where $M_t=W^2\ell_t^2\eta_t$.
+\end{lemma}
+
+\chapter{Main probabilistic estimates and results}
+
+\begin{lemma}[Loop induction, \texttt{lem:main\_ind}]\label{lem:loop-induction}
+  \uses{lem:loop-hierarchy, lem:tree-bound, lem:bridge-prec,
+         lem:bridge-moment, lem:gronwall, lem:discharge, lem:bootstrap}
+  Propagate the loop, two-loop and local resolvent estimates over the paper's
+  time mesh, replacing the stopping-time step with continuous induction.
+\end{lemma}
+
+\begin{lemma}[Loop and local estimates, \texttt{ML:GLoop}, \texttt{ML:GLoop\_expec},
+              \texttt{ML:GtLocal}]\label{lem:loop-estimates}
+  \uses{lem:loop-induction, lem:tree-bound}
+  Establish the hierarchy error, its two-loop spatial refinement, and the
+  entrywise local estimate at the paper's $M_t$ scale.
+\end{lemma}
+
+\begin{lemma}[Improved two-loop expectation, \texttt{ML:exp}]\label{lem:loop-expectation}
+  \uses{lem:loop-estimates, lem:tree-bound}
+  Prove the $M_t^{-3}$ expectation improvement needed for quantum unique
+  ergodicity.
+\end{lemma}
+
+\begin{theorem}[Local semicircle law, \texttt{MR:locSC}]\label{thm:local-law}
+  \uses{lem:loop-estimates, def:model, def:stochdom}
+  The entrywise and partial-trace local laws hold for
+  $|E|\le2-\kappa$ and $N^{-1+\tau}\le\eta\le1$ under $W\ge N^{\mathfrak c}$.
+\end{theorem}
+
+\begin{theorem}[Delocalization, \texttt{MR:decol}]\label{thm:delocalization}
+  \uses{thm:local-law, lem:deloc}
+  Deduce the bulk eigenvector $\ell^\infty$ bound from the local law and the
+  already formalized deterministic spectral inequality.
+\end{theorem}
+
+\begin{theorem}[Generalized quantum unique ergodicity, \texttt{MR:QUE}]\label{thm:que}
+  \uses{lem:loop-expectation, thm:local-law, def:block-model}
+  Control the matrix elements of $E_a-N^{-1}I$ between bulk eigenvectors and
+  the associated mass on unions of blocks.
+\end{theorem}
+
+\begin{theorem}[Quantum diffusion, \texttt{MR:QDiff}]\label{thm:qdiff}
+  \uses{lem:loop-estimates, lem:ktree2, thm:local-law}
+  Compare the two resolvent two-loop traces to their block propagator profiles.
+\end{theorem}
+
+\begin{remark}[External inputs to bulk universality]\label{rem:universality-inputs}
+  The proof of \texttt{Thm: B\_Univ} uses the short-time Dyson Brownian motion
+  theorem cited as \texttt{[LANDON20191137]}, correlation-function comparison
+  estimates cited as \texttt{[erdHos2017dynamical]} and \texttt{[Xu:2024aa]},
+  and several arguments cited from
+  \texttt{[YY\_25]}.  Their exact statements and Lean proofs remain open
+  dependencies; citing them does not close the theorem below.
+\end{remark}
+
+\begin{lemma}[Short-time comparison, \texttt{(417)}]\label{lem:short-time-comparison}
+  \uses{thm:local-law, thm:delocalization, thm:que,
+         rem:universality-inputs}
+  For the matrix Ornstein--Uhlenbeck flow over time
+  $t_*=N^{-1+\tau_U}$, control the change in expectations of products of
+  normalized resolvent traces at the paper's microscopic spectral scales.
+\end{lemma}
+
+\begin{theorem}[Bulk universality, \texttt{Thm: B\_Univ}]\label{thm:bulk-univ}
+  \uses{lem:short-time-comparison, rem:universality-inputs}
+  For each fixed $k$, bulk energy $E$, and compactly supported smooth test
+  function, the rescaled $k$-point correlation functions of the band matrix
+  and GUE have the same limiting test integral.
+\end{theorem}

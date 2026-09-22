@@ -33,7 +33,9 @@ DECL = re.compile(r"^(?:noncomputable\s+)?(theorem|def|abbrev|lemma|structure)\s
 PILL = {"done": "已证", "defn": "已形式化", "ready": "可开工", "blocked": "待解锁", "cited": "引用论文"}
 
 # Chinese chapter headings, keyed by a distinctive fragment of the \chapter{} title.
-CHAPTER = [("replacement stack", "第 4 章 · 随机层 —— Itô 替代栈"),
+CHAPTER = [("Main probabilistic estimates", "第 6 章 · 主定理证明链"),
+           ("Loop hierarchy and convolution tree", "第 5 章 · 环层级与卷积树"),
+           ("replacement stack", "第 4 章 · 随机层 —— Itô 替代栈"),
            ("Section 8", "第 2 章 · §8 —— Lemma lem_propTH 的证明"),
            ("model and the propagator", "第 1 章 · 模型与传播子 Θ_ξ"),
            ("Delocalization", "第 3 章 · 退局域化"),
@@ -59,9 +61,11 @@ TASK = {"lem:qcomp": "T2", "lem:latticesum": "T3", "lem:decay-small": "T4",
         "lem:dyadic": "T22", "lem:dyadic-case1": "T18", "lem:propTH-5": "T30", "lem:propTH-6": "T23",
         "lem:dyadic-sums": "T17", "def:block-model": "T7 ★ 最优先",
         "def:model": "S4", "def:stochdom": "S0",
-        "lem:envelope": "S1", "lem:stein-scalar": "S2", "lem:stein": "S3", "lem:bootstrap": "S8",
+        "lem:envelope": "S1", "lem:stein-scalar": "S2", "lem:stein-product": "S3",
+        "lem:stein": "S3/S4", "lem:bootstrap": "S8",
         "lem:generator": "S5", "lem:bridge-prec": "S6", "lem:bridge-moment": "S7",
-        "lem:gronwall": "S9", "lem:discharge": "S10"}
+        "lem:gronwall": "S9", "lem:discharge": "S10",
+        "lem:short-time-comparison": "U1", "thm:bulk-univ": "U2"}
 
 def parse(tex):
     chapters, cur = [], None

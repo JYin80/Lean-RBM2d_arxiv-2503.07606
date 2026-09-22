@@ -22,7 +22,7 @@
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 空闲 | **可开工**，纯 `Finset`/`ZMod` 记账 |
 | **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
 | **T24** | §8.2 的两个 structure 接口 + 性质 5 显式版 | `Propagator/ContourInterface.lean` | 空闲 | **可开工** |
-| **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 空闲 | **可开工**，只 import Mathlib |
+| **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **进行中**；独占该文件 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 空闲 | **可开工** |
 | **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
 | **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 空闲 | **可开工**，独立 |
@@ -31,21 +31,35 @@
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | Codex T4 | **完成，主分支全量验收通过**；T24 可复用 |
 | S4 | 一时刻高斯模型与坐标分解 | `Gauss/Model.lean` | Codex S4 | **进行中**；T7/S0 已有 |
 | S2 | 实与复高斯 Stein 分部积分 | `Gauss/Stein.lean` | Codex S2 | **完成，主分支全量验收通过**；S3 已解锁 |
-| S3 | 矩阵版 Stein 重采样测度不变式 | `Gauss/SteinMatrix.lean` | 当前对话内代理 | **进行中**；独占该文件，不新建项目对话 |
-| T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **进行中**；T3/T14 已有，独占该文件 |
+| S3 | 矩阵版 Stein 重采样测度不变式 | `Gauss/SteinMatrix.lean` | 当前对话内代理 | **乘积高斯核心完成，主分支全量验收通过**；实际 Hermitian 矩阵实例化仍待 S4 |
+| T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
-| T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 空闲 | 待 T18+T5 |
+| T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **进行中**；T18/T5 已有，独占该文件 |
 | T27 | 围道平移 `(eq_shifted_lower)(eq_Kinf_bound)` | `Propagator/Contour.lean` | 空闲 | 待 T26 |
 | T28 | 周期化 + 兑现 `ContourInput` | `Propagator/Periodize.lean` | 空闲 | 待 T26+T25 |
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**S4 在独立工作树；S3、T5 在当前对话内代理中；T4、S2、T7、S0、T3 已完成。** 其余可立刻开工且文件不重叠的储备有
-T19、T20、T21、T24、T25、T26、T29、T6、T8、S6、S8、T31；队列深度足够。
+**S4 在原有独立工作树；T23、T25 在当前对话内代理中；T5、S3 的乘积高斯核心、T4、S2、T7、S0、T3 已完成。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+T19、T20、T21、T24、T26、T29、T6、T8、S6、S8、T31；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
-**当前优先顺序**：T7 → S4；T3 → T4/T5；S0 → S2/S3 → S5（并将 S6/S7 保留在储备队列）。
+**当前优先顺序**：S4 + S3 乘积核心 → 实际矩阵 Stein 桥 → S5；T18 + T5 → T23；T25 + T26 → T27/T28（并将 S6/S7 保留在储备队列）。
 任何新结论先复查下游实际缺口，不能仅凭此顺序宣布解锁。
+
+**整篇论文的后段工单储备**（尚未派发，均为蓝图开放节点）：
+
+| 单号 | 交付范围 | 起步条件 |
+|---|---|---|
+| C1 | `Hierarchy/Loops.lean`：论文 `Def:G_loop` 与维度正确的归一化 | S4 与 T7 的矩阵/块接口验收 |
+| C2 | `Hierarchy/Operations.lean`：`Def:oper_loop` 的切割、胶合及指标映射 | C1 |
+| C3 | `Hierarchy/Tree.lean`：`Def_Ktza`、`(Kn2sol)` 的初值/演化/唯一性 | C1、T6、传播子基本性质 |
+| C4 | `[YY_25]` 引用审计：Ward、`(KKpi)`、短程组合结构的精确假设与证明责任 | 论文及被引版本核对；需要 Jun 裁定外部引用的形式化边界 |
+| U0 | Bulk universality 外部输入审计：`LANDON20191137`、`erdHos2017dynamical`、`Xu:2024aa`、`YY_25` 的版本/假设 | 局部律与 OU 时间尺度对齐 |
+| U1 | 矩阵 OU 短时比较 `(417)`，包含文中省略的扰动估计 | 主定理局部律、QUE、退局域化；U0 |
+| U2 | `Thm: B_Univ`：由短时比较和 DBM 输入推出相关函数极限 | U0、U1 |
+
+这些工单只列实际缺口，不把论文引用或一个任意可填的证明字段算作通过。
 
 ---
 
