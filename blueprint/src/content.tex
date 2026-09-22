@@ -664,7 +664,11 @@
 \begin{lemma}[Multiplier differences on an annulus]\label{lem:symbol-diff}
   \uses{lem:elliptic, lem:qcomp, lem:symbol-diff-shat,
          lem:symbol-diff-reciprocal-one,
-         lem:symbol-diff-reciprocal-two}
+         lem:symbol-diff-reciprocal-two,
+         lem:symbol-diff-reciprocal-two-bound,
+         lem:symbol-denom-annulus,
+         lem:symbol-shift-annulus,
+         lem:symbol-reciprocal-annulus-bound}
   Bound the first three lattice differences of the inverse symbol uniformly
   on a dyadic annulus, retaining the gain from $|\sin p_i|\lesssim|p|_*$.
   The first three differences of $\widehat S$ itself are proved below;
@@ -720,6 +724,77 @@
 \end{lemma}
 \begin{proof}\leanok
   Apply the first reciprocal difference formula twice and collect terms.
+\end{proof}
+
+\begin{lemma}[Second reciprocal-difference bounds with explicit denominators]
+  \label{lem:symbol-diff-reciprocal-two-bound}
+  \uses{lem:symbol-diff-reciprocal-two, lem:symbol-diff-shat}
+  \lean{RBM.reciprocalSymbolStepBound,
+        RBM.reciprocalSymbolSecondBound,
+        RBM.norm_invSymbolMultiplier_second_diff_e1_le,
+        RBM.norm_invSymbolMultiplier_second_diff_e2_le}\leanok
+  The two coordinate second differences obey bounds in terms of the proved
+  numerator increments and the exact two- and three-denominator products.
+  Annular lower bounds for those denominators remain open.
+  \emph{T21c, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the exact second quotient and triangle inequality, then insert the
+  coordinate increment estimates for $\widehat S$.
+\end{proof}
+
+\begin{lemma}[Inverse-symbol denominator on a dyadic annulus]
+  \label{lem:symbol-denom-annulus}
+  \uses{lem:elliptic, lem:cutoff}
+  \lean{RBM.norm_one_sub_mul_Shat_ge_dyadic,
+        RBM.norm_one_sub_mul_Shat_ge_of_dyadicCutoff_ne_zero}\leanok
+  Under the inner-radius condition, the actual multiplier denominator obeys
+  $\|1-\xi\widehat S(p)\|\ge
+  (4/(45\pi^2))(\kappa(\xi)^2+2^{-2(j+1)})$.
+  Nonzero dyadic cutoff supplies that radius condition; the momentum may
+  already be shifted. Comparing all shifted momenta in a high-order
+  difference remains open. \emph{T21d, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the established elliptic lower bound and use the cutoff support's
+  inner radius.
+\end{proof}
+
+\begin{lemma}[Shifted momenta retain a dyadic denominator scale]
+  \label{lem:symbol-shift-annulus}
+  \uses{lem:symbol-denom-annulus, lem:symbol-diff-reciprocal-two-bound}
+  \lean{RBM.pstar2_shift_ge_quarter,
+        RBM.norm_one_sub_mul_Shat_ge_e1_shifts,
+        RBM.norm_one_sub_mul_Shat_ge_e2_shifts}\leanok
+  If the original momentum is sufficiently farther than two lattice steps
+  from the origin, one- and two-step coordinate shifts retain at least a
+  quarter of its squared radial scale. Under an explicit dyadic inner margin,
+  both shifted inverse-symbol denominators have the same dyadic lower bound.
+  Relating this margin to all cutoff shells, especially the lowest ones,
+  remains open. \emph{T21e, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Compare each coordinate's periodic angular distance under one or two steps,
+  then apply the elliptic denominator bound at the shifted points.
+\end{proof}
+
+\begin{lemma}[Second reciprocal difference on a separated annulus]
+  \label{lem:symbol-reciprocal-annulus-bound}
+  \uses{lem:symbol-shift-annulus,
+         lem:symbol-diff-reciprocal-two-bound}
+  \lean{RBM.symbolAnnulusDenomScale_pos,
+        RBM.norm_invSymbolMultiplier_second_diff_e1_annulus_le,
+        RBM.norm_invSymbolMultiplier_second_diff_e2_annulus_le}\leanok
+  Under explicit inner-margin assumptions, each coordinate second reciprocal
+  difference is bounded by a numerator over $D^2$ plus a quadratic numerator
+  over $D^3$, where
+  $D=(4/(45\pi^2))(\kappa(\xi)^2+2^{-2(j+1)})$.
+  The hypotheses are nonvacuous, but cutoff support and the lowest-frequency
+  shells still need separate treatment. \emph{T21f, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Substitute the three shifted denominator lower bounds into the exact
+  reciprocal second-difference norm estimate.
 \end{proof}
 
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
@@ -1191,6 +1266,103 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   then apply the linear matrix trace.
 \end{proof}
 
+\begin{lemma}[Single-coordinate derivative of finite loops]
+  \label{lem:loop-coordinate-derivative}
+  \uses{lem:loop-derivative, lem:loop-contraction-directions}
+  \lean{RBM.Gauss.HflowBlock_update,
+        RBM.Gauss.hasDerivAt_green_HflowBlock_update,
+        RBM.Gauss.hasDerivAt_coordinateWord,
+        RBM.Gauss.hasDerivAt_gloop_update}\leanok
+  Perturbing one real Gaussian coordinate differentiates the Green matrix by
+  $-G(\sqrt u\,B_c)G$ and differentiates a finite loop by its finite
+  Leibniz sum. A one-edge example has nonzero directional derivative.
+  Weighted coordinate summation and the expected generator remain open.
+  \emph{S5 coordinate-derivative checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Differentiate the affine matrix-coordinate perturbation and apply the
+  inverse-matrix rule to each factor of the finite loop word.
+\end{proof}
+
+\begin{lemma}[Second derivative of a single-coordinate Green path]
+  \label{lem:green-coordinate-second}
+  \uses{lem:loop-coordinate-derivative}
+  \lean{RBM.Gauss.hasDerivAt_greenCoordinateDerivative,
+        RBM.Gauss.hasDerivAt_deriv_green_HflowBlock_update}\leanok
+  For a fixed nonreal spectral parameter and one affine Hermitian coordinate
+  direction $B=\sqrt u\,B_c$, the second Green derivative is $2GBGBG$.
+  The finite-loop second product rule and variance-weighted sum remain open.
+  \emph{S5 second Green step, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Differentiate $-GBG$ by the product rule and insert $G'=-GBG$ twice.
+\end{proof}
+
+\begin{lemma}[Second coordinate derivative of finite loops]
+  \label{lem:loop-coordinate-second}
+  \uses{lem:green-coordinate-second, lem:loop-coordinate-derivative}
+  \lean{RBM.Gauss.hasDerivAt_coordinateWordDeriv,
+        RBM.Gauss.hasDerivAt_deriv_gloopProd_update,
+        RBM.Gauss.hasDerivAt_deriv_gloop_update}\leanok
+  A finite loop has the second coordinate derivative obtained by the
+  recursive product rule, including both cross terms from differentiating
+  distinct Green factors. Integrability and expectation-level generator
+  identities remain open. \emph{S5 second-loop checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Differentiate the finite first-derivative word recursively and use the
+  signed Green second derivative, then apply the trace.
+\end{proof}
+
+\begin{lemma}[Uniform envelopes for loop coordinate derivatives]
+  \label{lem:loop-coordinate-derivative-bounds}
+  \uses{lem:loop-coordinate-second, lem:loop-envelope}
+  \lean{RBM.Gauss.norm_coordinateWordDeriv_le,
+        RBM.Gauss.norm_gloop_coordinate_derivatives_le}\leanok
+  On a nonreal spectral window, both first and second coordinate derivatives
+  of each finite loop have deterministic bounds uniform in the Gaussian
+  sample. The bounds depend explicitly on loop length, the gap, time and the
+  chosen coordinate direction. Measurability and integration remain separate.
+  \emph{S5 derivative-envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Induct on the finite loop word using the Green bounds and the recursive
+  first and second product rules, then bound the trace.
+\end{proof}
+
+\begin{lemma}[Measurability and integrability of loop coordinate derivatives]
+  \label{lem:loop-coordinate-integrable}
+  \uses{lem:loop-coordinate-derivative-bounds,
+         lem:loop-time-cont}
+  \lean{RBM.Gauss.measurable_gloop_coordinate_derivatives_sample,
+        RBM.Gauss.integrable_gloop_coordinate_derivatives,
+        RBM.Gauss.measurable_integrable_actual_gloop_coordinate_derivatives}\leanok
+  At fixed time and nonreal spectral parameter, the actual first and second
+  Gaussian-coordinate derivatives of a finite loop are measurable and
+  integrable under the product Gaussian law. These are the analytic inputs
+  for the single-coordinate Stein identity below.
+  \emph{S5 derivative-integrability checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Establish sample continuity of the finite derivative words, then combine
+  their deterministic envelopes with the probability measure's finite mass.
+\end{proof}
+
+\begin{lemma}[Single-coordinate Stein identity for a finite loop]
+  \label{lem:loop-coordinate-stein}
+  \uses{lem:loop-coordinate-integrable, lem:stein-product}
+  \lean{RBM.Gauss.stein_gloop_HflowBlock}\leanok
+  At fixed time and nonreal spectral parameter, Gaussian integration by
+  parts identifies the expectation of one coordinate times the finite loop
+  with its actual coordinate derivative, multiplied by the exact coordinate
+  variance (including zero variance). The finite coordinate sum and time
+  generator remain separate. \emph{S5 one-coordinate Stein checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply product Gaussian Stein to the loop, using the sample continuity and
+  deterministic derivative envelope to discharge the analytic hypotheses.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
   \uses{lem:generator, lem:moment-closing-base, lem:moment-time-cont,
          lem:flow-time-cont, lem:green-time-cont, lem:loop-time-cont,
@@ -1337,6 +1509,97 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Expand the three real coordinate matrices into matrix units and cancel
   the off-diagonal cross terms between real and imaginary directions.
+\end{proof}
+
+\begin{lemma}[Sum of the used Gaussian coordinate contractions]
+  \label{lem:loop-contraction-sum}
+  \uses{lem:loop-contraction-directions, lem:loop-contraction-basic}
+  \lean{RBM.Gauss.usedCoords,
+        RBM.Gauss.sum_usedCoords_trace,
+        RBM.Gauss.sum_Spaper_diag_mul_relabel,
+        RBM.Gauss.sum_usedCoords_trace_blocks}\leanok
+  Summing the actual real, imaginary and diagonal coordinate directions and
+  reindexing fine sites by blocks yields
+  $W^2\sum_{a,b}\operatorname{Tr}(A'E_a)S^{(B)}_{ab}
+  \operatorname{Tr}(C'E_b)$.
+  The unused product coordinates and generator derivative chain remain to be
+  checked. \emph{S5 finite-coordinate sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Partition the finite coordinate type into oriented off-diagonal pairs and
+  diagonals, apply the direction identities and reindex via the block split.
+\end{proof}
+
+\begin{lemma}[Unused Gaussian coordinates have zero matrix direction]
+  \label{lem:loop-contraction-unused}
+  \uses{lem:loop-contraction-sum}
+  \lean{RBM.Gauss.coordinateMatrix_zero_of_not_mem_usedCoords,
+        RBM.Gauss.sum_allCoords_trace_eq_usedCoords,
+        RBM.Gauss.sum_allCoords_trace_blocks}\leanok
+  Every product coordinate omitted from the used-coordinate sum has zero
+  Hermitian matrix direction. Hence the full Gaussian coordinate contraction
+  has the same exact $W^2$ block expression as the used-coordinate sum.
+  The derivative and cut-loop chain identification remain open.
+  \emph{S5 full-coordinate sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Classify the unused diagonal-imaginary and lower-oriented coordinates and
+  remove their zero terms from the finite sum.
+\end{proof}
+
+\begin{lemma}[Coordinate contractions close into cut loops]
+  \label{lem:loop-contraction-cutwords}
+  \uses{lem:loop-contraction-unused, lem:loop-cut-pair-word}
+  \lean{RBM.cutLeftChain, RBM.cutRightChain,
+        RBM.trace_cutLeftChain_Eblk,
+        RBM.trace_cutRightChain_Eblk,
+        RBM.sum_coordinate_cutChains}\leanok
+  At a fixed matrix and spectral parameter, the two open matrix chains in
+  a Gaussian coordinate contraction close into the left and right cut loops.
+  The complete coordinate sum is exactly $W^2$ times their
+  $S^{(B)}$-weighted double block sum. This supplies the covariance step of
+  the second-loop derivative; term-by-term assembly remains open.
+  \emph{S5 cut-chain checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Close each chain with a block projector, apply the pair cut matrix-word
+  identities, then use the full-coordinate contraction theorem.
+\end{proof}
+
+\begin{lemma}[Spectral drift insertion as a single-edge cut]
+  \label{lem:loop-contraction-drift}
+  \uses{lem:loop-cut-one, lem:loop-basic}
+  \lean{RBM.sum_gloop_cutGlue_split,
+        RBM.trace_scalarDrift_cutGlue_split,
+        RBM.neg_trace_scalarDrift_cutGlue_split}\leanok
+  At any valid edge, inserting $G_s(mI)G_s$ in the matrix word equals
+  $mW^2$ times the sum of the single-edge cut loops over the inserted block.
+  The inverse-derivative negative sign is recorded separately. The complete
+  generator still needs loop derivative multiplicities and expectation.
+  \emph{S5 drift checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Replace $I$ by $W^2\sum_b E_b$, then identify each inserted block word with
+  the general-position single-edge cut.
+\end{proof}
+
+\begin{lemma}[One ordered two-edge term closes into cut loops]
+  \label{lem:loop-contraction-second}
+  \uses{lem:loop-coordinate-second, lem:loop-contraction-cutwords}
+  \lean{RBM.trace_twoEdge_mixed_eq_cutChains,
+        RBM.sum_twoEdge_mixed_cutChains,
+        RBM.sum_twoEdge_mixed_coordinate,
+        RBM.sum_twoEdge_mixed_deriv}\leanok
+  For one ordered pair of distinct Green edges, the Gaussian variance sum
+  of the cross term in the second coordinate derivative equals $uW^2$ times
+  the $S^{(B)}$-weighted left/right cut-loop double sum. The reverse ordering,
+  same-edge terms, and expectation-level assembly remain open.
+  \emph{S5 two-edge contraction checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Rotate the trace to expose the two coordinate directions, apply the finite
+  covariance contraction, and use $(\sqrt u)^2=u$; the two derivative signs
+  cancel.
 \end{proof}
 
 \begin{definition}[Cut-and-glue operations, \texttt{Def:oper\_loop}]\label{def:loop-ops}
