@@ -76,7 +76,7 @@
   <header>
     <p class="eyebrow">Lean 4 · Mathlib · 形式化蓝图</p>
     <h1>二维随机带矩阵的退局域化</h1>
-    <p class="sub">arXiv:2503.07606（AOP 提交版）· Lean 4.34.0 / Mathlib 5ed2965256 · 确定性内核</p>
+    <p class="sub">arXiv:2503.07606（AOP 提交版）· Lean 4.34.0 / Mathlib 5ed2965256 · 全文形式化进度</p>
     <div class="chips">
       <div class="chip done"><b>@@DONE@@</b><span>节点已形式化</span></div>
       <div class="chip ready"><b>@@READY@@</b><span>依赖就绪，可开工</span></div>
@@ -90,16 +90,16 @@
     <span><i style="background:#cfe9dc"></i>定义（已形式化）</span>
     <span><i style="background:#dbe8f5"></i>前提就绪，可开工</span>
     <span><i style="background:#ffffff"></i>尚被上游阻塞</span>
-    <span><i style="background:#fdf3e0"></i>不形式化</span>
+    <span><i style="background:#fdf3e0"></i>论文引用待审计</span>
   </div>
 
 @@BODY@@
 
   <div class="note">
-    <strong>与 d=1 的区别，也是这个项目的全部难点。</strong>
+    <strong>二维传播子的关键差别。</strong>
     一维最近邻三项递推有特征方程，闭式解 <code>Θ_ξ = A(ξ)(ρ^d + ρ^{L−d})</code> 存在，
     <a href="https://github.com/JYin80/Lean-RBM1d_arxiv-2501.01718">RBM1D</a> 的衰减估计全建在它上面。
-    <code>Z_L²</code> 上没有这种递推，闭式解不存在，所以只剩论文 §8 的 Fourier 一条路：
+    <code>Z_L²</code> 上没有这种递推，论文 §8 改走 Fourier 路线：
     椭圆性 → 围道平移 → 周期化 → dyadic 分解。图里那条从 <code>elliptic</code> 出发、
     经 <code>contour</code> 与 <code>periodize</code> 汇到 <code>propTH-5</code> 的链就是它。
     旁边那条只经过 <code>latticesum</code> 的短路径（<code>κL &lt; 1</code> 区制与导数界 Case 2）

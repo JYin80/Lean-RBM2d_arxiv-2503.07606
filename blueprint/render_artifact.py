@@ -19,7 +19,7 @@ Node status comes from the blueprint itself, never from a hand-kept list:
 A `\\lean{}` tag naming a declaration that does not exist in the Lean sources is
 a hard error: the dependency graph must never claim more than the code does.
 """
-import re, subprocess, sys, html, pathlib, json
+import re, subprocess, sys, html, pathlib, json, shutil
 
 C = {  # fill, stroke, text
   "done":    ("#1f9d6b", "#177a54", "#ffffff"),
@@ -214,7 +214,97 @@ def svg_from_dot(src):
     return s, float(w.group(1)) if w else 800.0
 
 def svg_for(ch, by):
-    return svg_from_dot(dot_for(ch, by))
+    return svg_from_dot(dot_for(ch, by)) if shutil.which("dot") else svg_fallback([ch], by, False)
+
+def svg_fallback(chapters, by, global_view):
+    """Self-contained SVG layout for hosts without the Graphviz executable."""
+    nodes = [n for ch in chapters for n in ch["nodes"]]
+    here = {n["label"] for n in nodes}
+    positions, boxes = {}, []
+    if global_view:
+        for i, ch in enumerate(chapters):
+            if not ch["nodes"]:
+                continue
+            x = 20 + i * 290
+            boxes.append((x, 46, 268, 50 + len(ch["nodes"]) * 65, ch["title"]))
+            for j, n in enumerate(ch["nodes"]):
+                positions[n["label"]] = (x + 134, 99 + j * 65)
+        width = max(600, 30 + len(chapters) * 290)
+        height = max(320, 120 + max((len(c["nodes"]) for c in chapters), default=0) * 65)
+    else:
+        external = sorted({u for n in nodes for u in n["uses"] if u not in here and u in by})
+        order = external + [n["label"] for n in nodes]
+        rank, visiting = {}, set()
+        def level(label):
+            if label in rank:
+                return rank[label]
+            if label in visiting:
+                raise SystemExit("cycle in blueprint dependencies: " + label)
+            visiting.add(label)
+            deps = [u for u in by[label]["uses"] if u in here or u in external]
+            rank[label] = 1 + max((level(u) for u in deps), default=-1)
+            visiting.remove(label)
+            return rank[label]
+        for label in order:
+            level(label)
+        levels = {}
+        for label in order:
+            levels.setdefault(rank[label], []).append(label)
+        for col, labels in levels.items():
+            for row, label in enumerate(labels):
+                positions[label] = (148 + col * 280, 83 + row * 68)
+        width = max(600, 40 + (max(levels, default=0) + 1) * 280)
+        height = max(300, 135 + max((len(v) for v in levels.values()), default=0) * 68)
+    marker = "bp-arrow-global" if global_view else "bp-arrow-" + str(abs(hash(chapters[0]["title"])))
+    out = [f'<svg class="depgraph" preserveAspectRatio="xMinYMin meet" '
+           f'viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg">',
+           f'<defs><marker id="{marker}" viewBox="0 0 10 10" refX="9" refY="5" '
+           'markerWidth="5" markerHeight="5" orient="auto-start-reverse">'
+           '<path d="M 0 0 L 10 5 L 0 10 z" fill="#aeb6bf"/></marker></defs>']
+    for x, y, w, h, title in boxes:
+        out.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" '
+                   'fill="none" stroke="#cbd4dc" stroke-width="1.2"/>')
+        out.append(f'<text x="{x + 12}" y="{y + 20}" fill="#60707d" '
+                   f'font-family="sans-serif" font-size="12">{html.escape(title[:32])}</text>')
+    for n in nodes:
+        target = n["label"]
+        if target not in positions:
+            continue
+        x2, y2 = positions[target]
+        for source in n["uses"]:
+            if source not in positions:
+                continue
+            x1, y1 = positions[source]
+            if x2 > x1 + 30:
+                sx, tx = x1 + 112, x2 - 112
+                m = (sx + tx) / 2
+                path = f'M {sx} {y1} C {m} {y1}, {m} {y2}, {tx} {y2}'
+            elif x2 < x1 - 30:
+                sx, tx = x1 - 112, x2 + 112
+                m = (sx + tx) / 2
+                path = f'M {sx} {y1} C {m} {y1}, {m} {y2}, {tx} {y2}'
+            else:
+                sx = x1 + 112
+                path = f'M {sx} {y1} C {sx + 70} {y1}, {sx + 70} {y2}, {x2 + 112} {y2}'
+            out.append(f'<path d="{path}" fill="none" stroke="#aeb6bf" '
+                       f'stroke-opacity=".48" stroke-width="1" marker-end="url(#{marker})"/>')
+    for label, (x, y) in positions.items():
+        n = by[label]
+        f, stroke, color = C[n["status"]] if label in here else ("#f1f3f5", "#b9c1c9", "#60707d")
+        out.append(f'<g class="node"><title>{html.escape(label)}</title>')
+        if n["kind"] == "definition" or label not in here:
+            out.append(f'<rect x="{x - 112}" y="{y - 23}" width="224" height="46" rx="9" '
+                       f'fill="{f}" stroke="{stroke}" stroke-width="1.4"/>')
+        else:
+            out.append(f'<ellipse cx="{x}" cy="{y}" rx="112" ry="23" '
+                       f'fill="{f}" stroke="{stroke}" stroke-width="1.4"/>')
+        title = (gshort(n) if global_view else short(n))[:30]
+        tag = open_task(n) if not global_view else None
+        out.append(f'<text x="{x}" y="{y + 4}" text-anchor="middle" '
+                   f'font-family="sans-serif" font-size="11" fill="{color}">'
+                   f'{html.escape(title + (" · " + tag if tag else ""))}</text></g>')
+    out.append('</svg>')
+    return "".join(out), float(width)
 
 def figure_html(cap, svg, w):
     return (f'<figure class="graph" data-basew="{w:.0f}"><div class="gbar">'
@@ -261,14 +351,15 @@ def main(root, out):
     thms = n_thm
 
     body = []
-    gsvg, gw = svg_from_dot(global_dot(chapters, by))
+    gsvg, gw = (svg_from_dot(global_dot(chapters, by)) if shutil.which("dot")
+                 else svg_fallback(chapters, by, True))
     # graphviz writes "-" as "&#45;" inside <title>, so unescape before checking
     seen = set(re.findall(r"<title>([^<]*)</title>", gsvg.replace("&#45;", "-")))
     missing = [n["label"] for n in allnodes if n["label"] not in seen]
     if missing:
         raise SystemExit("global graph is missing nodes: " + ", ".join(missing))
     edges = sum(1 for n in allnodes for u in n["uses"] if u in by)
-    body.append('<h2>全局依赖图</h2>')
+    body.append('<h2>全文依赖图</h2>')
     body.append('<p class="sub">下面各章的每一个节点都在这张图里，按章分组；箭头方向是'
                 '“被用到的引理 → 用到它的结论”。节点上的 T□ 是 <code>docs/TASKS.md</code> 里的工单号。</p>')
     body.append(figure_html(f'全局 · {len(allnodes)} 个节点 · {edges} 条依赖', gsvg, gw))

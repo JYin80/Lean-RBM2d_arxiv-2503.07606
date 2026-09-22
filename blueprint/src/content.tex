@@ -310,10 +310,18 @@
 
 \begin{lemma}[Two-dimensional logarithmic integral, \texttt{(eq\_log\_int)}]
   \label{lem:log-integral}
-  $\int_{[-\pi,\pi]^2}(\kappa^2+|p|_*^2)^{-1}\,\mathrm dp
-   \le C\log(2+\kappa^{-1})$.
-  \emph{Work order T25.}
+  \lean{RBM.LogIntegral.log_integral_le,
+        RBM.LogIntegral.log_integral_square_le}\leanok
+  For every $\kappa>0$, the actual product-Lebesgue integral on the square is
+  bounded by $32\log(2+\kappa^{-1})$.  On $[-\pi,\pi]^2$ the periodic
+  momentum norm agrees with the Euclidean norm used in the Lean statement.
+  \emph{Work order T25, closed.}
 \end{lemma}
+\begin{proof}\leanok
+  Bound the first coordinate integral by an arctangent slice, then integrate
+  $(\kappa+|t|)^{-1}$ to obtain the logarithm.  Fubini converts the iterated
+  integral to the paper's square integral.
+\end{proof}
 
 \begin{definition}[Continuous symbol and infinite-volume kernel, \texttt{(eq\_Kinf)}]
   \label{def:continuum}
@@ -478,9 +486,9 @@
 
 \chapter{Stochastic layer: the It\^o replacement stack}
 
-Mathlib has no It\^o calculus for matrix-valued Brownian motion, no matrix SDEs
-and no Dyson Brownian motion --- and this development needs none of them.  An
-audit of the paper (\texttt{docs/random-layer.md}) found that it never uses a
+The \S5--\S7 loop estimates can use one-time Gaussian marginals in place of
+matrix stochastic calculus.  An audit of these sections
+(\texttt{docs/random-layer.md}) found that they do not use a
 filtration, the Markov property, a two-time joint law, or Doob: the single
 occurrence of ``filtration'' is a quantifier in the hypothesis of Lemma~5.5 and
 its proof never touches it.  The whole of \S5--\S7 therefore goes through with
@@ -513,9 +521,19 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 
 \begin{definition}[The one-time Gaussian matrix model]\label{def:model}
   \uses{def:block-model, def:stochdom}
-  The flow is $H_u:=\sqrt u\,X$ for one fixed Gaussian band matrix $X$,
-  which has the same one-time marginal as the matrix Brownian motion.
-  \emph{Work order S4.}
+  \lean{RBM.Gauss.P, RBM.Gauss.Xmat, RBM.Gauss.Hflow,
+        RBM.Gauss.Xmat_isHermitian, RBM.Gauss.integral_normSq_Xentry,
+        RBM.Gauss.Xmat_eq_sum_coordinates, RBM.Gauss.Xmat_update,
+        RBM.Gauss.Sizes.seqP, RBM.Gauss.Sizes.seqP_map_slice,
+        RBM.Gauss.Sizes.integral_normSq_seqHflow}\leanok
+  A finite product of independent real Gaussian coordinates defines the
+  Hermitian band matrix $X$, with diagonal variance $S_{ii}$ and real/imaginary
+  off-diagonal variances $S_{ij}/2$.  The flow $H_u:=\sqrt u\,X$ has the
+  paper's one-time marginal.  A countable product over admissible sizes gives
+  a common probability space whose size slices have exactly the fixed-size
+  laws, as required by \texttt{StochDomAt}.  Coordinate updates and the
+  covariance $\mathbb E|H_{u,ij}|^2=uS_{ij}$ are proved.
+  \emph{Work order S4, closed.}
 \end{definition}
 
 \begin{lemma}[The deterministic envelope]\label{lem:envelope}
@@ -564,11 +582,20 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 
 \begin{lemma}[Matrix Gaussian Stein identity]\label{lem:stein}
   \uses{lem:stein-product, def:model}
-  Instantiate the product identity for the actual Hermitian matrix coordinates
-  and their variances.  The independent real coordinates include diagonal
-  entries and the real and imaginary parts of off-diagonal entries.
-  \emph{S3--S4 interface remains open.}
+  \lean{RBM.Gauss.P_map_update, RBM.Gauss.Hflow_update,
+        RBM.Gauss.stein_Xmat, RBM.Gauss.stein_Hflow,
+        RBM.Gauss.stein_diagonal_sin_example}\leanok
+  The product Stein identity applies to the actual Hermitian matrix $X$ and
+  $H_u=\sqrt uX$, with the correct real coordinate variance and Hermitian
+  direction.  The derivative and boundedness assumptions are explicit; a
+  nonconstant diagonal sine test at variance $1/5$ proves satisfiability.
+  \emph{S3--S4 interface closed.}
 \end{lemma}
+\begin{proof}\leanok
+  Identify the concrete coordinate law with the Gaussian product law, then
+  use the exact matrix update formula to read the fibre derivative as a
+  directional matrix derivative.
+\end{proof}
 
 \begin{lemma}[Continuous induction]\label{lem:bootstrap}
   If $\varphi$ is continuous and $\varphi\le C\Rightarrow\varphi\le B$, then

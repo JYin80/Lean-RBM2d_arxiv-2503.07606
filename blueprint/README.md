@@ -15,11 +15,12 @@ leanblueprint pdf
 ```
 
 本仓另有 `blueprint/render_artifact.py`，可从同一份 `content.tex` 生成
-单页依赖图；它需要系统安装 Graphviz 的 `dot`：
+可缩放、拖动的单页交互依赖图；系统有 Graphviz `dot` 时使用其布局，
+没有时自动使用内建 SVG 布局：
 
 ```bash
-python3 blueprint/render_artifact.py . /tmp/rbm2d-blueprint.html
+python3 blueprint/render_artifact.py . blueprint/web/artifact.html
 ```
 
-本地未安装渲染工具时，先检查节点数和 `\lean{}` 声明引用；最终由
-推送后的 CI 完成全量构建与蓝图渲染。`content.tex` 本身始终可读。
+上述 HTML 是本地生成物，不进版本库；每次更新 `content.tex` 或 Lean 证明后
+重运行命令。生成器校验每个 `\lean{}` 引用，并同时绘制全文图与章节子图。
