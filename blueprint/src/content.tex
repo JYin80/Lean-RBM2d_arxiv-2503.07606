@@ -1008,8 +1008,8 @@
   If the shifted coordinate of the periodic radial distance is affine over
   two steps and the middle normalized radius is at least $\rho>0$, its
   second difference is at most $L^{-2}/\rho$ in either coordinate. The
-  affine hypothesis is necessary: an even-$L$ antipodal triple gives a
-  second difference of $2/L$ while every radius stays positive.
+  affine hypothesis is necessary: the proved $L=8$ antipodal triple gives a
+  second difference of $2/L=1/4$ while every radius stays positive.
   \emph{T22 no-fold radius checkpoint, closed.}
 \end{lemma}
 \begin{proof}\leanok
@@ -1034,6 +1034,27 @@
 \begin{proof}\leanok
   Evaluate the periodic distance on the lower or upper half of the cycle,
   then invoke the already proved Euclidean-radius curvature estimate.
+\end{proof}
+
+\begin{lemma}[Exact fold correction for the normalized radius]
+  \label{lem:normalized-radius-fold-correction}
+  \uses{lem:normalized-radius-no-fold}
+  \lean{RBM.pstarFoldDefect,
+        RBM.pstarFoldDefect_eq_zero_of_noFoldTwo,
+        RBM.abs_pstarFoldDefect_le,
+        RBM.normalizedFrequency_second_diff_e1_fold_identity,
+        RBM.normalizedFrequency_second_diff_e2_fold_identity,
+        RBM.pstarFoldDefect_antipodal_example}\leanok
+  The squared-radius identity separates the affine curvature term from a
+  discrete fold defect $D$. The exact normalized-radius identity remains
+  valid even when the middle radius is zero; $D=0$ on the proved no-fold
+  region, and $|D|$ is at most two physical grid steps in general. At the
+  proved $L=8$ antipodal crossing, $D$ attains the negative endpoint.
+  \emph{T22 fold-correction checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Expand the three squared physical radii and use the two adjacent
+  first differences of the periodic distance.
 \end{proof}
 
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
@@ -1786,6 +1807,22 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   expectation derivative formula and simplify the two coefficients.
 \end{proof}
 
+\begin{lemma}[Integrated finite expected loop hierarchy]
+  \label{lem:loop-hierarchy-integral}
+  \uses{lem:loop-hierarchy-generator}
+  \lean{RBM.Gauss.expectedLoopCutRHS,
+        RBM.Gauss.expected_gloop_hierarchy_integral,
+        RBM.Gauss.expected_gloop_hierarchy_integral_of_continuousOn}\leanok
+  On $0<a<b<1$, the difference of expected finite loops at $b$ and $a$
+  equals the time integral of the three explicit cut families, provided
+  this right-hand side is interval integrable. Continuity on $[a,b]$ is
+  a sufficient condition; establishing it for the actual cut integrands
+  remains a separate task. \emph{S5 conditional Duhamel checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the fundamental theorem of calculus to the interior hierarchy ODE.
+\end{proof}
+
 \begin{lemma}[Deterministic initial value of an expected finite loop]
   \label{lem:loop-initial-value}
   \uses{lem:loop-expectation-derivative,
@@ -1802,6 +1839,27 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \end{lemma}
 \begin{proof}\leanok
   Substitute $\sqrt0=0$ in the matrix flow and integrate a constant loop.
+\end{proof}
+
+\begin{lemma}[Scalar initial values of one- and two-edge loops]
+  \label{lem:loop-initial-scalar}
+  \uses{lem:loop-initial-value,
+         def:loops}
+  \lean{RBM.Gauss.green_zero_eq_scalar,
+        RBM.Gauss.Gsig_zero_eq_scalar,
+        RBM.Gauss.trace_Eblk_eq_one,
+        RBM.Gauss.initialLoopValue_one_edge,
+        RBM.Gauss.trace_Eblk_mul_Eblk,
+        RBM.Gauss.initialLoopValue_two_edges}\leanok
+  At the zero matrix, each signed Green factor is scalar. A one-edge
+  initial loop equals that scalar; a two-edge loop equals the two scalar
+  factors times $\mathbf 1_{a=b}W^{-2}$. These formulas have a nonzero
+  bulk example and determine the normalization for later general words.
+  \emph{S5 short-loop initial-value checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Reduce the zero-matrix resolvents to scalar identities and use the
+  block-projector product formula inside the trace.
 \end{proof}
 
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
