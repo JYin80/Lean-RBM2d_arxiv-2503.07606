@@ -15,9 +15,9 @@
 | T16 | 调和和与 `≺` 的桥 | `Propagator/Harmonic.lean` | Cowork | **完成** |
 | T17 | 两条 dyadic 几何级数 | `Propagator/GeomSum.lean` | Cowork | **完成** |
 | T18 | `(eq_dyadic)` 接口 + §8.3 Case 1 组装 | `Propagator/Dyadic.lean` | Cowork | **完成** |
-| **T7** | §2 模型层：`S = S^(B)⊗S_W` on `Z_{WL}²`、`I^(2)_a`、`E_a` | `Defs/Model.lean` | Codex T7 | **进行中**；S4→S5→S9→S10 的入口 |
-| **T3** | 格点求和 `Σ_{p≠0}\|p\|_*^{-2} ≤ CL²log L` | `Propagator/LatticeSum.lean` | Codex T3 | **完成，已集成待推送**；显式常数 `4/π²`，T4/T5 可开工 |
-| **S0** | Def 2.1 随机版 `≺` 与闭包引理 | `Defs/StochDom.lean` | Codex S0 | **进行中**；完成后重测 S4/S6/S7 |
+| **T7** | §2 模型层：`S = S^(B)⊗S_W` on `Z_{WL}²`、`I^(2)_a`、`E_a` | `Defs/Model.lean` | Codex T7 | **完成，主分支全量验收通过**；S4 已解锁 |
+| **T3** | 格点求和 `Σ_{p≠0}\|p\|_*^{-2} ≤ CL²log L` | `Propagator/LatticeSum.lean` | Codex T3 | **完成，已集成推送**；显式常数 `4/π²`，T4/T5 可开工 |
+| **S0** | Def 2.1 随机版 `≺` 与闭包引理 | `Defs/StochDom.lean` | Codex S0 | **完成，主分支全量验收通过**；S4/S6/S7 的此前置已解除 |
 | **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 空闲 | **可开工**，纯实多项式不等式 |
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 空闲 | **可开工**，纯 `Finset`/`ZMod` 记账 |
 | **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
@@ -37,7 +37,7 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**T7、S0、T4 在独立工作树，T3 已完成并集成。** 其余可立刻开工且文件不重叠的储备有
+**T4 在独立工作树；T7、S0、T3 已完成并通过主分支全量验收。** 其余可立刻开工且文件不重叠的储备有
 T19、T20、T21、T24、T25、T26、T29、T6、T8、S2、S8、T31；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 

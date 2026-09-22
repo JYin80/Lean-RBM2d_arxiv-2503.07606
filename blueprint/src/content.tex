@@ -452,6 +452,10 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{definition}[Two-dimensional block model, \S2.1 and \texttt{(Def\_matE)}]
   \label{def:block-model}
   \uses{def:SB}
+  \lean{RBM.Svar, RBM.Svar_apply, RBM.sum_Svar_row, RBM.Svar_conjTranspose,
+        RBM.split_bijective, RBM.Spaper_eq, RBM.sum_Spaper_row,
+        RBM.Epaper_eq, RBM.Epaper_conjTranspose, RBM.sum_Epaper}
+  \leanok
   $S=\SB\otimes S_W$ on $\Z_{WL}^2$, the blocks $I^{(2)}_a$ and the matrices
   $E_a$ from the paper.  In dimension two, $(S_W)_{ij}=W^{-2}$ and
   $(E_a)_{xy}=\delta_{xy}W^{-2}\mathbf 1(x\in I_a^{(2)})$.
@@ -459,6 +463,10 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \end{definition}
 
 \begin{definition}[Stochastic domination]\label{def:stochdom}
+  \lean{RBM.StochDom, RBM.StochDomAt, RBM.NormStochDom,
+        RBM.DepNormStochDom, RBM.HighProb, RBM.HighProbIn,
+        RBM.StochDom.of_forall_le, RBM.StochDomAt.of_unifDetDom_L_scale}
+  \leanok
   Definition \texttt{stoch\_domination} (i) itself, as a statement about a
   measure: for every $\tau,D>0$ the bad set has probability $\le N^{-D}$
   eventually.  The deterministic \texttt{def:detdom} already in this blueprint is
