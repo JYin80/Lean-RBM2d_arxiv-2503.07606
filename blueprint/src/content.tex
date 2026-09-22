@@ -485,11 +485,28 @@
 \end{proof}
 
 \begin{lemma}[Multiplier differences on an annulus]\label{lem:symbol-diff}
-  \uses{lem:elliptic, lem:qcomp}
+  \uses{lem:elliptic, lem:qcomp, lem:symbol-diff-shat}
   Bound the first three lattice differences of the inverse symbol uniformly
   on a dyadic annulus, retaining the gain from $|\sin p_i|\lesssim|p|_*$.
-  \emph{Work order T21.}
+  The first three differences of $\widehat S$ itself are proved below;
+  the reciprocal and shifted-annulus bounds remain open. \emph{Work order T21.}
 \end{lemma}
+
+\begin{lemma}[First three coordinate differences of $\widehat S$]
+  \label{lem:symbol-diff-shat}
+  \uses{lem:abel, lem:fourier}
+  \lean{RBM.norm_Shat_shift_e1_le, RBM.norm_Shat_shift_e2_le,
+        RBM.norm_Shat_second_diff_e1_le, RBM.norm_Shat_second_diff_e2_le,
+        RBM.norm_Shat_third_diff_e1_le, RBM.norm_Shat_third_diff_e2_le}\leanok
+  Each first coordinate difference costs $O(|p_i|_*/L+L^{-2})$;
+  second and third coordinate differences cost $O(L^{-2})$ and $O(L^{-3})$.
+  These are the actual two-dimensional Fourier symbol, not an abstract
+  smoothness hypothesis. \emph{T21 intermediate result.}
+\end{lemma}
+\begin{proof}\leanok
+  Factor the positive and negative Fourier characters exactly, then bound
+  each step factor by the phase estimates from periodic summation by parts.
+\end{proof}
 
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
@@ -727,8 +744,29 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   Apply Mathlib's one-sided slope form of the Gr\"onwall comparison theorem.
 \end{proof}
 
+\begin{lemma}[Scale-preserving analytic moment closure]\label{lem:moment-closing-base}
+  \lean{RBM.le_two_mul_add_sqrt_of_sq_le,
+        RBM.integral_sqrt_mul_le, RBM.sqrt_le_of_isLUB,
+        RBM.sqrt_le_of_integral_le,
+        RBM.exists_isLUB_Icc,
+        RBM.sqrt_le_of_integral_le_of_bdd,
+        RBM.sqrt_le_of_integral_le_of_continuousOn}\leanok
+  If $\psi\ge0$ satisfies the integrated inequality
+  $\psi(u)\le\psi(s)+2\int_s^u\sqrt{\psi(r)}f(r)\,dr
+    +c\int_s^u g(r)\,dr$ on $[s,t]$, with the stated nonnegativity,
+  integrability and boundedness hypotheses, then
+  $\sqrt{\psi(t)}\le\sqrt{\psi(s)}+2\int_s^t f
+    +\sqrt{c\int_s^t g}$.
+  A separate wrapper obtains the required interval bound from continuity.
+  This keeps the time-integrated scale. \emph{Work order S9b, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound the mixed integral using the supremum of $\psi$, then solve the
+  resulting quadratic inequality for its square root.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
-  \uses{lem:generator}
+  \uses{lem:generator, lem:moment-closing-base}
   Derive the required moment bound from the specific generator and quadratic
   variation estimates while preserving its $\eta$ scale.  The d=1 proof's
   integrate--supremum--quadratic argument is the analytic bridge; the generic

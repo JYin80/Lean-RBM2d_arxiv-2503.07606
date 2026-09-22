@@ -23,6 +23,7 @@ import RBM2D.Propagator.Contour
 import RBM2D.Propagator.Decay
 import RBM2D.Propagator.Cutoff
 import RBM2D.Propagator.AbelSum
+import RBM2D.Propagator.SymbolDiff
 import RBM2D.Propagator.FiniteDiff
 import RBM2D.Propagator.DerivBounds
 import RBM2D.Delocalization
@@ -35,6 +36,8 @@ import RBM2D.Gauss.Domination
 import RBM2D.Gauss.MomentBridge
 import RBM2D.Analysis.Bootstrap
 import RBM2D.Analysis.MomentGronwallBase
+import RBM2D.Analysis.MomentClosing
+import RBM2D.Analysis.MomentClosingSup
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms

@@ -20,13 +20,13 @@
 | **S0** | Def 2.1 随机版 `≺` 与闭包引理 | `Defs/StochDom.lean` | Codex S0 | **完成，主分支全量验收通过**；S4/S6/S7 的此前置已解除 |
 | **T19** | 显式 `C³` dyadic 单位分解 | `Propagator/Cutoff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；精确分解在归一化区间 `[2⁻ᴶ,1]` |
 | **T20** | `Z_L²` 上的周期分部求和 | `Propagator/AbelSum.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；相位损失双边界已证 |
-| **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 空闲 | **可开工**，原 T11 的真硬核 |
+| **T21** | 乘子在环上的差分界 | `Propagator/SymbolDiff.lean` | 当前对话内代理 | **前三阶 `Shat` 坐标差分已验收**；逆乘子与环内移位仍开放 |
 | **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
 | **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
 | **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；逐元素形式，从 RBM1D 只读移植 |
-| **T8** | 数值回归测试 | `Test/Numeric.lean` | 空闲 | **可开工**，独立 |
+| **T8** | 数值回归测试 | `Test/Numeric.lean` | 当前对话内代理 | **独立五点核与三类逆矩阵条目已证；完整 9×9 逆仍在做** |
 | T31 | 清理当前 10 条 linter warning | `Defs/Dist.lean`、`Gauss/Envelope.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；10 条已清、声明类型保持 |
 | T4 | 性质 5 在 `κL < 1` 区制 | `Propagator/Decay.lean` | Codex T4 | **完成，主分支全量验收通过**；T24 可复用 |
 | S4 | 一时刻高斯模型与坐标分解 | `Gauss/Model.lean` | Codex S4 | **完成，主分支全量验收通过**；含 `Sizes.seqP_map_slice` 共同概率空间 |
@@ -36,7 +36,8 @@
 | S7 | 随机支配到矩的逆桥 | `Gauss/MomentBridge.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；全局多项式包络与正尺度下界 |
 | S8 | 连续归纳与前缀自改进 | `Analysis/Bootstrap.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；具体矩函数前提仍由下游证明 |
 | S9a | 通用单侧导数 Grönwall 比较 | `Analysis/MomentGronwallBase.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；具体矩函数的尺度仍需审计 |
-| S9b | 保尺度积分—上确界—二次收口 | `Analysis/MomentClosing.lean` | 当前对话内代理 | **进行中**；从 RBM1D 只读移植 |
+| S9b | 保尺度积分—上确界—二次收口 | `Analysis/MomentClosing.lean`、`Analysis/MomentClosingSup.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；有界或连续时间窗口版本 |
+| S9c | 时间矩连续性辅助引理 | `Gauss/MomentTimeCont.lean` | 当前对话内代理 | **进行中**；从 RBM1D 只读移植 |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
@@ -45,7 +46,7 @@
 | T30 | 性质 5 的 `≺` 包装 + `ThetaEntry` | `Defs/Domination.lean` 等 | 空闲 | 待 T24 |
 | T12 | 蓝图上线 | `blueprint/` | Cowork | 站点 404 未解，本地渲染在用 |
 
-**T19、T20、T27 第一坐标阶段、S7、S8、S9a、T6、T31 已通过主分支全量验收；T8、T21 单步差分与 S9b 保尺度收口正在做。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
+**T19、T20、T21 `Shat` 差分阶段、T27 第一坐标阶段、S7、S8、S9a/S9b、T6、T31 已通过主分支全量验收；T8 与 S9 时间连续性辅助引理在做。** 不再新建项目对话。其余可立刻开工且文件不重叠的储备有
 T21、T28、T29、T8；队列深度足够。
 原来的 T9/T10/T11 已拆解重排：T11 → T19+T20+T21+T22，T9 → T26+T27，T10 → T28（**并砍掉了 T10 待 T9 的依赖边**）。
 
@@ -61,7 +62,7 @@ d=2 的实际矩不等式，不能因 S9a 已证就宣称完整矩估计完成�
 
 | 单号 | 交付范围 | 起步条件 |
 |---|---|---|
-| C1 | `Hierarchy/Loops.lean`：论文 `Def:G_loop` 与维度正确的归一化 | S4 与 T7 的矩阵/块接口验收 |
+| C1 | `Hierarchy/Loops.lean`：论文 `Def:G_loop` 与维度正确的归一化；基础定义和首块求和在做 | S4 与 T7 的矩阵/块接口验收 |
 | C2 | `Hierarchy/Operations.lean`：`Def:oper_loop` 的切割、胶合及指标映射 | C1 |
 | C3 | `Hierarchy/Tree.lean`：`Def_Ktza`、`(Kn2sol)` 的初值/演化/唯一性 | C1、T6、传播子基本性质 |
 | C4 | `[YY_25]` 引用审计：Ward、`(KKpi)`、短程组合结构的精确假设与证明责任 | 论文及被引版本核对；需要 Jun 裁定外部引用的形式化边界 |
