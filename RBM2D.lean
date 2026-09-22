@@ -47,6 +47,8 @@ import RBM2D.Propagator.NormalizedRadiusSecondDiff
 import RBM2D.Propagator.NormalizedRadiusNoFold
 import RBM2D.Propagator.NormalizedRadiusFoldCorrection
 import RBM2D.Propagator.NormalizedCutoffFoldBound
+import RBM2D.Propagator.NormalizedCutoffAffineRemainder
+import RBM2D.Propagator.NormalizedCutoffSecondDiffSharp
 import RBM2D.Propagator.PeriodizeShells
 import RBM2D.Propagator.PeriodizeTail
 import RBM2D.Propagator.PeriodizeConvergence
@@ -102,6 +104,10 @@ import RBM2D.Gauss.LoopInitialValueScalar
 import RBM2D.Gauss.LoopInitialValueProjectionWords
 import RBM2D.Gauss.LoopInitialValueEmpty
 import RBM2D.Gauss.LoopInitialValueSupport
+import RBM2D.Gauss.LoopInitialValueBound
+import RBM2D.Gauss.LoopInitialValueLabelSum
+import RBM2D.Gauss.LoopInitialValueConstantCount
+import RBM2D.Gauss.LoopInitialValueThreeLabelSum
 import RBM2D.Analysis.Bootstrap
 import RBM2D.Analysis.MomentGronwallBase
 import RBM2D.Analysis.MomentClosing
@@ -137,6 +143,11 @@ import RBM2D.Hierarchy.LoopHierarchyGenerator
 import RBM2D.Hierarchy.LoopHierarchyIntegral
 import RBM2D.Hierarchy.LoopHierarchyCutContinuity
 import RBM2D.Hierarchy.LoopHierarchyIntegralZero
+import RBM2D.Hierarchy.LoopHierarchyFirstDuhamel
+import RBM2D.Hierarchy.LoopHierarchyOneEdge
+import RBM2D.Hierarchy.LoopHierarchyTwoEdge
+import RBM2D.Hierarchy.LoopHierarchyCutLengths
+import RBM2D.Hierarchy.LoopHierarchyCutNormBounds
 
 /-! Hard axiom audit of the whole library: see `RBM2D.Test.Axioms`. -/
 #assert_rbm_axioms

@@ -1080,6 +1080,52 @@
   triangle inequality and the existing flat-region identities.
 \end{proof}
 
+\begin{lemma}[Quadratic cutoff remainder along an affine radius]
+  \label{lem:normalized-cutoff-affine-remainder}
+  \uses{lem:normalized-cutoff-fold-bound}
+  \lean{RBM.abs_second_forward_diff_le_of_deriv_lipschitz,
+        RBM.abs_second_diff_le_of_deriv_lipschitz,
+        RBM.dyadicCutoffD1,
+        RBM.abs_dyadicCutoffD1_sub_le,
+        RBM.abs_dyadicCutoff_second_diff_le,
+        RBM.abs_affine_cutoff_remainder_e1_le,
+        RBM.abs_affine_cutoff_remainder_e2_le,
+        RBM.abs_affine_cutoff_remainder_e1_quadratic_le,
+        RBM.abs_affine_cutoff_remainder_e2_quadratic_le}\leanok
+  A derivative-Lipschitz three-point estimate gives the actual dyadic
+  cutoff's quadratic mesh term. If the middle normalized radius is at
+  least $\rho>0$, the affine radial continuation has curvature at most
+  $L^{-2}/\rho$; hence its cutoff remainder is at most
+  $(420\,2^j/\rho+2100\,4^j)L^{-2}$ in either coordinate.
+  The genuine periodic path still carries the explicit fold defect.
+  \emph{T22 affine cutoff checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound the derivative of the cutoff and its Lipschitz constant, then
+  apply Euclidean-radius curvature to the affine three-point path.
+\end{proof}
+
+\begin{lemma}[Sharp cutoff second difference with explicit fold term]
+  \label{lem:normalized-cutoff-second-diff-sharp}
+  \uses{lem:normalized-cutoff-affine-remainder,
+         lem:normalized-radius-fold-correction}
+  \lean{RBM.abs_normalizedDyadicCutoff_second_diff_e1_sharp_le,
+        RBM.abs_normalizedDyadicCutoff_second_diff_e2_sharp_le,
+        RBM.abs_normalizedDyadicCutoff_second_diff_e1_noFold_le,
+        RBM.abs_normalizedDyadicCutoff_second_diff_e2_noFold_le}\leanok
+  For $0<\rho\leq\nu_L(q)$, the true periodic cutoff second difference
+  is bounded by a quadratic affine contribution
+  $(420\,2^j/\rho+2100\,4^j)L^{-2}$ plus the explicit fold term
+  $420\,2^j|D|/(2\pi)$. The latter vanishes under the decidable no-fold
+  condition. A nonzero $L=8$ path verifies the hypotheses.
+  Shell support and fold summation remain open.
+  \emph{T22 sharp local cutoff checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Add the fold comparison and quadratic affine remainder bounds; use
+  the no-fold defect identity for the corollaries.
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
   Assemble the three ingredients into the per-annulus estimate and produce
@@ -1884,6 +1930,106 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   identity in the endpoint form of the fundamental theorem of calculus.
 \end{proof}
 
+\begin{lemma}[First explicit Duhamel step and empty-loop base case]
+  \label{lem:loop-hierarchy-first-duhamel}
+  \uses{lem:loop-hierarchy-integral-zero,
+         lem:loop-initial-total}
+  \lean{RBM.Gauss.expected_gloop_eq_firstDuhamel,
+        RBM.Gauss.expected_gloop_empty_eq_dimension}\leanok
+  For $0<b<1$, the expected finite loop is its exact total scalar initial
+  value plus the time integral of the three expected cut families. The
+  empty-loop case has no cuts and stays equal to $(LW)^2$. This is the
+  first exact Picard step; tree iteration remains open.
+  \emph{S5 first Duhamel checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Substitute the total scalar initial value into the zero-endpoint
+  Duhamel formula and simplify the empty-word cut lists.
+\end{proof}
+
+\begin{lemma}[One-edge loop hierarchy base case]
+  \label{lem:loop-hierarchy-one-edge}
+  \uses{lem:loop-hierarchy-first-duhamel,
+         lem:loop-initial-scalar}
+  \lean{RBM.Gauss.expectedPairCuts_one_edge,
+        RBM.Gauss.expectedSameEdgeCuts_one_edge,
+        RBM.Gauss.expectedSpectralCuts_one_edge,
+        RBM.Gauss.deriv_expected_gloop_one_edge,
+        RBM.Gauss.deriv_expected_gloop_one_edge_explicit,
+        RBM.Gauss.expected_gloop_one_edge_firstDuhamel}\leanok
+  For a one-edge loop there is no distinct-edge pair cut. Exactly one
+  same-edge and one spectral-drift position remain, yielding an explicit
+  expected ODE and time-integral formula with signed scalar Green initial
+  value. \emph{S5 one-edge hierarchy checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Enumerate the singleton edge-split lists and specialize the general
+  finite hierarchy and initial-value identities.
+\end{proof}
+
+\begin{lemma}[Two-edge loop hierarchy base case]
+  \label{lem:loop-hierarchy-two-edge}
+  \uses{lem:loop-hierarchy-one-edge,
+         lem:loop-initial-scalar}
+  \lean{RBM.Gauss.pairSplits_two_edges,
+        RBM.Gauss.expectedPairCuts_two_edges,
+        RBM.Gauss.expectedSameEdgeCuts_two_edges,
+        RBM.Gauss.expectedSpectralCuts_two_edges,
+        RBM.Gauss.deriv_expected_gloop_two_edges,
+        RBM.Gauss.expected_gloop_two_edges_firstDuhamel}\leanok
+  A two-edge loop has two same-edge cuts, exactly one distinct-edge pair
+  cut, and two spectral-drift positions. Its first Duhamel step begins at
+  the signed scalar Green product times the block equality indicator and
+  $W^{-2}$ normalization. Expected products remain under the Gaussian
+  expectation. \emph{S5 two-edge hierarchy checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Enumerate the two edge and single pair-split lists, then specialize
+  the finite hierarchy and the two-edge initial value.
+\end{proof}
+
+\begin{lemma}[Lengths of finite cut loops]
+  \label{lem:loop-hierarchy-cut-lengths}
+  \uses{lem:loop-hierarchy-two-edge}
+  \lean{RBM.Gauss.sameEdgeOuterIdx,
+        RBM.Gauss.sameEdgeInnerIdx,
+        RBM.Gauss.pairBaseIdx,
+        RBM.Gauss.sameEdge_cut_WF,
+        RBM.Gauss.sameEdge_cut_lengths,
+        RBM.Gauss.pairBaseIdx_length_WF,
+        RBM.Gauss.spectral_cut_length_WF,
+        RBM.Gauss.pair_cut_lengths_WF}\leanok
+  A same-edge cut of an $n$-edge loop produces lengths $n+1$ and $1$;
+  a spectral cut produces length $n+1$. The two loops from a distinct
+  pair cut have total length $n+2$. Every resulting index is well formed.
+  These exact lengths set the resolvent powers for later cut bounds.
+  \emph{S5 cut-length checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Reconstruct each selected edge or pair split from the original word
+  and count the index lists after the corresponding cut operation.
+\end{proof}
+
+\begin{lemma}[Single-cut loop envelopes]
+  \label{lem:loop-hierarchy-cut-norm-bounds}
+  \uses{lem:loop-hierarchy-cut-lengths,
+         lem:loop-envelope}
+  \lean{RBM.Gauss.norm_gloop_fixed_le,
+        RBM.Gauss.norm_sameEdgeCutIntegrand_le,
+        RBM.Gauss.norm_pairCutIntegrand_le,
+        RBM.Gauss.norm_integral_sameEdgeCutIntegrand_le,
+        RBM.Gauss.norm_integral_pairCutIntegrand_le}\leanok
+  At spectral gap $\eta>0$, each same-edge or distinct-edge cut
+  integrand and its Gaussian expectation obey a deterministic resolvent
+  envelope with the exact cut-loop lengths and covariance entry
+  $\|S_B(p,q)\|$. Finite block and edge-position sums remain separate.
+  \emph{S5 single-cut envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the uniform Green-loop norm bound to both factors, use the cut
+  length identities, then integrate the samplewise constant envelope.
+\end{proof}
+
 \begin{lemma}[Deterministic initial value of an expected finite loop]
   \label{lem:loop-initial-value}
   \uses{lem:loop-expectation-derivative,
@@ -1975,6 +2121,71 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \end{lemma}
 \begin{proof}\leanok
   Induct over adjacent block-label comparisons in the projector word.
+\end{proof}
+
+\begin{lemma}[Sharp bulk magnitude of the initial loop]
+  \label{lem:loop-initial-bound}
+  \uses{lem:loop-initial-support}
+  \lean{RBM.Gauss.norm_initialGreenScalar,
+        RBM.Gauss.norm_initialLoopValue_all_same,
+        RBM.Gauss.norm_initialLoopValue_le,
+        RBM.Gauss.norm_initialLoopValue_le_gap}\leanok
+  Every signed initial Green scalar has unit modulus in the bulk.
+  A nonempty loop of length $n$ therefore has initial-value modulus at
+  most $W^{-2(n-1)}$, with equality when its labels all agree and zero
+  when they mismatch. A looser spectral-gap bound is also available.
+  \emph{S5 initial magnitude checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the semicircle root identity for the scalar Green factors and the
+  exact projector-word normalization for the block labels.
+\end{proof}
+
+\begin{lemma}[Two-edge initial-value sum over block labels]
+  \label{lem:loop-initial-label-sum}
+  \uses{lem:loop-initial-bound}
+  \lean{RBM.Gauss.card_Z2,
+        RBM.Gauss.norm_initialLoopValue_two_edges,
+        RBM.Gauss.sum_norm_initialLoopValue_two_edges}\leanok
+  The two-edge initial loop vanishes unless its block labels match.
+  Summing its modulus over both labels therefore gives exactly
+  $L^2W^{-2}$. At $L=2,W=1$ the sum is $4$. The general-length count
+  remains separate. \emph{S5 two-edge label-sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the exact two-edge scalar formula, unit modulus of each Green
+  factor, and the $L^2$ choices of a common block label.
+\end{proof}
+
+\begin{lemma}[Number of constant block assignments]
+  \label{lem:loop-initial-constant-count}
+  \uses{lem:loop-initial-label-sum}
+  \lean{RBM.Gauss.constantBlockAssignments,
+        RBM.Gauss.constantBlockAssignment_injective,
+        RBM.Gauss.card_constantBlockAssignments}\leanok
+  For any positive number of edge positions, a constant block-label
+  assignment is determined by one label; there are exactly $L^2$ such
+  assignments. This is the finite counting input for general initial
+  label sums. \emph{S5 constant-label checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Evaluate two constant functions at the first edge to prove injectivity,
+  then count the labels of the two-dimensional block torus.
+\end{proof}
+
+\begin{lemma}[Three-edge initial-value label sum]
+  \label{lem:loop-initial-three-label-sum}
+  \uses{lem:loop-initial-constant-count}
+  \lean{RBM.Gauss.norm_initialLoopValue_three_edges,
+        RBM.Gauss.sum_norm_initialLoopValue_three_edges}\leanok
+  For a three-edge loop, only triples with identical block labels have
+  nonzero initial modulus, equal to $W^{-4}$. Summing all labels gives
+  $L^2W^{-4}$; the $L=2,W=1$ probe gives $4$.
+  \emph{S5 three-edge label-sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the constant-label support and normalization formula and sum
+  the two equality indicators over the finite block torus.
 \end{proof}
 
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}

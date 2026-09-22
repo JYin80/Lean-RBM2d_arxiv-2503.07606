@@ -42,7 +42,9 @@
 | T22i | 可判定的两步无折叠代表元条件 | `Propagator/NormalizedRadiusNoFold.lean` | 当前对话内代理 | **完成，本地全量验收通过**；两坐标均给出 sharp 二阶界 |
 | T22j | 折叠点的离散修正项 | `Propagator/NormalizedRadiusFoldCorrection.lean` | 当前对话内代理 | **完成，本地全量验收通过**；一般界为两格，$L=8$ 对踵例达到界 |
 | T22k | 折叠点处 cutoff 的精确差分界 | `Propagator/NormalizedCutoffFoldBound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；仿射路径余项仍需二阶界 |
-| T22l | 仿射路径 cutoff 二阶余项 | `Propagator/NormalizedCutoffAffineRemainder.lean` | 当前对话内代理 | **进行中** |
+| T22l | 仿射路径 cutoff 二阶余项 | `Propagator/NormalizedCutoffAffineRemainder.lean` | 当前对话内代理 | **完成，本地全量验收通过**；显式 $420\cdot2^j/\rho+2100\cdot4^j$ |
+| T22m | 含折角缺陷的 sharp 局部 cutoff 界 | `Propagator/NormalizedCutoffSecondDiffSharp.lean` | 当前对话内代理 | **完成，本地全量验收通过**；无折叠区为二阶尺度 |
+| T22n | 非零 cutoff 壳的正半径下界 | `Propagator/NormalizedCutoffShellRadius.lean` | 当前对话内代理 | **进行中**；仍须折角项求和 |
 | **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
@@ -125,8 +127,17 @@
 | S5at | 空 loop 初值及统一公式 | `Gauss/LoopInitialValueEmpty.lean` | 当前对话内代理 | **完成，本地全量验收通过**；空 loop 为 $(LW)^2$ |
 | S5au | 初值块标签支持与精确归一化 | `Gauss/LoopInitialValueSupport.lean` | 当前对话内代理 | **完成，本地全量验收通过**；失配为零，同块为 $W^{-2(n-1)}$ |
 | S5av | 层级积分式延拓到零时间 | `Hierarchy/LoopHierarchyIntegralZero.lean` | 当前对话内代理 | **完成，本地全量验收通过**；$0\leq a<b<1$ |
-| S5aw | 总初值代入第一步 Duhamel 公式 | `Hierarchy/LoopHierarchyFirstDuhamel.lean` | 当前对话内代理 | **进行中** |
-| S5ax | 初值的谱隙模长界 | `Gauss/LoopInitialValueBound.lean` | 当前对话内代理 | **进行中** |
+| S5aw | 总初值代入第一步 Duhamel 公式 | `Hierarchy/LoopHierarchyFirstDuhamel.lean` | 当前对话内代理 | **完成，本地全量验收通过**；空 loop 恒为 $(LW)^2$ |
+| S5ax | 初值的谱隙模长界 | `Gauss/LoopInitialValueBound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；尖锐模长为 $W^{-2(n-1)}$ |
+| S5ay | 一边 loop 生成元基例 | `Hierarchy/LoopHierarchyOneEdge.lean` | 当前对话内代理 | **完成，本地全量验收通过**；异边项为零 |
+| S5az | 二边 loop 生成元基例 | `Hierarchy/LoopHierarchyTwoEdge.lean` | 当前对话内代理 | **完成，本地全量验收通过**；唯一异边 pair cut |
+| S5ba | 两边初值对块标签的求和 | `Gauss/LoopInitialValueLabelSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；精确值 $L^2W^{-2}$ |
+| S5bb | cut 后 loop 长度 | `Hierarchy/LoopHierarchyCutLengths.lean` | 当前对话内代理 | **完成，本地全量验收通过**；所有 cut 后索引良构 |
+| S5bc | 常值块赋值计数 | `Gauss/LoopInitialValueConstantCount.lean` | 当前对话内代理 | **完成，本地全量验收通过**；任意正长度恰有 $L^2$ 个 |
+| S5bd | 三边初值对块标签的求和 | `Gauss/LoopInitialValueThreeLabelSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；精确值 $L^2W^{-4}$ |
+| S5be | 任意正长度初值标签和 | `Gauss/LoopInitialValueGeneralLabelSum.lean` | 当前对话内代理 | **进行中** |
+| S5bf | cut-loop 的显式范数界 | `Hierarchy/LoopHierarchyCutNormBounds.lean` | 当前对话内代理 | **完成，本地全量验收通过**；同边与异边单项及其期望 |
+| S5bg | cut 范数界的块标签求和 | `Hierarchy/LoopHierarchyCutBlockSumBound.lean` | 当前对话内代理 | **进行中** |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |
