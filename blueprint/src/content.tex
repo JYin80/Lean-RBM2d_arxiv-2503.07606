@@ -818,6 +818,25 @@
   numerator terms.
 \end{proof}
 
+\begin{lemma}[Coordinate low-shell reciprocal differences]
+  \label{lem:symbol-low-shell}
+  \uses{lem:symbol-diff-reciprocal-two-bound}
+  \lean{RBM.symbolLowDenomScale_pos,
+        RBM.symbolLowDenomScale_le,
+        RBM.norm_invSymbolMultiplier_second_diff_e1_low_le,
+        RBM.norm_invSymbolMultiplier_second_diff_e2_low_le}\leanok
+  If the original momentum lies within four grid steps of the origin, the
+  either coordinate's second reciprocal difference has an explicit bound using
+  the positive mass denominator $D_0=\kappa(\xi)^2/9$. It includes zero
+  momentum and crossings of zero. Sufficiency of this
+  $\kappa$-dependent bound for dyadic summation remains open.
+  \emph{T21 low-shell coordinate checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound the two coordinate increments by their grid-scale values and all
+  three reciprocal denominators below by $D_0$.
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
   Assemble the three ingredients into the per-annulus estimate and produce
@@ -1399,6 +1418,25 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   then exchange each finite sum with integration and apply Stein coordinatewise.
 \end{proof}
 
+\begin{lemma}[Samplewise flow derivative as a coordinate sum]
+  \label{lem:loop-flow-coordinate-chain}
+  \uses{lem:loop-coordinate-derivative,
+         lem:loop-derivative}
+  \lean{RBM.Gauss.Xblock_eq_sum_coordinates,
+        RBM.Gauss.wordDirectionMap_time_eq_coordinate_sum,
+        RBM.Gauss.loopWordDeriv_split,
+        RBM.Gauss.loop_flow_derivative_actual_coordinate_chain}\leanok
+  For $0<u<1$ and a bulk spectral path, the actual samplewise time
+  derivative of a finite loop is $(2u)^{-1}$ times the finite sum of
+  Gaussian coordinates multiplied by their loop derivatives, plus an
+  explicit spectral drift. Interchanging time differentiation and
+  expectation remains open. \emph{S5 flow-coordinate chain, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Expand the Gaussian matrix as a finite coordinate sum, use linearity of
+  the word's matrix-direction derivative, and separate the spectral term.
+\end{proof}
+
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
   \uses{lem:generator, lem:moment-closing-base, lem:moment-time-cont,
          lem:flow-time-cont, lem:green-time-cont, lem:loop-time-cont,
@@ -1650,6 +1688,57 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Expand the recursive second product rule for two factors and normalize the
   two equal cross terms by matrix associativity and addition.
+\end{proof}
+
+\begin{lemma}[Single-edge second derivative covariance contraction]
+  \label{lem:loop-contraction-second-same-edge}
+  \uses{lem:loop-coordinate-second,
+         lem:loop-contraction-unused}
+  \lean{RBM.sum_coordinateBlock_trace_pair,
+        RBM.trace_gsigCoordinateSecondDeriv_Eblk,
+        RBM.sum_gsigCoordinateSecondDeriv_Eblk}\leanok
+  The variance-weighted sum of the actual second derivative at one Green
+  edge equals $2uW^2$ times a double block sum with covariance
+  $S^{(B)}(p,q)$, multiplying the two-edge trace
+  $\operatorname{tr}(GE_aGE_p)$ by the one-edge trace
+  $\operatorname{tr}(GE_q)$. Prefix/suffix words and expectation remain open.
+  \emph{S5 same-edge checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Rotate the trace of $2GBGBGE_a$ to isolate two coordinate directions,
+  extract $(\sqrt u)^2=u$, and apply the exact Gaussian block contraction.
+\end{proof}
+
+\begin{lemma}[Same-edge contraction with a surrounding matrix word]
+  \label{lem:loop-contraction-second-same-edge-word}
+  \uses{lem:loop-contraction-second-same-edge}
+  \lean{RBM.trace_gsigCoordinateSecondDeriv_word,
+        RBM.sum_gsigCoordinateSecondDeriv_word}\leanok
+  With arbitrary prefix and suffix matrices around one Green edge, the
+  variance-weighted second derivative equals $2uW^2$ times the exact
+  $S^{(B)}$-weighted block-trace pair. Summation over all edge positions
+  and expectation remain open. \emph{S5 same-edge word checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Rotate the surrounding word into the first trace and apply the finite
+  Gaussian block-coordinate contraction.
+\end{proof}
+
+\begin{lemma}[Chosen same-edge term closes into two finite loops]
+  \label{lem:loop-contraction-second-same-edge-cut}
+  \uses{lem:loop-contraction-second-same-edge-word,
+         lem:loop-cut-one}
+  \lean{RBM.trace_sameEdge_cutLoop,
+        RBM.trace_sameEdge_oneLoop,
+        RBM.sum_sameEdge_cutLoops}\leanok
+  At a chosen edge of a split finite loop word, the same-edge second
+  derivative contraction is $2uW^2$ times a covariance-weighted product of
+  a loop containing the repeated edge and a one-edge loop. The sum over all
+  positions remains open. \emph{S5 chosen-edge cut checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Substitute the prefix and suffix loop products into the matrix-word
+  contraction and identify both block traces as finite loops.
 \end{proof}
 
 \begin{definition}[Cut-and-glue operations, \texttt{Def:oper\_loop}]\label{def:loop-ops}
