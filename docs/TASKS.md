@@ -44,11 +44,23 @@
 | T22k | 折叠点处 cutoff 的精确差分界 | `Propagator/NormalizedCutoffFoldBound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；仿射路径余项仍需二阶界 |
 | T22l | 仿射路径 cutoff 二阶余项 | `Propagator/NormalizedCutoffAffineRemainder.lean` | 当前对话内代理 | **完成，本地全量验收通过**；显式 $420\cdot2^j/\rho+2100\cdot4^j$ |
 | T22m | 含折角缺陷的 sharp 局部 cutoff 界 | `Propagator/NormalizedCutoffSecondDiffSharp.lean` | 当前对话内代理 | **完成，本地全量验收通过**；无折叠区为二阶尺度 |
-| T22n | 非零 cutoff 壳的正半径下界 | `Propagator/NormalizedCutoffShellRadius.lean` | 当前对话内代理 | **进行中**；仍须折角项求和 |
+| T22n | 非零 cutoff 壳的正半径下界 | `Propagator/NormalizedCutoffShellRadius.lean` | 当前对话内代理 | **完成，本地全量验收通过**；分离壳中点半径有下界 |
+| T22o | 低网格壳的支持几何 | `Propagator/NormalizedCutoffLowGrid.lean` | 当前对话内代理 | **完成，本地全量验收通过**；距离盒小于八，尺度靠近 $L^{-1}$ |
+| T22p | 低网格盒的统一计数 | `Propagator/NormalizedCutoffLowGridCount.lean` | 当前对话内代理 | **完成，本地全量验收通过**；起点至多 768 |
+| T22q | 低网格单壳求和 | `Propagator/NormalizedCutoffLowGridSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；绝对和至多 1536 |
+| T22r | 低网格活跃壳数与总和 | `Propagator/NormalizedCutoffLowGridScales.lean` | 当前对话内代理 | **完成，本地全量验收通过**；至多 3 壳，总和至多 4608 |
+| T22s | 低网格与分离壳的总和分解 | `Propagator/NormalizedCutoffShellSplitSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；保留折角缺陷余项 |
+| T22t | 分离壳折角缺陷的支持与求和 | `Propagator/NormalizedCutoffFoldSupport.lean` | 当前对话内代理 | **进行中** |
 | **T24** | §8.2 两区制合并成性质 5 显式版 | `Propagator/DecayAll.lean` | 空闲 | 待 T27/T28；不得用自由证明字段替代大 $\kappa L$ 区制 |
 | **T25** | `(eq_log_int)` 二维对数积分 | `Propagator/LogIntegral.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；常数 32 |
 | **T26** | 连续层：`ℝ²` 版椭圆性 + `(eq_Kinf)` 的定义 | `Propagator/ContinuumSymbol.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；T27/T28 可复用 |
-| **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas.lean` | 空闲 | **可开工**，与一切独立 |
+| **T29** | Combes–Thomas 旁路：`\|1−ξ\| ≥ c` 时的性质 5 | `Propagator/CombesThomas*.lean` | 当前对话内代理 | **进行中**；已证对角共轭与扰动范数，距离权重和逆界待证 |
+| T29a | 二维块游走的对角权重共轭 | `Propagator/CombesThomasConjugation.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
+| T29b | 边权比值控制共轭扰动的行和与算子范数 | `Propagator/CombesThomasPerturbation.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
+| T29c | 线性距离权重的相邻边比值 | `Propagator/CombesThomasDistanceWeight.lean` | 当前对话内代理 | **完成，本地全量验收通过**；共轭扰动范数至多 $t$ |
+| T29d | 指数距离权重的相邻边比值 | `Propagator/CombesThomasExponentialWeight.lean` | 当前对话内代理 | **完成，本地全量验收通过**；共轭扰动范数至多 $e^t-1$ |
+| T29e | 加权逆的显式小扰动界 | `Propagator/CombesThomasWeightedInverse.lean` | 当前对话内代理 | **完成，本地全量验收通过**；门槛 $\|\xi\|e^t<1$ |
+| T29f | 从加权逆提取逐项核衰减 | `Propagator/CombesThomasKernelDecay.lean` | 当前对话内代理 | **进行中** |
 | **T6** | `(deri_Thxi)`：`∂_ξΘ = ΘSΘ` | `Propagator/Deriv.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；逐元素形式，从 RBM1D 只读移植 |
 | **T8** | 数值回归测试 | `Test/Numeric.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；独立 9×9 有理双侧逆、`Theta 3 (1/2)` 与行和 2 |
 | T28a | `ℤ²` 周期化壳层计数 | `Propagator/PeriodizeShells.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；正半径精确 `8r` |
@@ -135,9 +147,17 @@
 | S5bb | cut 后 loop 长度 | `Hierarchy/LoopHierarchyCutLengths.lean` | 当前对话内代理 | **完成，本地全量验收通过**；所有 cut 后索引良构 |
 | S5bc | 常值块赋值计数 | `Gauss/LoopInitialValueConstantCount.lean` | 当前对话内代理 | **完成，本地全量验收通过**；任意正长度恰有 $L^2$ 个 |
 | S5bd | 三边初值对块标签的求和 | `Gauss/LoopInitialValueThreeLabelSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；精确值 $L^2W^{-4}$ |
-| S5be | 任意正长度初值标签和 | `Gauss/LoopInitialValueGeneralLabelSum.lean` | 当前对话内代理 | **进行中** |
+| S5be | 任意正长度初值标签和 | `Gauss/LoopInitialValueGeneralLabelSum.lean` | 当前对话内代理 | **完成，本地全量验收通过**；精确 $L^2W^{-2(n-1)}$ |
 | S5bf | cut-loop 的显式范数界 | `Hierarchy/LoopHierarchyCutNormBounds.lean` | 当前对话内代理 | **完成，本地全量验收通过**；同边与异边单项及其期望 |
-| S5bg | cut 范数界的块标签求和 | `Hierarchy/LoopHierarchyCutBlockSumBound.lean` | 当前对话内代理 | **进行中** |
+| S5bg | cut 范数界的块标签求和 | `Hierarchy/LoopHierarchyCutBlockSumBound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；由 $S_B$ 行和只留一个块数因子 |
+| S5bh | 同边／异边所有位置的范数界 | `Hierarchy/LoopHierarchyCutTotalBound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；位置数 $n$ 与 $\binom n2$ |
+| S5bi | 谱割环所有位置的范数界 | `Hierarchy/LoopHierarchySpectralCutBounds.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
+| S5bj | 完整 cut 生成元 RHS 范数界 | `Hierarchy/LoopHierarchyRHSBound.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
+| S5bk | 实际期望 loop 导数范数界 | `Hierarchy/LoopHierarchyDerivativeBound.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
+| S5bl | 有限时间期望 loop 增量界 | `Hierarchy/LoopHierarchyIntegralBound.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
+| S5bm | 零时间显式初值加增量界 | `Hierarchy/LoopHierarchyFromInitialBound.lean` | 当前对话内代理 | **完成，本地全量验收通过** |
+| S5bn | 初值标签和与期望增量的合并 | `Hierarchy/LoopHierarchyInitialAverageBound.lean` | 当前对话内代理 | **完成，本地全量验收通过**；初值部分精确为 $L^2W^{-2(n-1)}$ |
+| S5bo | 有限时间 envelope 的标签独立性与求和 | `Hierarchy/LoopHierarchyEnvelopeLabelSum.lean` | 当前对话内代理 | **进行中** |
 | T5 | 性质 6 的 Case 2 | `Propagator/FiniteDiff.lean` | 当前对话内代理 | **完成，主分支全量验收通过**；显式公共系数 `720(1+log L)` |
 | T22 | `(eq_dyadic)` 本体，兑现 `DyadicDecomp` | `Propagator/DyadicBound.lean` | 空闲 | 待 T19+T20+T21 |
 | T23 | 性质 6 收口（两 case 合并 + `≺`） | `Propagator/DerivBounds.lean` | 当前对话内代理 | **条件版完成，主分支全量验收通过**；实际 `DyadicDecomp` 与统一 `C₀` 由 T22 构造 |

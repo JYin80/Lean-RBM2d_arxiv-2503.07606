@@ -1126,6 +1126,234 @@
   the no-fold defect identity for the corollaries.
 \end{proof}
 
+\begin{lemma}[Positive middle radius on separated cutoff shells]
+  \label{lem:normalized-cutoff-shell-radius}
+  \uses{lem:normalized-cutoff-second-diff-sharp,
+         lem:normalized-cutoff-shell}
+  \lean{RBM.cutoff_second_diff_e1_low_or_middle_radius,
+        RBM.cutoff_second_diff_e2_low_or_middle_radius,
+        RBM.abs_cutoff_second_diff_e1_shell_le,
+        RBM.abs_cutoff_second_diff_e2_shell_le,
+        RBM.abs_cutoff_second_diff_e1_shell_noFold_le,
+        RBM.abs_cutoff_second_diff_e2_shell_noFold_le}\leanok
+  A nonzero three-point cutoff contribution either lies in the low-grid
+  branch $2^{-(j+1)}<2/L$ or has middle normalized radius at least
+  $2^{-(j+2)}$. On the separated branch the sharp local second-difference
+  bound follows without an independent radius hypothesis, retaining the
+  explicit fold defect; in a no-fold region it is purely quadratic.
+  An active $L=16$ shell verifies nonvacuity.
+  \emph{T22 separated-shell checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use cutoff support at one of the three points and the one-step
+  normalized-radius Lipschitz estimate to bound the middle radius.
+\end{proof}
+
+\begin{lemma}[Support geometry in the low-grid cutoff branch]
+  \label{lem:normalized-cutoff-low-grid}
+  \uses{lem:normalized-cutoff-shell-radius}
+  \lean{RBM.zdist_coord_div_le_normalizedFrequency,
+        RBM.normalizedFrequency_ge_inv_of_ne_zero,
+        RBM.normalizedDyadicCutoff_low_grid_zdist_lt_eight,
+        RBM.normalizedDyadicCutoff_support_grid_lower_scale,
+        RBM.cutoff_second_diff_support_grid_lower_scale,
+        RBM.cutoff_second_diff_low_grid_has_near_origin_support}\leanok
+  In the low-grid branch $2^{-(j+1)}<2/L$, a nonzero cutoff can occur
+  only where both cyclic coordinate distances are below eight. An active
+  three-point difference has one of its sampled frequencies in that box,
+  and its shell scale satisfies $1/L\leq4\,2^{-(j+1)}$.
+  Hence the active low-grid scales occupy a fixed-factor window around
+  the mesh; the support count and low-grid sum are supplied below.
+  \emph{T22 low-grid support checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Compare each coordinate distance with the normalized Euclidean radius,
+  then use the inner and outer support radii of the cutoff.
+\end{proof}
+
+\begin{lemma}[Uniform count of low-grid cutoff starts]
+  \label{lem:normalized-cutoff-low-grid-count}
+  \uses{lem:normalized-cutoff-low-grid}
+  \lean{RBM.lowGridBall,
+        RBM.card_lowGridBall_le,
+        RBM.lowGridBox,
+        RBM.card_lowGridBox_le,
+        RBM.lowGridTwoStepStarts,
+        RBM.card_lowGridTwoStepStarts_le}\leanok
+  The cyclic distance ball of radius eight contains at most $16$ points,
+  so its two-dimensional box contains at most $256$. For any displacement,
+  a nonzero low-grid two-step cutoff difference starts in one of three
+  translates of that box; hence there are at most $768$ such starts.
+  \emph{T22 support-count checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Count cyclic representatives and take the union of three translated boxes.
+\end{proof}
+
+\begin{lemma}[One-shell low-grid cutoff sum]
+  \label{lem:normalized-cutoff-low-grid-sum}
+  \uses{lem:normalized-cutoff-low-grid-count}
+  \lean{RBM.normalizedDyadicCutoff_mem_unit_interval,
+        RBM.abs_normalizedDyadicCutoff_second_diff_le_two,
+        RBM.sum_abs_normalizedDyadicCutoff_second_diff_low_grid_le}\leanok
+  Each cutoff lies in $[0,1]$, so its three-point second difference has
+  absolute value at most $2$. Summing over the at most $768$ low-grid
+  starts gives the bound $1536$ for one shell and any lattice displacement.
+  The number of active shells and the final dyadic sum remain open.
+  \emph{T22 one-shell sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Bound each nonzero summand by two and use the support count.
+\end{proof}
+
+\begin{lemma}[All active low-grid cutoff shells]
+  \label{lem:normalized-cutoff-low-grid-scales}
+  \uses{lem:normalized-cutoff-low-grid-sum,
+         lem:normalized-cutoff-low-grid}
+  \lean{RBM.lowGridActiveScales,
+        RBM.mem_lowGridActiveScales_iff,
+        RBM.lowGridActiveScales_mem_of_second_diff_ne_zero,
+        RBM.lowGridActiveScales_gap_lt_three,
+        RBM.card_lowGridActiveScales_le_three,
+        RBM.sum_abs_normalizedDyadicCutoff_second_diff_low_grid_scales_le}\leanok
+  The genuinely finite active low-grid index set contains every index
+  with a nonzero low-grid cutoff second difference. Its indices lie
+  within three consecutive positions, so its cardinality is at most
+  three. For a fixed displacement, the sum over all these shells and
+  starting points is at most $3\cdot1536=4608$. The separated-shell
+  sum and full dyadic multiplier estimate remain open.
+  \emph{T22 low-grid sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the cutoff support scale window and dyadic halving to count the
+  indices, then sum the one-shell bound.
+\end{proof}
+
+\begin{lemma}[Finite low-grid and separated-shell cutoff split]
+  \label{lem:normalized-cutoff-shell-split-sum}
+  \uses{lem:normalized-cutoff-low-grid-scales,
+         lem:normalized-cutoff-shell-radius}
+  \lean{RBM.separatedShellIndices,
+        RBM.cutoffSecondDiffMass,
+        RBM.cutoffSecondDiffE1ShellRemainder,
+        RBM.sum_cutoffSecondDiffMass_e1_finite_shells_le,
+        RBM.cutoffSecondDiffE2ShellRemainder,
+        RBM.sum_cutoffSecondDiffMass_e2_finite_shells_le}\leanok
+  For either coordinate direction and any finite initial segment of
+  dyadic shells, the sum of absolute cutoff second differences is at
+  most $4608$ from low-grid shells plus an explicit separated-shell
+  remainder. The latter retains the exact antipodal fold defect and
+  affine second-order terms; its useful summation still remains open.
+  \emph{T22 finite-shell split checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Partition shell indices by whether their dyadic radius is below
+  $2/L$, use the low-grid sum, and apply the separated-shell local bound.
+\end{proof}
+
+\begin{lemma}[Diagonal conjugation of the block walk]
+  \label{lem:combes-thomas-conjugation}
+  \uses{def:model}
+  \lean{RBM.blockWeightMatrix,
+        RBM.blockWeightInverse,
+        RBM.blockWeight_SB_apply,
+        RBM.blockWeight_mul_inverse,
+        RBM.blockWeight_inverse_mul,
+        RBM.blockWeight_one_sub_smul_SB,
+        RBM.probeWeight_nonconstant,
+        RBM.probeWeight_nonzero}\leanok
+  For any nonvanishing diagonal weight on the two-dimensional block
+  torus, the conjugated walk has entries $w(a)S_B(a,b)w(b)^{-1}$ and
+  the weighted denominator $1-\xi S_B$ transforms exactly. A nonconstant
+  weight on $Z_3^2$ gives a compiled probe. This is the algebraic setup
+  for the Combes--Thomas branch; perturbation and decay remain open.
+  \emph{T29 conjugation checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Multiply diagonal matrices entrywise and use their two-sided inverse
+  when every weight is nonzero.
+\end{proof}
+
+\begin{lemma}[Weighted block-walk perturbation bound]
+  \label{lem:combes-thomas-perturbation}
+  \uses{lem:combes-thomas-conjugation}
+  \lean{RBM.blockWeight_SB_sub_apply,
+        RBM.sum_nnnorm_blockWeight_SB_sub_le,
+        RBM.nnnorm_blockWeight_SB_sub_le}\leanok
+  The weighted walk perturbation has entries
+  $(w(a)w(b)^{-1}-1)S_B(a,b)$. If this ratio has norm at most $\delta$
+  on every nonzero covariance edge, then for $L\geq3$ each row sum
+  and the matrix $\ell^\infty$ operator norm are at most $\delta$.
+  A nonconstant positive weight gives a compiled finite probe.
+  Concrete distance weights are supplied below; resolvent decay remains open.
+  \emph{T29 perturbation checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the exact conjugation entry formula, use the covariance norm
+  row sum one, and take the supremum over rows.
+\end{proof}
+
+\begin{lemma}[Linear cyclic-distance weight perturbation]
+  \label{lem:combes-thomas-distance-weight}
+  \uses{lem:combes-thomas-perturbation}
+  \lean{RBM.zdist2_center_edge_le,
+        RBM.blockDistanceWeight,
+        RBM.blockDistanceWeight_ne_zero,
+        RBM.blockDistanceWeight_edge_ratio_le,
+        RBM.nnnorm_blockDistanceWeight_SB_sub_le}\leanok
+  For $L\geq3$, distances from a fixed center differ by at most one
+  along any nonzero $S_B$ edge. The positive weight
+  $w_{c,t}(a)=1+t\,d(a,c)$, $t\geq0$, has edge ratio error at most $t$;
+  conjugating $S_B$ changes its operator norm by at most $t$.
+  This linear weight alone does not establish exponential decay.
+  \emph{T29 distance-weight checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the cyclic-distance triangle inequality, then divide by the
+  positive denominator of the neighboring weight.
+\end{proof}
+
+\begin{lemma}[Exponential cyclic-distance weight perturbation]
+  \label{lem:combes-thomas-exponential-weight}
+  \uses{lem:combes-thomas-distance-weight}
+  \lean{RBM.blockExponentialWeight,
+        RBM.blockExponentialWeight_ne_zero,
+        RBM.blockExponentialWeight_edge_ratio_le,
+        RBM.nnnorm_blockExponentialWeight_SB_sub_le}\leanok
+  The weight $w_{c,t}(a)=\exp(t\,d(a,c))$ never vanishes. On a
+  nonzero $S_B$ edge, its ratio differs from one by at most $e^t-1$
+  for $t\geq0$. The same bound holds for the operator norm of the
+  conjugated-walk perturbation. Invertibility of the weighted resolvent
+  and decay of its kernel remain open.
+  \emph{T29 exponential-weight checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the distance change of at most one along an edge and positivity
+  of the exponential, then apply the general perturbation lemma.
+\end{proof}
+
+\begin{lemma}[Weighted block propagator inverse]
+  \label{lem:combes-thomas-weighted-inverse}
+  \uses{lem:combes-thomas-exponential-weight}
+  \lean{RBM.exponentialConjugatedSB,
+        RBM.norm_exponentialConjugatedSB_le,
+        RBM.norm_smul_exponentialConjugatedSB_le,
+        RBM.isUnit_one_sub_smul_exponentialConjugatedSB,
+        RBM.norm_inverse_one_sub_smul_exponentialConjugatedSB_le,
+        RBM.exponentialConjugatedTheta_eq_inverse,
+        RBM.norm_exponentialConjugatedTheta_le}\leanok
+  For $L\geq3$, $t\geq0$, and $\|\xi\|e^t<1$, the exponentially
+  conjugated block walk has norm at most $e^t$. Its weighted denominator
+  is invertible, with inverse norm at most $(1-\|\xi\|e^t)^{-1}$, and
+  that inverse equals the conjugate of the original block propagator.
+  Entrywise kernel decay still requires extracting matrix entries.
+  \emph{T29 weighted-inverse checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the Neumann-series smallness criterion and the explicit
+  diagonal conjugation identity.
+\end{proof}
+
 \begin{lemma}[Dyadic estimate, \texttt{(eq\_dyadic)}]\label{lem:dyadic}
   \uses{lem:cutoff, lem:abel, lem:symbol-diff}
   Assemble the three ingredients into the per-annulus estimate and produce
@@ -2030,6 +2258,135 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
   length identities, then integrate the samplewise constant envelope.
 \end{proof}
 
+\begin{lemma}[Block sums of one cut-loop position]
+  \label{lem:loop-hierarchy-cut-block-sum}
+  \uses{lem:loop-hierarchy-cut-norm-bounds,
+         def:model}
+  \lean{RBM.Gauss.cutResolventEnvelope,
+        RBM.Gauss.sum_norm_SB_row,
+        RBM.Gauss.sum_norm_integral_sameEdgeCutIntegrand_le,
+        RBM.Gauss.sum_norm_integral_pairCutIntegrand_le}\leanok
+  For $L\geq3$, the actual block covariance has norm row sum one.
+  Summing an expected same-edge or pair-cut position over both inserted
+  block labels therefore costs one block-cardinality factor, with the
+  exact loop-length and $W^{-2}$ powers retained. Edge-position sums
+  remain separate. \emph{S5 block-sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Sum the single-cut expectation envelopes and use the stochastic row
+  sum of the five-point block covariance.
+\end{proof}
+
+\begin{lemma}[All edge-position cut envelopes]
+  \label{lem:loop-hierarchy-cut-total-bound}
+  \uses{lem:loop-hierarchy-cut-block-sum}
+  \lean{RBM.Gauss.length_edgeSplits,
+        RBM.Gauss.length_pairSplits,
+        RBM.Gauss.length_pairSplits_two_formula,
+        RBM.Gauss.sum_all_sameEdgeCutIntegrand_norm_le,
+        RBM.Gauss.sum_all_pairCutIntegrand_norm_le}\leanok
+  A word of length $n$ has $n$ same-edge positions and
+  $\binom n2$ distinct-edge pairs. Summing the block envelope over all
+  same-edge positions gives the explicit factor $n$; for pairs, the
+  finite bound preserves each pair's actual left/right loop lengths.
+  \emph{S5 all-cut envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Count the recursive split lists and sum the one-position bounds;
+  retain the pair-dependent powers under their finite sum.
+\end{proof}
+
+\begin{lemma}[Complete spectral-cut envelope]
+  \label{lem:loop-hierarchy-spectral-cut-bound}
+  \uses{lem:loop-hierarchy-cut-total-bound}
+  \lean{RBM.Gauss.norm_spectralMSign,
+        RBM.Gauss.norm_integral_spectralCut_gloop_le,
+        RBM.Gauss.norm_spectralEdgeCut_sum_le,
+        RBM.Gauss.sum_all_spectralEdgeCut_norm_le,
+        RBM.Gauss.norm_expectedSpectralCuts_le}\leanok
+  A spectral cut from an $n$-edge loop has $n+1$ Green factors.
+  The signed coefficient contributes $\|m(E)\|W^2$; summing over
+  blocks and all $n$ edge positions yields an explicit bound on the
+  complete expected spectral-drift family. The full moment inequality
+  remains open. \emph{S5 spectral envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the single-loop resolvent envelope at each cut, sum its block
+  labels, and count the spectral edge positions.
+\end{proof}
+
+\begin{lemma}[Complete finite-loop cut generator envelope]
+  \label{lem:loop-hierarchy-rhs-bound}
+  \uses{lem:loop-hierarchy-spectral-cut-bound,
+         lem:loop-hierarchy-cut-total-bound}
+  \lean{RBM.Gauss.norm_expectedSameEdgeCuts_le,
+        RBM.Gauss.norm_expectedPairCuts_le,
+        RBM.Gauss.norm_expectedLoopCutRHS_le}\leanok
+  At any positive spectral gap, the expected cut generator is bounded by
+  the sum of the complete same-edge, distinct-edge, and spectral-cut
+  envelopes. The distinct-edge term retains the actual powers for each
+  pair of positions. No moment closure is asserted.
+  \emph{S5 generator-envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the three cut-family bounds and the triangle inequality.
+\end{proof}
+
+\begin{lemma}[Time derivative of the expected finite loop]
+  \label{lem:loop-hierarchy-derivative-bound}
+  \uses{lem:loop-hierarchy-rhs-bound,
+         lem:loop-expectation-derivative}
+  \lean{RBM.Gauss.norm_deriv_expected_gloop_le,
+        RBM.Gauss.spectralZ_positive_point_gap,
+        RBM.Gauss.norm_deriv_expected_gloop_le_pathGap}\leanok
+  For $|E|<2$ and $0<u<1$, the actual expected-loop derivative obeys
+  the complete generator envelope. The spectral path supplies the exact
+  positive gap $(1-u)\operatorname{Im}m(E)$ throughout this interval.
+  This pointwise bound also feeds the finite-time estimate below.
+  \emph{S5 derivative-envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Substitute the exact hierarchy ODE and apply the full RHS bound;
+  use the spectral-path imaginary-part identity for the gap.
+\end{proof}
+
+\begin{lemma}[Finite-time expected-loop increment envelope]
+  \label{lem:loop-hierarchy-integral-bound}
+  \uses{lem:loop-hierarchy-rhs-bound,
+         lem:loop-hierarchy-derivative-bound}
+  \lean{RBM.Gauss.loopHierarchyUniformEnvelope,
+        RBM.Gauss.norm_expected_gloop_increment_le,
+        RBM.Gauss.norm_expected_gloop_increment_le_pathGap}\leanok
+  On a compact path interval $0\leq a<b<1$ with a uniform positive
+  spectral gap $\eta$, the increment in the expected finite loop has
+  norm at most $(b-a)$ times the complete explicit cut envelope.
+  The path gap $(1-b)\operatorname{Im}m(E)>0$ supplies a concrete choice.
+  Pair-dependent exponents are retained. No moment closure is asserted.
+  \emph{S5 finite-time envelope checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Use the exact endpoint Duhamel identity and bound the interval
+  integral by the uniform RHS envelope.
+\end{proof}
+
+\begin{lemma}[Expected loop relative to its deterministic initial value]
+  \label{lem:loop-hierarchy-from-initial-bound}
+  \uses{lem:loop-hierarchy-integral-bound,
+         lem:loop-initial-value}
+  \lean{RBM.Gauss.norm_expected_gloop_sub_initial_le,
+        RBM.Gauss.norm_expected_gloop_sub_initial_le_pathGap,
+        RBM.Gauss.norm_expected_gloop_le_initial_add_envelope}\leanok
+  For $0\leq u<1$, the expected loop differs from its explicit
+  deterministic initial scalar by at most $u$ times the complete
+  finite-cut envelope. The spectral-path gap gives a concrete version;
+  the triangle inequality also bounds the expectation itself.
+  \emph{S5 initial-plus-increment checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Specialize the finite-time increment estimate to the interval
+  $[0,u]$ and substitute the proved zero-time initial value.
+\end{proof}
+
 \begin{lemma}[Deterministic initial value of an expected finite loop]
   \label{lem:loop-initial-value}
   \uses{lem:loop-expectation-derivative,
@@ -2186,6 +2543,41 @@ $G_s=(\sqrt sH-z_s)^{-1}$.
 \begin{proof}\leanok
   Apply the constant-label support and normalization formula and sum
   the two equality indicators over the finite block torus.
+\end{proof}
+
+\begin{lemma}[Initial-value label sum at every positive length]
+  \label{lem:loop-initial-general-label-sum}
+  \uses{lem:loop-initial-three-label-sum,
+         lem:loop-initial-constant-count}
+  \lean{RBM.Gauss.norm_initialLoopValue_ofFn,
+        RBM.Gauss.sum_norm_initialLoopValue_ofFn,
+        RBM.Gauss.sum_norm_initialLoopValue_fin}\leanok
+  For a fixed signed word of any length $n>0$, summing the modulus of
+  its initial loop over all $n$ block-label assignments gives exactly
+  $L^2W^{-2(n-1)}$. The only surviving assignments are constant.
+  \emph{S5 general label-sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Identify label lists with functions on the finite edge set, use the
+  initial-value support formula, and count constant functions.
+\end{proof}
+
+\begin{lemma}[Finite-time expected-loop label sum]
+  \label{lem:loop-hierarchy-initial-average-bound}
+  \uses{lem:loop-hierarchy-from-initial-bound,
+         lem:loop-initial-general-label-sum}
+  \lean{RBM.Gauss.sum_norm_expected_gloop_ofFn_le_initial_add_envelopes,
+        RBM.Gauss.sum_norm_expected_gloop_ofFn_le_pathGap}\leanok
+  For a fixed sign word of length $n>0$, summing actual expected-loop
+  norms over all block labels is bounded by the exact initial sum
+  $L^2W^{-2(n-1)}$ plus time times the finite sum of full cut envelopes.
+  The path-gap version uses $(1-u)\operatorname{Im}m(E)>0$.
+  This finite estimate does not close the paper's moment inequality.
+  \emph{S5 expected label-sum checkpoint, closed.}
+\end{lemma}
+\begin{proof}\leanok
+  Apply the per-loop initial-plus-increment bound and evaluate the
+  initial label sum exactly.
 \end{proof}
 
 \begin{lemma}[Closing the paper's moment inequality]\label{lem:gronwall}
