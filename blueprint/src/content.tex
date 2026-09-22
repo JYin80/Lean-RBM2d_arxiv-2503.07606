@@ -253,9 +253,19 @@
 
 \begin{lemma}[Lattice sum]\label{lem:latticesum}
   \uses{lem:qcomp, lem:shells, lem:harmonic}
-  $\sum_{p\in\TL\setminus\{0\}}|p|_*^{-2}\le CL^2\log L$.
-  \emph{Work order T3.}
+  \lean{RBM.sum_inv_pstar2_le, RBM.normalized_sum_inv_pstar2_le_log,
+        RBM.normalizedPuncturedSum_detDom_one}\leanok
+  $\sum_{p\in\TL\setminus\{0\}}|p|_*^{-2}
+   \le(4/\pi^2)L^2\sum_{k=1}^L k^{-1}$; after division by $L^2$ this
+  is $O(\log L)\prec1$.  The sequence is extended by zero for $L<3$.
 \end{lemma}
+\begin{proof}\leanok
+  On the shell $k\ge1$, $|p|_*^2\ge(2\pi k/L)^2$ and the proved count
+  $12k+4\le16k$ yields at most $4L^2/(\pi^2 k)$.  Sum over shells and use
+  the harmonic bound.  A compiled $L=3$ example shows the punctured sum is
+  strictly positive, so the statement is not vacuous.
+  \emph{Work order T3, closed.}
+\end{proof}
 
 \begin{lemma}[Separating the zero mode]\label{lem:zero-mode}
   \uses{lem:fourier}
