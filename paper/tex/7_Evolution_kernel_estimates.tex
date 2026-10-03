@@ -1,0 +1,724 @@
+\section{Evolution kernel estimates}\label{ks}
+
+In this section we collect the bounds on $L_{\max\to \max}$ norm of $\mathcal{U}$ defined in \eqref{def_Ustz}. First, we state the trivial bound, proved in Lemma 7.1 of \cite{YY_25}. We note that the proof in \cite{YY_25} is independent of the dimension of the band matrix $d$. 
+
+\begin{lemma}[$\|{\cal U}\|_{\max\to \max}$ estimate]\label{lem:sum_Ndecay}
+Let $\cal A$ be a tensor $\left(\mathbb{Z}_L^2\right)^n\to \mathbb C$ and $n\ge 2$.  
+Then 
+\begin{align}\label{sum_res_Ndecay}
+   \| {\cal U}_{s,t,\boldsymbol{\sigma}}\;\circ {\cal A}\|_{\max } \prec \|{\cal A}\|_{\max}
+    \cdot \left(  \eta_s/ \eta_t\right)^{n } ,\quad s<t. 
+\end{align}
+\end{lemma}
+
+The following lemma shows how $\mathcal{U}_{s,t,(+,-)}$ affects the decay property of the 2-tensors.
+
+\begin{lemma}[Tail Estimates]\label{TailtoTail}
+Recall  
+$$
+{\cal T}_{t}(\ell) := M_t^{-2}\exp \left(- \left| \ell /\ell_t\right|^{1/2} \right)
+$$
+Fix $\boldsymbol{\sigma}=(+,-)$. Assume that for ${\cal A}_{\textbf{a}}$, $\textbf{a}\in (\mathbb Z^2_L)^2$ and for some large $D>0$, we have 
+$$
+{\cal A}_{\textbf{a}}\le {\cal T}_{s }(|a_1-a_2|_L)+W^{-D}
+$$
+Recall $\cal U$ from Definition \ref{def_Ustz}. We have 
+\begin{align}
+\label{neiwuj} 
+\left({\cal U}_{s,t,\boldsymbol{\sigma}} \circ 
+{\cal A}\right)_{\textbf{a}} & \prec
+ {\cal T}_{t}(|a_1-a_2|_L)+W^{-D} \cdot(\eta_s/\eta_t)^2, \quad {\rm if}\quad  |a_1-a_2|_{L}\ge \ell_t^* :=(\log W)^{3/2}\ell_t 
+\end{align}
+ \end{lemma}
+
+The analogous statement was proved in Lemma 7.2 of \cite{YY_25} in case of one-dimensional band matrices $d=1$. The proof of \cite{YY_25} goes through for $d=2$ as well. The only two adjustments necessary are the infinity norm bound $\|\Theta^{(B)}_t\|_{\max} \prec \ell_t^{-2}\eta_t^{-1}$, and the summation bound $\sum_{b, |a-b|_{L}\le \ell} 1 \prec \ell^2$ for any $a\in\mathbb{Z}_L^2$ and $\ell\in\mathbb{Z}_+$.
+ 
+ \bigskip
+
+The main technical part of this section is the following improved $L_{\max\to \max}$ bounds on $\mathcal{U}$.
+ 
+\begin{lemma}[${\cal U}_{s,t}$ on fast decay tensor]\label{lem:sum_decay}
+
+Let $\cal A$ be a tensor $\left(\mathbb{Z}_L^2\right)^n\to \mathbb R$, $n\ge 2$. We say that $\cal A$ has $(\tau, D)$ decay at time $s$ if  for some $\tau,D>0$, the following bound holds:
+\begin{equation}\label{deccA0}
+    \max_{i,j}|a_i-a_j|_{L}\ge \ell_s W^{\tau} \implies  {\cal A}_{\textbf{a}}=O(W^{-D}),\quad \textbf{a}=(a_1,a_2\cdots, a_n) .
+\end{equation}
+Now, suppose that $\cal A$ has $(\tau, D)$ decay at time $s$, and that $\cal A$ has rank $n\geq2$. We have
+\begin{align}\label{sum_res_1}
+    \left({\cal U}_{s,t,\boldsymbol{\sigma}} \circ {\cal A}\right)_\textbf{a} \le C_n W^{C_n\tau}\cdot   \|{\cal A}\|_{\max}
+    \cdot \left(\frac{\ell_t}{\ell_s}\right)^{2}
+    \cdot \left(\frac{\ell_s^{2}\eta_s}{\ell_t^{2}\eta_t}\right)^{n} +W^{-D+C_n}.
+\end{align}
+We will now consider five cases in which the bound \eqref{sum_res_1} can be improved.
+
+Case 1: Suppose that for some $1\leq k\leq n$, we have
+$$ 
+\sigma_k=\sigma_{k-1}, \quad \boldsymbol{\sigma}=(\sigma_1,\cdots, \sigma_n).
+$$ 
+Then the following estimate holds:
+\begin{align}\label{nonalternating}
+    \left({\cal U}_{s,t,\boldsymbol{\sigma}} \circ {\cal A}\right)_\textbf{a} \le W^{C_n\tau}\cdot   \|{\cal A}\|_{\max}\left(\frac{\ell_s^{2}\eta_s}{\ell_t^{2}\eta_t}\right)^{n } +W^{-D+C_n}
+\end{align}
+
+Case 2: Suppose that ${\cal A}_{\textbf{b}}$ has the sum zero property, i.e.
+\begin{align}\label{sumAzero}
+ \sum_{a_2,\,\ldots,\, a_n}{\cal A}_{\textbf{a}}=0, \forall a_1.
+\end{align}
+Then the following estimate holds:
+\begin{align}\label{sum_res_2}
+    \left({\cal U}_{s,t,\boldsymbol{\sigma}} \circ {\cal A}\right)_\textbf{a} \le W^{C_n\tau}\cdot   \|{\cal A}\|_{\max}\cdot\frac{\ell_{t}}{\ell_{s}}
+    \cdot \left(\frac{\ell_s^{2}\eta_s}{\ell_t^{2}\eta_t}\right)^{n } +W^{-D+C_n}
+\end{align} 
+
+Case 3: Suppose that ${\cal A}_{\textbf{b}}$ has the sum zero property \eqref{sumAzero}. Suppose also that ${\cal A}_{\textbf{b}}$ has the following form, which we explain afterwards:
+%
+\begin{align}\label{a-local-form}
+{\cal A}_{\textbf{b}}=\sum_{u=0}^{K}\sum_{\textbf{x},\textbf{y}\in(\Z_{WL}^{2})^{u}}C_{\textbf{b},\textbf{x},\textbf{y}}\cdot\prod_{i=1}^{u}G_{s}(\sigma_{i})_{x_{i}y_{i}}.
+\end{align}
+%
+Here, $K=O(1)$ is fixed. The coefficients $C_{\textbf{b},\textbf{x},\textbf{y}}$ are deterministic, and they satisfy the three conditions below. First, we have the following for some constant $C'=O(1)$:
+%
+\begin{align*}
+\|C\|_{\max}\leq N^{C'}.
+\end{align*}
+%
+Second, there exists $\tau>0$ such that 
+%
+\begin{align*}
+\max_{i}\min_{k}\Big(|[x_{i}]-b_{k}|_{L}+|[y_{i}]-b_{k}|_{L}\Big) \geq W^{\tau}\ell_{s} \Rightarrow C_{\textbf{b},\textbf{x},\textbf{y}}=0.
+\end{align*}
+%
+{Third, let $\Lambda>0$ be a deterministic constant such that 
+%
+\begin{align*}
+\|{\cal A}\|_{\max}\prec\Lambda.
+\end{align*}
+%
+}
+Now, suppose $0\leq s\leq 1-N^{-1+\delta}$ for some fixed $\delta>0$, and that \eqref{Gt_bound_flow} and \eqref{Eq:Gdecay_w} hold at time $s$. Then
+%
+\begin{align}\label{sum_res_3}
+\left({\cal U}_{s,t,\boldsymbol{\sigma}}\circ({\cal A}-\E{\cal A})\right)_{\textbf{a}}&\prec C_{n}W^{C_{n}\tau}\cdot{\Lambda} \cdot\left(\frac{\ell_{s}^{2}\eta_{s}}{\ell_{t}^{2}\eta_{t}}\right)^{n}+W^{-D+C_{n}}.
+\end{align}
+%
+Case 4: Suppose that $\mathcal{A}_{\textbf{b}}$ has the sum zero property \eqref{sumAzero} and that $\mathcal{A}$ is symmetric, i.e.:
+$$
+\mathcal{A}_{a, a+s_2,\ldots, a+s_n} = \mathcal{A}_{a, a-s_2,\ldots, a-s_n}
+$$
+for all $a, s_2, \ldots, s_n \in \mathbb{Z}_L^2$. Then we have the following bound:
+\begin{equation}\label{symmetric_tensor}
+    \left(\mathcal{U}_{s,t,\boldsymbol{\sigma}} \circ \mathcal{A}\right)_\textbf{a} \le W^{C_n\tau}\cdot   \|\mathcal{A}\|_{\max} 
+    \cdot \left(\frac{\ell_s^2\eta_s}{\ell_t^2\eta_t}\right)^{n } +W^{-D+C_n}.
+\end{equation}
+
+Case 5: Let $\mathcal{A}$ be a $2n$-tensor $\left(\mathbb{Z}^2_L\right)^{n} \times \left(\mathbb{Z}^2_L\right)^{n} \rightarrow \mathbb{R}$, $n\ge 2$ with $(\tau, D)$ decay at time $s$. Suppose that $\mathcal{A}$ has the double sum zero property, meaning that
+\begin{equation*}
+    \sum_{a_2, \ldots a_n \in \mathbb{Z}_L^2} \mathcal{A}_{\textbf{a}, \textbf{a}'} = 0\; \quad \forall a_1,\textbf{a}', \quad\text{and}\quad  \sum_{a'_2, \ldots a'_n \in \mathbb{Z}_L^2} \mathcal{A}_{\textbf{a}, \textbf{a}'} = 0\; \quad \forall \textbf{a}, a'_1.
+\end{equation*}
+Then we have the bound
+\begin{equation}\label{eq:double_sum_zero_tensor}
+    \left(\left(\mathcal{U}_{s,t,\boldsymbol{\sigma}}\otimes \mathcal{U}_{s,t,\boldsymbol{\bar{\sigma}}}\right) \circ \mathcal{A}\right)_{\textbf{a},\textbf{a}} \le W^{C_n\tau}\cdot   \|\mathcal{A}\|_{\max} 
+    \cdot \left(\frac{\ell_s^2\eta_s}{\ell_t^2\eta_t}\right)^{2n} +W^{-D+C_n}.
+\end{equation}
+
+\end{lemma} 
+
+The cases 1-2 of this Lemma \ref{lem:sum_decay} are analogous to Lemma 7.3 of \cite{YY_25}. However, in two dimensions the additional factor $\frac{\ell_s}{\ell_t}$ coming from the sum zero property of $\mathcal{A}$ is insufficient for the analysis of the loop hierarchy in Section \ref{Sec:Stoflo}. Thus, we show that another $\frac{\ell_s}{\ell_t}$ factor can be obtained from symmetry, double sum zero property of $\mathcal{A}$ in cases 4-5, or a CLT-like cancellation in case 3.
+
+\begin{proof}[Proof of Lemma \ref{lem:sum_decay}]
+By definition of ${\cal U}_{s, t}$ in \eqref{def_Ustz} and \eqref{def_Ustz_2}, we have 
+\begin{align}
+      \left(\mathcal{U}_{s, t, \boldsymbol{\sigma}} \circ \mathcal{A}\right)_a=\sum_{b_1, \ldots, b_n} \prod_{i=1}^n\psi_i  \cdot \mathcal{A}_{\boldsymbol{b}}, \quad \boldsymbol{b}=\left(b_1, \ldots, b_n\right),
+\end{align}
+\begin{align}\label{def_psixi}
+     \psi_i=\delta_{a_ib_i}+\Xi_i,  \quad \quad 
+\Xi_i:=-(s-t)\xi_i \cdot \left(S^{(B)}\cdot \Theta^{(B)}_{t \xi_i}\right)_{a_ib_i},\quad\quad \xi_i=m(\sigma_i)m(\sigma_{i+1}).
+ \end{align} 
+We now expand
+%
+\begin{align*}
+\sum_{b_{1},\ldots,b_{n}}\prod_{i=1}^{n}\psi_{i}\cdot{\cal A}_{\textbf{b}}&=\sum_{ A\subset\llbracket1,n\rrbracket}\sum_{b_{1},\ldots,b_{n}}\left(\prod_{j\in A^{c}}\Xi_{j}\right)\left(\prod_{j\in A}\delta_{a_{j}b_{j}}\right)\cdot{\cal A}_{\textbf{b}}.    
+\end{align*}
+By \eqref{def_psixi}, Lemma \ref{lem_propTH} and $|t-s|\leq C\eta_{s}$, the entries of $\Xi$ are $\mathrm{O}_{\prec}(\eta_{s}\ell_{t}^{-2}\eta_{t}^{-1})$. For any $A\neq\emptyset$, there must be at least one factor of $\delta_{a_{j}b_{j}}$ on the r.h.s. above. By the $(\tau,D)$ decay property of ${\cal A}_{\textbf{b}}$ at time $s$, this implies that all but $O(W^{\tau}\ell_{s}^{2})^{|A^{c}|}$ many indices in the sum over $b_{1},\ldots,b_{n}$ on the r.h.s. must be $O(W^{-D})$. Ultimately, we deduce that 
+%
+\begin{align}\label{iukwjn-d=2}
+\sum_{\emptyset\neq A\subset\llbracket1,n\rrbracket}\sum_{b_{1},\ldots,b_{n}}\prod_{i=1}^{n}\psi_{i}\cdot{\cal A}_{\textbf{b}}&\leq\sum_{\emptyset\neq A\subset\llbracket1,n\rrbracket} C_{n}W^{C_{n}\tau}\left(\frac{\ell_{s}^{2}\eta_{s}}{\ell_{t}^{2}\eta_{t}}\right)^{|A^{c}|}\|{\cal A}\|_{\max}+W^{-D+C_{n}}\nonumber\\
+&\leq C_{n}W^{C_{n}\tau}\left(\frac{\ell_{s}^{2}\eta_{s}}{\ell_{t}^{2}\eta_{t}}\right)^{n}\|{\cal A}\|_{\max}+W^{-D+C_{n}},
+\end{align}
+%
+where the last bound follows because $\ell_{s}^{2}\eta_{s}\geq\ell_{t}^{2}\eta_{t}$.
+
+Thus we only need to prove the bounds \eqref{sum_res_1}, \eqref{nonalternating}, \eqref{sum_res_2}, \eqref{symmetric_tensor} and \eqref{sum_res_3} on the main term $\sum_{\textbf{b}}  \left(\prod_{i=1}^n  \Xi_i \right) {\cal A}_{\textbf{b}}$. By definition of $\Theta^{(B)}$, we have 
+$$
+\Xi_i \prec \eta_s \,\ell_t^{-2}\eta_t^{-1}.
+$$
+Then, by $(\tau,D)$ decay property of $\cal A$ at time $s$ in \eqref{deccA0}, we have
+\begin{align}\label{llswuwg}
+  \sum_{\textbf{b}}   \prod_{i=1}^n  \Xi_i  \cdot 
+{\cal A}_{\textbf{b}}
+\;\le\; & C W^{\tau}\cdot \frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t} \max_{b_n}
+\cdot \left|\sum_{b_1\cdots b_{n-1}} \prod_{i=1}^{n-1}  \Xi_i  \cdot 
+{\cal A}_{\textbf{b}}\right|+W^{-D+C}
+\\\nonumber
+\;\le\; & C_n W^{C_n\tau} \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-1} \max_{b_2,\cdots, b_n}  \left|\sum_{b_1 }\Xi_1 {\cal A}_{\textbf{b}}\right|+W^{-D+C_n}
+\end{align}
+By the decay of $(\tau,D)$ decay of $\Theta^{(B)}_t$ at time $t$, we have 
+\begin{align}\label{tyzcsq}
+  \sum_{b_1 }\Xi_1 \left|{\cal A}_{\textbf{b}}\right|\le CW^\tau (\eta_s/\eta_t)\|{\cal A}\|_{\max}+W^{-D}  .
+\end{align}
+Together with \eqref{llswuwg} and \eqref{iukwjn-d=2}, we deduce  \eqref{sum_res_1}. For a non-alternating tensor, we can assume without loss of generality that $\sigma_1=\sigma_2=+$. Then $\sum_{b_1}|\Xi_1|=O(1)$, and we get an improved bound
+$$
+\sum_{b_1 }\Xi_1\left| {\cal A}_{\textbf{b}}\right|\le  C\|{\cal A}\|_{\max} .
+$$
+Together with \eqref{llswuwg} and \eqref{iukwjn-d=2}, this proves \eqref{nonalternating}.
+
+Now we assume that $\cal A$ has the sum zero property \eqref{sumAzero}. Since we proved \eqref{nonalternating} for case 1,  we can assume that $\sigma_i\ne \sigma_{i+1}$ for any $1\le i\le n$, and thus $\xi_i=|m|^2=1$ (in \eqref{def_psixi}). For each $\Xi_i$ with $i\ge 2$,  we write 
+$$
+\Xi_i=\Xi^0_i+\Xi^1_i+\Xi^2_i:=\Xi^0(a_i-b_1) + \Xi^1(a_i-b_1,r_i) + \Xi^2(a_i-b_1,r_i),
+$$ 
+where the shifts are defined by $r_i = b_i - b_1$ for $2\le i\le n$, and
+\begin{align*}
+    \Xi^0(a) &= (t-s)\left(S^{(B)}\Theta^{(B)}_t\right)_{a, 0  },\\
+    \Xi_i^1(a, r) &= (t-s)\left[\frac12\left(S^{(B)}\Theta^{(B)}_t\right)_{a, r} - \frac12\left(S^{(B)}\Theta^{(B)}_t\right)_{a, -r}\right],\\
+    \Xi_i^2(a, r) &= (t-s)\left[\frac12\left(S^{(B)}\Theta^{(B)}_t\right)_{a, r} + \frac12\left(S^{(B)}\Theta^{(B)}_t\right)_{a, -r} - \left(S^{(B)}\Theta^{(B)}_t\right)_{a, 0}\right].
+\end{align*}
+By Lemma \ref{lem_propTH} and $t-s = O(\eta_s)$, we have 
+\begin{align}
+    \left|\Xi^{0,1,2}(a)\right| &\prec \frac{\eta_s}{\ell_t^2\eta_t},\label{Xi-bound-0}\\
+    \left|\Xi^{1,2}(a, r)\right| &\prec \frac{\eta_s|r|_L}{|a|_L+1}+\frac{\eta_{s}|r|_{L}}{\ell_{t}^{2}\eta_{t}^{1/2}},\label{Xi-bound-1}\\
+    \left|\Xi^2(a, r)\right| &\prec \frac{\eta_s|r|_L^2}{(|a|_L+1)^2}+\frac{\eta_{s}|r|_{L}^{2}}{\ell_{t}^{2}}.\label{Xi-bound-2}
+\end{align}
+We expand the main term
+\begin{align}
+\sum_{\textbf{b}}   \left(\prod_{i=1}^n  \Xi_i\right)  \cdot 
+{\cal A}_{\textbf{b}}&=\sum_{\textbf{b}} \Xi_1
+\left(\prod_{i=2}^n  \left(\Xi^0_i+  \Xi^1_i + \Xi^2_i\right)\right)\cdot
+{\cal A}_{\textbf{b}}\nonumber\\
+&= \sum_{\llbracket2,n\rrbracket = A\sqcup B\sqcup C} \sum_{\textbf{b}}\prod_{i\in A} \Xi_i^0 \prod_{i\in B} \Xi_i^1 \prod_{i\in C} \Xi_i^2 \cdot \Xi_1 \mathcal{A}_{\textbf{b}}.\label{Xi-expansion}
+\end{align}
+The leading term, with $B, C =\emptyset$, vanishes due to the sum zero property of $\mathcal{A}$. For other partitions of $\llbracket 2,n\rrbracket$, we pick an $i\in B\cup C$ and bound the corresponding $\Xi^{1,2}_i$ with \eqref{Xi-bound-1}. The rest of the $\Xi^{0,1,2}_i$ factors are bounded by \eqref{Xi-bound-0}. By the decay \eqref{deccA0} of $\cal A$,  the main contribution to the last equation comes from $|r_i|_L\le W^\tau \ell_s$, thus the summation over each $r_i$ contributes a factor of $W^{2\tau}\ell_s^2$. Therefore, we obtain the following bound for  \eqref{llswuwg}.
+\begin{align}\label{llswuwg2}
+  \sum_{\textbf{b}}   \prod_{i=1}^n  \Xi_i  \cdot 
+{\cal A}_{\textbf{b}}
+\;\le\; & C_n W^{C_n\tau} \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-2}  \max_{b_2,\cdots, b_n}  \sum_{b_1 }\left[\sum_{i=2}^n \frac{\eta_s\ell_s^3}{|a_i-b_1|_L+1}+\frac{\eta_s\ell_s^3}{\ell_t^2\eta_t^{1/2}}\right]\Xi_1\left| {\cal A}_{\textbf{b}}\right|+W^{-D+C_n}
+\end{align}
+Due to the exponential decay property of $\Xi_1$, we can restrict the summation over $b_1$ to $|a_1-b_1|_L\le W^\tau\ell_t$. For $i\ge 2$, we have the following summation bound
+\begin{equation}\label{eq-1sum}
+    \sum_{|b_1-a_1|\le W^\tau\ell_t} \frac{1}{|a_i-b_1|_L+1} \le CW^\tau \ell_t.
+\end{equation}
+Using this together with the entrywise bound \eqref{Xi-bound-0} on $\Xi_1$ and \eqref{tyzcsq}, we have 
+\begin{align}\label{llswuwg3}
+  \sum_{\textbf{b}}   \prod_{i=1}^n  \Xi_i  \cdot 
+{\cal A}_{\textbf{b}}
+\;\le\; & C_n W^{C_n\tau} \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-2}  \left[\frac{(\ell_s^2\eta_s)^2}{\ell_t^2\eta_t}\cdot\frac{\ell_t}{\ell_s}+\frac{(\ell_s^2\eta_s)^2}{(\ell_t^2\eta_t)^{3/2}}\cdot\frac{\ell_t}{\ell_s}\right]\| {\cal A}\|_{\max}+W^{-D+C_n}.
+\end{align}
+This implies \eqref{sum_res_2}, since $\ell_t^2\eta_t=O(1)$. In case 4, we additionally have the symmetry property of $\mathcal{A}$, so that $\Xi^1(a, r) = -\Xi^1(a, -r)$ by definition, and thus
+$$
+\sum_{r_2,\ldots,r_n} \Xi^1(a_i-b_1, r_i) \mathcal{A}_{b_1, b_1+r_2,\ldots,b_1+r_n} = 0.
+$$
+Then the terms in the expansion of \eqref{Xi-expansion} with $|B| = 1$ and $C= \emptyset$ vanish as well. We split the remaining non-zero terms in \eqref{Xi-expansion} into two groups. The first group contains the partitions with $C \neq \emptyset$, where we use \eqref{Xi-bound-2} on one of $\Xi_i^2$ with $i\in C$ and \eqref{Xi-bound-0} on the other $\Xi^{0,1,2}_i$. The second group covers the partitions with $C = \emptyset$, $|B|\ge 2$, where we use \eqref{Xi-bound-1} for two terms $\Xi^1_{i,j}$ with $i, j\in B$ and \eqref{Xi-bound-0} on the other $\Xi^{0,1}_i$ terms. In total we get
+\begin{align}
+\sum_{\textbf{b}}   \prod_{i=1}^n  \Xi_i  \cdot 
+{\cal A}_{\textbf{b}}
+\;&\le\; C_n W^{C_n\tau} \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-2} \max_{b_2,\cdots, b_n}  \sum_{b_1}\left[\sum_{i=2}^n\frac{\ell_s^4\eta_s}{(|a_i-b_1|_L+1)^2}+ \frac{\ell_s^4\eta_s}{\ell_t^2}\right] \Xi_1 \left|{\cal A}_{\textbf{b}}\right|+W^{-D+C_n}\nonumber\\
+&+\delta_{n\ge 3}C_n W^{C_n\tau} \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-3} \max_{b_2,\cdots, b_n}  \sum_{b_1}\left[\sum_{i=2}^n \frac{\ell_s^3\eta_s}{|a_i-b_1|_L+1}+\frac{\ell_s^3\eta_s}{\ell_t^2\eta_t^{1/2}}\right]^2 \Xi_1 \left|{\cal A}_{\textbf{b}}\right|\label{eq-2-first-der}
+\end{align}
+Similarly to the proof of case 2, we now bound $\Xi_1$ entrywise using \eqref{Xi-bound-0}, use the decay of $\Xi_1$ to restrict $b_1$ summation to $|b_1-a_1|_L\le W^\tau\ell_t$ and sum out the prefactors using \eqref{eq-1sum} and
+\begin{equation}\label{eq-2sum}
+   \sum_{|b_1-a_1|_L\le W^\tau\ell_t} \frac{1}{(|a_i-b_1|_L+1)(|a_j-b_1|_L+1)} \le W^{\tau} 
+\end{equation}
+for $i, j\ge 2$. Then 
+\begin{align*}
+\sum_{\textbf{b}}   \prod_{i=1}^n  \Xi_i  \cdot 
+{\cal A}_{\textbf{b}} \;&\le\; C_n W^{C_n\tau} \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-2} \frac{(\ell_s^2\eta_s)^2}{\ell_t^2\eta_t}\|\mathcal{A}\|_{\max} \\
+&+ \delta_{n\ge 3}C_n W^{C_n\tau} \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-3} \left[\frac{(\ell_s^2\eta_s)^3}{\ell_t^2\eta_t}+\frac{(\ell_s^2\eta_s)^3}{(\ell_t^2\eta_t)^{3/2}}+\frac{(\ell_s^2\eta_s)^3}{(\ell_t^2\eta_t)^2}\right] \|\mathcal{A}\|_{\max} + W^{-D+C_n}.
+\end{align*}
+This finishes the proof of \eqref{symmetric_tensor}.
+
+{We now prove \eqref{sum_res_3}. Because ${\cal A}_{\textbf{b}}$ has the fast decay property, at the cost of an error term of the form $O(W^{-D})$ for any $D>0$ fixed, we can restrict ${\cal A}_{\textbf{b}}$ to indices $\textbf{b}=(b_{1},\ldots,b_{n})$ such that 
+%
+\begin{align*}
+\max_{i}|b_{i}-b_{1}|_{L}\leq W^{\tau}\ell_{s}.
+\end{align*}
+%
+In particular, we can assume that in the representation \eqref{a-local-form}, the coefficients $C_{\textbf{b},\textbf{x},\textbf{y}}$ satisfy
+%
+\begin{align}
+\max_{i}\Big(|[x_{i}]-b_{1}|_{L}+|[y_{i}]-b_{1}|_{L}\Big)\geq W^{2\tau}\ell_{s} \Rightarrow C_{\textbf{b},\textbf{x},\textbf{y}}=0.\label{c-decay-new}
+\end{align}
+%
+Take \eqref{Xi-expansion}. Because ${\cal A}_{\textbf{b}}$ has the sum-zero property by assumption, the term with $B,C=\emptyset$ vanishes as explained after \eqref{Xi-expansion}. For other partitions $\llbracket2,n\rrbracket=A\sqcup B\sqcup C$, there must be an index $i\in B\sqcup C$ with a factor of either $\Xi^{1}_{i}$ or $\Xi^{2}_{i}$; as before, call this factor $\Xi^{1,2}_{i}$, and without loss of generality (upon relabeling indices), assume that $i=2$. Thus, the quantity from \eqref{Xi-expansion} that we must control has the form
+%
+\begin{align*}
+\sum_{\llbracket2,n\rrbracket=A\sqcup B\sqcup C}\sum_{b_{1}}\Xi_{1}\Big(\sum_{b_{2},\ldots,b_{n}}\Xi^{1,2}_{2}\prod_{i\in A}\Xi^{0}_{i}\prod_{i\in B\setminus\{2\}}\Xi^{1}_{i}\prod_{i\in C\setminus\{2\}}\Xi^{2}_{i}\cdot ({\cal A}_{\textbf{b}}-\E{\cal A}_{\textbf{b}})\Big)
+\end{align*}
+%
+By the fast decay property of ${\cal A}_{\textbf{b}}$, the sum over $b_{2},\ldots,b_{n}$ can be restricted to $b_{2},\ldots,b_{n}$ such that $|b_{i}-b_{1}|_{L}\leq W^{\tau}\ell_{s}$ for every $i=2,\ldots,n$. Moreover, if we use the fast decay of $\Xi_{1}$, it suffices to restrict to $b_{1}$ such that $|b_{1}-a_{1}|_{L}\leq W^{\tau}\ell_{t}$ in the above display. In particular, the object we must control (in terms of the right-hand side of the desired estimate \eqref{sum_res_3}) is
+%
+\begin{align}
+    \Gamma:=\sum_{|b_{1}-a_{1}|_{L}\leq W^{\tau}\ell_{t}}\Xi_{1}\Big(\sum_{b_{2},\ldots,b_{n}}\Xi^{1,2}_{2}\prod_{i\in A}\Xi^{0}_{i}\prod_{i\in B\setminus\{2\}}\Xi^{1}_{i}\prod_{i\in C\setminus\{2\}}\Xi^{2}_{i}\cdot ({\cal A}_{\textbf{b}}-\E{\cal A}_{\textbf{b}})\Big).\label{gamma_def_clt}
+\end{align}
+%
+Now, recall that ${\cal A}_{\textbf{b}}\prec \Lambda$. Also, by \eqref{a-local-form} and the assumption that $s\leq 1-N^{-1+\delta}$ for some fixed $\delta>0$, we have ${\cal A}_{\textbf{b}}=O(W^{C})$ for some $C=O(1)$. Thus, we deduce $\E{\cal A}_{\textbf{b}}\prec\Lambda +W^{-D'}$ for any $D'=O(1)$. So, if we follow the derivation of \eqref{llswuwg2}, we deduce the following for any $D=O(1)$:
+%
+\begin{align*}
+\sum_{b_{2},\ldots,b_{n}}\Xi^{1,2}_{2}\prod_{i\in A}\Xi^{0}_{i}\prod_{i\in B\setminus\{2\}}\Xi^{1}_{i}\prod_{i\in C\setminus\{2\}}\Xi^{2}_{i} ({\cal A}_{\textbf{b}}-\E{\cal A}_{\textbf{b}})\prec \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-2} \eta_{s}\ell_{s}^{3}\Big(\frac{1}{1+|a_{2}-b_{1}|_{L}}+\frac{1}{\ell_{t}^{2}\eta_{t}^{1/2}}\Big)\Lambda + W^{-D}.
+\end{align*}
+%
+We now use Lemma \ref{clt-lemma} in two ways. First, we use case 2 of Lemma \ref{clt-lemma} with
+%
+\begin{align*}
+ Z_{ab_{1}}&:=(1+|a-b_{1}|_{L})^{-1}\cdot \eta_{s}^{-1}\ell_{t}^{2}\eta_{t} \cdot (\Xi_{1})_{a_{1}b_{1}}\cdot \mathbf{1}[|b_{1}-a_{1}|_{L}\leq W^{\tau}\ell_{t}],\\
+ Y_{s,b_{1}}&:=\Big(\frac{1}{1+|a_{2}-b_{1}|_{L}}+\frac{1}{\ell_{t}^{2}\eta_{t}^{1/2}}\Big)^{-1}\cdot \sum_{b_{2},\ldots,b_{n}}\Xi^{1,2}_{2}\prod_{i\in A}\Xi^{0}_{i}\prod_{i\in B\setminus\{2\}}\Xi^{1}_{i}\prod_{i\in C\setminus\{2\}}\Xi^{2}_{i}\cdot ({\cal A}_{\textbf{b}}-\E{\cal A}_{\textbf{b}}).
+\end{align*}
+%
+(In this application of Lemma \ref{clt-lemma}, the $\tau$ parameter there is equal to two times the $\tau$ parameter here; see the decay condition in \eqref{c-decay-new}, for example. Moreover, recall from \eqref{Xi-bound-0} that $\Xi_{1}\prec \eta_{s}\ell_{t}^{-2}\eta_{t}^{-1}$. Thus, our choice of $Z_{ab_{1}}$ satisfies the assumption \eqref{clt-z-form}.) Recall also that 
+%
+\begin{align*}
+Y_{s,b_{1}}\prec \left(\frac{\ell_{s}^{2}\eta_{s}}{\ell_{t}^{2}\eta_{t}}\right)^{n-2}\cdot\eta_{s}\ell_{s}^{3}\cdot\Lambda.
+\end{align*}
+%
+Thus, when we do this application of Lemma \ref{clt-lemma}, we arrive at the following for any $D=O(1)$:
+%
+\begin{align*}
+\eta_{s}\ell_{t}^{-2}\eta_{t}^{-1}\cdot \sum_{b_{1}}Z_{a_{2}b_{1}}Y_{s,b_{1}}&\prec W^{C\tau}\ell_{s}\cdot \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-2} \cdot \eta_{s}\ell_{t}^{-2}\eta_{t}^{-1} \cdot \eta_{s}\ell_{s}^{3} \cdot \Lambda + W^{-D}\\
+&\prec W^{C\tau}\left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n}\ell_{t}^{2}\eta_{t}\cdot \Lambda + W^{-D}.
+\end{align*}
+%
+Recalling that $\ell_{t}^{2}\leq\eta_{t}^{-1}$ (see \eqref{eq:bcal_k} and \eqref{eta}) then yields
+%
+\begin{align}
+\eta_{s}\ell_{t}^{-2}\eta_{t}^{-1}\cdot\sum_{b_{1}}Z_{a_{2}b_{1}}Y_{s,b_{1}}&\prec W^{C\tau}\left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n}\cdot \Lambda + W^{-D}.\label{clt-lemma-application-1}
+\end{align}
+%
+Next, we use \eqref{clt-lemma-final-result} (using $\tilde{Z}$ instead of $Z$ in order to avoid confusion with the above notation) with
+%
+\begin{align*}
+\tilde{Z}_{ab_{1}}:=\ell_{t}^{-2}\eta_{t}^{-\frac12}\cdot\eta_{s}^{-1}\ell_{t}^{2}\eta_{t}\cdot (\Xi_{1})_{ab_{1}}\cdot\mathbf{1}[|b_{1}-a|_{L}\leq W^{\tau}\ell_{t}]
+\end{align*}
+%
+and the same choice of $Y_{s,b_{1}}$ as above. Note that by \eqref{Xi-bound-0}, this choice of $\tilde{Z}_{ab_{1}}$ satisfies $\max_{b}|\tilde{Z}_{ab_{1}}|\prec \ell_{t}^{-2}\eta_{t}^{-1/2}$. Thus, we deduce the following for any $D=O(1)$:
+%
+\begin{align*}
+\eta_{s}\ell_{t}^{-2}\eta_{t}^{-1}\cdot \sum_{b_{1}}\tilde{Z}_{a_{1}b_{1}}Y_{s,b_{1}}&\prec W^{C\tau}\ell_{t}\ell_{s}\cdot \ell_{t}^{-2}\eta_{t}^{-\frac12}\cdot \eta_{s}\ell_{t}^{-2}\eta_{t}^{-1}\cdot\eta_{s}\ell_{s}^{3}\cdot \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n-2}\cdot \Lambda+W^{-D}\\
+&\prec W^{C\tau}\cdot \ell_{t}\eta_{t}^{\frac12} \cdot \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n}\cdot \Lambda +W^{-D}.
+\end{align*}
+%
+If we again use $\ell_{t}\eta_{t}^{\frac12}\leq1$, then we obtain
+%
+\begin{align*}
+\eta_{s}\ell_{t}^{-2}\eta_{t}^{-1}\cdot\sum_{b_{1}}\tilde{Z}_{a_{1}b_{1}}Y_{s,b_{1}}&\prec W^{C\tau}\cdot \left(\frac{\ell_s^{2} \eta_s}{\ell_t^{2} \eta_t}\right)^{n}\cdot \Lambda +W^{-D}.
+\end{align*}
+%
+Finally, we observe that, in the above notation, we have 
+%
+\begin{align*}
+\Gamma=\eta_{s}\ell_{t}^{-2}\eta_{t}^{-1}\sum_{b_{1}}Z_{a_{2}b_{1}}Y_{s,b_{1}}+\eta_{s}\ell_{t}^{-2}\eta_{t}^{-1}\sum_{b_{1}}\tilde{Z}_{a_{1}b_{1}}Y_{s,b_{1}}.
+\end{align*}
+%
+Combining the previous two displays with \eqref{clt-lemma-application-1} shows that $\Gamma$ is controlled by the right-hand side of the desired estimate \eqref{sum_res_3}. As noted immediately prior to \eqref{gamma_def_clt}, this completes the proof of case 3, i.e. \eqref{sum_res_3}.
+
+}
+Finally, we consider the case 5 of a double sum zero tensor $\mathcal{A}$. Due to \eqref{nonalternating}, we only need to consider the case when $\boldsymbol{\sigma}$ is alternating. Similarly to the previous cases, we have 
+\begin{equation*}
+    \left(\left(\mathcal{U}_{s,t,\boldsymbol{\sigma}}\otimes \mathcal{U}_{s,t,\boldsymbol{\bar{\sigma}}}\right) \circ \mathcal{A}\right)_{\textbf{a},\textbf{a}} = \sum_{\textbf{b}, \textbf{b}'} \prod_{i=1}^n \psi_i \psi'_i \cdot \mathcal{A}_{\textbf{b},\textbf{b}'},
+\end{equation*}
+where $\psi_i$ are defined in \eqref{def_psixi} and $\psi'_i$ are defined similarly, up to replacing the $b_i$ with $b'_i$ and $\xi_i$ with $\bar{\xi_i}$. More precisely,
+\begin{align}\label{def_psixi_prime}
+     \psi'_i=\delta_{a_ib'_i}+\Xi'_i,  \quad \quad 
+\Xi'_i:=-(s-t)\bar{\xi_i} \cdot \left(S^{(B)}\cdot \Theta^{(B)}_{t \bar{\xi_i}}\right)_{a_ib'_i}.
+\end{align} 
+Using a $2n$-tensor version of \eqref{iukwjn-d=2}, we get that
+\begin{align*}
+    \left|\sum_{\textbf{b}, \textbf{b}'} \left(\prod_{i=1}^n \psi_i \psi'_i-\prod_{i=1}^n\Xi_i\Xi'_i\right) \cdot \mathcal{A}_{\textbf{b},\textbf{b}'}\right| \le C_n \left(\frac{\ell_{s}^{2}\eta_{s}}{\ell_{t}^{2}\eta_{t}}\right)^{2n}\|{\cal A}\|_{\max}+W^{-D+C_{n}}.
+\end{align*}
+%
+Thus, we only need to bound $\sum_{\textbf{b}, \textbf{b}'} \prod_{i=1}^n \Xi_i\Xi'_i \cdot \mathcal{A}_{\textbf{b},\textbf{b}'}$. We decompose $\Xi_i = \Xi_i^0 + \Xi_i^\ast$ and $\Xi'_i =  \Xi_i^{\prime,0} + \Xi_i^{\prime,\ast}$, where $r_i = b_i - b_1$, $r_i' = b_i' - b_1$ and
+\begin{align*}
+    \Xi_i^0 &= \Xi^0(a_i - b_1), \quad &\Xi^\ast_i &= \Xi^1(a_i - b_1, r_i) + \Xi^2(a_i - b_1, r_i),\\
+    \Xi_i^{\prime,0} &= \Xi^0(a_i - b_1), \quad &\Xi^{\prime,\ast}_i &= \Xi^1(a_i - b_1, r'_i) + \Xi^2(a_i - b_1, r'_i).
+\end{align*}
+%
+Due to the double sum zero property of $\mathcal{A}$, we have
+\begin{align*}
+    \sum_{\textbf{b}\setminus b_1} \prod_{i=1}^n \Xi_i^0 \mathcal{A}_{\textbf{b},\textbf{b}'} = 0, \qquad \sum_{\textbf{b}'\setminus b'_1} \prod_{i=1}^n \Xi_i^{\prime,0} \mathcal{A}_{\textbf{b},\textbf{b}'} = 0.
+\end{align*}
+These properties allow us to expand
+\begin{align*}
+    \sum_{\textbf{b}\setminus b_1, \textbf{b}'\setminus b_1'} \prod_{i=1}^n \Xi_i\Xi'_i \cdot \mathcal{A}_{\textbf{b},\textbf{b}'} = \Xi_1 \Xi_1^{\prime}\sum_{B, B'\subset \llbracket 2,n\rrbracket,\, B,B'\neq \emptyset} \prod_{i\in B^{c}} \Xi_i^0 \prod_{i\in B^{\prime,c}} \Xi_i^{\prime,0} \sum_{\textbf{b}\setminus b_1, \textbf{b}'\setminus b_1'} \prod_{i\in B} \Xi_i^\ast \prod_{i\in B'} \Xi_i^{\prime,\ast} \mathcal{A}_{\textbf{b},\textbf{b}'}.
+\end{align*}
+We bound one of the factors $\Xi_i^\ast$ with $i\in B$ and one of the factors $\Xi_i^{\prime,\ast}$ using \eqref{Xi-bound-1}. We control the rest of the factors $\Xi_i^0, \Xi_i^{\prime,0}, \Xi_i^\ast, \Xi_i^{\prime,\ast}$ for $i\ge2$ and $\Xi'_1$ using \eqref{Xi-bound-0}. Then
+\begin{equation}\label{eq-dsz}
+    \sum_{\textbf{b}, \textbf{b}'} \prod_{i=1}^n \Xi_i\Xi'_i \cdot \mathcal{A}_{\textbf{b},\textbf{b}'} \le C_n W^{C_n\tau} \left(\frac{\ell_s^2\eta_s}{\ell_t^2\eta_t}\right)^{2n-3}\cdot \max_{\textbf{b}\setminus b_1, \textbf{b}'} \sum_{b_1}\left[\sum_{i=2}^n \frac{\ell_s^3\eta_s}{|a_i-b_1|_L+1}+\frac{\ell_s^3\eta_s}{\ell_t^2\eta_t^{1/2}}\right]^2 \cdot \Xi_1 \left|\mathcal{A}_{\textbf{b},\textbf{b}'} \right| + W^{-D+C_n}.
+\end{equation}
+The bound in this case is completely analogous to the bound on the second line of \eqref{eq-2-first-der} and we get
+$$
+\sum_{\textbf{b}, \textbf{b}'} \prod_{i=1}^n \Xi_i\Xi'_i \cdot \mathcal{A}_{\textbf{b},\textbf{b}'} \le C_n W^{C_n\tau} \left(\frac{\ell_s^2\eta_s}{\ell_t^2\eta_t}\right)^{2n}\cdot  \|\mathcal{A}\|_{\max}  + W^{-D+C_n},
+$$
+which completes the proof.
+\end{proof}
+
+We now record the following lemma, which was used in the proof of \eqref{sum_res_3}. 
+%%%
+\begin{lemma}\label{clt-lemma}
+Fix $u=O(1)$, and consider a function of $b\in\Z_{L}^{2}$ of the following form:
+%
+\begin{align}
+Y_{s,b}=\sum_{\textbf{x},\textbf{y}\in(\Z_{WL}^{2})^{u}}C_{b,\textbf{x},\textbf{y}}\cdot\prod_{i=1}^{u}G_{s}(\sigma_{i})_{x_{i}y_{i}}.\label{clt-yform}
+\end{align}
+%
+Above, $u=O(1)$ is fixed. The coefficients $C_{b,\textbf{x},\textbf{y}}$ are deterministic, and they satisfy the following conditions. First, for some $C'=O(1)$, we have 
+%
+\begin{align*}
+\|C\|_{\max}\leq N^{C'}.
+\end{align*}
+%
+Second, there exists $\tau>0$ such that 
+%
+\begin{align*}
+\max_{i}\Big(|[x_{i}]-b|_{L}+|[y_{i}]-b|_{L}\Big)\geq W^{\tau}\ell_{s} \Rightarrow C_{b,\textbf{x},\textbf{y}}=0.
+\end{align*}
+%
+{Third, there exists a deterministic constant $\Lambda>0$ such that 
+%
+\begin{align*}
+\max_{b}|Y_{s,b}|\prec\Lambda.   
+\end{align*}
+}
+Moreover, suppose that $0\leq s\leq 1-N^{-1+\delta}$ for fixed $\delta>0$, and that \eqref{Gt_bound_flow} and \eqref{Eq:Gdecay_w} hold at time $s$. 
+
+Now, let $Z=(Z_{ab})_{a,b\in\Z_{L}^{2}}$ be a deterministic matrix. We consider two separate cases.
+%%%
+\medskip
+
+Case 1: the matrix $Z$ satisfies the following constraint: 
+%
+\begin{align}
+|a-b|_{L}\geq W^{\tau}\ell_{t} \Rightarrow Z_{ab}=0.\label{clt-zrange}
+\end{align}
+%
+In this case, for any $D>0$ and for some $C=O(1)$, we have
+%
+\begin{align}
+\sum_{b}Z_{ab}(Y_{s,b}-\E Y_{s,b})&\prec W^{C\tau}\ell_{t}\ell_{s}\cdot\max_{b}|Z_{ab}|\cdot\Lambda+W^{-D}\cdot \max_{b}|Z_{ab}|.\label{clt-lemma-final-result}
+\end{align}
+%
+
+{Case 2: suppose that we have the bound
+%
+\begin{align}
+Z_{ab}\prec(1+|a-b|_{L})^{-1},\quad a,b\in\Z_{L}^{2}.\label{clt-z-form}
+\end{align}
+%
+Then, for any $D>0$ and some $C=O(1)$, we have
+%
+\begin{align}
+ \sum_{b}Z_{ab}(Y_{s,b}-\E Y_{s,b})&\prec W^{C\tau}\cdot \ell_{s}\cdot\Lambda+W^{-D}.   \label{clt-lemma-final-result2}
+\end{align}
+}\end{lemma}
+%%%
+Note that the trivial bound on the left-hand side of \eqref{clt-lemma-final-result} has $\ell_t$ instead of $\ell_s$ on the right-hand side of \eqref{clt-lemma-final-result}. The key observation leading to the improved bound is that $Y_{s,b_1}$ and $Y_{s, b_2}$ are essentially independent when $|b_1-b_2|_{L}\gg \ell_s$. Then the additional factor of $\frac{\ell_s}{\ell_t}$ comes from the CLT-like cancellation of the left-hand side. Here we explain the source of this independence. We claim that, heuristically, the resolvent entries $G_{s,xy}$ in the $\ell_s$ range around the $(b, b)$ block of the matrix (meaning that $|[x]-b|_{L}+|[y]-b|_{L} \le W^{\tau}\ell_s$) depend only on the entries of $H$ in the $\ell_s$ range around $b$. Indeed, we can compute the correlations of $H_{ij}$ with $G_{xy}$ by integration by parts:
+\begin{equation}\label{eq:ibp-heuristic}
+    \E H_{ij} G_{xy} = S_{ij}\E G_{xj} G_{iy},\quad \E \bar{H}_{ij} G_{xy} = S_{ij}\E G_{xi} G_{jy}.
+\end{equation}
+Due to the decay property of the resolvent entries \eqref{Eq:Gdecay_w}, the correlations \eqref{eq:ibp-heuristic} are $O(W^{-D})$ for any $D>0$ when {$|[i]-b|_{L}+|[j]-b|_{L}\gg W^{\tau} \ell_s$}. {This (heuristically) suggests that $G_{xy}$ and $G_{x'y'}$ are almost independent if $(x,y)$ is far from $(x',y')$.} From the definition \eqref{clt-yform} of $Y_{s,b}$, we see that the random functions $Y_{s,b_1}$ and $Y_{s,b_2}$ depend only on the resolvent entries in the $\ell_s$ range of $b_1$ and $b_2$ blocks, respectively, up to a $O(W^{-D})$ error term. 
+
+Thus, the randomness in $Y_{s,b_1}$ and $Y_{s,b_2}$ essentially comes from two disjoint subsets of the entries of $H$ in case $|b_1-b_2|_{L}\gg {W^{\tau}}\ell_s$. This implies their {(almost)} independence. 
+
+In order to make this argument rigorous, we compute $\E Y_{s,b_1} Y_{s,b_2}$ by interpolating between this correlation and $\E Y'_{s,b_1} Y_{s,b_2}$, where $Y'_{s,b_1}$ is an independent copy of $Y_{s,b_1}$. Interpolation is achieved by viewing $Y_{s,b_1}$ as a function of entries of $H$ and replacing the entries by their independent copies one by one. Then on a single step of the interpolation the change in the correlation is bounded in one of the two ways. One option is that the replaced entry $H_{ij}$ is located far away from $b_1$ ($|[i]-b_1|_{L}+|[j]-b_1|_{L}\gg {W^{\tau}}\ell_s$), then the change in the function $Y_{s,b_1}$ is $O(W^{-D})$. The other option is that $H_{ij}$ is far away from $b_2$ ($|[i]-b_2|_{L}+|[j]-b_2|_{L}\gg {W^{\tau}}\ell_s$). In this case, we Taylor expand $Y_{s,b_1}$ in $H_{ij}$ variable and use the bounds on the correlations of $H_{ij}$ with $Y_{s,b_2}$ explained below \eqref{eq:ibp-heuristic}. {A similar argument controls higher moments of the left-hand side of \eqref{clt-lemma-final-result}.} We present the full proof with details below.
+
+\begin{proof}
+Throughout this argument, we will let $G_{s}=(\sqrt{s}H-z_{s})^{-1}$; since the final conclusion \eqref{clt-lemma-final-result} is a statement about the law of $G_{s}$, this convention is okay. We compute $2p$-th moments. We have 
+%
+\begin{align}
+\E\left|\sum_{b}Z_{ab}(Y_{s,b}-\E Y_{s,b})\right|^{2p}&=\sum_{b_{1},\ldots,b_{2p}}\prod_{k=1}^{p}Z_{ab_{k}}\prod_{k=p+1}^{2p}\overline{Z}_{ab_{k}}\E\left[\prod_{k=1}^{p}(Y_{s,b_{k}}-\E Y_{s,b_{k}})\prod_{k=p+1}^{2p}(\overline{Y}_{s,b_{k}}-\E \overline{Y}_{s,b_{k}})\right].\label{clt-lemmamoment}
+\end{align}
+%
+Suppose that there exists an index, say $b_{1}$, such that $\min_{k=2,\ldots,2p}|b_{1}-b_{k}|_{L}\geq W^{2\tau}\ell_{s}$. We claim that
+%
+\begin{align}
+\left|\E\left[\prod_{k=1}^{p}(Y_{s,b_{k}}-\E Y_{s,b_{k}})\prod_{k=p+1}^{2p}(\overline{Y}_{s,b_{k}}-\E \overline{Y}_{s,b_{k}})\right]\right|\leq c_{D} W^{-D}\label{clt-lemmafar}
+\end{align}
+%
+for any $D>0$, where $c_{D}$ depends only on $D$. To prove this, we first realize $Y_{s,b_{k}}=Y_{s,b_{k}}(H)$ as a function of the entries of $H$. Let $H'$ be an i.i.d. copy of $H$. For any indices $i\leq j$, define
+%
+\begin{align}
+\Delta_{ij}Y_{s,b_{k}}&:=Y_{s,b_{k}}(H_{11},H_{12},\ldots,H_{ij},H_{i(j+1)}',\ldots,H_{NN}')\label{clt-delta}\\
+&-Y_{s,b_{k}}(H_{11},H_{12},\ldots,H_{ij}',H_{i(j+1)}',\ldots,H_{NN}').\nonumber
+\end{align}
+%
+We also set $Y'_{s,b_{k}}:=Y_{s,b_{k}}(H')$. (Here, and throughout this argument, indices $i,j$ are reserved for elements of $\{1,\ldots,N\}$, and they will only be used as indices for $H$ and $H'$. We will identify these indices with elements in $\Z_{WL}^{2}$ when we apply the $[\cdot]$ operation, but the exact choice of identification $\{1,\ldots,N\}\simeq \Z_{WL}^{2}$ is unimportant.) By telescoping sum, we have 
+%
+\begin{align}
+\sum_{i\leq j}\Delta_{ij}Y_{s,b_{k}}=Y_{s,b_{k}}(H)-Y_{s,b_{k}}(H').\label{clt-telescope-general}
+\end{align}
+%
+Now, for the $k=1$ factor in \eqref{clt-lemmafar}, we rewrite it as $Y_{s,b_{1}}-\E Y_{s,b_{1}}=Y_{s,b_{1}}-Y_{s,b_{1}}(H')+Y_{s,b_{1}}(H')-\E Y_{s,b_{1}}$. Using \eqref{clt-telescope-general} to rewrite $Y_{s,b_{1}}-Y_{s,b_{1}}(H')$ then gives
+%
+\begin{align}
+&\E\left[\prod_{k=1}^{p}(Y_{s,b_{k}}-\E Y_{s,b_{k}})\prod_{k=p+1}^{2p}(\overline{Y}_{s,b_{k}}-\E \overline{Y}_{s,b_{k}})\right]\\
+&=\E\left[(Y_{s,b_{1}}(H')-\E Y_{s,b_{1}})\prod_{k=2}^{p}(Y_{s,b_{k}}-\E Y_{s,b_{k}})\prod_{k=p+1}^{2p}(\overline{Y}_{s,b_{k}}-\E \overline{Y}_{s,b_{k}})\right]\label{clt-lemma'}\\
+&+\sum_{i\leq j}\E\left[\Delta_{ij}Y_{s,b_{1}}\prod_{k=2}^{p}(Y_{s,b_{k}}-\E Y_{s,b_{k}})\prod_{k=p+1}^{2p}(\overline{Y}_{s,b_{k}}-\E \overline{Y}_{s,b_{k}})\right].\label{clt-lemmatelescope}
+\end{align}
+%
+Of course, we can certainly restrict to $i,j$ such that $S_{ij}\neq0$ in \eqref{clt-lemmatelescope}; otherwise, $H_{ij}$ and $H_{ij}'$ are both $0$, and thus $\Delta_{ij}Y_{s,b_{1}}=0$ in this case. We will implicitly make this assumption for the rest of the proof of \eqref{clt-lemmafar}.
+
+Since $Y'_{s,b_{1}}$ is independent of all the $Y_{s,b_{k}}$, we know that \eqref{clt-lemma'} is zero. Since the number of summands in \eqref{clt-lemmatelescope} is $O(W^{C})$ for some $C=O(1)$, in order to prove \eqref{clt-lemmafar}, it suffices to control each summand in \eqref{clt-lemmatelescope}. Next, consider the function $\rho\mapsto Y_{s,b_{1}}(H_{11},\ldots,\rho H_{ij},H_{i(j+1)}',\ldots,H_{NN}')$. We think of this as a function $f_{s,b_{1}}(\rho H_{ij},\rho\overline{H}_{ij})$, so that $f_{s,b_{1}}$ is smooth in its two inputs. Taylor expanding in $\rho$ gives
+%
+\begin{align}
+Y_{s,b_{1}}(H_{11},\ldots,H_{ij},H_{i(j+1)}',\ldots,H_{NN}')&=f_{s,b_{1}}(0)+\sum_{\alpha=1}^{D_{1}}\frac{1}{\alpha!}\frac{d^{\alpha}}{d\rho^{\alpha}}f_{s,b_{1}}(0,0)\nonumber\\
+&+\frac{1}{D_{1}!}\int_{0}^{1}(1-\rho_{ij})^{D_{1}}\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}f_{s,b_{1}}(\rho_{ij}H_{ij},\rho_{ij}\overline{H}_{ij})\,d\rho_{ij},\label{clt-y-taylor}
+\end{align}
+%
+where $D_{1}>0$ is any large constant independent of $W$. (Since $f_{s,b_{1}}$ is complex-valued, we use the integral form of the remainder.) Using the chain rule, we compute the following for any $\alpha\geq1$:
+%
+\begin{align}
+\frac{d^{\alpha}}{d\rho^{\alpha}}f_{s,b_{1}}(\rho H_{ij},\rho\overline{H}_{ij})=\sum_{v=0}^{\alpha}\binom{\alpha}{v}\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(\rho H_{ij},\rho\overline{H}_{ij})\cdot H_{ij}^{v}\overline{H}_{ij}^{\alpha-v}.\label{clt-f-total}
+\end{align}
+%
+Similarly, for the function $\rho\mapsto Y_{s,b_{1}}(H_{11},\ldots,\rho H_{ij}',H_{i(j+1)}',\ldots,H_{NN}')=f_{s,b_{1}}(\rho H_{ij}',\rho\overline{H}_{ij}')$, we have 
+%
+\begin{align}
+Y_{s,b_{1}}(H_{11},\ldots,H_{ij}',H_{i(j+1)}',\ldots,H_{NN}')&=f_{s,b_{1}}(0)+\sum_{\alpha=1}^{D_{1}}\frac{1}{\alpha!}\frac{d^{\alpha}}{d\rho^{\alpha}}f_{s,b_{1}}(0,0)\\
+&+\frac{1}{D_{1}!}\int_{0}^{1}(1-\rho_{ij})^{D_{1}}\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}f_{s,b_{1}}(\rho_{ij}H_{ij}',\rho_{ij}\overline{H}_{ij}')\,d\rho_{ij}.\label{clt-y'-taylor}
+\end{align}
+%
+If we now combine \eqref{clt-y-taylor}, \eqref{clt-y'-taylor}, \eqref{clt-f-total}, and \eqref{clt-delta}, we deduce
+%
+\begin{align}
+\Delta_{ij}Y_{s,b_{1}}&=\sum_{\alpha=1}^{D_{1}}\frac{1}{\alpha!}\sum_{v=0}^{\alpha}\binom{\alpha}{v}\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\left[H_{ij}^{v}\overline{H}_{ij}^{\alpha-v}-(H_{ij}')^{v}(\overline{H}_{ij}')^{\alpha-v}\right]\\
+&+\frac{1}{D_{1}!}\int_{0}^{1}(1-\rho_{ij})^{D_{1}}\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}\Big(f_{s,b_{1}}(\rho_{ij}H_{ij},\rho_{ij}\overline{H}_{ij})-f_{s,b_{1}}(\rho_{ij}H_{ij}',\rho_{ij}\overline{H}_{ij}')\Big)\,d\rho_{ij}.
+\end{align}
+%
+For convenience, let $\Gamma_{s}$ denote the product of the two products in \eqref{clt-lemmatelescope}, so that
+%
+\begin{align*}
+\Gamma_{s}:=\prod_{k=2}^{p}(Y_{s,b_{k}}-\E Y_{s,b_{k}})\prod_{k=p+1}^{2p}(\overline{Y}_{s,b_{k}}-\E \overline{Y}_{s,b_{k}}).
+\end{align*}
+%
+We have 
+%
+\begin{align}
+\E[\Delta_{ij}Y_{s,b_{1}}\cdot\Gamma_{s}]&=\sum_{\alpha=1}^{D_{1}}\sum_{v=0}^{\alpha}\frac{1}{\alpha!}\binom{\alpha}{v}\E\left[\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\Gamma_{s}\cdot\left\{H_{ij}^{v}\overline{H}_{ij}^{\alpha-v}-(H_{ij}')^{v}(\overline{H}_{ij}')^{\alpha-v}\right\}\right]\nonumber\\
+&+\frac{1}{D_{1}!}\int_{0}^{1}(1-\rho_{ij})^{D_{1}}\E\left[\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}f_{s,b_{1}}(\rho_{ij}H_{ij},\rho_{ij}\overline{H}_{ij})\cdot\Gamma_{s}\right]d\rho_{ij}\nonumber\\
+&-\frac{1}{D_{1}!}\int_{0}^{1}(1-\rho_{ij})^{D_{1}}\E\left[\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}f_{s,b_{1}}(\rho_{ij}H_{ij}',\rho_{ij}\overline{H}_{ij}')\cdot\Gamma_{s}\right]d\rho_{ij}.\label{clt-taylor}
+\end{align}
+%
+We will estimate each term on the right-hand side of \eqref{clt-taylor}. For this, we need some auxiliary estimates. Let $G^{i,j}=(\sqrt{s}H^{i,j}-z_{s})^{-1}$, where $H^{i,j}=H-(1-\gamma_{ij})H_{ij}e_{i}e_{j}^{\dagger}-(1-\gamma_{ij})H_{ji}e_{j}e_{i}^{\dagger}$, be the resolvent $G_{s}$ except we replace the entries $H_{ij},H_{ji}$ by $\gamma_{ij}H_{ij},\gamma_{ij}H_{ji}$, respectively. We will only assume that $\gamma_{ij}=O(1)$; they can be random and depend on $H_{uv},H'_{uv}$ entries, and we will be interested in either $\gamma_{ij}=0$ or $\gamma_{ij}=\rho_{ij}\in[0,1]$ from \eqref{clt-y-taylor}.
+%%%
+\begin{itemize}
+\item By resolvent expansion, Gaussianity of $H$ entries, and the assumption $\|G_{s}\|_{\max}\prec1$ from \eqref{Gt_bound_flow}, we have $G^{i,j}_{xy}=(G_{s})_{xy}+\mathrm{O}_{\prec}(W^{-1}\|G^{i,j}\|_{\max})$. Taking a maximum over $x,y$ gives 
+%
+\begin{align}
+\|G^{i,j}\|_{\max}\prec\|G_{s}\|_{\max}\prec1.\label{clt-gij-bound}
+\end{align}
+%
+\item By the same resolvent expansion, for any $K_{0}>0$ large and any indices $x,y=1,\ldots,N$, we have 
+%
+\begin{align*}
+G^{i,j}_{xy}&=(G_{s})_{xy}+\sum_{k=1}^{K_{0}}(G_{s}(X^{i,j}G_{s})^{k})_{xy}+\left(G^{i,j}(X^{i,j}G_{s})^{K_{0}+1}\right)_{xy},
+\end{align*}
+%
+where $X^{i,j}$ is supported at $(i,j)$ and $(j,i)$ entries, and its entries are all $\mathrm{O}_{\prec}(S_{ij}^{1/2})$. We now compute
+%
+\begin{align}
+(G_{s}(X^{i,j}G_{s})^{k})_{xy}&=\sum_{\substack{\{i_{1},i_{2}\}=\{i,j\}\\\ldots\\\{i_{2k-1},i_{2k}\}=\{i,j\}}}(G_{s})_{xi_{1}}X^{i,j}_{i_{1}i_{2}}(G_{s})_{i_{2}i_{3}}\ldots X^{i,j}_{i_{2k-1}i_{2k}}(G_{s})_{i_{2k}y},\label{clt-resolvent}\\
+(G^{i,j}(X^{i,j}G_{s})^{k})_{xy}&=\sum_{\substack{\{i_{1},i_{2}\}=\{i,j\}\\\ldots\\\{i_{2k-1},i_{2k}\}=\{i,j\}}}G^{i,j}_{xi_{1}}X^{i,j}_{i_{1}i_{2}}(G_{s})_{i_{2}i_{3}}\ldots X^{i,j}_{i_{2k-1}i_{2k}}(G_{s})_{i_{2k}y}.
+\end{align}
+%
+In each identity, the number of summands is bounded by a constant depending only on $k$. Thus, as long as $K_{0}$ is finite, we can use $\|X^{i,j}\|_{\max}\prec W^{-1}$ and $\|G^{i,j}\|_{\max}+\|G_{s}\|_{\max}\prec1$ to deduce that $(G^{i,j}(X^{i,j}G_{s})^{K_{0}+1})_{xy}\prec W^{-(K_{0}+1)}$. 
+
+Next, fix any $\tau',D'>0$. We also fix $a,b\in\Z_{L}^{2}$ so that $x\in{\cal I}^{(2)}_{a}$ and $y\in{\cal I}^{(2)}_{b}$. We claim that if $|a-b|_{L}>W^{2\tau'}\ell_{s}$, where $|\cdot|_L$ is periodic distance on $\Z_{L}^{2}$, then $(G_{s}(X^{i,j}G_{s})^{k})_{xy}\prec W^{-D'}$. Indeed, take \eqref{clt-resolvent}. If $|a-b|_{L}>W^{2\tau'}\ell_{s}$ and $k=O(1)$, then at least one of the following must be true:
+%%%
+\begin{itemize}
+\item There exists some $i_{n},i_{n+1}$ indices such that $|i_{n}-i_{n+1}|_{L}\geq W^{1+\tau'}\ell_{s}$; indeed, if $|a-b|_{L}>W^{2\tau'}\ell_{s}$, then $|x-y|\geq W^{1+2\tau'}\ell_{s}$. If this pair of indices corresponds to the factor $X^{i,j}_{i_{n}i_{n+1}}$, then this factor is equal to $0$. If this pair of indices corresponds to the factor $(G_{s})_{i_{n}i_{n+1}}$, then by the assumption \eqref{Eq:Gdecay_w} and \eqref{GijGEX}, we have $|(G_{s})_{i_{n}i_{n+1}}|\prec W^{-D'}$. Moreover, since $\|X^{i,j}\|_{\max}+\|G_{s}\|_{\max}\prec1$, this implies that the corresponding summand on the right-hand side of \eqref{clt-resolvent} is $\mathrm{O}_{\prec}(W^{-D'})$.
+\item We have either $|a-i_{1}|_{L}\geq W^{1+\tau'}\ell_{s}$ or $|i_{2k}-b|_{L}\geq W^{1+\tau'}\ell_{s}$. The same reasoning in the previous paragraph implies that the corresponding summand in \eqref{clt-resolvent} is $\mathrm{O}_{\prec}(W^{-D'})$.
+\end{itemize}
+%%%
+Ultimately, we deduce that for any $\tau',D'>0$, we have $(G_{s}(X^{i,j}G_{s})^{k})_{xy}\prec W^{-D'}$ if $|a-b|_{L}\geq W^{\tau'}\ell_{s}$. Finally, since $|(G_{s})_{xy}|\prec W^{-D'}$ if $|a-b|_{L}\geq W^{\tau'}\ell_{s}$, we conclude that for any $\tau',D'>0$, we have
+%
+\begin{align}
+\mathbf{1}[|a-b|_{L}\geq W^{\tau'}\ell_{s}]\sup_{x\in{\cal I}^{(2)}_{a}}\sup_{y\in{\cal I}^{(2)}_{b}}|G^{i,j}_{xy}|\prec W^{-D'}.\label{clt-gij-decay}
+\end{align}
+%
+\item Our last auxiliary estimate is a bound on $\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}$ in \eqref{clt-f-total}. Recall that
+%
+\begin{align*}
+f_{s,b_{1}}(\rho H_{ij},\rho \overline{H}_{ij})=Y_{s,b_{1}}(H_{11},\ldots,\rho H_{ij},H_{i(j+1)}',\ldots,H_{NN}'),
+\end{align*}
+%
+and recall that $Y_{s,b_{1}}$ has the form \eqref{clt-yform}. In particular, $\partial_{1}f_{s,b_{1}}$ is the derivative of $Y_{s,b_{1}}$ from \eqref{clt-yform} with respect to $H_{ij}$ (treating $H_{ij}$ and $\overline{H}_{ij}$ as separate variables), and $\partial_{2}f_{s,b_{1}}$ is the derivative of $Y_{s,b_{1}}$ in $\overline{H}_{ij}$. Each such derivative can only act on entries of $G_{s}$ or $G_{s}^{\dagger}$ in \eqref{clt-yform}; when it hits one such entry, it returns two entries of $G_{s}$ or $G_{s}^{\dagger}$. More precisely, we have $\partial_{H_{ij}}(G_{s})_{xy}=-(G_{s})_{xi}(G_{s})_{jy}$, and similar standard formulas hold for $\overline{H}_{ij}$ instead of $H_{ij}$ and/or $G_{s}^{\dagger}$ instead of $G_{s}$. Therefore, since $\|C\|_{\max}\leq N^{C'}$ in \eqref{clt-yform}, and since $W\geq N^{\mathfrak{c}}$ gives $\|C\|_{\max}=O(W^{C})$ for some $C=O(1)$, we deduce from \eqref{clt-gij-bound} that for any $\alpha=O(1)$ and $0\leq v\leq \alpha$ and $\gamma_{ij}=O(1)$, we have
+%
+\begin{align}
+|\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(\gamma_{ij} H_{ij},\gamma_{ij}\overline{H}_{ij})|\prec W^{C}.\label{clt-f-total-bound-1}
+\end{align}
+%
+If we instead bound entries of Green's functions that appear in $\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}$ using the deterministic bound $O(W^{C})$ for some $C=O(1)$, then we instead have the following deterministic bound for any $\alpha=O(1)$ and $0\leq v\leq \alpha$ and $\gamma_{ij}=O(1)$, where now $C_{D_{1}}$ depends on $D_{1}>0$:
+%
+\begin{align}
+|\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(\gamma_{ij} H_{ij},\gamma_{ij}\overline{H}_{ij})|= O(W^{C_{D_{1}}}).\label{clt-f-total-bound-2}
+\end{align}
+%
+\item We note that \eqref{clt-gij-bound}, \eqref{clt-gij-decay}, \eqref{clt-f-total-bound-1}, and \eqref{clt-f-total-bound-2} all hold if we replace $H_{ij},\overline{H}_{ij}$ by $H_{ij}',\overline{H}_{ij}'$, respectively. Indeed, the proofs of \eqref{clt-gij-bound}, \eqref{clt-gij-decay} use only $|H_{ij}|\prec S_{ij}^{1/2}$. The proof of \eqref{clt-f-total-bound-1} uses only the distribution of $H_{ij}$. The proof of \eqref{clt-f-total-bound-2} is deterministic in $H_{ij}$.
+\end{itemize}
+%%%
+We will now use the bounds \eqref{clt-gij-bound}, \eqref{clt-gij-decay}, \eqref{clt-f-total-bound-1}, and \eqref{clt-f-total-bound-2} to control the second term on the right-hand side of \eqref{clt-taylor}. To this end, we fix $\rho_{ij}\in[0,1]$ and bound the expectation in the integrand, uniformly in $\rho_{ij}$. First, we recall that $\Gamma_{s}$ is the product of the $k\geq2$ factors in \eqref{clt-lemmatelescope}. By \eqref{clt-yform}, we know that $|\Gamma_{s}|=O(W^{C})$ deterministically for some $C=O(1)$ depending only on $p$. This gives
+%
+\begin{align}
+&\left|\E\left[\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}f_{s,b_{1}}(\rho_{ij}H_{ij},\rho_{ij}\overline{H}_{ij})\cdot\Gamma_{s}\right]\right|\nonumber\\
+&\leq O(W^{C})\E\left[\left|\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}f_{s,b_{1}}(\rho_{ij}H_{ij},\rho_{ij}\overline{H}_{ij})\right|\right]\nonumber\\
+&\leq O(W^{C})\sum_{v=0}^{D_{1}+1}\E\left|\partial_{1}^{v}\partial_{2}^{D_{1}+1-v}f_{s,b_{1}}(\rho_{ij} H_{ij},\rho_{ij}\overline{H}_{ij})\cdot H_{ij}^{v}\overline{H}_{ij}^{D_{1}+1-v}\right|,\label{clt-remainder-bound-1}
+\end{align}
+%
+where the last line follows by \eqref{clt-f-total} and the triangle inequality. Now, fix any $D_{2}>0$ and any $0\leq v\leq D_{1}+1$. By \eqref{clt-f-total-bound-1} for $\alpha=D_{1}+1$, there exists a good event ${\cal E}$ such that $\mathbb{P}({\cal E})=1-O(W^{-D_{2}})$, and such that on ${\cal E}$, we have $|\partial_{1}^{v}\partial_{2}^{D_{1}+1-v}f_{s,b_{1}}(\rho_{ij} H_{ij},\rho_{ij}\overline{H}_{ij})|=O(W^{2C})$ for some $C=O(1)$. We now estimate the expectation in the last line above by separating into ${\cal E}$ and its complement ${\cal E}^{c}$. On ${\cal E}$, we use the bound $|\partial_{1}^{v}\partial_{2}^{D_{1}+1-v}f_{s,b_{1}}(\rho_{ij} H_{ij},\rho_{ij}\overline{H}_{ij})|=O(W^{2C})$. On the bad event ${\cal E}^{c}$, we use the deterministic bound \eqref{clt-f-total-bound-2} for $\alpha=D_{1}+1$. This implies that 
+%
+\begin{align}
+&\E\left|\partial_{1}^{v}\partial_{2}^{D_{1}+1-v}f_{s,b_{1}}(\rho_{ij} H_{ij},\rho_{ij}\overline{H}_{ij})\cdot H_{ij}^{v}\overline{H}_{ij}^{D_{1}+1-v}\right|\\
+&\leq O(W^{2C})\E|H_{ij}^{v}\overline{H}_{ij}^{D_{1}+1-v}|+O(W^{2C_{D_{1}}})\E[\mathbf{1}_{{\cal E}^{c}}|H_{ij}^{v}\overline{H}_{ij}^{D_{1}+1-v}|]\\
+&\leq O(W^{2C}W^{-(D_{1}+1)})+O(W^{2C_{D_{1}}})\mathbb{P}({\cal E}^{c})^{1/2}\\
+&\leq O(W^{2C}W^{-(D_{1}+1)})+O(W^{2C_{D_{1}}}W^{-D_{2}/2}).
+\end{align}
+%
+Fix any $D'>0$. We can choose $D_{1}>0$ large enough and then $D_{2}>0$ large enough depending on $D_{1}$ such that the last line above is $O(W^{-D'})$. In particular, combining this with \eqref{clt-remainder-bound-1} implies the following. For any $D_{3}>0$, there exists $D_{1}>0$ such that 
+%
+\begin{align}
+\E\left[\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}f_{s,b_{1}}(\rho_{ij}H_{ij},\rho_{ij}\overline{H}_{ij})\cdot\Gamma_{s}\right]=O(W^{-D_{3}})\quad\text{uniformly in }\rho_{ij}\in[0,1].\label{clt-remainder-bound}
+\end{align}
+%
+The same argument provides the same bound on the last term in \eqref{clt-taylor}, i.e. for any $D_{3}>0$, there exists $D_{1}>0$ such that 
+%
+\begin{align}
+\E\left[\frac{d^{D_{1}+1}}{d\rho_{ij}^{D_{1}+1}}f_{s,b_{1}}(\rho_{ij}H'_{ij},\rho_{ij}\overline{H}'_{ij})\cdot\Gamma_{s}\right]=O(W^{-D_{3}})\quad\text{uniformly in }\rho_{ij}\in[0,1].\label{clt-remainder-bound-same}
+\end{align}
+%
+We are left to control the first term on the right-hand side of \eqref{clt-taylor}, which is a sum over $\alpha,v$; fix any such $\alpha,v$. We first expand $H_{ij}^{v}\overline{H}_{ij}^{\alpha-v}$ as a linear combination of Hermite polynomials in $H_{ij},\overline{H}_{ij}$ of degree at most $\alpha$. We do the same to $(H_{ij}')^{v}(\overline{H}_{ij}')^{\alpha-v}$. In these expansions, the zero-th degree (constant) terms cancel each other out. Then, by Gaussian integration-by-parts, we get
+%
+\begin{align}
+&\E\left[\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\Gamma_{s}\cdot\left\{H_{ij}^{v}\overline{H}_{ij}^{\alpha-v}-(H_{ij}')^{v}(\overline{H}_{ij}')^{\alpha-v}\right\}\right]\\
+&=\sum_{\substack{q_{1},q_{2}=0,\ldots,\alpha\\q_{1}+q_{2}>0}}c_{q_{1},q_{2}}\E\left[\left\{S_{ij}^{q_{1}+q_{2}}\partial_{H_{ij}}^{q_{1}}\partial_{\overline{H}_{ij}}^{q_{2}}\right\}\left(\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\Gamma_{s}\right)\right]\\
+&-\sum_{\substack{q_{1},q_{2}=0,\ldots,\alpha\\q_{1}+q_{2}>0}}c_{q_{1},q_{2}}\E\left[\left\{S_{ij}^{q_{1}+q_{2}}\partial_{H_{ij}'}^{q_{1}}\partial_{\overline{H}_{ij}'}^{q_{2}}\right\}\left(\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\Gamma_{s}\right)\right].
+\end{align}
+%
+Above, $c_{q_{1},q_{2}}=O(1)$ are deterministic constants. The last line vanishes, since nothing inside the expectation depends on $H_{ij}',\overline{H}_{ij}'$. For the first term on the right-hand side above, we note that because we evaluate the $f_{s,b_{1}}$ derivatives at $(0,0)$, they have no dependence on $H_{ij},\overline{H}_{ij}$, so the derivatives act only on $\Gamma_{s}$ (which we recall to be the product of the $k\geq2$ factors in \eqref{clt-lemmatelescope}). Thus, we have 
+%
+\begin{align}
+&\E\left[\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\Gamma_{s}\cdot\left\{H_{ij}^{v}\overline{H}_{ij}^{\alpha-v}-(H_{ij}')^{v}(\overline{H}_{ij}')^{\alpha-v}\right\}\right]\nonumber\\
+&=\sum_{\substack{q_{1},q_{2}=0,\ldots,\alpha\\q_{1}+q_{2}>0}}c_{q_{1},q_{2}}\E\left[\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\left\{S_{ij}^{q_{1}+q_{2}}\partial_{H_{ij}}^{q_{1}}\partial_{\overline{H}_{ij}}^{q_{2}}\right\}\Gamma_{s}\right].\label{clt-ibp}
+\end{align}
+%
+We now study further the derivatives of $\Gamma_{s}$ in \eqref{clt-ibp}; again, recall that $\Gamma_{s}$ is the product of $k\geq2$ factors in \eqref{clt-lemmatelescope}. Thus, by the Leibniz rule, we have the following for some deterministic constants $c_{\textbf{w}_{1},\textbf{w}_{2}}=O(1)$:
+%
+\begin{align}
+&\left\{\partial_{H_{ij}}^{q_{1}}\partial_{\overline{H}_{ij}}^{q_{2}}\right\}\Gamma_{s}\label{clt-ibp-leibniz}\\
+&=\sum_{\substack{\mathbf{w}_{1}:=(w_{1,2},\ldots,w_{1,2p})\in\Z_{\geq0}^{2p-1}\\w_{1,2}+\ldots+w_{1,2p}=q_{1}\\\mathbf{w}_{2}:=(w_{2,2},\ldots,w_{2,2p})\in\Z_{\geq0}^{2p-1}\\w_{2,2}+\ldots+w_{2,2p}=q_{2}}}c_{\textbf{w}_{1},\textbf{w}_{2}}\prod_{k=2}^{p}\partial_{H_{ij}}^{w_{1,k}}\partial_{\overline{H}_{ij}}^{w_{2,k}}(Y_{s,b_{k}}-\E Y_{s,b_{k}})\cdot\prod_{k=p+1}^{2p}\partial_{H_{ij}}^{w_{1,k}}\partial_{\overline{H}_{ij}}^{w_{2,k}}(\overline{Y}_{s,b_{k}}-\E\overline{Y}_{s,b_{k}}).\nonumber
+\end{align}
+%
+Now, we use the form \eqref{clt-yform} for $Y_{s,b_{k}}$, and suppose that $w_{1,k}+w_{2,k}>0$. Since the $C_{b,\textbf{x},\textbf{y}}$ coefficients therein are deterministic, we have
+%
+\begin{align}
+\partial_{H_{ij}}^{w_{1,k}}\partial_{\overline{H}_{ij}}^{w_{2,k}}(Y_{s,b_{k}}-\E Y_{s,b_{k}})&=\sum_{\textbf{x},\textbf{y}\in(\Z_{WL}^{2})^{u}}C_{b_{k},\textbf{x},\textbf{y}}\sum_{\substack{\boldsymbol{\gamma}_{1}=(\gamma_{11},\ldots,\gamma_{1u})\\\gamma_{11}+\ldots+\gamma_{1u}=w_{1,k}\\\boldsymbol{\gamma}_{2}=(\gamma_{21},\ldots,\gamma_{2u})\\\gamma_{21}+\ldots+\gamma_{2u}=w_{2,k}}}\prod_{r=1}^{u}\partial_{H_{ij}}^{\gamma_{1r}}\partial_{\overline{H}_{ij}}^{\gamma_{2r}}G_{s}(\sigma_{r})_{x_{r}y_{r}}.\label{clt-ibp-leibniz-formula}
+\end{align}
+%
+(The expectation on the left-hand side above vanishes under the derivatives.) Now, recall $w_{1,k}+w_{2,k}>0$. In this case, there must exist a factor of the form $G_{s}(\sigma)_{\beta\iota}$ or $G_{s}(\sigma)_{\iota\beta}$ with $\iota\in\{i,j\}$ (for some $\sigma\in\{+,-\}$), where $\beta=x_{r}$ or $\beta=y_{r}$ for some $r$. This follows by differentiation formulas for the resolvent, e.g. $\partial_{H_{ij}}(G_{s})_{xy}=-(G_{s})_{xi}(G_{s})_{jy}$. (For mixed derivatives in $H_{ij}$ and $\overline{H}_{ij}$, all such factors may carry the same index $\iota$, e.g. $(G_{s})_{xi}(G_{s})_{jj}(G_{s})_{iy}$.) Given this information, suppose now that $|[i]-b_{k}|_{L}+|[j]-b_{k}|_{L}\geq 3W^{\tau}\ell_{s}$. Since $S_{ij}\neq0$, we have $|[i]-[j]|_{L}\leq1$, and hence $|[\iota]-b_{k}|_{L}\geq 3W^{\tau}\ell_{s}/2-1$ for both $\iota\in\{i,j\}$. Take the factor $G_{s}(\sigma)_{\beta\iota}$ (or $G_{s}(\sigma)_{\iota\beta}$), where $\beta=x_{r}$ or $\beta=y_{r}$ for some $r$. If $|[\beta]-b_{k}|\geq W^{\tau}\ell_{s}$, then the corresponding coefficient $C_{b_{k},\textbf{x},\textbf{y}}$ vanishes by assumptions. If $|[\beta]-b_{k}|_{L}\leq W^{\tau}\ell_{s}$, then we have $|[\iota]-[\beta]|_{L}\geq W^{\tau}\ell_{s}/2-1\geq W^{\tau}\ell_{s}/4$. In this case, we can use the fast decay property for $G_{s}$ (see \eqref{Eq:Gdecay_w} and \eqref{GijGEX}) to deduce the bound $G_{s}(\sigma)_{\beta\iota}\prec W^{-D_{0}}$ for any $D_{0}>0$. Finally, we can bound the remaining factors in \eqref{clt-ibp-leibniz-formula} by $\mathrm{O}_{\prec}(N^{C'})$ for some $C'=O(1)$ (this uses the assumption \eqref{Gt_bound_flow}). We deduce
+%
+\begin{align}
+\mathbf{1}[w_{1,k}+w_{2,k}>0]\mathbf{1}[|[i]-b_{k}|_{L}+|[j]-b_{k}|_{L}\geq 3W^{\tau}\ell_{s}]|\partial_{H_{ij}}^{w_{1,k}}\partial_{\overline{H}_{ij}}^{w_{2,k}}(Y_{s,b_{k}}-\E Y_{s,b_{k}})|\prec W^{-D'}\label{clt-ibp-decay}
+\end{align}
+%
+for any $D'=O(1)$. On the other hand, even if $w_{1,k}+w_{2,k}=0$, we can use the bounds $\|C\|_{\max}=O(W^{C'})$ and $\|G_{s}\|_{\max}=O(W^{C'})$ for some $C'=O(1)$ to get
+%
+\begin{align}
+|\partial_{H_{ij}}^{w_{1,k}}\partial_{\overline{H}_{ij}}^{w_{2,k}}(Y_{s,b_{k}}-\E Y_{s,b_{k}})|\prec W^{C'}\label{clt-ibp-other-factor-bound}
+\end{align}
+%
+for some (possibly different) $C'=O(1)$. We emphasize that the previous two bounds are true if we replace $Y_{s,b_{k}}$ by its complex conjugate as well. We also clarify that the bound $\|G_{s}\|_{\max}=O(W^{C'})$ comes from the assumption that $s\leq 1-N^{-1+\delta}$ for some $\delta>0$, and thus $\eta_{s}^{-1}=O(N^{1-\delta})$.
+
+Now, take \eqref{clt-ibp-leibniz}, and recall that $q_{1}+q_{2}>0$ therein; see \eqref{clt-ibp} for this constraint. Thus, at least one pair $(w_{1,k},w_{2,k})$ must satisfy $w_{1,k}+w_{2,k}>0$. For this pair, we bound the corresponding factor using \eqref{clt-ibp-decay}. The other factors in \eqref{clt-ibp-leibniz} can be bounded using \eqref{clt-ibp-decay} and \eqref{clt-ibp-other-factor-bound}. Ultimately, we deduce
+%
+\begin{align}
+\mathbf{1}\left[\min_{k=2,\ldots,2p}(|[i]-b_{k}|_{L}+|[j]-b_{k}|_{L})\geq 3W^{\tau}\ell_{s}\right]\cdot \left\{\partial_{H_{ij}}^{q_{1}}\partial_{\overline{H}_{ij}}^{q_{2}}\right\}\Gamma_{s}&\prec W^{-D'},\label{clt-ibp-bound1}\\
+\left\{\partial_{H_{ij}}^{q_{1}}\partial_{\overline{H}_{ij}}^{q_{2}}\right\}\Gamma_{s}&=O(W^{C}),\label{clt-ibp-bound2}
+\end{align}
+%
+where $D'=O(1)$ is arbitrary and $C=O(1)$ is fixed. This bounds the last factor in the expectation in \eqref{clt-ibp}. 
+
+To control $\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)$, we note that $\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)$ has the same form as the summand on the right-hand side of \eqref{clt-ibp-leibniz} (or its complex conjugate) with $p=1$ and $w_{1,2}+w_{2,2}>1$, except we evaluate the Green's functions at $H_{ij},\overline{H}_{ij}=0$. (Indeed, recall from \eqref{clt-y-taylor} that $f_{s,b_{1}}(H_{ij},\overline{H}_{ij})=Y_{s,b_{1}}$.) Therefore, if we instead use the Green's function estimates \eqref{clt-gij-bound} and \eqref{clt-gij-decay} to account for setting $H_{ij},\overline{H}_{ij}=0$, then for any $\tau',D'>0$ and for some $C=O(1)$, we have the same bounds
+%
+\begin{align}
+\mathbf{1}[|[i]-b_{1}|_{L}+|[j]-b_{1}|_{L}\geq 3W^{\tau}\ell_{s}]\cdot\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)&\prec W^{-D'},\label{clt-ibp-bound3}\\
+\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)&=O(W^{C}).\label{clt-ibp-bound4}
+\end{align}
+%
+Now, consider \eqref{clt-ibp}, and recall the assumption $\min_{k=2,\ldots,2p}|b_{k}-b_{1}|_{L}\geq W^{2\tau}\ell_{s}$ that was stated before \eqref{clt-lemmafar}. This implies that for any $i,j$ indices, we either have $|[i]-b_{1}|_{L}+|[j]-b_{1}|_{L}\geq 3W^{\tau}\ell_{s}$, or $|[i]-b_{k}|_{L}+|[j]-b_{k}|_{L}\geq 3W^{\tau}\ell_{s}$ for all $k=2,\ldots,2p$. So, by \eqref{clt-ibp-bound1}, \eqref{clt-ibp-bound2}, \eqref{clt-ibp-bound3}, and \eqref{clt-ibp-bound4}, we get the following. For any $D_{4},D_{5}>0$ and any $i,j$ indices, there exists another good event ${\cal E}_{good}$ such that $\mathbb{P}({\cal E}_{good})=1-O(W^{-D_{4}})$ and
+%
+\begin{align}
+\mathbf{1}_{{\cal E}_{good}}\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\left\{S_{ij}^{q_{1}+q_{2}}\partial_{H_{ij}}^{q_{1}}\partial_{\overline{H}_{ij}}^{q_{2}}\right\}\Gamma_{s}=O(W^{-D_{5}}).\label{clt-ibp-bound5}
+\end{align}
+%
+When we estimate the expectation in \eqref{clt-ibp}, we separate into the good event ${\cal E}_{good}$ and the bad event ${\cal E}_{good}^{c}$. On the former, we use \eqref{clt-ibp-bound5}. On the bad event, we use \eqref{clt-ibp-bound2} and \eqref{clt-ibp-bound4}. This gives
+%
+\begin{align}
+&\E\left[\partial_{1}^{v}\partial_{2}^{\alpha-v}f_{s,b_{1}}(0,0)\cdot\left\{S_{ij}^{q_{1}+q_{2}}\partial_{H_{ij}}^{q_{1}}\partial_{\overline{H}_{ij}}^{q_{2}}\right\}\Gamma_{s}\right]\\
+&=O(W^{-D_{5}})+O(W^{2C})\mathbb{P}({\cal E}_{good}^{c})\leq O(W^{-D_{5}})+O(W^{2C-D_{4}}).
+\end{align}
+%
+We plug this bound into \eqref{clt-ibp}, which we then plug into the first term on the right-hand side of \eqref{clt-taylor}. Since $D_{4},D_{5}>0$ are any large constants independent of $W$ in the previous display, this shows that for any $D>0$ independent of $W$, the first term on the right-hand side of \eqref{clt-taylor} is $O(W^{-D})$. Combining this with \eqref{clt-remainder-bound} and \eqref{clt-remainder-bound-same} and \eqref{clt-taylor} ultimately gives $\E[\Delta_{ij}Y_{s,b_{1}}\cdot\Gamma_{s}]=O(W^{-D})$ for any $D>0$ independent of $W$. By \eqref{clt-lemmatelescope}, this completes the proof of \eqref{clt-lemmafar}.
+
+{We now finish the proof. Take any large $D_{0}>0$. By \eqref{clt-lemmafar}, if we give up an error term of $O(W^{-D_{0}})$, we can restrict to indices $b_{1},\ldots,b_{2p}$ so that for every $i$, we have $\min_{k\neq i}|b_{i}-b_{k}|_{L}\leq W^{2\tau}\ell_{s}$. In particular, for any $j=1,\ldots,p$, choose $j$ many ``free indices", and label them $b_{1},\ldots,b_{j}$. The remaining indices $b_{j+1},\ldots,b_{2p}$ must be assigned to one of the $b_{1},\ldots,b_{j}$ in the following sense. If $b_{j+1}$ is assigned to $b_{1}$, then $|b_{j+1}-b_{1}|_{L}\leq W^{3\tau}\ell_{s}$. Thus, from \eqref{clt-lemmamoment} and \eqref{clt-lemmafar}, we have
+%
+\begin{align}
+\E\left|\sum_{b}Z_{ab}(Y_{s,b}-\E Y_{s,b})\right|^{2p}&\prec\sum_{j=1}^{p}\sum_{\substack{k_{1},\ldots,k_{j}\geq1\\k_{1}+\ldots+k_{j}=2p-j}}\prod_{i=1}^{j}\sum_{b_{i}}|Z_{ab_{i}}|\left(\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}|Z_{ab_{i,2}}|\right)^{k_{i}}\cdot \E(\|Y_{s}\|_{\max}^{2p})\label{eq:cltmomentfinal}\\
+&+O(W^{-D}\max_{b}|Z_{ab}|^{2p}).\nonumber
+\end{align}
+%
+We now focus on case $1$, i.e. the proof of \eqref{clt-lemma-final-result}. By our assumption on the range of $Z_{ab}$, we can restrict each $b_{i}$ summation to $O(W^{C\tau}\ell_{t}^{2})$ many terms. Thus, the total number of summands in the first term on the right-hand side of \eqref{eq:cltmomentfinal} is $O(W^{2pC\tau}\ell_{t}^{2p}\ell_{s}^{2p})$. (There are at most $p$-many $b_{i}$-sums, and a total of $2p$-sums overall.) Then we bound entries of $Z$ by its max-norm. Also, recall the assumption $\|Y_{s}\|_{\max}\prec\Lambda$, and note that $\|Y_{s}\|_{\max}=O(W^{C})$ for some $C=O(1)$, which follows from \eqref{clt-yform} and $s\leq 1-N^{-1+\delta}$ for some $\delta>0$. This implies that $\E(\|Y_{s}\|_{\max}^{2p})\prec\Lambda^{2p} +W^{-D'}$ for any $D'=O(1)$. Ultimately, we deduce (for any $D=O(1)$) that
+%
+\begin{align*}
+\E\left|\sum_{b}Z_{ab}(Y_{s,b}-\E Y_{s,b})\right|^{2p} \prec W^{C\tau}\ell_{t}^{2p}\ell_{s}^{2p}\max_{b}|Z_{ab}|^{2p}\cdot\Lambda^{2p}+W^{-D}\max_{b}|Z_{ab}|^{2p}.
+\end{align*}
+%
+Since $D,p=O(1)$ are arbitrary, we obtain the desired result \eqref{clt-lemma-final-result} in case $1$.
+
+We now move to case $2$. On the right-hand side of \eqref{eq:cltmomentfinal}, we fix some sequence of $k_{1},\ldots,k_{p}$ and some $i\in\{1,\ldots,p\}$. Consider the object
+%
+\begin{align}
+\sum_{b_{i}}|Z_{ab_{i}}|\cdot \left(\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}|Z_{ab_{i,2}}|\right)^{k_{i}}.\label{clt-lemma-case-2}   
+\end{align}
+%
+We emphasize that $k_{i}\geq1$. We now rewrite \eqref{clt-lemma-case-2} as follows:
+%
+\begin{align*}
+\sum_{b_{i}}|Z_{ab_{i}}|\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}|Z_{ab_{i,2}}|\cdot\left(\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}|Z_{ab_{i,2}}|\right)^{k_{i}-1}.
+\end{align*}
+%
+Since $k_{i}\geq1$, we can use the a priori estimate of $|Z_{ab}|\prec(1+|a-b|_{L})^{-1}$ to show that the last factor in the previous display is $\mathrm{O}_{\prec}(W^{3\tau(k_{i}-1)}\ell_{s}^{k_{i}-1})$. On the other hand, we can use this same bound on $|Z_{ab}|$ to get
+%
+\begin{align*}
+\sum_{b_{i}}|Z_{ab_{i}}|\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}|Z_{ab_{i,2}}|&\prec\sum_{b_{i}}\frac{1}{|a-b_{i}|^{2}+1}\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}\frac{|a-b_{i}|_{L}+1}{|a-b_{i,2}|_{L}+1}\\
+&\leq\sum_{b_{i}}\frac{1}{|a-b_{i}|^{2}+1}\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}\Big(1+\frac{|b_{i}-b_{i,2}|_{L}}{1+|a-b_{i,2}|_{L}}\Big)\\
+&\prec W^{6\tau}\ell_{s}^{2} \cdot \sum_{b_{i}}\frac{1}{|a-b_{i}|^{2}+1}\prec W^{6\tau}\ell_{s}^{2}.
+\end{align*}
+%
+Therefore, we deduce
+%
+\begin{align}
+\sum_{b_{i}}|Z_{ab_{i}}|\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}|Z_{ab_{i,2}}|\cdot\left(\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}|Z_{ab_{i,2}}|\right)^{k_{i}-1}&\prec W^{6\tau}W^{3\tau(k_{i}-1)}\ell_{s}^{k_{i}+1}.
+\end{align}
+%
+The benefit of this bound is that there is no dependence on the range of $Z$. Now, when we take a product over all $i=1,\ldots,j$, we deduce
+%
+\begin{align*}
+\prod_{i=1}^{j}\sum_{b_{i}}|Z_{ab_{i}}|\cdot \left(\sum_{|b_{i,2}-b_{i}|_{L}\leq W^{3\tau}\ell_{s}}|Z_{ab_{i,2}}|\right)^{k_{i}}\prec \prod_{i=1}^{j} W^{C\tau k_{i}}\ell_{s}^{k_{i}+1}\prec W^{(2p-j)C\tau}\ell_{s}^{2p-j}\cdot\ell_{s}^{j}\prec W^{2pC\tau}\ell_{s}^{2p}
+\end{align*}
+%
+since the $k_{i}$ sum to $2p-j$ over $i=1,\ldots,j$. In particular, if we plug the previous display into the first term on the right-hand side of \eqref{eq:cltmomentfinal} and use $|Z_{ab}|\prec1$, we obtain the following for any $D=O(1)$:
+%
+\begin{align*}
+\E\left|\sum_{b}Z_{ab}(Y_{s,b}-\E Y_{s,b})\right|^{2p}\prec W^{2pC\tau}\ell_{s}^{2p}\cdot \E(\|Y_{s}\|_{\max}^{2p})+W^{-D}.
+\end{align*}
+%
+If we again use $\|Y_{s}\|_{\max}\prec \Lambda$ and $\|Y_{s}\|_{\max}=O(W^{C})$ for some $C=O(1)$, then the previous display yields the desired estimate \eqref{clt-lemma-final-result2} (since $D,p=O(1)$ are arbitrary). This completes the proof.}
+\end{proof}
+
+
+

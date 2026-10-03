@@ -1,0 +1,206 @@
+\section{Basic properties of \texorpdfstring{$\cal K$}{K}}\label{Sec:CalK}
+
+
+In this section, we record the exact properties about ${\cal K}$ that will be used in the analysis of the loop hierarchy. The results in this section are essentially taken from Section 3 of \cite{YY_25} with some slight modifications. 
+
+We start with an estimate for a ``pure loop".
+\begin{lemma}\label{lem_pureloop} Suppose that $\boldsymbol{\sigma}=(+,+\cdots +)$. We have 
+\begin{align}\label{res_pureKes}\left|{\cal K}_{t, \boldsymbol{\sigma}, \textbf{a}}\right|\le C_n \exp\left(-c_n\max_{ij}|a_i-a_j|_{L}\right).
+\end{align} 
+\end{lemma}
+\begin{proof}
+We follow the proof of Corollary 3.5 in \cite{YY_25}. First, we use equations (3.5) and (3.6) in \cite{YY_25}; this gives 
+%
+\begin{align*}
+{\cal K}_{t,\boldsymbol{\sigma}, \textbf{a}}=\prod_{i=1}^{n}m(\sigma_{i})\cdot W^{-2(n-1)}\sum_{\Gamma_{\textbf{a}}}\Gamma_{\textbf{a}}(t,\boldsymbol{\sigma}).
+\end{align*}
+%
+The sum $\Gamma_{\textbf{a}}$ has a number of terms depending only on $n$, and each $\Gamma_{\textbf{a}}$ has the form
+%
+\begin{align*}
+\Gamma_{\textbf{a}}(t,\boldsymbol{\sigma})&:=\sum_{\textbf{b}\in(\Z_{L}^{2})^{n}}\Gamma^{(\textbf{b})}_{\textbf{a}}(t,\boldsymbol{\sigma}),\\
+|\Gamma^{(\textbf{b})}_{\textbf{a}}(t,\boldsymbol{\sigma})|&\leq C_{n}\exp\left(-c_{n}\max_{i,j}|b_{i}-b_{j}|_{L}-c_{n}\max_{i,j}|a_{i}-b_{j}|_{L}\right).
+\end{align*}
+%
+(Each $\Gamma^{(\textbf{b})}_{\textbf{a}}(t,\boldsymbol{\sigma})$ term is a product of $\Theta_{tm^{2}}$ matrices. The second line above, which is shown in the proof of Corollary 3.5 in \cite{YY_25}, relies only on the exponential decay of $\Theta_{tm^{2}}$, which follows from Lemma \ref{lem_propTH} and the bound $|1-tm^{2}|\geq c$ for some $c>0$.) It now suffices to combine the previous two displays.
+\end{proof}
+We now give a generalization of the Ward identity for both ${\cal L}$ and ${\cal K}$. This is Lemma 3.6 in \cite{YY_25}.
+
+
+\begin{lemma}\label{lem_WI_K} Fix a loop ${\cal L}_{t, \boldsymbol{\sigma}, \textbf{a}}$ with 
+$\sigma_1=+$ and $\sigma_n=-$. We have
+\begin{equation}\label{WI_calL}
+  \sum_{a_n}{\cal L}_{t, \boldsymbol{\sigma}, \textbf{a}}=
+\frac{1}{2\mathrm{i}W^{2}\eta_t}\left({\cal L}_{t, \; \boldsymbol{\sigma}+,  \; \textbf{a}/a_n}- {\cal L}_{t, \; \boldsymbol{\sigma}-,  \; \textbf{a}/a_n}\right)  
+\end{equation}
+\begin{equation}\label{WI_calK}
+  \sum_{a_n}{\cal K}_{t, \boldsymbol{\sigma}, \textbf{a}}=
+\frac{1}{2\mathrm{i}W^{2}\eta_t}\left({\cal K}_{t, \; \boldsymbol{\sigma}+,  \; \textbf{a}/a_n}
+- {\cal K}_{t, \; \boldsymbol{\sigma}-,  \; \textbf{a}/a_n}\right)  
+\end{equation}
+where 
+\begin{itemize}
+\item  $\boldsymbol{\sigma}\pm$ is the length $n-1$ sign vector obtained by removing $\sigma_n$ from $\boldsymbol{\sigma}$ and replacing $\sigma_1$ with $\pm$, i.e., 
+    $$
+\boldsymbol{\sigma}\pm=(\pm, \sigma_2, \sigma_3,\cdots \sigma_{ n-1}).$$
+\item  $\textbf{a}/a_n$ is obtained by removing $a_n$ from $\textbf{a}$:
+ $$
+\textbf{a}/a_n=(a_1, a_2,a_3,\cdots, a_{n-1})
+$$
+\end{itemize}
+\end{lemma}
+\begin{proof}
+As in the proof of Lemma 3.6 in \cite{YY_25}, \eqref{WI_calL} follows by the usual Ward identity for Green's functions, i.e. $GG^{\dagger}=\frac{1}{2\mathrm{i}\eta}(G-G^{\dagger})$. The proof of \eqref{WI_calK} in the case $n=2,3$ is an algebraic computation using the explicit formulas for ${\cal K}$. For $n\geq4$, it uses only \eqref{pro_dyncalK}. Both are given in the proof of Lemma 3.6 in \cite{YY_25} with no dimension dependence (i.e. no dependence on estimates of $\Theta^{(B)}$), so we omit them here.
+\end{proof}
+
+The proof of Corollary 3.7 in \cite{YY_25} now gives the following as a consequence of the Ward identity \eqref{WI_calK}.
+
+\begin{corollary}\label{lem_sumAinK}
+    Under the assumptions of Lemma \ref{lem_WI_K}, we have 
+\begin{align}\label{sumallAinK}
+      \sum_{a_2}\cdots\sum_{a_{n-1}}\sum_{a_n}{\cal K}_{t, \boldsymbol{\sigma}, \textbf{a}}=O([W^{2}\eta_t]^{-n+1})
+\end{align}
+ \end{corollary}
+
+We now conclude with an estimate on ${\cal K}$. To state it, we need to recall a decomposition of the convolution tree ${\cal K}$ in terms of simpler objects. First, fix a length $n$ for the ${\cal K}$ loop. We have the decomposition
+\begin{equation}\label{KKpi}
+  {\cal K}_{t, \boldsymbol{\sigma}, \textbf{a}} =W^{-2(n-1)}\cdot m_{\boldsymbol{\sigma}}\cdot \sum_{\pi}{\cal K}_{t, \boldsymbol{\sigma}, \textbf{a}} ^{(\pi)},\quad m_{\boldsymbol{\sigma}}=\prod_i m_i. 
+\end{equation}
+where the notation is explained as follows. First, $\pi$ is a collection of sets of the form $\{i,j\}$ with $i,j\in\Z_{n}$. (The exact constraints on $\pi$ are given in Definition 3.9 in \cite{YY_25}. We do not record them here because these constraints will not be important for us to explicitly use; in \cite{YY_25}, they are used to prove certain estimates that depend only on Lemma \ref{lem_propTH} for $|1-\xi|,\hat{\ell}(\xi)>c$ for some $c>0$, which we can therefore borrow directly.) The summands are given as follows:
+%
+\begin{align}
+{\cal K}^{(\pi)}(t,\boldsymbol{\sigma},\textbf{a}):=\sum_{\textbf{d}\in(\Z_{L}^{2})^{n}}\sum_{\textbf{c}\in(\Z_{L}^{2})^{2(M-1)}}\left(\prod_{i=1}^{n}\left(\Theta^{(B)}_{tm_{i}m_{i+1}}\right)_{a_{i}d_{i}}\right)\cdot\prod_{k=1}^{M-1}\left(\Theta^{(B)}_{t|m|^{2}}-1\right)_{c_{2k-1}c_{2k}}\cdot\prod_{k=1}^{M}\Sigma^{(\emptyset)}(t,\boldsymbol{\sigma}^{(k)},\textbf{d}^{(k)}).
+\end{align}
+%
+Above, $M=O(1)$ is a number determined only by $n,\pi$. The $\boldsymbol{\sigma}^{(k)}$ and $\textbf{d}^{(k)}$ are determined by $\boldsymbol{\sigma},\textbf{d},\pi,k$. However, the only properties that we will need for $\Sigma^{(\emptyset)}(t,\boldsymbol{\sigma}^{(k)},\textbf{d}^{(k)})$ are the following facts, whose proofs use only $\Theta^{(B)}$ bounds of the form in Lemma \ref{lem_propTH} for $|1-\xi|,\hat{\ell}(\xi)>c$ for some $c>0$ (and can therefore be directly cited).
+%%%
+\begin{itemize}
+\item Suppose $n\geq4$ is even, and define the alternating sign vector $\boldsymbol{\sigma}^{(alt)}=(\sigma^{(alt)}_{1},\ldots,\sigma^{(alt)}_{n})$ via
+\begin{equation}\label{assum_SZ_SinMole}
+1\le k\le n, \quad \quad {\sigma}^{(alt)}_k =\begin{cases}
+    +, \quad k\in 2\mathbb Z-1
+    \\\nonumber
+    -, \quad k\in 2\mathbb Z 
+\end{cases}\; \;,\quad t\in[0,1]  ,  
+\end{equation}
+We have the following \emph{sum zero property}, which follows from the proof of Lemma 3.10 in \cite{YY_25}:
+\begin{equation}\label{SZjadljsk}
+   \sum_{d_2,\,\cdots,\,d_n}\left(\Sigma^{(\emptyset)}(t, \boldsymbol{\sigma}^{(alt)}, \textbf{d})\right)=O(\eta_t) 
+\end{equation}
+\item We have the short-range exponential bound below (which comes from (3.43) in \cite{YY_25}):
+\begin{align}\label{res_SIGempdd}
+  \Sigma^{(\emptyset)}(t, \boldsymbol{\sigma}, \textbf{d})\le C_n\exp\left(-c_n \max_{ij}|d_i-d_j|_{L}\right)   .
+\end{align}
+(This comes from exponential decay of $\Theta^{(B)}$ in Lemma \ref{lem_propTH}). However, in principle, all we need is that the sum of $|\Sigma^{(\emptyset)}(t,\boldsymbol{\sigma},\textbf{d})|$ over $d_{2},\ldots,d_{n}$ is $O(1)$, which follows from $\sum_{b}(\Theta^{(B)}_{\xi})_{ab}=(1-\xi)^{-1}$. 
+\item Fix $d_{1}$, and write $s_{i}=d_{i}-d_{1}$ for $i=2,\ldots,n$, and $g(\textbf{s}):=\Sigma^{(\emptyset)}(t,\boldsymbol{\sigma},\textbf{d})$. We have $g(\textbf{s})=g(-\textbf{s})$; see the proof of Lemma 3.11 in \cite{YY_25}.
+\end{itemize}
+%%%
+
+The following is analogous to Lemma 3.11 in \cite{YY_25}. We explain the differences in the proofs of the result below and of Lemma 3.11 in \cite{YY_25}, namely the dimension-dependent parts.
+
+\begin{lemma}\label{ML:Kbound+pi}
+Recall $M_{t}:=W^{2}\ell_{t}^{2}\eta_{t}$. We have the estimate
+\begin{equation}\label{eq:bcal_k_2}
+  {\cal K}_{t, \boldsymbol{\sigma}, \textbf{a}} \prec M_{t}^{-n+1}.    
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+In the case $n=2$, this follows by \eqref{Kn2sol}, so we focus on $n\geq3$ for the rest of this argument. Moreover, we can assume that $\boldsymbol{\sigma}$ does not consist of just one sign, i.e. it is not pure, since the estimate at hand follows by Lemma \ref{lem_pureloop} in this case. By \eqref{KKpi}, it suffices to show
+\begin{equation}\label{eq:bcal_k_pi}
+  {\cal K}^{(\pi)}_{t, \boldsymbol{\sigma}, \textbf{a}} \prec (\ell_t^{2}\eta_t)^{-n+1} .    
+\end{equation}
+We first assume that $\pi=\emptyset$. Assume without loss of generality (after re-indexing) that $\sigma_{1}\neq\sigma_{2}$. We have 
+\begin{align*}
+{\cal K}^{(\emptyset)}_{t, \boldsymbol{\sigma}, \textbf{a}}
+=\;&
+ \sum_{\textbf{d}}\left(\Sigma^{(\emptyset)}(t, \boldsymbol{\sigma}, \textbf{d})\right)
+\cdot 
+\prod_{i=1}^n \left(\Theta^{(B)}_{tm_im_{i+1}}\right)_{a_i, d_i}
+\\\nonumber
+=\;&\sum_{d_1}\left(\Theta^{(B)}_{t|m|^2}\right)_{a_1, d_1}
+\cdot \sum_{d_2,\,\cdots,\, d_n}\left(\Sigma^{(\emptyset)}(t, \boldsymbol{\sigma}, \textbf{d})\right)
+\cdot 
+\prod_{i=2}^n \left(\Theta^{(B)}_{tm_im_{i+1}}\right)_{a_i, d_i}  
+\end{align*}
+We claim that to show \eqref{eq:bcal_k_pi} for $\pi=\emptyset$, it suffices to show
+\begin{align}\label{spwow3}
+\sum_{d_2, \cdots, d_n}\left(\Sigma^{(\emptyset)}(t, \boldsymbol{\sigma}, \mathbf{d})\right) \cdot \prod_{i=2}^n\left(\Theta_{t m_i m_{i+1}}^{(B)}\right)_{a_i, d_i} \prec (\ell^2_t \eta_t)^{-n+2} \cdot\left(\min _{2 \leq k \leq n}\left|a_k-d_1\right|_{L}^2+1\right)^{-1}+(\ell_{t}^{2}\eta_{t})^{-n+1}\eta_{t},
+\end{align}
+Indeed, we can bound entries of $\Theta^{(B)}_{t|m|^{2}}$ by $\ell_{t}^{-2}\eta_{t}^{-1}$ using Lemma \ref{lem_propTH}, so that
+%
+\begin{align*}
+&[\ell^2_t \eta_t]^{-n+2}\sum_{d_1}\left(\Theta^{(B)}_{t|m|^2}\right)_{a_1, d_1} \cdot\left(\min _{2 \leq k \leq n}\left|a_k-d_1\right|_{L}^2+1\right)^{-1}\\
+&=[\ell^2_t \eta_t]^{-n+1}\sum_{d_{1}}\left(\min _{2 \leq k \leq n}\left|a_k-d_1\right|_{L}^2+1\right)^{-1}\prec [\ell^2_t \eta_t]^{-n+1}.
+\end{align*}
+%
+On the other hand, the column and row sums of $\Theta^{(B)}_{t|m|^{2}}$ are $O(\eta_{t}^{-1})$ by Lemma \ref{lem_propTH}, so
+%
+\begin{align*}
+[\ell_{t}^{2}\eta_{t}]^{-n+1}\eta_{t}\sum_{d_{1}}\Big(\Theta^{(B)}_{t|m|^{2}}\Big)_{a_{1}d_{1}}\prec [\ell_{t}^{2}\eta_{t}]^{-n+1}.
+\end{align*}
+%
+To prove \eqref{spwow3}, we follow the proof of Lemma 3.11 in \cite{YY_25} and first assume that $\sigma_{j}=\sigma_{j+1}$ for some $j>1$. (Here, $n+1$ means $1$.) By Lemma \ref{lem_propTH}, we have 
+%
+\begin{align*}
+    (\Theta^{(B)}_{tm_{j}m_{j+1}})_{a_{j}d_{j}}&=(\Theta^{(B)}_{tm^{2}})_{a_{j}d_{j}}\prec1,\\
+    \prod_{i\neq1,j}(\Theta^{(B)}_{tm_{i}m_{i+1}})_{a_{i}d_{i}}&\prec[\ell_{t}^{2}\eta_{t}]^{-n+2}.
+\end{align*}
+By \eqref{res_SIGempdd}, the display \eqref{spwow3} then follows (with actually an exponential decay instead of polynomial decay).
+
+We are left with the case $\boldsymbol{\sigma}=\boldsymbol{\sigma}^{(alt)}$. Following the proof of Lemma 3.11 in \cite{YY_25}, we write
+%
+\begin{align}
+\sum_{d_{2},\ldots,d_{n}}\Sigma^{(\emptyset)}(t,\boldsymbol{\sigma},\textbf{d})\cdot\prod_{i=2}^{n}\left(\Theta^{(B)}_{tm_{i}m_{i+1}}\right)_{a_{i}d_{i}}&=\sum_{s_{2},\ldots,s_{n}}g(\textbf{s})\prod_{i=2}^{n}f(a_{i},s_{i})\\
+&=\sum_{s_{2},\ldots,s_{n}}g(\textbf{s})\prod_{i=2}^{n}\sum_{\xi_{i}=0,1,2}f_{\xi_{i}}(a_{i},s_{i}),
+\end{align}
+%
+where for any $d_{1},\textbf{a}$, we introduced the notation
+%
+\begin{align*}
+\textbf{s}&=(s_{2},\ldots,s_{n}):=(d_{2}-d_{1},\ldots,d_{n}-d_{1})\\
+g(\textbf{s})&:=\Sigma^{(\emptyset)}(t,\boldsymbol{\sigma},\textbf{d}),\\
+f(a_{i},s_{i})&:=\left(\Theta^{(B)}_{t|m|^{2}}\right)_{a_{i},(d_{1}+s_{i})},\\
+f_{0}(a_{i},s_{i})&:=f(a_{i},0)\\
+f_{1}(a_{i},s_{i})&:=\frac{f(a_{i},s_{i})-f(a_{i},-s_{i})}{2}\\
+f_{2}(a_{i},s_{i})&:=\frac12 f(a_{i},s_{i})+\frac12 f(a_{i},-s_{i})-f(a_{i},0).
+\end{align*}
+%
+By Lemma \ref{lem_propTH}, we have the regularity bounds
+$$\begin{aligned} & f_0\left(a_i, s_i\right)\prec \ell^{-2}_t \,\eta_t^{-1} \\ & f_1\left(a_i, s_i\right) \prec \frac{1}{\left|a_i-d_1\right|_{L}+1}+\frac{1}{\ell_{t}^{2}\eta_{t}^{1/2}} \\ & f_2\left(a_i, s_i\right)\prec \frac{1}{\left|a_i-d_1\right|_{L}^{2}+1}+\frac{1}{\ell_{t}^{2}}.\end{aligned}$$
+
+We now follow the same reasoning in the proof of Lemma 3.11 in \cite{YY_25} to deduce \eqref{spwow3}, so \eqref{eq:bcal_k_pi} follows for $\pi=\emptyset$. The proof for general $\pi$ follows by an inductive argument given at the end of the proof of Lemma 3.11 in \cite{YY_25}, which in dimension two should be combined with the following localized form of \eqref{spwow3}. The last term on the right-hand side of \eqref{spwow3} does not depend on $d_{1}$, so it should not be summed over all $d_{1}\in\Z_{L}^{2}$ using only a uniform bound on the remaining factors: compared with a sum over a ball of radius $\ell_{t}$, this would cost a factor $(L/\ell_{t})^{2}$. However, for any fixed $\tau,D>0$, the left-hand side of \eqref{spwow3} is $O(W^{-D})$ if $|a_{k}-d_{1}|_{L}\geq\ell_{t}W^{\tau}$ for all $2\leq k\leq n$ (which is only possible if $\ell_{t}<L$). Indeed, by \eqref{res_SIGempdd}, the contribution of the $\textbf{d}$ with $\max_{i}|d_{i}-d_{1}|_{L}\geq\ell_{t}W^{\tau}/2$ is $O(W^{-D})$. For the remaining $\textbf{d}$, we have $|a_{i}-d_{i}|_{L}\geq\ell_{t}W^{\tau}/2$ for all $i\geq2$, so that each factor $(\Theta^{(B)}_{tm_{i}m_{i+1}})_{a_{i}d_{i}}$ is $O(W^{-D})$ by \eqref{prop:ThfadC}, since $\hat{\ell}(tm_{i}m_{i+1})\leq C\ell_{t}$. Hence \eqref{spwow3} holds with its last term multiplied by $\mathbf{1}(\min_{2\leq k\leq n}|a_{k}-d_{1}|_{L}\leq\ell_{t}W^{\tau})$, up to an additive error $O(W^{-D})$. In this form, the last term is supported on $O(W^{2\tau}\ell_{t}^{2})$ vertices $d_{1}$, and the counting in the inductive argument of \cite{YY_25} goes through in dimension two.
+\end{proof} 
+
+
+
+
+
+\section{Estimates for entries of \texorpdfstring{$G$}{G}}
+We now collect a set of estimates for $G_{t}$; the proof of these estimates follows that of Lemma 4.1 in \cite{YY_25}, which is dimension-independent and based on standard calculations for resolvents as in \cite{erdHos2012rigidity,erdos2013delocalization}. 
+
+\begin{lemma}\label{lem_GbEXP}
+Recall   $z_t$ and  $G_t$  from  Definitions \ref{def_flow} and \ref{Def:G_loop}. Fix any $|E|<2-\kappa$ and $0\leq t<1$. For any $c>0$, consider the event
+\begin{equation}\label{def_asGMc}
+    \Omega(t, c) := \big\{\|G_t - m\|_{\max} \leq W^{-c} \big\}.
+\end{equation}
+Then we have the following estimate for $G_{t}$ entries in terms of loops of length $2$:
+\begin{equation}\label{GijGEX}
+    {\bf 1}_{\Omega(t, c)} \cdot \max_{\substack{x \in {\cal I}^{(2)}_a,\; y \in {\cal I}^{(2)}_b\\ x\neq y}} |(G_t)_{xy}|^{\,2} \prec 
+    \sum_{a':|a'-a|_{L}\leq1} \; \sum_{b':|b'-b|_{L}\leq1} {\cal L}_{t, (+,-), (b', a')}
+    + W^{-2} \cdot {\bf 1}(|a - b|_{L} \leq 1),
+\end{equation}
+\begin{equation}\label{GiiGEX}
+    {\bf 1}_{\Omega(t, c)} \cdot \max_{x} \left|(G_t)_{xx} - m\right|^{\,2} \prec \max_{a, b} {\cal L}_{t, (+,-), (a, b)}.
+\end{equation}
+Moreover, suppose that the following is true for some $c > 0$:
+\begin{equation}\label{asGMc} 
+    \|G_t - m\|_{\max} \prec W^{-c}.
+\end{equation}
+Then \eqref{GijGEX} and \eqref{GiiGEX} hold without the indicator ${\bf 1}_{\Omega(t, c)}$, and we also have
+\begin{equation}\label{GavLGEX}
+    \max_{a} \left| \left\langle \left(G_t - m\right) E_a \right\rangle \right| \prec \max_{a, b} {\cal L}_{t, (+,-), (a, b)}.
+\end{equation} 
+\end{lemma}
+
+

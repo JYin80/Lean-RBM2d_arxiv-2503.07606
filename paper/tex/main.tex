@@ -1,0 +1,419 @@
+\documentclass[aop]{imsart}
+
+%% Packages
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+\RequirePackage[numbers,sort&compress]{natbib}
+%\RequirePackage[authoryear]{natbib}%% uncomment this for author-year citations
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\RequirePackage{graphicx}
+
+\startlocaldefs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Uncomment next line to change            %%
+%% the type of equation numbering           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\numberwithin{equation}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Axiom, Claim, Corollary, Hypothesis, %%
+%% Lemma, Theorem, Proposition              %%
+%% use \theoremstyle{plain}                 %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem*{claim*}{Claim}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem*{definition*}{Definition}         
+\theoremstyle{definition}
+\newtheorem*{example*}{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{remarks}[theorem]{Remarks}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{remarks*}{Remarks}
+\newtheorem{strategy}[theorem]{Strategy}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Assumption, Definition, Example,     %%
+%% Notation, Property, Remark, Fact         %%
+%% use \theoremstyle{definition}            %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{example}{Example}
+\newtheorem*{fact}{Fact}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please put your definitions here:        %%
+ \usepackage{tikz}
+ \usetikzlibrary{decorations.pathmorphing}
+ \usepackage{graphicx}
+ \usepackage{stmaryrd}
+\def\P{\mathbb{P}}
+\def\Pr{\mathrm{\mathbf{P}}}
+\def\Ex{\mathrm{\mathbf{E}}}
+\def\E{\mathbb{E}}
+\newcommand{\gE}[1]{\left\langle #1 \right \rangle}
+\def\Z{\mathbb{Z}}
+\def\R{\mathbb{R}}
+\def\N{\mathbb{N}}
+\def\L{\mathbb{L}}
+\def\Q{\mathbb{Q}}
+\def\11{{\mathbf{1}}}
+\def\re{\mathrm{Re}}
+\def\im{\mathrm{Im}}
+\def\Im{\im }
+\def\tran{\mathsf{T}}
+
+\newcommand{\sidenote}[1]{\marginpar{\color{red}\footnotesize #1}}
+\newcommand{\Id}{{\mathrm{Id}}}
+
+\newcommand{\AO}{\mathrm{AO}}
+\newcommand{\BA}{\mathrm{BA}}
+\newcommand{\WO}{\mathrm{WO}}
+\newcommand{\deq}{\mathrel{\mathop:}=}
+\newcommand{\pscale}{\text{pseudo-scaling size}}
+\newcommand{\rB}{\mathscr B}
+\newcommand{\wE}{{\mathcal E}}
+\newcommand{\bp}{\mathbf p}
+\newcommand{\bq}{\mathbf q}
+\newcommand{\bk}{\mathbf k}
+\newcommand{\T}{\mathbb T}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\fQ}{\mathsf Q}
+\newcommand{\bE}{\mathbf{E}}
+\newcommand{\fd}{{\mathfrak d}}
+\newcommand{\fD}{{\mathfrak D}}
+\newcommand{\zb}{\mathring b}
+\newcommand{\bx}{{\bf{x}}}
+\newcommand{\by}{{\bf{y}}}
+\newcommand{\bu}{{\bf{u}}}
+\newcommand{\bv}{{\bf{v}}}
+\newcommand{\bw}{{\bf{w}}}
+\newcommand{\bg}{{\bf{g}}}
+\newcommand{\bz} {{\bf {z}}}
+\newcommand{\bt} {{\bf t }}
+\newcommand{\bh}{{\bf{h}}}
+\newcommand{\inv}{\mathrm{inv}}
+\newcommand{\bigGamma}{\Gamma}
+\newcommand{\ord}{{\rm{ord}}}
+\newcommand{\sgn}{{\operatorname{sgn}\,}}
+\newcommand{\size}{{\mathsf{size}}}
+\newcommand{\psize}{{\mathsf{psize}}}
+\newcommand{\gh}{{\rm{gh}}}
+\newcommand{\fr}{{\rm{fr}}}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Iso}{{\mathcal I}}
+\renewcommand{\bar}{\overline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\wG}{{\widehat G}}
+\newcommand{\al}{\alpha}
+\newcommand{\de}{\delta}
+\newcommand{\nonuni}{{\text{complete $T$-equation}}}
+\newcommand{\Nonuni}{{\text{Complete $T$-equation}}}
+\renewcommand{\qq}[1]{\langle{#1}\rangle}
+\newcommand{\qqq}[1]{\llbracket{#1}\rrbracket}
+\newcommand{\KM}{M^0_{L\to n}}
+\newcommand{\KMp}{M^+_{L\to n}}
+\newcommand{\KMm}{M^-_{L\to n}}
+\newcommand{\KL}{{n\to L}}
+\newcommand{\LK}{{L\to n}}
+\newcommand{\zerob}{{\mathsf C}_W}
+\newcommand{\infinf}{{\infty\to \infty}}
+\newcommand{\projn}{\pi_{L\to n}}
+\newcommand{\projW}{\pi_{L\to W}}
+\newcommand{\Zn}{\widetilde{\mathbb Z}_n^d}
+\newcommand{\Gc}{{\mathring G}}
+\newcommand{\rank}{{\mathrm{rank}}}
+\newcommand{\zf}{\mathring f}
+\newcommand{\zS}{\mathring S}
+\newcommand{\Sp}{\mathcal S^+}
+\newcommand{\Sm}{\mathcal S^-}
+\newcommand{\zT}{\mathring T}
+\newcommand{\cT}{\mathcal T}
+\newcommand{\czT}{\mathring{\mathcal T}}
+\newcommand{\zTheta}{\mathring \Theta}
+\newcommand{\DeltaL}{\Delta^{(L)}}
+\newcommand{\Deltainf}{\Delta^{(\infty)}}
+\newcommand{\dashed}{\text{diffusive}}
+\newcommand{\Dashed}{\text{Diffusive}}
+\newcommand{\self}{\text{self-energy}}
+\newcommand{\selfs}{\text{self-energies}}
+\newcommand{\Self}{\text{Self-energy}}
+\newcommand{\Selfs}{\text{Self-energies}}
+\newcommand{\pself}{\text{pseudo-self-energy}}
+\newcommand{\pselfs}{\text{pseudo-self-energies}}
+\newcommand{\Pself}{\text{Pseudo-self-energy}}
+\newcommand{\Pselfs}{\text{Pseudo-self-energies}}
+\newcommand{\pTexp}{\text{pseudo-$T$-expansion}}
+\newcommand{\PTexp}{\text{Pseudo-$T$-expansion}}
+\newcommand{\pTeq}{\text{pseudo-$T$-equation}}
+\newcommand{\PTeq}{\text{Pseudo-$T$-equation}}
+\newcommand{\renormal}{\text{self-energy renormalization}}
+\newcommand{\Renormal}{\text{Self-energy renormalization}}
+\newcommand{\Incomp}{{\text{$T$-equation}}}
+\newcommand{\incomp}{{\text{$T$-equation}}}
+% \def\mathcalC{\mathcal{C}}
+% \def\mathcalV{\mathcal{V}}
+% \def\mathcalW{\mathcal{W}}
+\newcommand{\fa}{{\mathfrak a}}
+\newcommand{\fb}{{\mathfrak b}}
+\newcommand{\fc}{{\mathfrak c}}
+\newcommand{\fe}{{\mathfrak e}}
+\newcommand{\fC}{{\mathfrak C}}
+\newcommand{\fG}{{\mathsf G}}
+\newcommand{\fw}{{\mathfrak w}}
+\newcommand{\PGn}{\mathcal R^{(n)}}
+\newcommand{\AGn}{\mathcal A^{(>n)}_{ho}}
+\newcommand{\QGn}{\mathcal Q^{(n)}}
+\newcommand{\Err}{{\mathcal Err}}
+\newcommand{\J}{J}
+\newcommand{\IM}{\mathrm{IM}}
+\newcommand{\EM}{\mathrm{EM}}
+
+\newcommand{\PT}{\mathcal R}
+\newcommand{\wtPT}{\widetilde{\mathcal R}}
+\newcommand{\PTn}{\mathcal R^{(n)}}
+\newcommand{\PTk}{{\mathcal R_{T,k}}}
+\newcommand{\PIT}{\mathcal R}
+\newcommand{\wtPIT}{\widetilde{\mathcal R}}
+\newcommand{\whPIT}{\widehat{\mathcal R}}
+\newcommand{\PITn}{{\mathcal R^{(n)}}}
+\newcommand{\PITk}{{\mathcal R_{k}}}
+
+\newcommand{\QT}{\mathcal Q}
+\newcommand{\QTn}{\mathcal Q}
+\newcommand{\QTk}{{\mathcal Q_{T,k}}}
+\newcommand{\QIT}{\mathcal Q_{IT}}
+\newcommand{\whQIT}{\widehat{\mathcal Q}}
+\newcommand{\QITn}{{\mathcal Q^{(n)}}}
+\newcommand{\QITk}{{\mathcal Q_{k}}}
+
+\newcommand{\AT}{\mathcal A}
+\newcommand{\ATn}{\mathcal A^{(>C)}}
+\newcommand{\ATk}{{\mathcal A_{k}}}
+\newcommand{\AIT}{\mathcal A}
+\newcommand{\wtAIT}{\widetile{\mathcal A}}
+\newcommand{\AITn}{{\mathcal A^{(>n)}}}
+\newcommand{\AITk}{{\mathcal A_{k}}}
+\DeclareMathOperator{\OO}{O}
+\DeclareMathOperator{\oo}{o}
+
+\newcommand{\WT}{\mathcal W}
+\newcommand{\Wn}{\mathcal W^{(n)}}
+\newcommand{\Sdelta}{{\Sigma}_T}
+\newcommand{\Sdeltak}{{\Sigma}_{T,k}}
+\newcommand{\wtSdelta}{\Sigma}
+\newcommand{\wtSdeltan}{\Sigma^{(n)}}
+\newcommand{\wtSdeltak}{\Sigma^{(k)}}
+\newcommand{\Sinfty}{\Sigma^{\infty}}
+\newcommand{\wtSinfty}{\wt\Sigma^{\infty}}
+
+\newcommand{\Sele}{{\mathcal E}}
+\newcommand{\Smax}{{\mathcal E}^{\max}}
+%\newcommand{\Selek}{{\mathcal E}^{(\omega)}}
+\newcommand{\Selek}{{\mathcal E}}
+\newcommand{\pSele}{{\mathcal P}}
+\newcommand{\Selekl}{{\mathcal E}^{[\eta]}}
+\newcommand{\Seleinf}{{\mathcal E}^{\infty}}
+%\newcommand{\wtSeleinf}{\widetilde{\mathcal E}^{(\kappa),\infty}}
+\newcommand{\wtSeleinf}{ {\mathcal E}^{\infty}}
+\newcommand{\Sint}{\mathfrak S}
+\newcommand{\Sintk}{{\mathfrak S}^{(\omega)}}
+\newcommand{\Cele}{{\mathscr E}}
+\newcommand{\sizeself}{\boldsymbol{\psi}}
+\newcommand{\zeroself}{\boldsymbol{\phi}}
+
+\newcommand{\nwd}{4}
+\newcommand{\cof}{\mathrm{cof}}
+\newcommand{\qll}[1]{[\![{#1}]\!]}
+\newcommand{\rep}[1]{({#1})}
+
+\newcommand{\conc}{\mathfrak g}
+\newcommand{\soe}{d_\eta}
+%\newcommand{\etas}{\lambda^{-3}W^{-7/2} L^{5-d}}
+\newcommand{\etas}{\lambda^{-2}W^{-4} L^{5-d}}
+\newcommand{\etasa}{\beta(\lambda) W^{-5} L^{5-d}}
+\newcommand{\blam}{\beta(\lambda)}
+%\newcommand{\etars}{\lambda^{-5} W^{-5/2+2\mathfrak d_2}L^{-(d-5)}}
+
+\newcommand{\Wlambda}{\frac{W}{\lambda^2}}
+\newcommand{\errL}{\epsilon_0}
+\newcommand{\errw}{\epsilon_1}
+\newcommand{\erre}{\mathfrak d}
+\newcommand{\serr}{\epsilon_0}
+\newcommand{\heta}{\mathfrak h_\eta}
+\newcommand{\pheta}{\widetilde{\mathfrak h}_\eta}
+\newcommand{\wheta}{\mathfrak h_{\widetilde\eta}}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{Tr}
+\DeclareMathOperator{\var}{Var}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ff}{\mathrm{f}}
+\newcommand{\e}{{\varepsilon}}
+%\newcommand{\cal}{\mathcal}
+
+\newcommand{\cor}{\color{red}}
+\newcommand{\cop}{\color{purple}}
+\newcommand{\cob}{\color{blue}}
+\newcommand{\nc}{\normalcolor}
+
+\newcommand\dif{\mathop{}\!\mathrm{d}}
+\newcommand\capa{\mathrm{cap}}
+
+\newcommand{\fn}{{\mathfrak n}}
+\newcommand{\sN}{{\mathsf N}}
+\newcommand{\sT}{{\mathsf T}}
+\newcommand{\sH}{{\mathsf H}}
+\newcommand{\sG}{{\mathsf G}}
+\newcommand{\sS}{{\mathsf S}}
+\newcommand{\sL}{{\mathsf L}}
+\newcommand{\ba}{{\bf{a}}}
+\newcommand{\thn}{\vartheta}
+\newcommand{\zthn}{\mathring\vartheta}
+\usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\endlocaldefs
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Delocalization of Two-Dimensional Random Band Matrices}
+%\title{A sample article title with some additional note\thanksref{t1}}
+\runtitle{Delocalization of 2D random band matrices}
+%\thankstext{T1}{A sample additional note to the title.}
+
+\begin{aug}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Only one address is permitted per author. %%
+%% Only division, organization and e-mail is %%
+%% included in the address.                  %%
+%% Additional information can be included in %%
+%% the Acknowledgments section if necessary. %%
+%% ORCID can be inserted by command:         %%
+%% \orcid{0000-0000-0000-0000}               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author[A]{\fnms{Sofiia}~\snm{Dubova} \ead[label=e1]{sdubova@northwestern.edu}},
+\author[B]{\fnms{Kevin}~\snm{Yang} \ead[label=e2]{kevinyang@math.harvard.edu}},
+\author[B]{\fnms{Horng-Tzer}~\snm{Yau} \ead[label=e3]{htyau@math.harvard.edu}},
+\author[C]{\fnms{Jun}~\snm{Yin} \ead[label=e4]{jyin@math.ucla.edu}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Addresses                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\address[A]{Department of Mathematics,
+Northwestern University\printead[presep={ ,\ }]{e1}}
+
+\address[B]{Department of Mathematics,
+Harvard University \printead[presep={,\ }]{e2,e3}}
+
+\address[C]{Department of Mathematics,
+University of California, Los Angeles \printead[presep={,\ }]{e4}}
+\end{aug}
+
+\begin{abstract}
+We study a random band matrix $H=(H_{xy})_{x,y}$ of dimension $N\times N$ with mean-zero complex Gaussian entries, where $x,y$ belong to the discrete torus $(\Z/\sqrt{N}\Z)^{2}$. The variance profile $\E|H_{xy}|^{2}=S_{xy}$ vanishes when $|x-y|\geq W$ for some band-width parameter $W$ depending on $N$.
+
+We show that if the band-width satisfies $W\geq N^{\mathfrak{c}}$ for some $\mathfrak{c}>0$, then in the large-$N$ limit, we have the following results. The first result is a local semicircle law in the bulk down to scales $N^{-1+\e}$. The second is delocalization of bulk eigenvectors. The third is a quantum unique ergodicity for bulk eigenvectors. The fourth is universality of local bulk eigenvalue statistics. The fifth is a quantum diffusion profile for the associated $T$ matrix.
+
+{Our method is based on embedding $H$ inside a matrix Brownian motion $H_{t}$ as done in \cite{DY,YY_25} for band matrices on the one-dimensional torus. In this paper, the key additional ingredient in our analysis of $H_{t}$ is a new CLT-type estimate for polynomials in the entries of the resolvent of $H_{t}$.}
+\end{abstract}
+
+\begin{keyword}[class=MSC]
+\kwd[Primary ]{60B20}
+\kwd[; secondary ]{15B52}
+\kwd{82B44}
+\end{keyword}
+
+\begin{keyword}
+\kwd{random band matrices}
+\kwd{delocalization}
+\kwd{bulk universality}
+\end{keyword}
+
+\end{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please use \tableofcontents for articles %%
+%% with 50 pages and more                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+
+
+
+\input{1-2_intro-results-new}
+
+\input{3-4_properties-k-g}
+
+\input{5-6_loop-hierarchy-analysis}
+
+\input{7_Evolution_kernel_estimates}
+
+\input{8_theta_properties}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Funding information, if any,             %%
+%% should be provided in the                %%
+%% funding section.                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{funding}
+K.Y. was supported by NSF Grant No. DMS-2203075.
+\end{funding}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Supplementary Material, including data   %%
+%% sets and code, should be provided in     %%
+%% {supplement} environment with title      %%
+%% and short description. It cannot be      %%
+%% available exclusively as external link.  %%
+%% All Supplementary Material must be       %%
+%% available to the reader on Project       %%
+%% Euclid with the published article.       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  imsart-???.bst  will be used to                        %%
+%%  create a .BBL file for submission.                     %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%  MR numbers will be added by VTeX.                      %%
+%%                                                         %%
+%%  Use \cite{...} to cite references in text.             %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% if your bibliography is in bibtex format, uncomment commands:
+\bibliographystyle{imsart-number} % Style BST file (imsart-number.bst or imsart-nameyear.bst)
+\bibliography{main}       % Bibliography file (usually '*.bib')
+
+%% or include bibliography directly:
+
+\end{document}

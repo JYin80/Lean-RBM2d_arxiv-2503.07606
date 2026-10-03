@@ -1,0 +1,203 @@
+\section{Proof of Lemma \ref{lem_propTH}}\label{sec_TH}
+%%%
+Throughout this section we fix $\xi\in\C$ with $|\xi|<1$, and we abbreviate
+%
+\begin{equation}\label{eq_kappa_def}
+\kappa:=|1-\xi|^{1/2},\qquad \hat\ell=\hat{\ell}(\xi)=\min\left(\kappa^{-1},\,L\right),\qquad x:=a-b\in\Z_{L}^{2}.
+\end{equation}
+%
+Recall that $S^{(B)}_{ab}=\frac{1}{5}\mathbf{1}(|a-b|_{L}\leq1)$ is the transition matrix of the lazy nearest-neighbor random walk on $\Z_{L}^{2}$. Recall also that $|\cdot|_{L}$ denotes the periodic $L^{1}$ distance on $\Z_{L}^{2}$; since the periodic $L^{1}$ and $L^{2}$ distances on $\Z_{L}^{2}$ differ by at most a factor of $\sqrt{2}$, and since all the estimates of Lemma \ref{lem_propTH} are stated up to constants in the exponents and up to $\prec$, we may and do use the two interchangeably in this section. In particular, we write
+%
+\begin{align*}
+|x|_{L}=\min_{n\in\Z^{2}}|x+nL|
+\end{align*}
+%
+for the periodic Euclidean norm of $x\in\Z_{L}^{2}$, where $|\cdot|$ is the Euclidean norm on $\Z^{2}$. Finally, we recall that $A\prec B$ means that for every fixed $\e>0$ we have $A\leq C_{\e}L^{\e}B$; in particular, powers of $\log L$ are harmless.
+
+The first four assertions of Lemma \ref{lem_propTH} are immediate. Indeed, $S^{(B)}$ is a real symmetric circulant matrix and $\Theta^{(B)}_{\xi}=(1-\xi S^{(B)})^{-1}$ is a function of $S^{(B)}$; this gives the symmetry, the translation invariance, and the commutation relations in properties 1--3. Moreover, $S^{(B)}$ is stochastic and symmetric, so $\|S^{(B)}\|=1$, and therefore the Neumann series
+%
+\begin{align}
+\Theta^{(B)}_{\xi}=(1-\xi S^{(B)})^{-1}=\sum_{k=0}^{\infty}\xi^{k}(S^{(B)})^{k}\label{theta_rw}
+\end{align}
+%
+converges in operator norm for every $|\xi|<1$. For $0\leq\xi<1$ all the terms in \eqref{theta_rw} are nonnegative and $[(S^{(B)})^{k}]_{ab}$ is the $k$-step transition probability of the lazy random walk; this is property 4.
+
+We prove the remaining entrywise estimates, i.e. properties 5 and 6, by Fourier analysis. We emphasize that the argument below only uses $|\xi|<1$; in particular it covers the three cases $\xi\in\{tm^{2},t\bar m^{2},t|m|^{2}\}$ appearing in properties 5 and 6 of Lemma \ref{lem_propTH}.
+
+\subsection{Fourier setup and an ellipticity estimate}
+
+Set
+%
+\begin{align*}
+\T^{2}_{L}:=\Big(\frac{2\pi}{L}\Z_{L}\Big)^{2}.
+\end{align*}
+%
+The Fourier symbol of $S^{(B)}$ is
+%
+\begin{align}
+\widehat{S}(p)=\frac{1+2\cos p_{1}+2\cos p_{2}}{5},\qquad p=(p_{1},p_{2})\in \T_{L}^{2}.\label{eq_symbol}
+\end{align}
+%
+Consequently, with $x=a-b$,
+%
+\begin{align}
+(\Theta^{(B)}_{\xi})_{ab}=K_{\xi,L}(x):=\frac{1}{L^{2}}\sum_{p\in\T_{L}^{2}}\frac{e^{\ii p\cdot x}}{1-\xi\widehat{S}(p)}.\label{eq_Fourier_rep}
+\end{align}
+%
+Let
+%
+\begin{align}
+q(p):=1-\widehat{S}(p)=\frac{2}{5}\Big[\big(1-\cos p_{1}\big)+\big(1-\cos p_{2}\big)\Big],\label{eq_qdef}
+\end{align}
+%
+and write $|p|_{*}^{2}:=\dist(p_{1},2\pi\Z)^{2}+\dist(p_{2},2\pi\Z)^{2}$, so that
+%
+\begin{align}
+q(p)\sim|p|_{*}^{2}.\label{eq_qcomp}
+\end{align}
+%
+We shall use the following elementary ellipticity estimate:
+%
+\begin{align}
+\big|1-\xi\widehat{S}(p)\big|\sim\kappa^{2}+q(p)\sim\kappa^{2}+|p|_{*}^{2}.\label{eq_elliptic}
+\end{align}
+%
+To verify \eqref{eq_elliptic}, write $\lambda=\widehat{S}(p)\in[-3/5,1]$. If $\lambda\leq1/2$, then $|\lambda|\leq3/5$ and hence $|1-\lambda\xi|\geq1-|\lambda||\xi|\geq2/5$, while $\kappa^{2}+q(p)\leq|1-\xi|+2\leq C$; this gives \eqref{eq_elliptic} in this regime. If $\lambda\geq1/2$, then
+%
+\begin{align*}
+1-\lambda\xi=(1-\lambda)+\lambda(1-\xi).
+\end{align*}
+%
+Since $|\xi|<1$ we have $\re(1-\xi)>0$, so the real parts of the two summands above cannot cancel, and therefore
+%
+\begin{align*}
+|1-\lambda\xi|&\geq\max\Big\{(1-\lambda)+\lambda\re(1-\xi),\ \lambda|\im(1-\xi)|\Big\}\\
+&\geq\frac{1}{2}\Big[(1-\lambda)+\lambda|1-\xi|\Big]\geq\frac{1}{4}\Big[(1-\lambda)+|1-\xi|\Big],
+\end{align*}
+%
+where we used $\lambda\geq1/2$ in the last step. The matching upper bound $|1-\lambda\xi|\leq(1-\lambda)+|1-\xi|$ is clear. Since $1-\lambda=q(p)$ and $|1-\xi|=\kappa^{2}$, this proves \eqref{eq_elliptic}.
+
+\subsection{Proof of the decay estimate \texorpdfstring{\eqref{prop:ThfadC}}{(5)}}
+
+Consider first the infinite-volume kernel
+%
+\begin{align}
+K_{\xi,\infty}(x):=\frac{1}{(2\pi)^{2}}\int_{[-\pi,\pi]^{2}}\frac{e^{\ii p\cdot x}}{1-\xi\widehat{S}(p)}\dd p,\qquad x\in\Z^{2}.\label{eq_Kinf}
+\end{align}
+%
+We give the contour-shift argument in some detail. Write
+%
+\begin{align*}
+D_{\xi}(p):=1-\xi\widehat{S}(p)=1-\xi+\xi q(p).
+\end{align*}
+%
+For real $p\in[-\pi,\pi]^{2}$ and a real vector $\eta$ with $|\eta|\leq1$, the explicit expression \eqref{eq_qdef} for $q$ gives
+%
+\begin{align*}
+|q(p+\ii\eta)-q(p)|\leq C\big(|\eta||p|_{*}+|\eta|^{2}\big).
+\end{align*}
+%
+Indeed, this follows directly from $\cos(u+\ii v)=\cos u\cosh v-\ii\sin u\sinh v$ together with $|\sin u|\leq\dist(u,2\pi\Z)$. Hence
+%
+\begin{align*}
+|D_{\xi}(p+\ii\eta)-D_{\xi}(p)|\leq C\big(|\eta||p|_{*}+|\eta|^{2}\big).
+\end{align*}
+%
+Combining this estimate with \eqref{eq_elliptic} and choosing $c_{0}>0$ sufficiently small, we obtain
+%
+\begin{align}
+|D_{\xi}(p+\ii\eta)|\geq c\big(\kappa^{2}+|p|_{*}^{2}\big),\qquad |\eta|\leq c_{0}\kappa.\label{eq_shifted_lower}
+\end{align}
+%
+To see the last step, use $\kappa|p|_{*}\leq(\kappa^{2}+|p|_{*}^{2})/2$, so that the above perturbation can be absorbed into the lower bound in \eqref{eq_elliptic}. In particular, the denominator in \eqref{eq_Kinf} has no zeros in this strip.
+
+Choose $j\in\{1,2\}$ with $|x_{j}|=\max(|x_{1}|,|x_{2}|)$. If $x\neq0$, we shift the $p_{j}$-contour from $[-\pi,\pi]$ to $[-\pi,\pi]+\ii\,\sgn(x_{j})\,c_{0}\kappa$. The integrand is $2\pi$-periodic in $p_{j}$ because $x_{j}\in\Z$, so the integrals over the two vertical sides of the corresponding rectangle cancel. Cauchy's theorem and \eqref{eq_shifted_lower} thus give
+%
+\begin{align*}
+|K_{\xi,\infty}(x)|\leq e^{-c_{0}\kappa|x_{j}|}\cdot\frac{C}{(2\pi)^{2}}\int_{[-\pi,\pi]^{2}}\frac{\dd p}{\kappa^{2}+|p|_{*}^{2}}.
+\end{align*}
+%
+Since $|x_{j}|\geq|x|/\sqrt2$, and since the same integral bound holds directly when $x=0$, we conclude that
+%
+\begin{align}
+|K_{\xi,\infty}(x)|\leq C\log(2+\kappa^{-1})\,e^{-c\kappa|x|}.\label{eq_Kinf_bound}
+\end{align}
+%
+Here the logarithm comes from the familiar two-dimensional integral
+%
+\begin{align}
+\int_{[-\pi,\pi]^{2}}\frac{\dd p}{\kappa^{2}+|p|_{*}^{2}}\leq C\log(2+\kappa^{-1}).\label{eq_log_int}
+\end{align}
+
+Suppose first that $\kappa L\geq1$, so that $\hat\ell=\kappa^{-1}$. By Poisson summation, or simply by comparing Fourier coefficients in \eqref{eq_Fourier_rep} and \eqref{eq_Kinf}, the torus kernel is the periodization
+%
+\begin{align*}
+K_{\xi,L}(x)=\sum_{n\in\Z^{2}}K_{\xi,\infty}(x+nL).
+\end{align*}
+%
+Using \eqref{eq_Kinf_bound} and $\kappa L\geq1$ to sum the geometric series over $n$, we obtain
+%
+\begin{align*}
+|K_{\xi,L}(x)|\leq C\log(2+\kappa^{-1})\,e^{-c\kappa|x|_{L}}\prec e^{-c\kappa|x|_{L}}.
+\end{align*}
+%
+Since $\kappa^{2}\hat\ell^{2}=1$ in this regime, this is exactly \eqref{prop:ThfadC}.
+
+Suppose next that $\kappa L<1$, so that $\hat\ell=L$. We separate the zero Fourier mode in \eqref{eq_Fourier_rep} and use \eqref{eq_elliptic} for the remaining modes:
+%
+\begin{align*}
+|K_{\xi,L}(x)|\leq\frac{1}{L^{2}|1-\xi|}+\frac{C}{L^{2}}\sum_{p\in\T_{L}^{2}\setminus\{0\}}\frac{1}{|p|_{*}^{2}}\leq\frac{1}{\kappa^{2}L^{2}}+C\log L\prec\frac{1}{\kappa^{2}L^{2}},
+\end{align*}
+%
+where in the last step we used $\kappa^{2}L^{2}<1$. Since $|x|_{L}\leq CL=C\hat\ell$, the factor $\exp(-c|x|_{L}/\hat\ell)$ is bounded below by a positive constant, and $|1-\xi|\hat\ell^{2}=\kappa^{2}L^{2}$. This again yields \eqref{prop:ThfadC}, and completes the proof of property 5.
+
+\subsection{Proof of the derivative bounds \texorpdfstring{\eqref{prop:BD1}--\eqref{prop:BD2}}{(6)}}
+
+We first record the standard dyadic Fourier estimate needed below. Separate the zero mode in \eqref{eq_Fourier_rep} and decompose the remaining momenta into dyadic annuli $|p|_{*}\sim r$, where $L^{-1}\lesssim r\lesssim1$, using a smooth partition of unity. If $K_{r}$ denotes the contribution of one such annulus to \eqref{eq_Fourier_rep}, then discrete summation by parts, \eqref{eq_elliptic}, and the corresponding derivative bounds on the multiplier give, for $m=0,1,2$,
+%
+\begin{align}
+|\nabla^{m}K_{r}(x)|\leq C_{M}\frac{r^{m+2}}{\kappa^{2}+r^{2}}\big(1+r|x|_{L}\big)^{-M}.\label{eq_dyadic}
+\end{align}
+%
+Here $K_{r}$ is viewed as a trigonometric polynomial on the continuous torus, and $M$ can be chosen arbitrarily large. For completeness, we recall the mechanism: each summation by parts produces a factor $(1+r|x|_{L})^{-1}$, while each differentiation of the multiplier or of the cutoff costs one power of $r^{-1}$; the annulus contains $\OO(L^{2}r^{2})$ momenta, its multiplier is $\OO((\kappa^{2}+r^{2})^{-1})$ by \eqref{eq_elliptic}, and each of the $m$ derivatives in $x$ produces a factor $\OO(r)$. Together these give \eqref{eq_dyadic}.
+
+Let $d:=|a-b|_{L}$, and choose the representatives of $x=a-b$ and of $s$ in $\Z^{2}$ with minimal Euclidean norm.
+
+\medskip
+\noindent\emph{Case 1: $|s|_{L}\leq d/2$.} In this case the line segments joining $x$ to $x-s$, and $x-s$ to $x+s$, remain at distance comparable to $d$ from the origin. The fundamental theorem of calculus and \eqref{eq_dyadic} therefore imply
+%
+\begin{align}
+|K_{\xi,L}(x)-K_{\xi,L}(x-s)|&\leq C|s|_{L}\sum_{r}\frac{r^{3}}{\kappa^{2}+r^{2}}(1+rd)^{-M},\label{eq_fd1}\\
+|2K_{\xi,L}(x)-K_{\xi,L}(x-s)-K_{\xi,L}(x+s)|&\leq C|s|_{L}^{2}\sum_{r}\frac{r^{4}}{\kappa^{2}+r^{2}}(1+rd)^{-M},\label{eq_fd2}
+\end{align}
+%
+where the sums run over dyadic $L^{-1}\lesssim r\lesssim1$ (the zero mode is constant and cancels from both differences). Splitting each sum at $r\sim\kappa$ and at $r\sim(d+1)^{-1}$ gives
+%
+\begin{align}
+\sum_{r}\frac{r^{3}}{\kappa^{2}+r^{2}}(1+rd)^{-M}&\leq C\left(\frac{1}{d+1}+\frac{1}{\hat\ell}\right),\label{eq_dyadic_sum1}\\
+\sum_{r}\frac{r^{4}}{\kappa^{2}+r^{2}}(1+rd)^{-M}&\leq C\left(\frac{1}{d^{2}+1}+\frac{1}{\hat\ell^{2}}\right).\label{eq_dyadic_sum2}
+\end{align}
+%
+Since $\kappa\hat\ell\leq1$ by \eqref{eq_kappa_def}, we have
+%
+\begin{align*}
+\frac{1}{\hat\ell}\leq\frac{1}{\kappa\hat\ell^{2}}=\frac{1}{[\hat\ell(\xi)]^{2}|1-\xi|^{1/2}}.
+\end{align*}
+%
+Combining this with \eqref{eq_fd1}--\eqref{eq_dyadic_sum2} proves \eqref{prop:BD1} and \eqref{prop:BD2} when $|s|_{L}\leq d/2$.
+
+\medskip
+\noindent\emph{Case 2: $|s|_{L}>d/2$.} The zero Fourier mode is constant and cancels from both differences, so by \eqref{eq_elliptic},
+%
+\begin{align*}
+&|K_{\xi,L}(x)-K_{\xi,L}(x-s)|+|2K_{\xi,L}(x)-K_{\xi,L}(x-s)-K_{\xi,L}(x+s)|\\
+&\qquad\leq\frac{C}{L^{2}}\sum_{p\in\T_{L}^{2}\setminus\{0\}}\frac{1}{\kappa^{2}+|p|_{*}^{2}}\leq C\log L.
+\end{align*}
+%
+Thus both differences are $\OO(\log L)$, hence $\prec1$. On the other hand, unless $s=0$ we have $|s|_{L}\geq1$ and $d<2|s|_{L}$, so that
+%
+\begin{align*}
+\frac{|s|_{L}}{d+1}\geq c,\qquad \frac{|s|_{L}^{2}}{d^{2}+1}\geq c
+\end{align*}
+%
+for some constant $c>0$. The case $s=0$ is trivial. This proves \eqref{prop:BD1} and \eqref{prop:BD2} in all cases, and completes the proof of Lemma \ref{lem_propTH}. \qed
