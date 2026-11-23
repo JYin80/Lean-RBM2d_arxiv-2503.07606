@@ -1,7 +1,7 @@
 name = "RBM2D"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["RBM2D"]
+defaultTargets = ["RBM2D", "Challenge", "Solution"]
 
 [leanOptions]
 pp.unicode.fun = true # pretty-prints `fun a ↦ b`
@@ -16,3 +16,13 @@ rev = "v4.36.0-rc1"
 
 [[lean_lib]]
 name = "RBM2D"
+
+# Palomar statement surface: `Challenge` states the results (imports Mathlib only),
+# `Solution` proves the same statements from the library. See `comparator.json`.
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]

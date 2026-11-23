@@ -6,6 +6,7 @@ Authors: Jun Yin
 
 module
 
+public import RBM2D.MainDefs
 public import RBM2D.Gauss.Model
 public import RBM2D.Delocalization
 public import RBM2D.Propagator.Basic
@@ -49,142 +50,13 @@ open RBM.Gauss RBM.Gauss.Sizes
 
 /-! ### Local objects -/
 
-/-- The semicircle Stieltjes transform, by the paper's integral (Section 2.1):
-`m(z) = ∫_{-2}^{2} (2π)⁻¹ √(4-x²) / (x - z) dx`. -/
-noncomputable def mSC (z : ℂ) : ℂ :=
-  ∫ x in (-2 : ℝ)..2, ((Real.sqrt (4 - x ^ 2) / (2 * Real.pi) : ℝ) : ℂ) / ((x : ℂ) - z)
-
-/-- `(μ, ψ)` is an orthonormal eigenbasis of `H`: `ψ k` are orthonormal for the
-standard inner product and `H ψ_k = μ_k ψ_k`. -/
-def IsOrthoEigenbasis {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (H : Matrix ι ι ℂ) (μ : ι → ℝ) (ψ : ι → ι → ℂ) : Prop :=
-  (∀ k k', star (ψ k) ⬝ᵥ ψ k' = if k = k' then 1 else 0) ∧
-    ∀ k, H *ᵥ ψ k = (μ k : ℂ) • ψ k
-
-/-- The admissible-sequence hypotheses shared by all five statements: size `N → ∞` and
-the bandwidth condition `(Main_DEL_COND)` `W ≥ N^𝔠`, eventually. -/
-def Admissible (𝔠 : ℝ) (d : Sizes) : Prop :=
-  Tendsto (fun n => d.size n) atTop atTop ∧
-    ∀ᶠ n in atTop, ((d.size n : ℕ) : ℝ) ^ 𝔠 ≤ (d.W n : ℝ)
-
-/-- The Green function of the size-`n` band matrix. -/
-noncomputable def Gn (d : Sizes) (n : ℕ) (ω : SeqΩ d) (z : ℂ) :
-    Matrix (Idx (d.L n) (d.W n)) (Idx (d.L n) (d.W n)) ℂ :=
-  green (seqXmat d n ω) z
-
-/-- The spectral domain of `MR:locSC`/`MR:QDiff`:
-`z = E + iη`, `|E| ≤ 2 - κ`, `N^{-1+τ} ≤ η ≤ 1`. -/
-def locDomain (N : ℕ) (κ τ : ℝ) (z : ℂ) : Prop :=
-  |z.re| ≤ 2 - κ ∧ (N : ℝ) ^ (-1 + τ) ≤ z.im ∧ z.im ≤ 1
-
 /-! ### 1. Delocalization `MR:decol` -/
-
-/-- The good event of `MR:decol`: for every orthonormal eigenbasis, every eigenvector
-with eigenvalue in `[-2+κ, 2-κ]` has `‖ψ‖²_∞ ≤ N^{-1+τ}`. -/
-def decolEvent (d : Sizes) (n : ℕ) (κ τ : ℝ) (ω : SeqΩ d) : Prop :=
-  ∀ (μ : Idx (d.L n) (d.W n) → ℝ) (ψ : Idx (d.L n) (d.W n) → Idx (d.L n) (d.W n) → ℂ),
-    IsOrthoEigenbasis (seqXmat d n ω) μ ψ →
-      ∀ k, μ k ∈ Set.Icc (-2 + κ) (2 - κ) →
-        ∀ x, ‖ψ k x‖ ^ 2 ≤ ((d.size n : ℕ) : ℝ) ^ (-1 + τ)
-
-/-- **Delocalization `MR:decol`.** -/
-def decol : Prop :=
-  ∀ 𝔠 : ℝ, 0 < 𝔠 → ∀ d : Sizes, Admissible 𝔠 d →
-    ∀ κ τ D : ℝ, 0 < κ → 0 < τ → 0 < D →
-      ∀ᶠ n in atTop,
-        seqP d {ω | ¬ decolEvent d n κ τ ω} ≤
-          ENNReal.ofReal (((d.size n : ℕ) : ℝ) ^ (-D))
 
 /-! ### 2. Local semicircle law `MR:locSC` -/
 
-/-- **Local semicircle law `MR:locSC`**, both `(G_bound)` and `(G_bound_ave)`; `N₀` is uniform
-over the `N`-dependent spectral domain. -/
-def locSC : Prop :=
-  ∀ 𝔠 : ℝ, 0 < 𝔠 → ∀ d : Sizes, Admissible 𝔠 d →
-    ∀ κ τ D : ℝ, 0 < κ → 0 < τ → 0 < D →
-      ∀ᶠ n in atTop, ∀ z : ℂ, locDomain (d.size n) κ τ z →
-        -- (G_bound)
-        seqP d {ω | ¬ ∀ x y : Idx (d.L n) (d.W n),
-            ‖Gn d n ω z x y - (if x = y then mSC z else 0)‖ ≤
-              (d.W n : ℝ) ^ τ / Real.sqrt (Meta (d.L n) (d.W n) z)} ≤
-          ENNReal.ofReal (((d.size n : ℕ) : ℝ) ^ (-D)) ∧
-        -- (G_bound_ave)
-        seqP d {ω | ¬ ∀ a : Z2 (d.L n),
-            ‖((d.W n : ℂ) ^ 2)⁻¹ * ∑ x ∈ Iblk (d.L n) (d.W n) a, Gn d n ω z x x -
-                mSC z‖ ≤
-              (d.W n : ℝ) ^ τ / Meta (d.L n) (d.W n) z} ≤
-          ENNReal.ofReal (((d.size n : ℕ) : ℝ) ^ (-D))
-
 /-! ### 3. Generalized QUE `MR:QUE` -/
 
-/-- The window `𝒥_E = {k : |λ_k - E| ≤ N^{-1-τ} W^{2/3}}` for eigenvalues `μ`. -/
-def window {ι : Type*} (N W : ℕ) (τ E : ℝ) (μ : ι → ℝ) (k : ι) : Prop :=
-  |μ k - E| ≤ (N : ℝ) ^ (-1 - τ) * (W : ℝ) ^ ((2 : ℝ) / 3)
-
-/-- The failure event of `(Meq:QUE)`: some orthonormal eigenbasis has `k, k' ∈ 𝒥_E` with
-`|N ψ_k^*(E_a - N⁻¹) ψ_{k'}|² ≥ N^{-τ/6}`. -/
-def queBad (d : Sizes) (n : ℕ) (τ E : ℝ) (a : Z2 (d.L n)) (ω : SeqΩ d) : Prop :=
-  ∃ (μ : Idx (d.L n) (d.W n) → ℝ) (ψ : Idx (d.L n) (d.W n) → Idx (d.L n) (d.W n) → ℂ),
-    IsOrthoEigenbasis (seqXmat d n ω) μ ψ ∧
-      ∃ k k', window (d.size n) (d.W n) τ E μ k ∧
-        window (d.size n) (d.W n) τ E μ k' ∧
-        ((d.size n : ℕ) : ℝ) ^ (-τ / 6) ≤
-          ‖((d.size n : ℕ) : ℂ) *
-              (star (ψ k) ⬝ᵥ ((Epaper (d.L n) (d.W n) a -
-                ((d.size n : ℕ) : ℂ)⁻¹ • (1 : Matrix _ _ ℂ)) *ᵥ ψ k'))‖ ^ 2
-
-/-- The failure event of `(Meq:QUE2)` for a block set `A`. -/
-def que2Bad (d : Sizes) (n : ℕ) (τ E : ℝ) (A : Finset (Z2 (d.L n)))
-    (ω : SeqΩ d) : Prop :=
-  ∃ (μ : Idx (d.L n) (d.W n) → ℝ) (ψ : Idx (d.L n) (d.W n) → Idx (d.L n) (d.W n) → ℂ),
-    IsOrthoEigenbasis (seqXmat d n ω) μ ψ ∧
-      ∃ k, window (d.size n) (d.W n) τ E μ k ∧
-        (A.card : ℝ) * (d.W n : ℝ) ^ 2 / ((d.size n : ℕ) : ℝ) ^ (1 + τ / 6) ≤
-          |∑ a ∈ A, ∑ x ∈ Iblk (d.L n) (d.W n) a, ‖ψ k x‖ ^ 2 -
-            (A.card : ℝ) * (d.W n : ℝ) ^ 2 / ((d.size n : ℕ) : ℝ)|
-
-/-- **Generalized QUE `MR:QUE`**, `(Meq:QUE)` and `(Meq:QUE2)`.  The paper's `D` is unused and
-omitted; `(Meq:QUE2)` is stated for nonempty `A`. -/
-def QUE : Prop :=
-  ∀ 𝔠 : ℝ, 0 < 𝔠 → ∀ d : Sizes, Admissible 𝔠 d →
-    ∀ τ : ℝ, 0 < τ → τ < 𝔠 / 2 → ∀ κ : ℝ, 0 < κ →
-      ∀ᶠ n in atTop, ∀ E : ℝ, |E| < 2 - κ →
-        (∀ a : Z2 (d.L n),
-          seqP d {ω | queBad d n τ E a ω} ≤
-            ENNReal.ofReal (((d.size n : ℕ) : ℝ) ^ (-τ / 6))) ∧
-        (∀ A : Finset (Z2 (d.L n)), A.Nonempty →
-          seqP d {ω | que2Bad d n τ E A ω} ≤
-            ENNReal.ofReal (((d.size n : ℕ) : ℝ) ^ (-τ / 6)))
-
 /-! ### 4. Quantum diffusion `MR:QDiff` -/
-
-/-- `tr(G E_a G^σ E_b)` with `G^σ = G†` (`σ = false`) or `G` (`σ = true`). -/
-noncomputable def trGEGE (d : Sizes) (n : ℕ) (ω : SeqΩ d) (z : ℂ) (σ : Bool)
-    (a b : Z2 (d.L n)) : ℂ :=
-  Matrix.trace (Gn d n ω z * Epaper (d.L n) (d.W n) a *
-    (if σ then Gn d n ω z else (Gn d n ω z)ᴴ) * Epaper (d.L n) (d.W n) b)
-
-/-- The deterministic profile `W^{-2} (ξ/(1 - ξ S^(B)))_{ab} = W^{-2} ξ (Θ_ξ)_{ab}` with
-`ξ = |m|²` (`σ = false`) or `ξ = m²` (`σ = true`), `m = m(z)`. -/
-noncomputable def profile (L W : ℕ) [NeZero L] (z : ℂ) (σ : Bool)
-    (a b : Z2 L) : ℂ :=
-  let ξ : ℂ := if σ then mSC z ^ 2 else ((‖mSC z‖ ^ 2 : ℝ) : ℂ)
-  ((W : ℂ) ^ 2)⁻¹ * (ξ * Theta L ξ a b)
-
-/-- **Quantum diffusion `MR:QDiff`**: `(Meq:QdW1)`/`(Meq:QdW2)` (`σ = false/true`) with
-probability `≥ 1 - N^{-D}`, and `(Meq:QdS1)`/`(Meq:QdS2)` for the expectation. -/
-def QDiff : Prop :=
-  ∀ 𝔠 : ℝ, 0 < 𝔠 → ∀ d : Sizes, Admissible 𝔠 d →
-    ∀ κ τ D : ℝ, 0 < κ → 0 < τ → 0 < D →
-      ∀ᶠ n in atTop, ∀ z : ℂ, locDomain (d.size n) κ τ z → ∀ σ : Bool,
-        seqP d {ω | ¬ ∀ a b : Z2 (d.L n),
-            ‖trGEGE d n ω z σ a b - profile (d.L n) (d.W n) z σ a b‖ ≤
-              (d.W n : ℝ) ^ τ / Meta (d.L n) (d.W n) z ^ 2} ≤
-          ENNReal.ofReal (((d.size n : ℕ) : ℝ) ^ (-D)) ∧
-        ∀ a b : Z2 (d.L n),
-          ‖(∫ ω, trGEGE d n ω z σ a b ∂(seqP d)) -
-              profile (d.L n) (d.W n) z σ a b‖ ≤
-            Meta (d.L n) (d.W n) z ^ (-(3 : ℤ)) * (d.W n : ℝ) ^ τ
 
 /-! ### 5. Bulk universality `Thm: B_Univ` -/
 

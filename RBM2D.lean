@@ -1,5 +1,6 @@
 module
 
+public import RBM2D.MainDefs
 public import RBM2D.Basic
 public import RBM2D.Test.Axioms
 public import RBM2D.Defs.Block

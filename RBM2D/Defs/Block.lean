@@ -6,6 +6,7 @@ Authors: Jun Yin
 
 module
 
+public import RBM2D.MainDefs
 public import Mathlib.LinearAlgebra.Matrix.Circulant
 public import Mathlib.Data.ZMod.Basic
 public import Mathlib.Analysis.Matrix.Normed
@@ -42,23 +43,9 @@ namespace RBM
 
 open Finset Matrix
 
-/-- The index set of the paper: the discrete torus `Z_L^2`. -/
-abbrev Z2 (L : ℕ) := ZMod L × ZMod L
-
 section Defs
 
 variable (L : ℕ)
-
-/-- The nearest-neighbour support `{(0,0), (1,0), (-1,0), (0,1), (0,-1)} ⊆ Z_L^2`. -/
-def sbSupport : Finset (Z2 L) := {(0, 0), (1, 0), (-1, 0), (0, 1), (0, -1)}
-
-/-- The generating kernel of `S^(B)`: the value `1/5` on the five-point
-nearest-neighbour support, zero elsewhere. -/
-noncomputable def sbKernel : Z2 L → ℂ :=
-  fun u => if u ∈ sbSupport L then (5 : ℂ)⁻¹ else 0
-
-/-- The block covariance matrix `S^(B)` of Section 2.1, on `Z_L^2`. -/
-noncomputable def SB : Matrix (Z2 L) (Z2 L) ℂ := circulant (sbKernel L)
 
 theorem SB_apply (a b : Z2 L) : SB L a b = sbKernel L (a - b) := rfl
 

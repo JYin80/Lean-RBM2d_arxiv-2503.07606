@@ -1,0 +1,121 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4, for Palomar (https://palomar-registry.org/).
+version: "v0.4"
+
+project:
+  name: "Delocalization of two-dimensional random band matrices"
+  description: >-
+    A Lean 4 / Mathlib proof of the main results of Dubova, Yang, Yau and Yin, "Delocalization of
+    two-dimensional random band matrices" (arXiv:2503.07606). The model is the complex Gaussian
+    block band matrix on the torus Z_L^2 with L^2 blocks of size W x W, N = W^2 L^2, and band
+    width W >= N^c for some c > 0. This entry contains Theorem 2.2 (delocalization of the bulk
+    eigenvectors), Theorem 2.3 (the local semicircle law, (4)-(5)), Theorem 2.4 (generalized
+    quantum unique ergodicity, (8)-(9)) and Theorem 2.5 (quantum diffusion, (10)-(13)); they have
+    no hypotheses other than their parameters, and no result of another work is assumed for them.
+    The library also proves Theorem 2.6 (bulk universality) from one external input, stated as an
+    explicit hypothesis; that theorem is not part of this entry.
+  authors:
+    - "Jun Yin"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Jun Yin"
+
+classification:
+  arxiv: ["math.PR", "math-ph"]
+  msc2020: ["60B20", "15B52", "82B44"]
+
+sources:
+  - title: "Delocalization of two-dimensional random band matrices"
+    authors:
+      - "Sofiia Dubova"
+      - "Kevin Yang"
+      - "Horng-Tzer Yau"
+      - "Jun Yin"
+    id: "arXiv:2503.07606"
+    type: "paper"
+    location: "https://arxiv.org/abs/2503.07606"
+    relationship: "formalizes"
+    note: >-
+      The Lean code follows paper/DubovaYangYauYin_RBM2D_Lean_version.pdf in this repository;
+      theorem and equation numbers in docs/PAPER-VS-LEAN.md refer to it. Jun Yin, a co-author of
+      the paper, is the author of the formalization.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+
+related_formalizations: []
+
+status:
+  scope: >-
+    In this entry (Challenge.lean): Theorems 2.2, 2.3, 2.4 and 2.5. Also proved in the library,
+    not in this entry: Theorem 2.6 (bulk universality, (17)), which takes the fixed-energy
+    universality of Dyson Brownian motion (Landon-Sosoe-Yau, arXiv:1609.09011v4, Theorem 2.2) as
+    the explicit hypothesis RBM.Univ.L32 (RBM.Endpoints.bUniv_holds in
+    RBM2D/Main/BUnivHolds.lean; docs/PAPER-VS-LEAN.md).
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5", "claude-sonnet-5-5", "claude-fable-5-1", "claude-fable-5-2"]
+      framework: "Claude Code"
+      tool_setup: >-
+        AI-assisted: a team of Claude Code agents (a dispatcher, workers on ticket worktrees and
+        reviewing agents) wrote the Lean code and the comparison documents from the paper's
+        source, under the direction of Jun Yin, who fixed the endpoint statements. The upgrade to
+        Lean v4.36, the port to the Lean module system and the Challenge/Solution files for
+        Palomar were also written with Claude.
+      cost:
+        wall_time: "about 94 hours of active work between 2026-09-19 and 2026-10-02 (587 commits in the work repository; the run was paused for long stretches in between)"
+        spend_usd: "not tracked"
+        hardware: "local machine"
+      prompting_notes: "n/a"
+  spend_usd: "not tracked"
+  notes: >-
+    The mathematical source is a paper by Sofiia Dubova, Kevin Yang, Horng-Tzer Yau and Jun Yin.
+    The Lean proofs were produced by AI agents; the statements of the main theorems and of the
+    definitions they use were fixed and checked by Jun Yin against the paper.
+
+fidelity:
+  divergences: >-
+    (1) The statements are made along any admissible sequence of sizes (W_n, L_n), which is the
+    paper's "there is N_0 such that for all N >= N_0". (2) Probability bounds are stated for the
+    failure events. (3) L >= 3. (4) One probability space serves all n. (5) Some proofs take a
+    different route from the paper (discrete time grids in place of stopping times and Brownian
+    paths). Details: docs/PAPER-VS-LEAN.md.
+
+review:
+  status: "agent-reviewed"
+  reviewers: []
+  notes: >-
+    The Lean proof of each ticket was audited by a separate auditing agent, and a supervising
+    agent checked the final statements. Jun Yin checked the statements of the main theorems and
+    of the definitions they use against the paper. No independent human review has been
+    performed.
+
+alignment:
+  namespace: "RBM.Endpoints"
+  statements:
+    - source: "Theorem 2.2"
+      lean: "RBM.Endpoints.theorem_2_2"
+      module: "Challenge"
+      status: "proved"
+      note: "The statement is RBM.Endpoints.decol; proved in Solution.lean by RBM.Endpoints.decol_holds."
+    - source: "Theorem 2.3, (4)-(5)"
+      lean: "RBM.Endpoints.theorem_2_3"
+      module: "Challenge"
+      status: "proved"
+      note: "The statement is RBM.Endpoints.locSC; proved by RBM.Endpoints.locSC_holds."
+    - source: "Theorem 2.4, (8)-(9)"
+      lean: "RBM.Endpoints.theorem_2_4"
+      module: "Challenge"
+      status: "proved"
+      note: "The statement is RBM.Endpoints.QUE; proved by RBM.Endpoints.QUE_holds."
+    - source: "Theorem 2.5, (10)-(13)"
+      lean: "RBM.Endpoints.theorem_2_5"
+      module: "Challenge"
+      status: "proved"
+      note: "The statement is RBM.Endpoints.QDiff; proved by RBM.Endpoints.QDiff_holds."
+
+acknowledgements: "Mathlib and the Lean community; Lean 4 (Lean FRO); Claude Code (Anthropic)."

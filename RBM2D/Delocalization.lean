@@ -6,6 +6,7 @@ Authors: Jun Yin
 
 module
 
+public import RBM2D.MainDefs
 public import Mathlib.Analysis.Matrix.Spectrum
 public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
@@ -42,9 +43,6 @@ namespace RBM
 open Matrix
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
-
-/-- The Green's function `G(z) = (H - z)⁻¹`. -/
-noncomputable def green (H : Matrix n n ℂ) (z : ℂ) : Matrix n n ℂ := (H - z • 1)⁻¹
 
 variable {H : Matrix n n ℂ} (hH : H.IsHermitian)
 

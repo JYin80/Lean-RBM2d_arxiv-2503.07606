@@ -11,7 +11,7 @@ generalized Wigner matrices*, Adv. Math. 229 (2012). [45] = C. Xu, F. Yang, H.-T
 universality and quantum unique ergodicity for random band matrices in high dimensions*, Ann. Probab. 52
 (2024). [50] = H.-T. Yau, J. Yin, *Delocalization of one-dimensional random band matrices*, arXiv:2501.01718.
 
-**Lean.** The library is `RBM2D` (Lean 4.34.0, Mathlib v4.34.0); its declarations are in the namespace `RBM`.
+**Lean.** The library is `RBM2D` (Lean 4.36.0-rc1, Mathlib v4.36.0-rc1); its declarations are in the namespace `RBM`.
 Every name below that starts with `RBM.` is a declaration of this library, used directly or indirectly by
 the proofs of the five main theorems or by the compiled instances of §1. Other names (such as
 `Matrix.trace`, `Matrix.IsHermitian.eigenvalues`, `ProbabilityTheory.gaussianReal`) are from Mathlib. Lean
@@ -53,7 +53,7 @@ def Admissible (𝔠 : ℝ) (d : Sizes) : Prop :=
     ∀ᶠ n in atTop, ((d.size n : ℕ) : ℝ) ^ 𝔠 ≤ (d.W n : ℝ)
 ```
 
-**The theorems.** The statements `decol`, `locSC`, `QUE`, `QDiff`, `BUniv` are in `RBM2D/Endpoints.lean`
+**The theorems.** The statements `decol`, `locSC`, `QUE`, `QDiff` are in `RBM2D/MainDefs.lean` and `BUniv` in `RBM2D/Endpoints.lean`
 (Appendix A). The four theorems without hypothesis are proved in `RBM2D/Main/Endpoints.lean`, and
 `bUniv_holds` in `RBM2D/Main/BUnivHolds.lean`.
 
@@ -476,7 +476,7 @@ probability `O(N^{-D})` (p. 10), stay inside the expectation (`RBM.Univ.EMCTE2`,
 
 ## Appendix A. The Lean statements
 
-The five statements and the definitions they use (namespace `RBM.Endpoints`, file `RBM2D/Endpoints.lean`).
+The five statements and the definitions they use (namespace `RBM.Endpoints`, files `RBM2D/MainDefs.lean` and `RBM2D/Endpoints.lean`).
 `ellz`, `Meta`, `Gn` are described in §2.7, `gueP`, `gueVar` in §2.8.
 
 ```lean

@@ -6,6 +6,7 @@ Authors: Jun Yin
 
 module
 
+public import RBM2D.MainDefs
 public import Mathlib.Analysis.Complex.Polynomial.Basic
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 public import RBM2D.Gauss.SpectralAlgebra
@@ -291,13 +292,5 @@ theorem zztE_quant {z : ℂ} {κ : ℝ} (hκ0 : 0 < κ) (hz0 : 0 < z.im) (hz1 : 
     exact Real.sqrt_le_sqrt ht
   refine ⟨(semicircle_abs_lemE_le hz0).trans hκ, ht, ?_, ?_⟩ <;>
     rw [semicircle_spectralZ_im_lemT hz0] <;> nlinarith
-
-/-- `ℓ(z) = min(η^{-1/2}, L) + 1`, `η = Im z` (`def_ellz`). -/
-noncomputable def ellz (L : ℕ) (z : ℂ) : ℝ :=
-  min (z.im ^ (-(1 / 2 : ℝ))) (L : ℝ) + 1
-
-/-- `M_η = W² ℓ(z)² η` (`def_meta`, `d = 2`). -/
-noncomputable def Meta (L W : ℕ) (z : ℂ) : ℝ :=
-  (W : ℝ) ^ 2 * ellz L z ^ 2 * z.im
 
 end RBM

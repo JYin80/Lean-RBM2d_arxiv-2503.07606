@@ -6,6 +6,7 @@ Authors: Jun Yin
 
 module
 
+public import RBM2D.MainDefs
 public import RBM2D.Defs.Model
 public import RBM2D.Defs.StochDom
 public import Mathlib.Probability.ProductMeasure
@@ -39,19 +40,6 @@ open MeasureTheory ProbabilityTheory Matrix
 open scoped NNReal
 
 variable (L W : ℕ) [NeZero L] [NeZero W]
-
-/-- The exact fine-lattice index set of Section 2.1. -/
-abbrev Idx := Z2 (W * L)
-
-/-- The real form of the paper's variance profile. -/
-noncomputable def svar (i j : Idx L W) : ℝ :=
-  if (blk L W i.1, blk L W i.2) - (blk L W j.1, blk L W j.2) ∈ sbSupport L
-  then (5 : ℝ)⁻¹ * (W : ℝ)⁻¹ ^ 2 else 0
-
-omit [NeZero L] [NeZero W] in
-theorem svar_nonneg (i j : Idx L W) : 0 ≤ svar L W i j := by
-  unfold svar
-  split_ifs <;> positivity
 
 omit [NeZero L] [NeZero W] in
 theorem svar_comm (i j : Idx L W) : svar L W i j = svar L W j i := by
@@ -89,9 +77,6 @@ theorem svar_diag_pos (i : Idx L W) : 0 < svar L W i i := by
   have hW : (0 : ℝ) < W := by exact_mod_cast NeZero.pos W
   positivity
 
-/-- A finite injective key, used only to orient independent off-diagonal entries. -/
-noncomputable def idxKey (i : Idx L W) : ℕ := (Fintype.equivFin (Idx L W) i).val
-
 theorem idxKey_injective : Function.Injective (idxKey L W) := fun _ _ h =>
   (Fintype.equivFin (Idx L W)).injective (Fin.val_injective h)
 
@@ -101,20 +86,6 @@ theorem idxKey_lt_or_eq_or_lt (i j : Idx L W) :
   · exact Or.inl h
   · exact Or.inr (Or.inl (idxKey_injective L W h))
   · exact Or.inr (Or.inr h)
-
-/-- Two real coordinates per oriented pair.  The lower-triangular and imaginary diagonal
-coordinates are unused independent noise; this choice makes the product index simple. -/
-abbrev Coord := Idx L W × Idx L W × Bool
-
-/-- The finite product sample space. -/
-abbrev Ω := Coord L W → ℝ
-
-/-- Diagonal coordinate variance `S_ii`; off-diagonal coordinate variance `S_ij/2`. -/
-noncomputable def gvar (c : Coord L W) : ℝ≥0 :=
-  ⟨if c.1 = c.2.1 then svar L W c.1 c.2.1 else svar L W c.1 c.2.1 / 2, by
-    split_ifs
-    · exact svar_nonneg L W _ _
-    · exact div_nonneg (svar_nonneg L W _ _) (by norm_num)⟩
 
 omit [NeZero L] [NeZero W] in
 @[simp] theorem gvar_diag (i : Idx L W) (b : Bool) :
@@ -141,18 +112,6 @@ omit [NeZero L] [NeZero W] in
 theorem P_map_eval (c : Coord L W) :
     (P L W).map (fun ω => ω c) = gaussianReal 0 (gvar L W c) :=
   Measure.infinitePi_map_eval _ c
-
-/-- An entry of the Hermitian matrix, oriented by `idxKey`. -/
-noncomputable def Xentry (ω : Ω L W) (i j : Idx L W) : ℂ :=
-  if idxKey L W i < idxKey L W j then
-    (ω (i, j, true) : ℂ) + Complex.I * (ω (i, j, false) : ℂ)
-  else if idxKey L W j < idxKey L W i then
-    (ω (j, i, true) : ℂ) - Complex.I * (ω (j, i, false) : ℂ)
-  else (ω (i, j, true) : ℂ)
-
-/-- The fixed one-time Gaussian matrix. -/
-noncomputable def Xmat (ω : Ω L W) : Matrix (Idx L W) (Idx L W) ℂ :=
-  Matrix.of fun i j => Xentry L W ω i j
 
 @[simp] theorem Xmat_apply (ω : Ω L W) (i j : Idx L W) :
     Xmat L W ω i j = Xentry L W ω i j := rfl
@@ -325,46 +284,16 @@ theorem Hflow_sub (u v : ℝ) (ω : Ω L W) :
 
 /-! ### A common probability space for an admissible size sequence -/
 
-/-- Only the size data needed by the Gaussian construction.  Quantitative bandwidth
-hypotheses belong to the later asymptotic estimates. -/
-structure Sizes where
-  L : ℕ → ℕ
-  W : ℕ → ℕ
-  three_le_L : ∀ n, 3 ≤ L n
-  W_pos : ∀ n, 0 < W n
-
 namespace Sizes
 
 variable (d : Sizes)
 
-instance neZeroL (n : ℕ) : NeZero (d.L n) := ⟨by have := d.three_le_L n; omega⟩
-instance neZeroW (n : ℕ) : NeZero (d.W n) := ⟨(d.W_pos n).ne'⟩
-
-/-- The full matrix dimension along this admissible sequence. -/
-def size (n : ℕ) : ℕ := (d.W n * d.L n) ^ 2
-
 theorem size_eq (n : ℕ) : size d n = d.W n ^ 2 * d.L n ^ 2 := by
   simp [size, mul_pow]
-
-/-- A coordinate records its size parameter as well as the entry and real/imaginary tag. -/
-abbrev SeqCoord := Σ n : ℕ, Coord (d.L n) (d.W n)
-
-/-- One common sample space for all sizes. -/
-abbrev SeqΩ := SeqCoord d → ℝ
-
-noncomputable def seqGvar (c : SeqCoord d) : ℝ≥0 :=
-  gvar (d.L c.1) (d.W c.1) c.2
-
-/-- Independent Gaussian coordinates for every size in one countable product. -/
-noncomputable def seqP : Measure (SeqΩ d) :=
-  Measure.infinitePi fun c => gaussianReal 0 (seqGvar d c)
 
 instance isProbabilityMeasure_seqP : IsProbabilityMeasure (seqP d) := by
   unfold seqP
   infer_instance
-
-/-- The coordinate vector at one size, extracted from the common product. -/
-def slice (n : ℕ) (ω : SeqΩ d) : Ω (d.L n) (d.W n) := fun c => ω ⟨n, c⟩
 
 theorem measurable_slice (n : ℕ) : Measurable (slice d n) := by
   exact Measurable.of_eval fun (c : Coord (d.L n) (d.W n)) =>
@@ -406,11 +335,6 @@ theorem seqP_map_slice (n : ℕ) :
   apply Finset.prod_congr rfl
   intro a ha
   simp [t', e, seqGvar]
-
-/-- The size-`n` matrix on the common probability space. -/
-noncomputable def seqXmat (n : ℕ) (ω : SeqΩ d) :
-    Matrix (Idx (d.L n) (d.W n)) (Idx (d.L n) (d.W n)) ℂ :=
-  Xmat (d.L n) (d.W n) (slice d n ω)
 
 /-- The one-time flow on the common probability space. -/
 noncomputable def seqHflow (n : ℕ) (u : ℝ) (ω : SeqΩ d) :

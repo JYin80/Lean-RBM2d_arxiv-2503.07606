@@ -6,6 +6,7 @@ Authors: Jun Yin
 
 module
 
+public import RBM2D.MainDefs
 public import RBM2D.Defs.Block
 public import Mathlib.LinearAlgebra.Matrix.Kronecker
 public import Mathlib.LinearAlgebra.Matrix.ConjTranspose
@@ -116,9 +117,6 @@ section Paper
 
 variable (L W : ℕ) [NeZero L] [NeZero W]
 
-/-- The block containing a one-dimensional coordinate. -/
-def blk (i : ZMod (W * L)) : ZMod L := ((i.val / W : ℕ) : ZMod L)
-
 /-- The offset within a one-dimensional block. -/
 def ofs (i : ZMod (W * L)) : Fin W := ⟨i.val % W, Nat.mod_lt _ (NeZero.pos W)⟩
 
@@ -128,13 +126,6 @@ def split (i : Z2 (W * L)) : BlockIndex L W :=
 
 theorem blk_val (i : ZMod (W * L)) : (blk L W i).val = i.val / W :=
   ZMod.val_natCast_of_lt (Nat.div_lt_of_lt_mul (ZMod.val_lt i))
-
-/-- A zero-based version of the paper's interval `I_a`. -/
-def I₁ (a : ZMod L) : Finset (ZMod (W * L)) :=
-  (Finset.range W).image fun α => ((a.val * W + α : ℕ) : ZMod (W * L))
-
-/-- The paper's two-dimensional block `I_a^(2) = I_(a₁) × I_(a₂)`. -/
-def Iblk (a : Z2 L) : Finset (Z2 (W * L)) := (I₁ L W a.1).product (I₁ L W a.2)
 
 theorem mem_I₁ (a : ZMod L) (i : ZMod (W * L)) :
     i ∈ I₁ L W a ↔ blk L W i = a := by
@@ -215,11 +206,6 @@ theorem sum_Spaper_row (hL : 3 ≤ L) (i : Z2 (W * L)) :
         ∑ k : BlockIndex L W, Svar L W (split L W i) k := by
           exact Fintype.sum_equiv (splitEquiv L W) _ _ (fun _ => rfl)
     _ = 1 := sum_Svar_row L W hL (split L W i)
-
-/-- The matrix `E_a` in `Def_matE` at literal paper indices. -/
-noncomputable def Epaper (a : Z2 L) :
-    Matrix (Z2 (W * L)) (Z2 (W * L)) ℂ :=
-  Matrix.of fun i j => if i = j then (W : ℂ)⁻¹ ^ 2 * (if i ∈ Iblk L W a then 1 else 0) else 0
 
 theorem Epaper_eq (a : Z2 L) (i j : Z2 (W * L)) :
     Epaper L W a i j = Eblk L W a (split L W i) (split L W j) := by

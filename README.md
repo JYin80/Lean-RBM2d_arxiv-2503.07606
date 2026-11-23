@@ -15,8 +15,8 @@ Yau–Yin, *Delocalization of one-dimensional random band matrices* (arXiv:2501.
 
 ## Main results
 
-The five statements are written in [`RBM2D/Endpoints.lean`](RBM2D/Endpoints.lean) as closed
-propositions; the theorems are in [`RBM2D/Main/Endpoints.lean`](RBM2D/Main/Endpoints.lean) and
+The five statements are closed propositions: `decol`, `locSC`, `QUE` and `QDiff` are written in
+[`RBM2D/MainDefs.lean`](RBM2D/MainDefs.lean) and `BUniv` in [`RBM2D/Endpoints.lean`](RBM2D/Endpoints.lean); the theorems are in [`RBM2D/Main/Endpoints.lean`](RBM2D/Main/Endpoints.lean) and
 [`RBM2D/Main/BUnivHolds.lean`](RBM2D/Main/BUnivHolds.lean).
 
 | Paper | Lean statement | Lean theorem | What it says |
@@ -57,7 +57,7 @@ the namespace `RBM`, and makes the build fail otherwise.
 
 ## Build
 
-The toolchain is `leanprover/lean4:v4.34.0` (file `lean-toolchain`) with Mathlib `v4.34.0`.
+The toolchain is `leanprover/lean4:v4.36.0-rc1` (file `lean-toolchain`) with Mathlib `v4.36.0-rc1`.
 
 ```
 lake exe cache get
@@ -85,7 +85,7 @@ theorems to it (the examples for Theorem 2.6 take `L32` as a hypothesis).
 - `RBM2D/Induction/`: the continuous induction over the time grid (Steps 1–6 of the proof of Theorem 2.20).
 - `RBM2D/Universality/`: the proof of Theorem 2.6: the Ornstein–Uhlenbeck flow, the Green's function comparison, the free convolution, eigenvalue interlacing, the GUE local law and the GUE phase, and the statement of the external input `L32`.
 - `RBM2D/Main/`: the assembly of Theorems 2.2–2.6 from the results above.
-- `RBM2D/Endpoints.lean`: the five statements; `RBM2D/Delocalization.lean`: from a Green's function bound to eigenvector delocalization; `RBM2D/Test/Axioms.lean`: the axiom check.
+- `RBM2D/MainDefs.lean`, `RBM2D/Endpoints.lean`: the five statements; `RBM2D/Delocalization.lean`: from a Green's function bound to eigenvector delocalization; `RBM2D/Test/Axioms.lean`: the axiom check.
 
 ## `docs/PAPER-VS-LEAN.md`
 
@@ -100,3 +100,16 @@ in `paper/tex/` (`imsart.cls`, `imsart.sty`, `imsart-number.bst`) are the IMS jo
 VTeX, under the MIT license in `paper/tex/LICENSE-imsart`.
 
 Paper: Sofiia Dubova, Kevin Yang, Horng-Tzer Yau and Jun Yin. Lean formalization: Jun Yin.
+
+## Palomar
+
+The repository is laid out for the [Palomar registry](https://palomar-registry.org/) of Lean-verified mathematics.
+All source files use Lean's module system. [`RBM2D/MainDefs.lean`](RBM2D/MainDefs.lean) holds every definition used
+by the statements of Theorems 2.2–2.5; [`Challenge.lean`](Challenge.lean) is the statement to audit (it imports
+Mathlib only, repeats the definitions of `RBM2D/MainDefs.lean` and states the four theorems; Theorem 2.6, which has
+an external input as a hypothesis, is not in it), [`Solution.lean`](Solution.lean) proves the four statements from
+the library, [`comparator.json`](comparator.json) names the compared theorems and
+[`formalization.yaml`](formalization.yaml) holds the metadata. `lake build` also builds `Challenge.lean` (four
+`sorry` warnings, by design) and `Solution.lean`. `python3 scripts/check-lean-sources.py` and
+`./scripts/verify-comparator.sh` (Linux, needs `bwrap`) run the checks locally; submissions go to
+<https://submit.palomar-registry.org/>.

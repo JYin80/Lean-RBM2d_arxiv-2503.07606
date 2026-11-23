@@ -6,6 +6,7 @@ Authors: Jun Yin
 
 module
 
+public import RBM2D.MainDefs
 public import RBM2D.Defs.Block
 public import Mathlib.Analysis.Normed.Ring.Units
 public import Mathlib.Analysis.SpecificLimits.Normed
@@ -83,10 +84,6 @@ end Norm
 section Defs
 
 variable (L : ℕ) [NeZero L]
-
-/-- The propagator `Θ^(B)_ξ = (1 - ξ S^(B))⁻¹` on `Z_L^2`. -/
-noncomputable def Theta (ξ : ℂ) : Matrix (Z2 L) (Z2 L) ℂ :=
-  Ring.inverse (1 - ξ • SB L)
 
 theorem isUnit_one_sub_smul_SB (hL : 3 ≤ L) {ξ : ℂ} (hξ : ‖ξ‖ < 1) :
     IsUnit (1 - ξ • SB L) :=
