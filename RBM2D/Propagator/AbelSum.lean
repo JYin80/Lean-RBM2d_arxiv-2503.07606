@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.Momentum
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+
+module
+
+public import RBM2D.Propagator.Momentum
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+
+@[expose] public section
 
 /-!
 # Periodic summation by parts on the two-dimensional torus

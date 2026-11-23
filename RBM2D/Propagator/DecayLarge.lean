@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.KinfBound
-import RBM2D.Propagator.PeriodizeImageSum
-import RBM2D.Propagator.PeriodizeKinfSummable
+
+module
+
+public import RBM2D.Propagator.KinfBound
+public import RBM2D.Propagator.PeriodizeImageSum
+public import RBM2D.Propagator.PeriodizeKinfSummable
+
+@[expose] public section
 
 /-!
 # Property 5 (`prop:ThfadC`) in the regime `κL ≥ 1` (Section 8.2)

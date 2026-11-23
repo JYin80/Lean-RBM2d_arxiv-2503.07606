@@ -3,7 +3,12 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.Case4
+
+module
+
+public import RBM2D.Evolution.Case4
+
+@[expose] public section
 
 /-!
 # Case 5 of `lem:sum_decay`: the `2k`-kernel

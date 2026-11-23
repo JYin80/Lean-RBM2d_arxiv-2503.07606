@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.Model
-import RBM2D.Delocalization
-import RBM2D.Propagator.Basic
-import RBM2D.Defs.Semicircle
-import RBM2D.Defs.SemicircleIntegral
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-import Mathlib.Topology.Algebra.Support
+
+module
+
+public import RBM2D.Gauss.Model
+public import RBM2D.Delocalization
+public import RBM2D.Propagator.Basic
+public import RBM2D.Defs.Semicircle
+public import RBM2D.Defs.SemicircleIntegral
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Topology.Algebra.Support
+
+@[expose] public section
 
 /-!
 # The five endpoint statements of the paper

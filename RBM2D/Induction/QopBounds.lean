@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.SumZeroQ
-import RBM2D.Propagator.Prop5
-import RBM2D.Propagator.Harmonic
-import RBM2D.Loop.LatticeCount
-import RBM2D.Path.ScalesBridge
+
+module
+
+public import RBM2D.Induction.SumZeroQ
+public import RBM2D.Propagator.Prop5
+public import RBM2D.Propagator.Harmonic
+public import RBM2D.Loop.LatticeCount
+public import RBM2D.Path.ScalesBridge
+
+@[expose] public section
 
 /-!
 # The bounds on `𝒬_t`

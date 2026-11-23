@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.Grid
-import RBM2D.Universality.GUEPhase.Eq729B
-import RBM2D.Path.GoodEvent
-import RBM2D.Induction.Split
-import RBM2D.Defs.Semicircle
-import RBM2D.Path.Scales
+
+module
+
+public import RBM2D.Universality.GUEPhase.Grid
+public import RBM2D.Universality.GUEPhase.Eq729B
+public import RBM2D.Path.GoodEvent
+public import RBM2D.Induction.Split
+public import RBM2D.Defs.Semicircle
+public import RBM2D.Path.Scales
+
+@[expose] public section
 
 /-!
 # The §7.2 random layer, first part: Lemma 2.8, the size-level conditions, the one-time law

@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.OUGenerator
-import RBM2D.Universality.OUContraction
-import RBM2D.Universality.OUHessian
-import RBM2D.Endpoints
-import RBM2D.Induction.Split
+
+module
+
+public import RBM2D.Universality.OUGenerator
+public import RBM2D.Universality.OUContraction
+public import RBM2D.Universality.OUHessian
+public import RBM2D.Endpoints
+public import RBM2D.Induction.Split
+
+@[expose] public section
 
 /-!
 # The weighted `(EMCTE2)` from the OU generator identity

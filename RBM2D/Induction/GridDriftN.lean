@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierarchyN
-import RBM2D.Induction.HierAlgebra
-import RBM2D.Path.LoopStep
-import RBM2D.Path.UBounds
-import RBM2D.Path.ScalesBridge
-import RBM2D.Path.GoodEvent
-import RBM2D.Path.Stop
-import RBM2D.Loop.KBound
+
+module
+
+public import RBM2D.Induction.HierarchyN
+public import RBM2D.Induction.HierAlgebra
+public import RBM2D.Path.LoopStep
+public import RBM2D.Path.UBounds
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Path.GoodEvent
+public import RBM2D.Path.Stop
+public import RBM2D.Loop.KBound
+
+@[expose] public section
 
 /-!
 # One grid step of (`LK_SDE`) for general `n` and all `σ`

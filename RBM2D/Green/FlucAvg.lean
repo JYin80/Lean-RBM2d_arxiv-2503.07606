@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.FlucVanish
-import RBM2D.Gauss.Envelope
-import RBM2D.Gauss.SpectralAlgebra
-import RBM2D.Induction.Defs
-import RBM2D.Induction.Split
-import Mathlib.Analysis.Matrix.MeasurableSpace
-import Mathlib.Topology.Instances.Matrix
+
+module
+
+public import RBM2D.Green.FlucVanish
+public import RBM2D.Gauss.Envelope
+public import RBM2D.Gauss.SpectralAlgebra
+public import RBM2D.Induction.Defs
+public import RBM2D.Induction.Split
+public import Mathlib.Analysis.Matrix.MeasurableSpace
+public import Mathlib.Topology.Instances.Matrix
+
+@[expose] public section
 
 /-!
 # Fluctuation averaging, averaging layer: measurability, envelopes, bounds, counting

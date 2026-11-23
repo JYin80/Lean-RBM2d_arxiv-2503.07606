@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Hierarchy.ContractionSum
-import RBM2D.Green.LDEQuad
-import RBM2D.Gauss.GreenTimeCont
-import Mathlib.Analysis.Calculus.FDeriv.Mul
+
+module
+
+public import RBM2D.Hierarchy.ContractionSum
+public import RBM2D.Green.LDEQuad
+public import RBM2D.Gauss.GreenTimeCont
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+
+@[expose] public section
 
 /-!
 # The resolvent as a differentiable function of the Gaussian coordinates

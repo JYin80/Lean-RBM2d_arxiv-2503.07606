@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Endpoints
-import RBM2D.Universality.ZeroModeProfile
-import RBM2D.Gauss.GreenTimeCont
-import RBM2D.Gauss.LoopEnvelope
-import RBM2D.Loop.Kcal
-import RBM2D.Path.Scales
+
+module
+
+public import RBM2D.Endpoints
+public import RBM2D.Universality.ZeroModeProfile
+public import RBM2D.Gauss.GreenTimeCont
+public import RBM2D.Gauss.LoopEnvelope
+public import RBM2D.Loop.Kcal
+public import RBM2D.Path.Scales
+
+@[expose] public section
 
 /-!
 # The deterministic transfer `z ↦ (E, u)`

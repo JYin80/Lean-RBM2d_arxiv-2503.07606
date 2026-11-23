@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Loop.KBoundCut
-import RBM2D.Loop.KBoundInner
+
+module
+
+public import RBM2D.Loop.KBoundCut
+public import RBM2D.Loop.KBoundInner
+
+@[expose] public section
 
 /-!
 # `(eq:bcal_k_pi)` for all `π` and `ML:Kbound` = `(eq:bcal_k_2)`

@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Endpoints
-import RBM2D.Evolution.Defs
-import RBM2D.Main.DecolFromLocal
-import RBM2D.Main.QUEFromQDiff
-import Mathlib.Probability.Moments.SubGaussian
+
+module
+
+public import RBM2D.Endpoints
+public import RBM2D.Evolution.Defs
+public import RBM2D.Main.DecolFromLocal
+public import RBM2D.Main.QUEFromQDiff
+public import Mathlib.Probability.Moments.SubGaussian
+
+@[expose] public section
 
 /-!
 # The reduction of `BUniv` to its inputs

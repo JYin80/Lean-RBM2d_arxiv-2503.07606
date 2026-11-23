@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Data.Fin.Tuple.Embedding
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
-import RBM2D.Universality.Pins
+
+module
+
+public import Mathlib.Data.Fin.Tuple.Embedding
+public import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+public import RBM2D.Universality.Pins
+
+@[expose] public section
 
 /-!
 # Injective-sum decomposition and `η`-monotonicity of the Stieltjes transform
@@ -321,11 +326,11 @@ private lemma isTestFun2_mkO1 {k m : ℕ} {O : (Fin (k + 1) → ℝ) → (Fin m 
     · apply contDiff_pi'
       intro i
       induction i using Fin.lastCases with
-      | last => simp only [Fin.snoc_last]; exact (contDiff_apply ℝ ℝ (0 : Fin (m + 1))).comp contDiff_snd
-      | cast j => simp only [Fin.snoc_castSucc]; exact (contDiff_apply ℝ ℝ j).comp contDiff_fst
+      | last => simp only [Fin.snoc_last]; exact (contDiff_apply ℝ (fun _ => ℝ) (0 : Fin (m + 1))).comp contDiff_snd
+      | cast j => simp only [Fin.snoc_castSucc]; exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
     · apply contDiff_pi'
       intro i
-      exact (contDiff_apply ℝ ℝ (i.succ)).comp contDiff_snd
+      exact (contDiff_apply ℝ (fun _ => ℝ) (i.succ)).comp contDiff_snd
   have hΦc : Continuous
       (fun p : (Fin k → ℝ) × (Fin (m + 1) → ℝ) =>
         ((Fin.snoc p.1 (p.2 0) : Fin (k + 1) → ℝ), p.2 ∘ Fin.succ)) := hΦcd.continuous
@@ -335,12 +340,12 @@ private lemma isTestFun2_mkO1 {k m : ℕ} {O : (Fin (k + 1) → ℝ) → (Fin m 
     refine (?_ : ContDiff ℝ (⊤:ℕ∞) (fun p : (Fin (k + 1) → ℝ) × (Fin m → ℝ) => Fin.init p.1)).prodMk ?_
     · apply contDiff_pi'
       intro j
-      exact (contDiff_apply ℝ ℝ (j.castSucc)).comp contDiff_fst
+      exact (contDiff_apply ℝ (fun _ => ℝ) (j.castSucc)).comp contDiff_fst
     · apply contDiff_pi'
       intro i
       induction i using Fin.cases with
-      | zero => simp only [Fin.cons_zero]; exact (contDiff_apply ℝ ℝ (Fin.last k)).comp contDiff_fst
-      | succ j => simp only [Fin.cons_succ]; exact (contDiff_apply ℝ ℝ j).comp contDiff_snd
+      | zero => simp only [Fin.cons_zero]; exact (contDiff_apply ℝ (fun _ => ℝ) (Fin.last k)).comp contDiff_fst
+      | succ j => simp only [Fin.cons_succ]; exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_snd
   have hΨc : Continuous
       (fun p : (Fin (k + 1) → ℝ) × (Fin m → ℝ) =>
         (Fin.init p.1, (Fin.cons (p.1 (Fin.last k)) p.2 : Fin (m + 1) → ℝ))) := hΨcd.continuous
@@ -370,8 +375,8 @@ private lemma isTestFun2_mkO2 {k m : ℕ} {O : (Fin (k + 1) → ℝ) → (Fin m 
     apply contDiff_pi'
     intro j
     induction j using Fin.lastCases with
-    | last => simp only [Fin.snoc_last]; exact (contDiff_apply ℝ ℝ i).comp contDiff_fst
-    | cast j => simp only [Fin.snoc_castSucc]; exact (contDiff_apply ℝ ℝ j).comp contDiff_fst
+    | last => simp only [Fin.snoc_last]; exact (contDiff_apply ℝ (fun _ => ℝ) i).comp contDiff_fst
+    | cast j => simp only [Fin.snoc_castSucc]; exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
   have hΦc : Continuous
       (fun p : (Fin k → ℝ) × (Fin m → ℝ) => ((Fin.snoc p.1 (p.1 i) : Fin (k + 1) → ℝ), p.2)) :=
     hΦcd.continuous

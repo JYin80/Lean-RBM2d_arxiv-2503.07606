@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.EntryCore
-import RBM2D.Green.Stability
-import RBM2D.Green.Pins
-import RBM2D.Green.EntryBlock
-import RBM2D.Induction.PerTimeCalc
+
+module
+
+public import RBM2D.Green.EntryCore
+public import RBM2D.Green.Stability
+public import RBM2D.Green.Pins
+public import RBM2D.Green.EntryBlock
+public import RBM2D.Induction.PerTimeCalc
+
+@[expose] public section
 
 /-!
 # The `≺` layer of Lemma 4.2 of [YY_25] in the per-sequence form of `GbEXPHypV3`

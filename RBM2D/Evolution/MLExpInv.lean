@@ -3,7 +3,12 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.MLExpVocab
+
+module
+
+public import RBM2D.Evolution.MLExpVocab
+
+@[expose] public section
 
 /-!
 # Translation and negation invariance of the expected tensors (`ExpInvariant` of `ML:exp`)
@@ -130,12 +135,12 @@ section Mat
 variable {L : ℕ} [NeZero L] (W : ℕ) [NeZero W]
 
 /-- `(a, o) ↦ (T a, o)` on block labels and offsets. -/
-private def MLExpInv_psi (T : Z2 L ≃ Z2 L) : BlockIndex L W ≃ BlockIndex L W :=
+def MLExpInv_psi (T : Z2 L ≃ Z2 L) : BlockIndex L W ≃ BlockIndex L W :=
   Equiv.prodCongr T (Equiv.refl _)
 
 /-- The relabelling of the fine lattice `Z_{WL}²` that moves the block label by `T` and keeps the
 offset. -/
-private def MLExpInv_phi (T : Z2 L ≃ Z2 L) : Idx L W ≃ Idx L W :=
+def MLExpInv_phi (T : Z2 L ≃ Z2 L) : Idx L W ≃ Idx L W :=
   ((splitEquiv L W).trans (MLExpInv_psi W T)).trans (splitEquiv L W).symm
 
 private theorem MLExpInv_split_phi (T : Z2 L ≃ Z2 L) (i : Idx L W) :

@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.AltEnd
-import RBM2D.Induction.AltDriftQ
-import RBM2D.Induction.AltLevelsQ0
-import RBM2D.Induction.AltLevelsQ
-import RBM2D.Induction.AltBudget
-import RBM2D.Induction.AltAbsorb
-import RBM2D.Induction.DecayLoop
-import RBM2D.Induction.KcalDecay
+
+module
+
+public import RBM2D.Induction.AltEnd
+public import RBM2D.Induction.AltDriftQ
+public import RBM2D.Induction.AltLevelsQ0
+public import RBM2D.Induction.AltLevelsQ
+public import RBM2D.Induction.AltBudget
+public import RBM2D.Induction.AltAbsorb
+public import RBM2D.Induction.DecayLoop
+public import RBM2D.Induction.KcalDecay
+
+@[expose] public section
 
 /-!
 # The hypothesis `AltLevelsE`, the packaging of `AltLevelsQ`, `altGridEnd` and `stoeqTargetV2`

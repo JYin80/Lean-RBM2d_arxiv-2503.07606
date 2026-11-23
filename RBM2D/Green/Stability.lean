@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.EntryCore
-import RBM2D.Propagator.Prop5
-import RBM2D.Loop.LatticeCount
-import RBM2D.Loop.Kcal
-import RBM2D.Induction.Defs
-import RBM2D.Gauss.Model
-import RBM2D.Gauss.SpectralAlgebra
-import RBM2D.Gauss.SpectralWindow
+
+module
+
+public import RBM2D.Green.EntryCore
+public import RBM2D.Propagator.Prop5
+public import RBM2D.Loop.LatticeCount
+public import RBM2D.Loop.Kcal
+public import RBM2D.Induction.Defs
+public import RBM2D.Gauss.Model
+public import RBM2D.Gauss.SpectralAlgebra
+public import RBM2D.Gauss.SpectralWindow
+
+@[expose] public section
 
 /-!
 # Stability of `1 - t m² S` for the `d = 2` variance profile

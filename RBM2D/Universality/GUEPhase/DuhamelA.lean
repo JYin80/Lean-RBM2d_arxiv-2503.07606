@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.Drift
-import RBM2D.Path.StepDecomp
-import RBM2D.Induction.Split
-import RBM2D.Gauss.LoopEnvelope
-import RBM2D.Hierarchy.WardResolvent
-import RBM2D.Induction.LoopC2N
+
+module
+
+public import RBM2D.Universality.GUEPhase.Drift
+public import RBM2D.Path.StepDecomp
+public import RBM2D.Induction.Split
+public import RBM2D.Gauss.LoopEnvelope
+public import RBM2D.Hierarchy.WardResolvent
+public import RBM2D.Induction.LoopC2N
+
+@[expose] public section
 
 /-!
 # The loop Duhamel tail of the GUE phase, part I (`d = 2`)

@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierVocab
-import RBM2D.Path.DriftAlgebra
-import RBM2D.Hierarchy.ContractionSecondLoopAllCuts
-import RBM2D.Hierarchy.OperationsPairWord
-import RBM2D.Hierarchy.ContractionDrift
-import RBM2D.Gauss.LoopCoordinateSecondDerivative
-import RBM2D.Gauss.GreenDerivative
+
+module
+
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Path.DriftAlgebra
+public import RBM2D.Hierarchy.ContractionSecondLoopAllCuts
+public import RBM2D.Hierarchy.OperationsPairWord
+public import RBM2D.Hierarchy.ContractionDrift
+public import RBM2D.Gauss.LoopCoordinateSecondDerivative
+public import RBM2D.Gauss.GreenDerivative
+
+@[expose] public section
 
 /-!
 # The general-`n` loop generator

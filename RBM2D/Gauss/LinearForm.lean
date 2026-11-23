@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.Model
-import Mathlib.Probability.Independence.InfinitePi
-import Mathlib.Probability.HasLaw
+
+module
+
+public import RBM2D.Gauss.Model
+public import Mathlib.Probability.Independence.InfinitePi
+public import Mathlib.Probability.HasLaw
+
+@[expose] public section
 
 /-!
 # Linear forms in the Gaussian coordinates of the sequence-level sample

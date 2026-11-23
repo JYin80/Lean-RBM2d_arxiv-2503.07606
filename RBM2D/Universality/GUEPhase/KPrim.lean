@@ -3,11 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.Bootstrap
-import RBM2D.Universality.ZeroModeProfile
-import RBM2D.Loop.Kcal
-import RBM2D.Defs.Semicircle
-import Mathlib.Analysis.ODE.ExistUnique
+
+module
+
+public import RBM2D.Universality.GUEPhase.Bootstrap
+public import RBM2D.Universality.ZeroModeProfile
+public import RBM2D.Loop.Kcal
+public import RBM2D.Defs.Semicircle
+public import Mathlib.Analysis.ODE.ExistUnique
+public import Mathlib.Analysis.Calculus.Deriv.Prod
+
+@[expose] public section
 
 /-!
 # The 2-loop primitive of the GUE phase and the primitive loops `K̃` (§7.2 of [YY_25], `d = 2`)

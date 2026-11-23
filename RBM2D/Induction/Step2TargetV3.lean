@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Defs
-import RBM2D.Path.Step2PropsV3
+
+module
+
+public import RBM2D.Induction.Defs
+public import RBM2D.Path.Step2PropsV3
+
+@[expose] public section
 
 /-!
 # The Step 2 target with the near exponent `3`

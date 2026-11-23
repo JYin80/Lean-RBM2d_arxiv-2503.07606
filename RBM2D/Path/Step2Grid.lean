@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.StepBound
-import RBM2D.Path.Bootstrap
-import RBM2D.Path.StepArith
+
+module
+
+public import RBM2D.Path.StepBound
+public import RBM2D.Path.Bootstrap
+public import RBM2D.Path.StepArith
+
+@[expose] public section
 
 /-!
 # The Step 2 stopping argument on the grid

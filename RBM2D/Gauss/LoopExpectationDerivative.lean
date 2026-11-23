@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.LoopFlowDerivativeEnvelope
-import Mathlib.Analysis.Calculus.ParametricIntegral
+
+module
+
+public import RBM2D.Gauss.LoopFlowDerivativeEnvelope
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+
+@[expose] public section
 
 /-!
 # Differentiating an expected finite Gaussian resolvent loop

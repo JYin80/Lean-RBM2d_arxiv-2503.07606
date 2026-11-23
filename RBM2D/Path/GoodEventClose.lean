@@ -3,7 +3,12 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.GoodEventGrid
+
+module
+
+public import RBM2D.Path.GoodEventGrid
+
+@[expose] public section
 
 /-!
 # The deterministic consequence of the Azuma event and the Step 2 good event

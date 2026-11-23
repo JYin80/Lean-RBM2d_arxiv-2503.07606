@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.PeriodizeDelta
-import RBM2D.Propagator.Symbol
+
+module
+
+public import RBM2D.Propagator.PeriodizeDelta
+public import RBM2D.Propagator.Symbol
+
+@[expose] public section
 
 /-!
 # The periodized five-point stencil is `S^(B)`

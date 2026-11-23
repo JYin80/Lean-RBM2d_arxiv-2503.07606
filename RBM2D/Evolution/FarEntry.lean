@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.Pins
-import RBM2D.Path.KellStar
-import RBM2D.Induction.PerTimeCalc
+
+module
+
+public import RBM2D.Green.Pins
+public import RBM2D.Path.KellStar
+public import RBM2D.Induction.PerTimeCalc
+
+@[expose] public section
 
 /-!
 # The far-entry decay of the resolvent on the Step 2 window

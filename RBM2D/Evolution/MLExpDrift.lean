@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.MLExpVocab
-import RBM2D.Induction.BcalEDecay
-import RBM2D.Induction.KcalDecay
-import RBM2D.Path.ScalesBridge
-import RBM2D.Gauss.LoopSampleCont
+
+module
+
+public import RBM2D.Evolution.MLExpVocab
+public import RBM2D.Induction.BcalEDecay
+public import RBM2D.Induction.KcalDecay
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Gauss.LoopSampleCont
+
+@[expose] public section
 
 /-!
 # The expected drift terms of `ML:exp`

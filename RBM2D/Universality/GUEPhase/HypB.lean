@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.HypA
-import RBM2D.Green.EntryDom
-import RBM2D.Induction.PerTimeCalc
-import RBM2D.Path.Bootstrap
+
+module
+
+public import RBM2D.Universality.GUEPhase.HypA
+public import RBM2D.Green.EntryDom
+public import RBM2D.Induction.PerTimeCalc
+public import RBM2D.Path.Bootstrap
+
+@[expose] public section
 
 /-!
 # (7.45)G and (7.46)G for the stopped GUE-phase processes, part II (`d = 2`)
@@ -589,7 +594,7 @@ private theorem HypB_path (E t1 t0 : ℕ → ℝ) (K : ℕ → ℕ) (δ : ℕ �
     refine ContinuousOn.mul (ContinuousOn.add ?_ (gueDproc_continuousOn _ _ _ _ _ _ _ _ _ _))
       (gueDproc_continuousOn _ _ _ _ _ _ _ _ _ _)
     refine ContinuousOn.pow (ContinuousOn.inv₀ (continuous_const.mul hηc).continuousOn
-      fun u hu => (mul_pos hS0 (hηpos u hu.2)).ne') _
+      fun (u : ℝ) (hu : u ∈ Set.Icc (t1 n) (t0 n)) => (mul_pos hS0 (hηpos u hu.2)).ne') _
   -- the bilinear drift, `Cf = 3 m² c S`
   have hF : ∀ j < σ, ∀ x : (Fin m → Bool) × (Fin m → Z2 (d.L n)),
       ‖primRhsGUE (d.L n) (d.W n) (RBM.Ind.LLf (d.L n) (d.W n) (E n) (gridTime t1 t0 K n j)

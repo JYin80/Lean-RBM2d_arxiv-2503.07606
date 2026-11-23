@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Algebra.Group.ForwardDiff
-import RBM2D.Propagator.SymbolShiftAnnulus
-import RBM2D.Propagator.SymbolReciprocalDiff
-import RBM2D.Propagator.GeomSum
+
+module
+
+public import Mathlib.Algebra.Group.ForwardDiff
+public import RBM2D.Propagator.SymbolShiftAnnulus
+public import RBM2D.Propagator.SymbolReciprocalDiff
+public import RBM2D.Propagator.GeomSum
+
+@[expose] public section
 
 /-!
 # Forward differences of the reciprocal symbol up to order three

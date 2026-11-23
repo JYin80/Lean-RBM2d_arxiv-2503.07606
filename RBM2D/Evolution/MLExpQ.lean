@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.MLExpVocab
-import RBM2D.Hierarchy.WardResolvent
-import RBM2D.Gauss.LoopSampleCont
-import RBM2D.Gauss.LoopEnvelope
-import RBM2D.Propagator.Bounds
-import RBM2D.Propagator.Prop5
-import RBM2D.Path.ScalesBridge
+
+module
+
+public import RBM2D.Evolution.MLExpVocab
+public import RBM2D.Hierarchy.WardResolvent
+public import RBM2D.Gauss.LoopSampleCont
+public import RBM2D.Gauss.LoopEnvelope
+public import RBM2D.Propagator.Bounds
+public import RBM2D.Propagator.Prop5
+public import RBM2D.Path.ScalesBridge
+
+@[expose] public section
 
 /-!
 # The `𝒬`-terms of `ML:exp` for alternating `σ`

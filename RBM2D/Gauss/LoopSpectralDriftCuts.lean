@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.LoopFlowCoordinateChain
-import RBM2D.Hierarchy.ContractionDrift
+
+module
+
+public import RBM2D.Gauss.LoopFlowCoordinateChain
+public import RBM2D.Hierarchy.ContractionDrift
+
+@[expose] public section
 
 /-!
 # Spectral drift as a finite sum of single-edge cuts
@@ -46,7 +51,7 @@ theorem spectralEdgeSplits_reconstruct (l : List (Bool × Z2 L))
       · rfl
       · simpa only [List.cons_append] using congrArg (List.cons p) (ih s' hs')
 
-private noncomputable def pairedWord (H : Matrix (BlockIndex L W) (BlockIndex L W) ℂ)
+noncomputable def pairedWord (H : Matrix (BlockIndex L W) (BlockIndex L W) ℂ)
     (z : ℂ) (l : List (Bool × Z2 L)) :
     Matrix (BlockIndex L W) (BlockIndex L W) ℂ :=
   l.foldr (fun p M => Gsig H z p.1 * Eblk L W p.2 * M) 1

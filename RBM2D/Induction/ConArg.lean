@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Defs
-import RBM2D.Induction.ConArgDet
-import RBM2D.Induction.PerTimeCalc
+
+module
+
+public import RBM2D.Induction.Defs
+public import RBM2D.Induction.ConArgDet
+public import RBM2D.Induction.PerTimeCalc
+
+@[expose] public section
 
 /-!
 # `lem_ConArg`: the continuity argument, probabilistic part

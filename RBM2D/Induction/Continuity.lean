@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Defs
-import RBM2D.Path.Step2Props
-import RBM2D.Gauss.Domination
-import RBM2D.Gauss.Envelope
-import RBM2D.Gauss.LoopEnvelope
-import RBM2D.Gauss.SpectralAlgebra
-import Mathlib.Probability.Moments.SubGaussian
+
+module
+
+public import RBM2D.Induction.Defs
+public import RBM2D.Path.Step2Props
+public import RBM2D.Gauss.Domination
+public import RBM2D.Gauss.Envelope
+public import RBM2D.Gauss.LoopEnvelope
+public import RBM2D.Gauss.SpectralAlgebra
+public import Mathlib.Probability.Moments.SubGaussian
+
+@[expose] public section
 
 /-!
 # Continuity of the Green function in time, and the net lift of the Step 1 families

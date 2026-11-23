@@ -4,16 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
 
-import RBM2D.Path.PerTime
-import RBM2D.Path.Walk
-import RBM2D.Path.Scales
-import RBM2D.Path.Kernel
-import RBM2D.Path.Step2Props
-import RBM2D.Loop.Kcal
-import RBM2D.Gauss.SpectralWindow
-import RBM2D.Gauss.Domination
-import RBM2D.Propagator.Basic
-import RBM2D.Defs.Dist
+module
+
+public import RBM2D.Path.PerTime
+public import RBM2D.Path.Walk
+public import RBM2D.Path.Scales
+public import RBM2D.Path.Kernel
+public import RBM2D.Path.Step2Props
+public import RBM2D.Loop.Kcal
+public import RBM2D.Gauss.SpectralWindow
+public import RBM2D.Gauss.Domination
+public import RBM2D.Propagator.Basic
+public import RBM2D.Defs.Dist
+
+@[expose] public section
 
 /-!
 # Vocabulary of the induction step: functionals, hypothesis shapes, per-time conclusions

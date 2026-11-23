@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierVocab
-import RBM2D.Induction.Split
-import RBM2D.Induction.PerTimeCalc
+
+module
+
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Induction.Split
+public import RBM2D.Induction.PerTimeCalc
+
+@[expose] public section
 
 /-!
 # `lem_decayLoop` at a single time and its two corollaries

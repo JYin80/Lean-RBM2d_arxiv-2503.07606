@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Loop.SumAll
-import RBM2D.Loop.KBoundCut
+
+module
+
+public import RBM2D.Loop.SumAll
+public import RBM2D.Loop.KBoundCut
+
+@[expose] public section
 
 /-!
 # The sum-zero identity `R_n(1) = 0` and the bound `SigmaPi_alt_sumZero_le`
@@ -56,11 +61,11 @@ variable {n : ℕ} [NeZero n]
 /-! ### Laminarity -/
 
 /-- `F` is a family of diagonals with no crossing pair: an element of `T_SP(n)`. -/
-private def IsTSP (F : Finset (Fin n × Fin n)) : Prop :=
+def SZWIsTSP (F : Finset (Fin n × Fin n)) : Prop :=
   (∀ d ∈ F, IsDiag n d.1 d.2) ∧ CrossingFree F
 
 omit [NeZero n] in
-private theorem isTSP_of_mem_TSP {F : Finset (Fin n × Fin n)} (h : F ∈ TSP n) : IsTSP F := by
+private theorem isTSP_of_mem_TSP {F : Finset (Fin n × Fin n)} (h : F ∈ TSP n) : SZWIsTSP F := by
   rw [mem_TSP] at h
   refine ⟨fun d hd => ?_, h.2⟩
   have := h.1 hd
@@ -73,14 +78,14 @@ private theorem arcLe_wholeP (d : Fin n × Fin n) : ArcLe d (wholeP n) := by
   have := d.2.isLt
   omega
 
-private theorem lt_of_mem_nodes {F : Finset (Fin n × Fin n)} (hF : IsTSP F) (hn : 2 ≤ n)
+private theorem lt_of_mem_nodes {F : Finset (Fin n × Fin n)} (hF : SZWIsTSP F) (hn : 2 ≤ n)
     {d : Fin n × Fin n} (hd : d ∈ nodes F) : d.1 < d.2 := by
   rcases mem_insert.1 hd with rfl | hd
   · simp only [wholeP, Fin.lt_def, Fin.val_zero]; omega
   · exact (hF.1 d hd).1
 
 /-- **Laminarity**: two nodes are nested or have disjoint arcs. -/
-private theorem nodes_laminar {F : Finset (Fin n × Fin n)} (hF : IsTSP F) {d e : Fin n × Fin n}
+private theorem nodes_laminar {F : Finset (Fin n × Fin n)} (hF : SZWIsTSP F) {d e : Fin n × Fin n}
     (hd : d ∈ nodes F) (he : e ∈ nodes F) :
     ArcLe d e ∨ ArcLe e d ∨ d.2 ≤ e.1 ∨ e.2 ≤ d.1 := by
   rcases mem_insert.1 he with rfl | he'
@@ -183,7 +188,7 @@ private theorem shiftOut_injOn {d e : Fin n × Fin n} (hd : OutEnds J d) (he : O
   have a4 := (col_le_iff he.2.1 hd.2.1 hJ).1 (by omega)
   exact Prod.ext (Fin.ext (by omega)) (Fin.ext (by omega))
 
-variable {F : Finset (Fin n × Fin n)} (hF : IsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F)
+variable {F : Finset (Fin n × Fin n)} (hF : SZWIsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F)
 include hF hJ
 
 omit [NeZero n] in
@@ -325,7 +330,7 @@ private theorem width_of_isDiag : J.1.val + 2 ≤ J.2.val := by
 
 omit [NeZero n] hJd in
 /-- The inside family is a crossing-free family of diagonals. -/
-private theorem FIn_mem_TSP {F : Finset (Fin n × Fin n)} (hF : IsTSP F) :
+private theorem FIn_mem_TSP {F : Finset (Fin n × Fin n)} (hF : SZWIsTSP F) :
     FIn F J ∈ TSP (wIn J + 1) := by
   rw [mem_TSP]
   constructor
@@ -357,7 +362,7 @@ private theorem FIn_mem_TSP {F : Finset (Fin n × Fin n)} (hF : IsTSP F) :
     omega
 
 /-- The outside family is a crossing-free family of diagonals. -/
-private theorem FOut_mem_TSP {F : Finset (Fin n × Fin n)} (hF : IsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F) :
+private theorem FOut_mem_TSP {F : Finset (Fin n × Fin n)} (hF : SZWIsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F) :
     FOut F J ∈ TSP (n - wIn J + 1) := by
   have hJw := width_of_isDiag hJd
   have hJ2 : J.1.val < J.2.val := by omega
@@ -550,7 +555,7 @@ private theorem FOut_glueF {G : Finset (Fin (n - wIn J + 1) × Fin (n - wIn J + 
       not_arcLe_unColP hJd (mem_diagonals_iff.1 (hG.1 hy))⟩, shiftOut_unColP y hJw⟩
     exact mem_insert_of_mem (mem_union_left _ (mem_image_of_mem _ hy))
 
-private theorem glueF_cut {F : Finset (Fin n × Fin n)} (hF : IsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F) :
+private theorem glueF_cut {F : Finset (Fin n × Fin n)} (hF : SZWIsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F) :
     glueF J (FOut F J) (FIn F J) = F := by
   have hJw := width_of_isDiag hJd
   ext x
@@ -648,7 +653,7 @@ private theorem sigmaOut_shiftOut (σ : Fin n → Bool) {d : Fin n × Fin n} (hd
   have e2 := unCol_col hd.2.1 hJ
   constructor <;> (unfold sigmaOut; congr 1; ext; simp only [h1, h2, e1, e2]; omega)
 
-variable {F : Finset (Fin n × Fin n)} (hF : IsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F)
+variable {F : Finset (Fin n × Fin n)} (hF : SZWIsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F)
 include hF hn hJ
 
 /-- The long edges of the outside family are the outside long edges of `F`. -/
@@ -692,7 +697,7 @@ private theorem Flong_FIn (σ : Fin n → Bool) :
 `J ∈ π` be innermost.  Then a tree `F ∋ J` lies in the layer `π` iff its inside family has no
 long edges and the long edges of its outside family are `π ∖ {J}`, collapsed. -/
 private theorem Flong_eq_iff_cut (σ : Fin n → Bool) {F₀ : Finset (Fin n × Fin n)}
-    (hF₀ : IsTSP F₀)
+    (hF₀ : SZWIsTSP F₀)
     {π : Finset (Fin n × Fin n)} (hπ : Flong F₀ σ = π) (hJπ : J ∈ π)
     (hinner : ∀ e ∈ π, ArcLe e J → e = J) :
     Flong F σ = π ↔ Flong (FOut F J) (sigmaOut σ J) = (π.erase J).image (shiftOut J) ∧
@@ -767,7 +772,7 @@ variable {n : ℕ} [NeZero n] {J : Fin n × Fin n}
 
 /-- **A product over the edges of `F ∋ J` splits over the cut**: the edge `J`, the outside
 family and the inside family, each with its own charges. -/
-private theorem prod_cut {F : Finset (Fin n × Fin n)} (hF : IsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F)
+private theorem prod_cut {F : Finset (Fin n × Fin n)} (hF : SZWIsTSP F) (hn : 2 ≤ n) (hJ : J ∈ F)
     (σ : Fin n → Bool) (w : Bool → Bool → ℂ) :
     ∏ e ∈ F, w (σ e.1) (σ e.2) =
       w (σ J.1) (σ J.2) * (∏ g ∈ FOut F J, w (sigmaOut σ J g.1) (sigmaOut σ J g.2)) *

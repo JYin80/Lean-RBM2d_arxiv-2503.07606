@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Scales
-import RBM2D.Loop.LatticeCount
-import RBM2D.Defs.Dist
-import Mathlib.Analysis.SumIntegralComparisons
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+module
+
+public import RBM2D.Path.Scales
+public import RBM2D.Loop.LatticeCount
+public import RBM2D.Defs.Dist
+public import Mathlib.Analysis.SumIntegralComparisons
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+
+@[expose] public section
 
 /-!
 # Tail sums of `𝒯_{u,D}` on `Z_L²`

@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.Step1RegularityGUE
-import RBM2D.Universality.Step1Band
-import RBM2D.Universality.Step1Cond
-import RBM2D.Universality.Pins
-import RBM2D.Endpoints
+
+module
+
+public import RBM2D.Universality.Step1RegularityGUE
+public import RBM2D.Universality.Step1Band
+public import RBM2D.Universality.Step1Cond
+public import RBM2D.Universality.Pins
+public import RBM2D.Endpoints
+
+@[expose] public section
 
 /-!
 # The GUE translation and the reduction `Infty1Row`
@@ -1114,7 +1119,7 @@ theorem guetranslationRow : GUETranslationRow := by
     refine (integral_mono_of_nonneg (Eventually.of_forall fun ω => abs_nonneg _)
       ((integrable_const _).add ((integrable_const _).indicator hTm))
       (Eventually.of_forall hpt)).trans ?_
-    rw [integral_add (integrable_const _) ((integrable_const _).indicator hTm), integral_const,
+    simp only [Pi.add_apply]; rw [integral_add (integrable_const _) ((integrable_const _).indicator hTm), integral_const,
       integral_indicator_const _ hTm, probReal_univ, one_smul, smul_eq_mul]
   have hTreal : (gueP (d.L n) (d.W n)).real T ≤ N ^ (-((k + 1 : ℕ) : ℝ)) := by
     rw [measureReal_def, measure_toMeasurable]

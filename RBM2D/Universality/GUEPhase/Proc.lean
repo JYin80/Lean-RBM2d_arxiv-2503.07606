@@ -3,15 +3,20 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.Grid
-import RBM2D.Universality.GUEPhase.Bootstrap
-import RBM2D.Universality.GUEPhase.Generator
-import RBM2D.Universality.GUEPhase.KPrim
-import RBM2D.Universality.GUEPhase.EntryDet
-import RBM2D.Induction.Split
-import RBM2D.Loop.KBound
-import RBM2D.Path.ScalesBridge
-import RBM2D.Path.Stop
+
+module
+
+public import RBM2D.Universality.GUEPhase.Grid
+public import RBM2D.Universality.GUEPhase.Bootstrap
+public import RBM2D.Universality.GUEPhase.Generator
+public import RBM2D.Universality.GUEPhase.KPrim
+public import RBM2D.Universality.GUEPhase.EntryDet
+public import RBM2D.Induction.Split
+public import RBM2D.Loop.KBound
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Path.Stop
+
+@[expose] public section
 
 /-!
 # The process layer of the §7.2 random layer on the GUE-phase grid, `d = 2`

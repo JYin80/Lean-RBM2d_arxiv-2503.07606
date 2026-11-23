@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.Decay
-import RBM2D.Propagator.DecayLarge
-import RBM2D.Propagator.Harmonic
-import RBM2D.Defs.Domination
-import Mathlib.Analysis.Complex.ExponentialBounds
+
+module
+
+public import RBM2D.Propagator.Decay
+public import RBM2D.Propagator.DecayLarge
+public import RBM2D.Propagator.Harmonic
+public import RBM2D.Defs.Domination
+public import Mathlib.Analysis.Complex.ExponentialBounds
+
+@[expose] public section
 
 /-!
 # Property 5 (`prop:ThfadC`): merge of the two regimes

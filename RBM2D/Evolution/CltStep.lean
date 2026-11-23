@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.CltSwap
-import RBM2D.Evolution.CltGood
-import RBM2D.Evolution.CltPath
+
+module
+
+public import RBM2D.Evolution.CltSwap
+public import RBM2D.Evolution.CltGood
+public import RBM2D.Evolution.CltPath
+
+@[expose] public section
 
 /-!
 # One real coordinate of the telescoping

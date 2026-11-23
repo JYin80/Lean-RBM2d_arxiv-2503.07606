@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.JakKernel
-import RBM2D.Universality.OU
-import RBM2D.Universality.OUHessian
+
+module
+
+public import RBM2D.Universality.JakKernel
+public import RBM2D.Universality.OU
+public import RBM2D.Universality.OUHessian
+
+@[expose] public section
 
 /-!
 # The `Jak` half of the reduction `JakUywRow`

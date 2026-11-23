@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.ShellCutoff
-import Mathlib.Algebra.Group.ForwardDiff
+
+module
+
+public import RBM2D.Propagator.ShellCutoff
+public import Mathlib.Algebra.Group.ForwardDiff
+
+@[expose] public section
 
 /-!
 # Scale-uniform forward differences of the shell cutoff

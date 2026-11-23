@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.Envelope
-import RBM2D.Gauss.FlowTimeCont
+
+module
+
+public import RBM2D.Gauss.Envelope
+public import RBM2D.Gauss.FlowTimeCont
+
+@[expose] public section
 
 /-!
 # Time continuity of a fixed-parameter resolvent

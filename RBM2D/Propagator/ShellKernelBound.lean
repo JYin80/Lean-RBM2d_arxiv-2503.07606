@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.ShellCutoff
-import RBM2D.Propagator.ShellCutoffDiff
-import RBM2D.Propagator.ShellSBP
-import RBM2D.Propagator.InvSymbolDiff
-import RBM2D.Propagator.Decay
-import Mathlib.Algebra.Group.ForwardDiff
-import Mathlib.Analysis.Real.Pi.Bounds
+
+module
+
+public import RBM2D.Propagator.ShellCutoff
+public import RBM2D.Propagator.ShellCutoffDiff
+public import RBM2D.Propagator.ShellSBP
+public import RBM2D.Propagator.InvSymbolDiff
+public import RBM2D.Propagator.Decay
+public import Mathlib.Algebra.Group.ForwardDiff
+public import Mathlib.Analysis.Real.Pi.Bounds
+
+@[expose] public section
 
 /-!
 # Per-shell kernel bounds on small and large shells

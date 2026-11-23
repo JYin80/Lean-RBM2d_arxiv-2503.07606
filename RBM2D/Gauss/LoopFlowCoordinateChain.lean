@@ -3,7 +3,12 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.LoopCoordinateDerivative
+
+module
+
+public import RBM2D.Gauss.LoopCoordinateDerivative
+
+@[expose] public section
 
 /-!
 # Matrix-flow term as a finite sum of coordinate derivatives
@@ -19,7 +24,7 @@ open scoped Matrix.Norms.L2Operator
 
 variable (L W : ℕ) [NeZero L] [NeZero W]
 
-private abbrev BlockMat (L W : ℕ) :=
+abbrev BlockMat (L W : ℕ) :=
   Matrix (BlockIndex L W) (BlockIndex L W) ℂ
 
 /-- Linear dependence of one signed resolvent derivative on its matrix direction. -/

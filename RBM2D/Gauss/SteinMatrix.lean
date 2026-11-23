@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.Stein
-import Mathlib.Probability.ProductMeasure
+
+module
+
+public import RBM2D.Gauss.Stein
+public import Mathlib.Probability.ProductMeasure
+
+@[expose] public section
 
 /-!
 # Coordinatewise Stein identity for a product Gaussian measure

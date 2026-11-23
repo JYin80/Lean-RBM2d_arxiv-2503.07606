@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.IBPPoly
-import RBM2D.Green.LDEQuadT
-import RBM2D.Green.RowIndep
-import RBM2D.Green.LDE
+
+module
+
+public import RBM2D.Green.IBPPoly
+public import RBM2D.Green.LDEQuadT
+public import RBM2D.Green.RowIndep
+public import RBM2D.Green.LDE
+
+@[expose] public section
 
 /-!
 # The row chaos of the Gaussian model, and the input `hLquad`

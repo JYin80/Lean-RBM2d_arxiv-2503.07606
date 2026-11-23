@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Main.BUniv
-import RBM2D.Universality.GUEPhase.RandomLayerB
+
+module
+
+public import RBM2D.Main.BUniv
+public import RBM2D.Universality.GUEPhase.RandomLayerB
+
+@[expose] public section
 
 /-!
 # `BUniv` from the external input `L32` alone

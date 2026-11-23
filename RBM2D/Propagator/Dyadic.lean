@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.GeomSum
-import RBM2D.Propagator.ZeroMode
-import RBM2D.Defs.Dist
+
+module
+
+public import RBM2D.Propagator.GeomSum
+public import RBM2D.Propagator.ZeroMode
+public import RBM2D.Defs.Dist
+
+@[expose] public section
 
 /-!
 # `(eq_dyadic)` as an interface, and Case 1 of the derivative bounds

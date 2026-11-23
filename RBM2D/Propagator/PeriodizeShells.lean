@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Order.Interval.Finset.Box
-import Mathlib.Tactic
+
+module
+
+public import Mathlib.Order.Interval.Finset.Box
+public import Mathlib.Tactic
+
+@[expose] public section
 
 /-!
 # Finite boxes and max-norm shells in `ℤ²`

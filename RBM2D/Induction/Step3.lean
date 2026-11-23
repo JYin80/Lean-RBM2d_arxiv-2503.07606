@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
 
-import RBM2D.Induction.Defs
-import RBM2D.Induction.PerTimeCalc
-import RBM2D.Induction.ScaleFacts
-import RBM2D.Induction.Split
-import RBM2D.Loop.Cyclic
-import RBM2D.Path.ScalesBridge
+module
+
+public import RBM2D.Induction.Defs
+public import RBM2D.Induction.PerTimeCalc
+public import RBM2D.Induction.ScaleFacts
+public import RBM2D.Induction.Split
+public import RBM2D.Loop.Cyclic
+public import RBM2D.Path.ScalesBridge
+
+@[expose] public section
 
 /-!
 # Step 3 of Theorem `lem:main_ind`: the deterministic `≺`-calculus giving (`Eq:LGxb`)

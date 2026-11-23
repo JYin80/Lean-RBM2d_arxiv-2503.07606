@@ -3,15 +3,20 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierVocab
-import RBM2D.Induction.SumZeroQ
-import RBM2D.Loop.Ward
-import RBM2D.Hierarchy.WardResolvent
-import RBM2D.Propagator.Prop5
-import RBM2D.Propagator.Bounds
-import RBM2D.Path.ScalesBridge
-import RBM2D.Loop.LatticeCount
-import RBM2D.Induction.Chain
+
+module
+
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Induction.SumZeroQ
+public import RBM2D.Loop.Ward
+public import RBM2D.Hierarchy.WardResolvent
+public import RBM2D.Propagator.Prop5
+public import RBM2D.Propagator.Bounds
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Loop.LatticeCount
+public import RBM2D.Induction.Chain
+
+@[expose] public section
 
 /-!
 # `ℬ₅`, `ℬ₄` and `𝒫(𝓛-𝒦)` for alternating `σ`: the deterministic estimates

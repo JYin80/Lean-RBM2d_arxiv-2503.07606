@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.FlucAvgDet
-import RBM2D.Green.IBPRem
+
+module
+
+public import RBM2D.Green.FlucAvgDet
+public import RBM2D.Green.IBPRem
+
+@[expose] public section
 
 /-!
 # The integration-by-parts display at a deterministic entry scale: `ibpDetThm`

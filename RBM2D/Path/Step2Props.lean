@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Scales
-import RBM2D.Path.PerTime
-import RBM2D.Hierarchy.Loops
-import RBM2D.Propagator.Basic
-import RBM2D.Defs.Dist
-import RBM2D.Gauss.Model
-import RBM2D.Gauss.LoopTimeCont
+
+module
+
+public import RBM2D.Path.Scales
+public import RBM2D.Path.PerTime
+public import RBM2D.Hierarchy.Loops
+public import RBM2D.Propagator.Basic
+public import RBM2D.Defs.Dist
+public import RBM2D.Gauss.Model
+public import RBM2D.Gauss.LoopTimeCont
+
+@[expose] public section
 
 /-!
 # The Step 2 vocabulary: threshold, matrix-level functionals, step conditions

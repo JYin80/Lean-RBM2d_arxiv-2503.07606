@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.GoodSet
-import RBM2D.Path.TailSums
-import RBM2D.Loop.KBoundCut
-import Mathlib.Analysis.Complex.ExponentialBounds
+
+module
+
+public import RBM2D.Path.GoodSet
+public import RBM2D.Path.TailSums
+public import RBM2D.Loop.KBoundCut
+public import Mathlib.Analysis.Complex.ExponentialBounds
+
+@[expose] public section
 
 /-!
 # `lem_dec_calE`, first part: the loss, the hypothesis bundle, the `LK×LK` bound

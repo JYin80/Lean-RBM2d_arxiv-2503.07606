@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
 
-import RBM2D.Induction.Defs
+module
+
+public import RBM2D.Induction.Defs
+
+@[expose] public section
 
 /-!
 # The scale facts of Steps 1--5 and the chain step condition

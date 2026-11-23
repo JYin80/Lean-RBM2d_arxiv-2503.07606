@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.KernelExpand
-import RBM2D.Evolution.LatticeSums
+
+module
+
+public import RBM2D.Evolution.KernelExpand
+public import RBM2D.Evolution.LatticeSums
+
+@[expose] public section
 
 /-!
 # Case 4 of `lem:sum_decay`: alternating `σ`, sum-zero and symmetric tensor

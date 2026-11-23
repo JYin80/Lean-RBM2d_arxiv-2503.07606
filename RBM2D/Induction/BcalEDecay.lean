@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierVocab
-import RBM2D.Induction.Split
-import RBM2D.Loop.LatticeCount
-import RBM2D.Hierarchy.LoopHierarchyCutBlockSumBound
+
+module
+
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Induction.Split
+public import RBM2D.Loop.LatticeCount
+public import RBM2D.Hierarchy.LoopHierarchyCutBlockSumBound
+
+@[expose] public section
 
 /-!
 # Decay through cuts, and conjunct (v) of `BcalEPT`

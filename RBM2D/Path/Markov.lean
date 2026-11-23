@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Walk
-import RBM2D.Gauss.LinearForm
-import Mathlib.Probability.Moments.SubGaussian
+
+module
+
+public import RBM2D.Path.Walk
+public import RBM2D.Gauss.LinearForm
+public import Mathlib.Probability.Moments.SubGaussian
+
+@[expose] public section
 
 /-!
 # The discrete grid Markov property: freezing and conditional sub-Gaussian linear forms

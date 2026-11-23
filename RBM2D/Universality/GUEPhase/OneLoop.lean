@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.Grid
-import RBM2D.Evolution.XiBounds
-import RBM2D.Hierarchy.ContractionSecondLoopSameEdge
-import RBM2D.Gauss.LoopFlowCoordinateChain
-import RBM2D.Gauss.LoopCoordinateDerivativeBounds
-import RBM2D.Gauss.SteinMatrix
-import RBM2D.Gauss.LoopInitialValueScalar
+
+module
+
+public import RBM2D.Universality.GUEPhase.Grid
+public import RBM2D.Evolution.XiBounds
+public import RBM2D.Hierarchy.ContractionSecondLoopSameEdge
+public import RBM2D.Gauss.LoopFlowCoordinateChain
+public import RBM2D.Gauss.LoopCoordinateDerivativeBounds
+public import RBM2D.Gauss.SteinMatrix
+public import RBM2D.Gauss.LoopInitialValueScalar
+
+@[expose] public section
 
 /-!
 # Lemma 5.15 for the GUE-phase grid: the `1`-loop expectation bound, `d = 2`

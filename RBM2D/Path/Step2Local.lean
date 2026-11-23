@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.GoodSet
-import RBM2D.Path.KellStar
+
+module
+
+public import RBM2D.Path.GoodSet
+public import RBM2D.Path.KellStar
+
+@[expose] public section
 
 /-!
 # (`Gt_bound_flow`) per time from (`Eq:Gdecay_w`)

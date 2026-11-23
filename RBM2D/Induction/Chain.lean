@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Defs
-import RBM2D.Induction.ScaleFacts
-import RBM2D.Induction.PerTimeCalc
-import RBM2D.Path.ScalesBridge
-import RBM2D.Loop.TreeRep
-import RBM2D.Gauss.LoopInitialValueSupport
-import RBM2D.Gauss.SpectralAlgebra
+
+module
+
+public import RBM2D.Induction.Defs
+public import RBM2D.Induction.ScaleFacts
+public import RBM2D.Induction.PerTimeCalc
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Loop.TreeRep
+public import RBM2D.Gauss.LoopInitialValueSupport
+public import RBM2D.Gauss.SpectralAlgebra
+
+@[expose] public section
 
 /-!
 # The initial data at `s ≡ 0` and the induction chain

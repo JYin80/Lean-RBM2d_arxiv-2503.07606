@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.Symbol
-import Mathlib.Analysis.Complex.Circle
-import Mathlib.Algebra.Group.AddChar
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+
+module
+
+public import RBM2D.Propagator.Symbol
+public import Mathlib.Analysis.Complex.Circle
+public import Mathlib.Algebra.Group.AddChar
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+
+@[expose] public section
 
 /-!
 # Separating the zero mode from `(eq_Fourier_rep)`

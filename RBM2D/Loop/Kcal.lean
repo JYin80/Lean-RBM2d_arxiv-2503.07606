@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.Deriv
-import RBM2D.Propagator.Bounds
-import RBM2D.Propagator.Elliptic
-import RBM2D.Hierarchy.OperationsPair
-import RBM2D.Gauss.SpectralWindow
-import RBM2D.Gauss.SpectralAlgebra
-import RBM2D.Defs.Domination
-import RBM2D.Defs.Dist
+
+module
+
+public import RBM2D.Propagator.Deriv
+public import RBM2D.Propagator.Bounds
+public import RBM2D.Propagator.Elliptic
+public import RBM2D.Hierarchy.OperationsPair
+public import RBM2D.Gauss.SpectralWindow
+public import RBM2D.Gauss.SpectralAlgebra
+public import RBM2D.Defs.Domination
+public import RBM2D.Defs.Dist
+
+@[expose] public section
 
 /-!
 # The primitive loops `𝒦` (tree representation) and the definitions of Section 3

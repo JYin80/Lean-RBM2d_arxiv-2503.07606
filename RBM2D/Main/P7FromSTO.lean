@@ -3,16 +3,21 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.AltAbsorb
-import RBM2D.Induction.MainInd
-import RBM2D.Induction.PPClosure
-import RBM2D.Induction.PPKernel
-import RBM2D.Induction.PPDrift
-import RBM2D.Induction.PPCondVar
-import RBM2D.Induction.PPGoodEvent
-import RBM2D.Evolution.Step61
-import RBM2D.Evolution.MLExpDuhamel
-import RBM2D.Universality.UnivMain
+
+module
+
+public import RBM2D.Induction.AltAbsorb
+public import RBM2D.Induction.MainInd
+public import RBM2D.Induction.PPClosure
+public import RBM2D.Induction.PPKernel
+public import RBM2D.Induction.PPDrift
+public import RBM2D.Induction.PPCondVar
+public import RBM2D.Induction.PPGoodEvent
+public import RBM2D.Evolution.Step61
+public import RBM2D.Evolution.MLExpDuhamel
+public import RBM2D.Universality.UnivMain
+
+@[expose] public section
 
 /-!
 # `P7Out`, `P7ExpOut` from the stopped-evolution estimate

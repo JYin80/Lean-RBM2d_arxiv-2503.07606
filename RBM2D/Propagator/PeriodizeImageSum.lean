@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.Shells
-import RBM2D.Propagator.PeriodizeDescend
+
+module
+
+public import RBM2D.Propagator.Shells
+public import RBM2D.Propagator.PeriodizeDescend
+
+@[expose] public section
 
 /-!
 # Image sums for the periodization (Section 8.2)

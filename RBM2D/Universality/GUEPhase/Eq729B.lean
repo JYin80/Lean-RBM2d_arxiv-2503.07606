@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.Eq729A
-import RBM2D.Universality.GUEPhase.OneLoop
-import RBM2D.Universality.GUEPhase.KPrim
-import RBM2D.Universality.GUEPhase.BootstrapAt
-import RBM2D.Evolution.Defs
-import RBM2D.Loop.KBound
-import RBM2D.Path.ScalesBridge
-import RBM2D.Main.ZRescale
+
+module
+
+public import RBM2D.Universality.GUEPhase.Eq729A
+public import RBM2D.Universality.GUEPhase.OneLoop
+public import RBM2D.Universality.GUEPhase.KPrim
+public import RBM2D.Universality.GUEPhase.BootstrapAt
+public import RBM2D.Evolution.Defs
+public import RBM2D.Loop.KBound
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Main.ZRescale
+
+@[expose] public section
 
 /-!
 # (7.29) at `t₀` on the GUE-phase grid, second half, and the (7.47) step (`d = 2`)

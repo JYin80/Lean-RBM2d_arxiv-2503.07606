@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.IBP
-import RBM2D.Path.PerTime
-import RBM2D.Path.Scales
-import RBM2D.Gauss.Domination
+
+module
+
+public import RBM2D.Green.IBP
+public import RBM2D.Path.PerTime
+public import RBM2D.Path.Scales
+public import RBM2D.Gauss.Domination
+
+@[expose] public section
 
 /-!
 # Conditional expectations at a fixed time: the row-slice bounds and the moment wrapper

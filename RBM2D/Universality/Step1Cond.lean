@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEInvariance
-import RBM2D.Universality.EigenMeasurable
-import RBM2D.Universality.OU
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
-import Mathlib.Analysis.Calculus.MeanValue
+
+module
+
+public import RBM2D.Universality.GUEInvariance
+public import RBM2D.Universality.EigenMeasurable
+public import RBM2D.Universality.OU
+public import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+public import Mathlib.Analysis.Calculus.MeanValue
+
+@[expose] public section
 
 /-!
 # Step 1 of Theorem 2.6: conditioning on the initial matrix, stationarity of `𝐇_∞`, rescaling

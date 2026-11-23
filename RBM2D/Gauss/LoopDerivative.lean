@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.GreenDerivative
-import Mathlib.Analysis.Calculus.Deriv.Star
+
+module
+
+public import RBM2D.Gauss.GreenDerivative
+public import Mathlib.Analysis.Calculus.Deriv.Star
+
+@[expose] public section
 
 /-!
 # Fixed-sample derivative of finite resolvent loops

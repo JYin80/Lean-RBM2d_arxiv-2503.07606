@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.Cutoff
-import RBM2D.Propagator.Elliptic
-import RBM2D.Propagator.Momentum
-import RBM2D.Propagator.Shells
-import RBM2D.Propagator.SymbolReciprocalDiff
-import RBM2D.Propagator.SymbolShiftAnnulus
+
+module
+
+public import RBM2D.Propagator.Cutoff
+public import RBM2D.Propagator.Elliptic
+public import RBM2D.Propagator.Momentum
+public import RBM2D.Propagator.Shells
+public import RBM2D.Propagator.SymbolReciprocalDiff
+public import RBM2D.Propagator.SymbolShiftAnnulus
+
+@[expose] public section
 
 /-!
 # The dyadic shell cutoff in the smooth periodic variable

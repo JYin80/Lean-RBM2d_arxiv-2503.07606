@@ -3,7 +3,12 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.LoopFlowSteinExpectation
+
+module
+
+public import RBM2D.Gauss.LoopFlowSteinExpectation
+
+@[expose] public section
 
 /-!
 # An integrable time-neighborhood envelope for samplewise loop derivatives
@@ -21,7 +26,7 @@ open scoped Matrix.Norms.L2Operator
 variable (L W : ℕ) [NeZero L] [NeZero W]
 
 /-- The closed neighborhood of a positive time before the singular endpoint. -/
-def flowWindow (u : ℝ) : Set ℝ := Set.Icc (u / 2) ((1 + u) / 2)
+noncomputable def flowWindow (u : ℝ) : Set ℝ := Set.Icc (u / 2) ((1 + u) / 2)
 
 theorem flowWindow_strict (u : ℝ) (hu : 0 < u) (hu1 : u < 1) :
     u / 2 < u ∧ u < (1 + u) / 2 := by
@@ -58,7 +63,7 @@ theorem coordinateFirstWordBound_le_one (c : Coord L W) {v η : ℝ}
         gcongr
       change _ ≤ _
       gcongr
-      exact hD
+      all_goals first | exact hD | exact pow_nonneg hA _
 
 /-- A fixed integrable majorant: one constant plus finitely many absolute coordinates. -/
 noncomputable def flowDerivativeEnvelope (E u : ℝ) (I : LoopIdx (Z2 L))

@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.NonAltBudget
-import RBM2D.Induction.GridAssemblyN
+
+module
+
+public import RBM2D.Induction.NonAltBudget
+public import RBM2D.Induction.GridAssemblyN
+
+@[expose] public section
 
 /-!
 # The non-alternating grid endpoint `nonAltGridEnd`

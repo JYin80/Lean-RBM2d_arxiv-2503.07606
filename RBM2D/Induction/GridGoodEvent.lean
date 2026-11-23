@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.GridGoodN
-import RBM2D.Induction.KcalDecay
+
+module
+
+public import RBM2D.Induction.GridGoodN
+public import RBM2D.Induction.KcalDecay
+
+@[expose] public section
 
 /-!
 # The high-probability grid good event `gridGoodN`

@@ -3,7 +3,12 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.CltResolvent
+
+module
+
+public import RBM2D.Evolution.CltResolvent
+
+@[expose] public section
 
 /-!
 # The pointwise path bound of the replacement step

@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.GridDuhamelN
-import RBM2D.Induction.QVN
-import RBM2D.Induction.BcalE
-import RBM2D.Path.GoodEventClose
-import RBM2D.Path.Bootstrap
+
+module
+
+public import RBM2D.Induction.GridDuhamelN
+public import RBM2D.Induction.QVN
+public import RBM2D.Induction.BcalE
+public import RBM2D.Path.GoodEventClose
+public import RBM2D.Path.Bootstrap
+
+@[expose] public section
 
 /-!
 # The vocabulary of the general-`n` grid walk, and its measurability

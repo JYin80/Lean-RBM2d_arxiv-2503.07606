@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.Case3Defs
-import RBM2D.Evolution.LatticeSums
-import RBM2D.Loop.LatticeCount
-import RBM2D.Gauss.LoopEnvelope
-import Mathlib.Analysis.Convex.Integral
+
+module
+
+public import RBM2D.Evolution.Case3Defs
+public import RBM2D.Evolution.LatticeSums
+public import RBM2D.Loop.LatticeCount
+public import RBM2D.Gauss.LoopEnvelope
+public import Mathlib.Analysis.Convex.Integral
+
+@[expose] public section
 
 /-!
 # The moment and counting half of the `clt-lemma`

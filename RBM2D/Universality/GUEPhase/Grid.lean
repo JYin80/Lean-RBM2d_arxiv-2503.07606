@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Walk
-import RBM2D.Path.Step2Props
-import RBM2D.Universality.OU
-import RBM2D.Universality.ZeroModeProfile
-import RBM2D.Green.Pins
-import RBM2D.Main.ZRescale
-import RBM2D.Defs.StochDom
+
+module
+
+public import RBM2D.Path.Walk
+public import RBM2D.Path.Step2Props
+public import RBM2D.Universality.OU
+public import RBM2D.Universality.ZeroModeProfile
+public import RBM2D.Green.Pins
+public import RBM2D.Main.ZRescale
+public import RBM2D.Defs.StochDom
+
+@[expose] public section
 
 /-!
 # The GUE-phase grid carrier, path and one-time laws (7.25)/(7.26), `d = 2`

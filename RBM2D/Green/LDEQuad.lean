@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Complex.RealDeriv
-import Mathlib.MeasureTheory.Function.L1Space.Integrable
-import RBM2D.Gauss.Model
+
+module
+
+public import Mathlib.Algebra.Ring.GeomSum
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Complex.RealDeriv
+public import Mathlib.MeasureTheory.Function.L1Space.Integrable
+public import RBM2D.Gauss.Model
+
+@[expose] public section
 
 /-!
 # The Hanson–Wright layer, first half: polynomial weights, tame functions, the row chaos

@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Step2Props
-import RBM2D.Path.UBounds
-import RBM2D.Propagator.Prop5
+
+module
+
+public import RBM2D.Path.Step2Props
+public import RBM2D.Path.UBounds
+public import RBM2D.Propagator.Prop5
+
+@[expose] public section
 
 /-!
 # The `𝒦` bound at `n = 2` and the far field `Kell*`

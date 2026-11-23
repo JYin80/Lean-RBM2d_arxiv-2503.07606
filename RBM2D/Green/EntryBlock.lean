@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.EntryCore
-import RBM2D.Green.Stability
-import RBM2D.Green.Pins
+
+module
+
+public import RBM2D.Green.EntryCore
+public import RBM2D.Green.Stability
+public import RBM2D.Green.Pins
+
+@[expose] public section
 
 /-!
 # Entry estimates for the Green's function: the `d = 2` block model

@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.PPVocab
-import RBM2D.Propagator.Prop5
-import RBM2D.Loop.LatticeCount
-import RBM2D.Path.Kernel
-import RBM2D.Gauss.SpectralAlgebra
+
+module
+
+public import RBM2D.Induction.PPVocab
+public import RBM2D.Propagator.Prop5
+public import RBM2D.Loop.LatticeCount
+public import RBM2D.Path.Kernel
+public import RBM2D.Gauss.SpectralAlgebra
+
+@[expose] public section
 
 /-!
 # The `(+,+)` slot-kernel row bound `ppKernelN`

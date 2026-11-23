@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.Pins
-import RBM2D.Universality.OU
-import RBM2D.Universality.OUHessian
-import RBM2D.Propagator.FiniteDiff
-import RBM2D.Induction.Split
+
+module
+
+public import RBM2D.Universality.Pins
+public import RBM2D.Universality.OU
+public import RBM2D.Universality.OUHessian
+public import RBM2D.Propagator.FiniteDiff
+public import RBM2D.Induction.Split
+
+@[expose] public section
 
 /-!
 # The zero-mode profile `S̃ = (1 - ζ) S + ζ N⁻¹ J` and the §7.2 layer interface

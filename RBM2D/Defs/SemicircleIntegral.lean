@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import RBM2D.Defs.Semicircle
+
+module
+
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import RBM2D.Defs.Semicircle
+
+@[expose] public section
 
 /-!
 # The semicircle Stieltjes transform as the paper's integral

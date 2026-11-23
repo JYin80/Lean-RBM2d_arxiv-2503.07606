@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.CltDecorrelation
-import RBM2D.Green.FlucAvg
+
+module
+
+public import RBM2D.Evolution.CltDecorrelation
+public import RBM2D.Green.FlucAvg
+
+@[expose] public section
 
 /-!
 # Case 3 of `lem:sum_decay`: `BridgeCase3` and `SumDecayCase3Prec`

@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Defs.Model
-import RBM2D.Defs.StochDom
-import Mathlib.Probability.ProductMeasure
-import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.Analysis.CStarAlgebra.Matrix
+
+module
+
+public import RBM2D.Defs.Model
+public import RBM2D.Defs.StochDom
+public import Mathlib.Probability.ProductMeasure
+public import Mathlib.Probability.Distributions.Gaussian.Real
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+
+@[expose] public section
 
 /-!
 # The one-time Gaussian matrix model

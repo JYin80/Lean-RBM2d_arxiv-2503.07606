@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Analysis.SpecificLimits.Basic
-import RBM2D.Propagator.Elliptic
+
+module
+
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import RBM2D.Propagator.Elliptic
+
+@[expose] public section
 
 /-!
 # Dyadic scales and their geometric sums

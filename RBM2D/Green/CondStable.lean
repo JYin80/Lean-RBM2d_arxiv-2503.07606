@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.CondDom
-import RBM2D.Induction.PerTimeCalc
+
+module
+
+public import RBM2D.Green.CondDom
+public import RBM2D.Induction.PerTimeCalc
+
+@[expose] public section
 
 /-!
 # `≺` under `E_k` and the minor replacement (4.9), at a fixed time

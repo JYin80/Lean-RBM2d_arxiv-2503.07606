@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Markov
-import RBM2D.Path.Stop
-import RBM2D.Gauss.Stein
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen
-import Mathlib.Analysis.Convex.Mul
-import Mathlib.Algebra.Order.Chebyshev
+
+module
+
+public import RBM2D.Path.Markov
+public import RBM2D.Path.Stop
+public import RBM2D.Gauss.Stein
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen
+public import Mathlib.Analysis.Convex.Mul
+public import Mathlib.Algebra.Order.Chebyshev
+
+@[expose] public section
 
 /-!
 # The one-step decomposition of a loop observable (`d = 2`)

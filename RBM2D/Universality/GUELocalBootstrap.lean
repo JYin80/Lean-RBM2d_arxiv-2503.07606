@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.Pins
-import RBM2D.Green.Pins
-import RBM2D.Green.LDE
-import RBM2D.Hierarchy.WardResolvent
-import RBM2D.Induction.Split
+
+module
+
+public import RBM2D.Universality.Pins
+public import RBM2D.Green.Pins
+public import RBM2D.Green.LDE
+public import RBM2D.Hierarchy.WardResolvent
+public import RBM2D.Induction.Split
+
+@[expose] public section
 
 /-!
 # The GUE local law from the Schur tail: the deterministic bootstrap

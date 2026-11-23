@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Kernel
-import RBM2D.Path.ScalesBridge
-import RBM2D.Loop.Kcal
-import RBM2D.Loop.LatticeCount
-import RBM2D.Propagator.Prop5
-import RBM2D.Propagator.Prop6
+
+module
+
+public import RBM2D.Path.Kernel
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Loop.Kcal
+public import RBM2D.Loop.LatticeCount
+public import RBM2D.Propagator.Prop5
+public import RBM2D.Propagator.Prop6
+
+@[expose] public section
 
 /-!
 # The `d = 2` kernel inputs of `lem:sum_decay`: bounds on `Ξ = (1 - vξS)Θ_{wξ} - 1`

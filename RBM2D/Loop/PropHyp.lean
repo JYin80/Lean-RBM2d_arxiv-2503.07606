@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Loop.Kcal
-import RBM2D.Propagator.Prop5
-import RBM2D.Propagator.Prop6
+
+module
+
+public import RBM2D.Loop.Kcal
+public import RBM2D.Propagator.Prop5
+public import RBM2D.Propagator.Prop6
+
+@[expose] public section
 
 /-!
 # Discharging `Prop5Hyp κ (1/20000)` and `Prop6Hyp κ`

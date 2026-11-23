@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.FlucAvgDet
-import RBM2D.Green.IBPDet
-import RBM2D.Green.LocalLaw
+
+module
+
+public import RBM2D.Green.FlucAvgDet
+public import RBM2D.Green.IBPDet
+public import RBM2D.Green.LocalLaw
+
+@[expose] public section
 
 /-!
 # `lem_GbEXP` for every size sequence

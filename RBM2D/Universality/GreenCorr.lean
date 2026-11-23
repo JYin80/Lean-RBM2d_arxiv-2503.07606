@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.PoissonSmoothing
-import RBM2D.Universality.EigenMeasurable
+
+module
+
+public import RBM2D.Universality.PoissonSmoothing
+public import RBM2D.Universality.EigenMeasurable
+
+@[expose] public section
 
 /-!
 # The Green-function-to-correlation comparison

@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.RowIndep
-import RBM2D.Green.EntryDom
+
+module
+
+public import RBM2D.Green.RowIndep
+public import RBM2D.Green.EntryDom
+
+@[expose] public section
 
 /-!
 # The large deviation inputs of Lemma 4.2 of [YY_25] for the Gaussian flow

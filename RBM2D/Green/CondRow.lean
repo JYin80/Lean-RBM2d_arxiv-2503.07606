@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
-import Mathlib.MeasureTheory.Function.SpecialFunctions.Basic
-import Mathlib.Probability.ProductMeasure
-import RBM2D.Delocalization
-import RBM2D.Gauss.Model
-import RBM2D.Green.Minor
-import RBM2D.Green.RowIndep
+
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
+public import Mathlib.MeasureTheory.Function.SpecialFunctions.Basic
+public import Mathlib.Probability.ProductMeasure
+public import RBM2D.Delocalization
+public import RBM2D.Gauss.Model
+public import RBM2D.Green.Minor
+public import RBM2D.Green.RowIndep
+
+@[expose] public section
 
 /-!
 # `E_x` = integration over the row-`x` coordinates of slice `n`

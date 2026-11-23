@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Analysis.CStarAlgebra.Hom
-import RBM2D.Induction.GridGoodN
-import RBM2D.Path.StepDecomp
-import RBM2D.Path.Step2Props
-import RBM2D.Gauss.LoopEnvelope
-import RBM2D.Gauss.SpectralWindow
-import RBM2D.Hierarchy.Loops
+
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Hom
+public import RBM2D.Induction.GridGoodN
+public import RBM2D.Path.StepDecomp
+public import RBM2D.Path.Step2Props
+public import RBM2D.Gauss.LoopEnvelope
+public import RBM2D.Gauss.SpectralWindow
+public import RBM2D.Hierarchy.Loops
+
+@[expose] public section
 
 /-!
 # The general-length `C²` bound of the loop observables (`d = 2`)

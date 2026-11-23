@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.Apriori
-import RBM2D.Universality.GreenCorr
-import RBM2D.Universality.EigenMeasurable
-import RBM2D.Induction.Split
-import RBM2D.Gauss.Envelope
-import RBM2D.Green.LDE
+
+module
+
+public import RBM2D.Universality.Apriori
+public import RBM2D.Universality.GreenCorr
+public import RBM2D.Universality.EigenMeasurable
+public import RBM2D.Induction.Split
+public import RBM2D.Gauss.Envelope
+public import RBM2D.Green.LDE
+
+@[expose] public section
 
 /-!
 # The two arithmetic reductions of the universality argument: `UnivMainRow` and `ClaimRow`

@@ -3,7 +3,12 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Hierarchy.ContractionSameEdgePositionCut
+
+module
+
+public import RBM2D.Hierarchy.ContractionSameEdgePositionCut
+
+@[expose] public section
 
 /-!
 # The two-edge cut formula at one enumerated pair of loop positions

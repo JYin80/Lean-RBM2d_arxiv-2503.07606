@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import RBM2D.Delocalization
+
+module
+
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import RBM2D.Delocalization
+
+@[expose] public section
 
 /-!
 # Minor formulas for the Green's function (Schur complement, (4.7) and (4.9))

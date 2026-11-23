@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Endpoints
-import RBM2D.Propagator.FiniteDiff
-import RBM2D.Gauss.LoopEnvelope
-import RBM2D.Gauss.GreenTimeCont
+
+module
+
+public import RBM2D.Endpoints
+public import RBM2D.Propagator.FiniteDiff
+public import RBM2D.Gauss.LoopEnvelope
+public import RBM2D.Gauss.GreenTimeCont
+
+@[expose] public section
 
 /-!
 # `MR:QUE` from `MR:QDiff`

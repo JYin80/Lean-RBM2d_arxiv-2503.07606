@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierVocab
-import RBM2D.Loop.Kcal
-import RBM2D.Propagator.Prop5
+
+module
+
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Loop.Kcal
+public import RBM2D.Propagator.Prop5
+
+@[expose] public section
 
 /-!
 # Fast decay of the primitive loop `𝒦` at far labels (`kcalDecay`)

@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.LoopFlowCoordinateChain
-import RBM2D.Gauss.LoopCoordinateIntegrability
-import RBM2D.Gauss.SteinMatrix
+
+module
+
+public import RBM2D.Gauss.LoopFlowCoordinateChain
+public import RBM2D.Gauss.LoopCoordinateIntegrability
+public import RBM2D.Gauss.SteinMatrix
+
+@[expose] public section
 
 /-!
 # Expected samplewise loop-flow derivative
@@ -22,10 +27,10 @@ open scoped Matrix.Norms.L2Operator
 
 variable (L W : ℕ) [NeZero L] [NeZero W]
 
-private noncomputable def driftA (η : ℝ) : ℝ :=
+noncomputable def driftA (η : ℝ) : ℝ :=
   η⁻¹ * ((W : ℝ)⁻¹ ^ 2)
 
-private noncomputable def driftD (E η : ℝ) : ℝ :=
+noncomputable def driftD (E η : ℝ) : ℝ :=
   (η⁻¹ * ‖spectralM E‖ * η⁻¹) * ((W : ℝ)⁻¹ ^ 2)
 
 /-- A deterministic recursive bound for the spectral drift of a word. -/

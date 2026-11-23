@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.Grid
-import RBM2D.Path.Markov
-import RBM2D.Path.PerTime
-import Mathlib.Probability.Moments.SubGaussian
+
+module
+
+public import RBM2D.Universality.GUEPhase.Grid
+public import RBM2D.Path.Markov
+public import RBM2D.Path.PerTime
+public import Mathlib.Probability.Moments.SubGaussian
+
+@[expose] public section
 
 /-!
 # The `Pgue` Markov toolkit, `d = 2`

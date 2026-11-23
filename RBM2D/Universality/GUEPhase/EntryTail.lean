@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.AuxCarrier
-import RBM2D.Universality.GUEPhase.EntryDet
-import RBM2D.Green.EntryDom
+
+module
+
+public import RBM2D.Universality.GUEPhase.AuxCarrier
+public import RBM2D.Universality.GUEPhase.EntryDet
+public import RBM2D.Green.EntryDom
+
+@[expose] public section
 
 /-!
 # The probabilistic half of Lemma 4.1 at the mixture profile

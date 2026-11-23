@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Hierarchy.OperationsPair
-import RBM2D.Defs.StochDom
-import RBM2D.Defs.Domination
-import RBM2D.Path.PerTime
-import RBM2D.Path.Scales
-import Mathlib.Data.Set.Finite.List
+
+module
+
+public import RBM2D.Hierarchy.OperationsPair
+public import RBM2D.Defs.StochDom
+public import RBM2D.Defs.Domination
+public import RBM2D.Path.PerTime
+public import RBM2D.Path.Scales
+public import Mathlib.Data.Set.Finite.List
+
+@[expose] public section
 
 /-!
 # The abstract bootstraps of the GUE phase (§7.2 of [YY_25], `d = 2`)

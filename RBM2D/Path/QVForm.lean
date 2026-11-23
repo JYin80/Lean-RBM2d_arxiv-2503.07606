@@ -3,7 +3,12 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.StepDecomp
+
+module
+
+public import RBM2D.Path.StepDecomp
+
+@[expose] public section
 
 /-!
 # The quadratic-variation form of the linear part (`d = 2`)

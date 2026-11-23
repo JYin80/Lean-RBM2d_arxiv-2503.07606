@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.LoopCoordinateSecondDerivative
-import RBM2D.Gauss.LoopEnvelope
+
+module
+
+public import RBM2D.Gauss.LoopCoordinateSecondDerivative
+public import RBM2D.Gauss.LoopEnvelope
+
+@[expose] public section
 
 /-!
 # Sample-uniform bounds for coordinate derivatives of finite loops
@@ -20,14 +25,14 @@ open scoped Matrix.Norms.L2Operator
 
 variable (L W : ℕ) [NeZero L] [NeZero W]
 
-private noncomputable def coordA (η : ℝ) : ℝ :=
+noncomputable def coordA (η : ℝ) : ℝ :=
   η⁻¹ * ((W : ℝ)⁻¹ ^ 2)
 
-private noncomputable def coordD (u η : ℝ) (c : Coord L W) : ℝ :=
+noncomputable def coordD (u η : ℝ) (c : Coord L W) : ℝ :=
   (η⁻¹ * ‖Real.sqrt u • coordinateBlock L W c‖ * η⁻¹) *
     ((W : ℝ)⁻¹ ^ 2)
 
-private noncomputable def coordS (u η : ℝ) (c : Coord L W) : ℝ :=
+noncomputable def coordS (u η : ℝ) (c : Coord L W) : ℝ :=
   2 * ((η⁻¹ * ‖Real.sqrt u • coordinateBlock L W c‖ * η⁻¹ *
       ‖Real.sqrt u • coordinateBlock L W c‖ * η⁻¹) *
     ((W : ℝ)⁻¹ ^ 2))

@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Loop.Molecule
-import RBM2D.Loop.PureLoop
-import RBM2D.Loop.SumZeroWard
-import RBM2D.Loop.PropHyp
+
+module
+
+public import RBM2D.Loop.Molecule
+public import RBM2D.Loop.PureLoop
+public import RBM2D.Loop.SumZeroWard
+public import RBM2D.Loop.PropHyp
+
+@[expose] public section
 
 /-!
 # `ML:Kbound+pi` at `π = ∅`: `(spwow3)` and `(eq:bcal_k_pi)`

@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierVocab
-import RBM2D.Induction.HierAlgebra
-import RBM2D.Induction.LoopGenN
-import RBM2D.Path.DriftAlgebra
+
+module
+
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Induction.HierAlgebra
+public import RBM2D.Induction.LoopGenN
+public import RBM2D.Path.DriftAlgebra
+
+@[expose] public section
 
 /-!
 # The general-`n` `(𝓛 - 𝒦)` hierarchy identity

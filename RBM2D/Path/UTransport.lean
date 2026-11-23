@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.UBounds
-import RBM2D.Path.Scales
-import RBM2D.Path.Kernel
-import RBM2D.Defs.Dist
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Analysis.Complex.ExponentialBounds
+
+module
+
+public import RBM2D.Path.UBounds
+public import RBM2D.Path.Scales
+public import RBM2D.Path.Kernel
+public import RBM2D.Defs.Dist
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Analysis.Complex.ExponentialBounds
+
+@[expose] public section
 
 /-!
 # Transport by the `𝒰` kernel: local-maximum bounds and `TailtoTail`

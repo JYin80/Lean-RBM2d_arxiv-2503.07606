@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.MLExpVocab
-import RBM2D.Hierarchy.LoopHierarchyCutContinuity
-import RBM2D.Gauss.LoopGeneratorExpectation
-import RBM2D.Gauss.LoopExpectationDerivative
-import RBM2D.Loop.TreeRep
+
+module
+
+public import RBM2D.Evolution.MLExpVocab
+public import RBM2D.Hierarchy.LoopHierarchyCutContinuity
+public import RBM2D.Gauss.LoopGeneratorExpectation
+public import RBM2D.Gauss.LoopExpectationDerivative
+public import RBM2D.Loop.TreeRep
+
+@[expose] public section
 
 /-!
 # The expected hierarchy at `n = 2` (`ExpHierPin` of `ML:exp`)

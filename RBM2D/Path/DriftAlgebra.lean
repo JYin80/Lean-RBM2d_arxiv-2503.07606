@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Step2Vocab
-import RBM2D.Path.OneStep
-import RBM2D.Path.UBounds
-import RBM2D.Hierarchy.ContractionCutWords
-import RBM2D.Gauss.LoopInitialValueScalar
-import RBM2D.Gauss.Envelope
-import RBM2D.Gauss.GreenDerivative
+
+module
+
+public import RBM2D.Path.Step2Vocab
+public import RBM2D.Path.OneStep
+public import RBM2D.Path.UBounds
+public import RBM2D.Hierarchy.ContractionCutWords
+public import RBM2D.Gauss.LoopInitialValueScalar
+public import RBM2D.Gauss.Envelope
+public import RBM2D.Gauss.GreenDerivative
+
+@[expose] public section
 
 /-!
 # The `n = 2` loop hierarchy at matrix level

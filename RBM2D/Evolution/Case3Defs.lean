@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.Defs
-import RBM2D.Evolution.KernelExpand
-import RBM2D.Evolution.XiBounds
-import RBM2D.Evolution.LatticeSums
-import RBM2D.Green.Pins
+
+module
+
+public import RBM2D.Evolution.Defs
+public import RBM2D.Evolution.KernelExpand
+public import RBM2D.Evolution.XiBounds
+public import RBM2D.Evolution.LatticeSums
+public import RBM2D.Green.Pins
+
+@[expose] public section
 
 /-!
 # The contracts that depend on `lem_GbEXP`, stated on `GbEXPHypV3`

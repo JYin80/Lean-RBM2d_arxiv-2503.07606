@@ -4,6 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
 
+module
+
+
+@[expose] public section
+
 /-!
 # RBM2D
 

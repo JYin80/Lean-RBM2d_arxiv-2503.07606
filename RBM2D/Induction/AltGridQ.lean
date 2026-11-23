@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.GridEnvelopeN
-import RBM2D.Induction.GridDuhamelN
-import RBM2D.Induction.SumZeroQ
-import RBM2D.Induction.HierAlgebra
-import RBM2D.Propagator.Bounds
-import RBM2D.Propagator.Deriv
+
+module
+
+public import RBM2D.Induction.GridEnvelopeN
+public import RBM2D.Induction.GridDuhamelN
+public import RBM2D.Induction.SumZeroQ
+public import RBM2D.Induction.HierAlgebra
+public import RBM2D.Propagator.Bounds
+public import RBM2D.Propagator.Deriv
+
+@[expose] public section
 
 /-!
 # The `𝒬`-hierarchy on the grid

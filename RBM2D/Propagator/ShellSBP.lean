@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.AbelSum
-import RBM2D.Propagator.ZeroMode
-import RBM2D.Propagator.SymbolShiftAnnulus
-import RBM2D.Propagator.GeomSum
-import Mathlib.Algebra.Group.ForwardDiff
-import Mathlib.Analysis.Real.Pi.Bounds
+
+module
+
+public import RBM2D.Propagator.AbelSum
+public import RBM2D.Propagator.ZeroMode
+public import RBM2D.Propagator.SymbolShiftAnnulus
+public import RBM2D.Propagator.GeomSum
+public import Mathlib.Algebra.Group.ForwardDiff
+public import Mathlib.Analysis.Real.Pi.Bounds
+
+@[expose] public section
 
 /-!
 # Shell phases, three-factor Leibniz rule and threefold summation by parts

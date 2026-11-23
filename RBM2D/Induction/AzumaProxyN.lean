@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.StepDecompN
-import RBM2D.Induction.GridGoodN
-import RBM2D.Induction.LoopC2N
-import RBM2D.Path.QVForm
-import RBM2D.Gauss.Stein
-import Mathlib.Probability.ConditionalExpectation
+
+module
+
+public import RBM2D.Induction.StepDecompN
+public import RBM2D.Induction.GridGoodN
+public import RBM2D.Induction.LoopC2N
+public import RBM2D.Path.QVForm
+public import RBM2D.Gauss.Stein
+public import Mathlib.Probability.ConditionalExpectation
+
+@[expose] public section
 
 /-!
 # The Azuma proxies and the `Y` moments of the grid walk (`d = 2`)

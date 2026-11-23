@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.AltGridQ
-import RBM2D.Induction.QopBounds
-import RBM2D.Induction.AzumaProxyN
-import RBM2D.Induction.QVN
-import RBM2D.Induction.SumZeroQ
-import RBM2D.Evolution.Case5
-import RBM2D.Induction.NonAltGood
+
+module
+
+public import RBM2D.Induction.AltGridQ
+public import RBM2D.Induction.QopBounds
+public import RBM2D.Induction.AzumaProxyN
+public import RBM2D.Induction.QVN
+public import RBM2D.Induction.SumZeroQ
+public import RBM2D.Evolution.Case5
+public import RBM2D.Induction.NonAltGood
+
+@[expose] public section
 
 /-!
 # The martingale part of the `𝒬`-process

@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.Step1RegularityA
-import RBM2D.Universality.FreeConvStability
-import RBM2D.Universality.InjSum
+
+module
+
+public import RBM2D.Universality.Step1RegularityA
+public import RBM2D.Universality.FreeConvStability
+public import RBM2D.Universality.InjSum
+
+@[expose] public section
 
 /-!
 # The good event of Step 1

@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.Bootstrap
-import RBM2D.Defs.StochDom
-import RBM2D.Gauss.Domination
-import RBM2D.Induction.PerTimeCalc
+
+module
+
+public import RBM2D.Universality.GUEPhase.Bootstrap
+public import RBM2D.Defs.StochDom
+public import RBM2D.Gauss.Domination
+public import RBM2D.Induction.PerTimeCalc
+
+@[expose] public section
 
 /-!
 # The abstract bootstraps of the GUE phase on the size scale (§7.2 of [YY_25], `d = 2`)

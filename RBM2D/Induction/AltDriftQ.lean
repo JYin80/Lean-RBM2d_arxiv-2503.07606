@@ -3,16 +3,21 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.AltGridQ
-import RBM2D.Induction.AltSymm
-import RBM2D.Induction.LocalFormCalc
-import RBM2D.Induction.LocalFormLin
-import RBM2D.Induction.LocalFormCuts
-import RBM2D.Induction.NonAltEnd
-import RBM2D.Induction.B45
-import RBM2D.Induction.StoppedEndDefs
-import RBM2D.Evolution.Case4
-import RBM2D.Evolution.Case3
+
+module
+
+public import RBM2D.Induction.AltGridQ
+public import RBM2D.Induction.AltSymm
+public import RBM2D.Induction.LocalFormCalc
+public import RBM2D.Induction.LocalFormLin
+public import RBM2D.Induction.LocalFormCuts
+public import RBM2D.Induction.NonAltEnd
+public import RBM2D.Induction.B45
+public import RBM2D.Induction.StoppedEndDefs
+public import RBM2D.Evolution.Case4
+public import RBM2D.Evolution.Case3
+
+@[expose] public section
 
 /-!
 # The `ℚ`/`𝔼` split of the drift and of the initial term of the `𝒬`-process

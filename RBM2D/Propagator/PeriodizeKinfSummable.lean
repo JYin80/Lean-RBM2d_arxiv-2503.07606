@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.KinfBound
-import RBM2D.Propagator.PeriodizeConvergence
-import RBM2D.Propagator.PeriodizeResolventBridge
-import RBM2D.Propagator.PeriodizeIntegrand
+
+module
+
+public import RBM2D.Propagator.KinfBound
+public import RBM2D.Propagator.PeriodizeConvergence
+public import RBM2D.Propagator.PeriodizeResolventBridge
+public import RBM2D.Propagator.PeriodizeIntegrand
+
+@[expose] public section
 
 /-!
 # Summability of the shifted `Kinf` lattice sums

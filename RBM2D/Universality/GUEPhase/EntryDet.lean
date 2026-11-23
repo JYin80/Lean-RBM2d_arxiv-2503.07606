@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.AuxCarrier
-import RBM2D.Green.EntryBlock
+
+module
+
+public import RBM2D.Universality.GUEPhase.AuxCarrier
+public import RBM2D.Green.EntryBlock
+
+@[expose] public section
 
 /-!
 # The deterministic entry layer of the GUE phase at the mixture profile

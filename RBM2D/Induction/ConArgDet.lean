@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Split
-import RBM2D.Hierarchy.WardResolvent
-import RBM2D.Gauss.SpectralWindow
-import RBM2D.Gauss.SpectralAlgebra
-import RBM2D.Path.Scales
-import Mathlib.Algebra.Order.Chebyshev
+
+module
+
+public import RBM2D.Induction.Split
+public import RBM2D.Hierarchy.WardResolvent
+public import RBM2D.Gauss.SpectralWindow
+public import RBM2D.Gauss.SpectralAlgebra
+public import RBM2D.Path.Scales
+public import Mathlib.Algebra.Order.Chebyshev
+
+@[expose] public section
 
 /-!
 # The deterministic part of `lem_ConArg` in `d = 2`: (6.3)–(6.12) of [YY_25]

@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Analysis.CStarAlgebra.Hom
-import RBM2D.Path.Step2Props
-import RBM2D.Gauss.LoopEnvelope
-import RBM2D.Loop.Kcal
+
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Hom
+public import RBM2D.Path.Step2Props
+public import RBM2D.Gauss.LoopEnvelope
+public import RBM2D.Loop.Kcal
+
+@[expose] public section
 
 /-!
 # Lipschitz dependence of the resolvent on the matrix

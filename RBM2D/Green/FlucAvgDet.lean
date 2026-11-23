@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.FlucThreshold
-import RBM2D.Green.EntryBlock
-import RBM2D.Green.LocalLaw
+
+module
+
+public import RBM2D.Green.FlucThreshold
+public import RBM2D.Green.EntryBlock
+public import RBM2D.Green.LocalLaw
+
+@[expose] public section
 
 /-!
 # The fixed-time fluctuation averaging at a deterministic entry scale: `fixedTimeFAThm`

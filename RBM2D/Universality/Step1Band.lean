@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.Step1Cond
-import RBM2D.Universality.Step1RegularityB
-import RBM2D.Universality.FreeConv
+
+module
+
+public import RBM2D.Universality.Step1Cond
+public import RBM2D.Universality.Step1RegularityB
+public import RBM2D.Universality.FreeConv
+
+@[expose] public section
 
 /-!
 # Step 1 of Theorem 2.6 for the band model: the band side of `(1infyuniv)`
@@ -1133,6 +1138,7 @@ theorem step1Band :
     refine (integral_mono_of_nonneg (Eventually.of_forall fun ω => abs_nonneg _)
       ((integrable_const _).add ((integrable_const _).indicator hTm))
       (Eventually.of_forall hpt)).trans ?_
+    simp only [Pi.add_apply]
     rw [integral_add (integrable_const _) ((integrable_const _).indicator hTm), integral_const,
       integral_indicator_const _ hTm, probReal_univ, one_smul, smul_eq_mul]
   have hTreal : (seqP d).real T ≤ N ^ (-((k + 1 : ℕ) : ℝ)) := by

@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.Case3Defs
-import RBM2D.Induction.Step3
-import RBM2D.Induction.Step45
-import RBM2D.Path.Expansion
-import RBM2D.Path.DuhamelTail
-import RBM2D.Path.QVIdentity
+
+module
+
+public import RBM2D.Evolution.Case3Defs
+public import RBM2D.Induction.Step3
+public import RBM2D.Induction.Step45
+public import RBM2D.Path.Expansion
+public import RBM2D.Path.DuhamelTail
+public import RBM2D.Path.QVIdentity
+
+@[expose] public section
 
 /-!
 # The vocabulary of the loop hierarchy and the statements used by the induction

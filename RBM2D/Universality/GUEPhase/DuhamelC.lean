@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.DuhamelA
-import RBM2D.Universality.GUEPhase.DuhamelB
-import RBM2D.Universality.GUEPhase.Markov
-import RBM2D.Universality.GUEPhase.Proc
-import RBM2D.Path.PerTime
-import RBM2D.Induction.PerTimeCalc
-import RBM2D.Green.Pins
+
+module
+
+public import RBM2D.Universality.GUEPhase.DuhamelA
+public import RBM2D.Universality.GUEPhase.DuhamelB
+public import RBM2D.Universality.GUEPhase.Markov
+public import RBM2D.Universality.GUEPhase.Proc
+public import RBM2D.Path.PerTime
+public import RBM2D.Induction.PerTimeCalc
+public import RBM2D.Green.Pins
+
+@[expose] public section
 
 /-!
 # The loop Duhamel tail of the GUE phase, part III (`d = 2`)

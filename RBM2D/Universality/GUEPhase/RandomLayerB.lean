@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.RandomLayerA
-import RBM2D.Universality.GUEPhase.LLTransfer
-import RBM2D.Universality.GUEPhase.PathBounds
-import RBM2D.Universality.GUEPhase.Eq729B
-import RBM2D.Universality.GUEPhase.KPrim
-import RBM2D.Universality.ZeroModeProfile
-import RBM2D.Main.Endpoints
+
+module
+
+public import RBM2D.Universality.GUEPhase.RandomLayerA
+public import RBM2D.Universality.GUEPhase.LLTransfer
+public import RBM2D.Universality.GUEPhase.PathBounds
+public import RBM2D.Universality.GUEPhase.Eq729B
+public import RBM2D.Universality.GUEPhase.KPrim
+public import RBM2D.Universality.ZeroModeProfile
+public import RBM2D.Main.Endpoints
+
+@[expose] public section
 
 /-!
 # The §7.2 random layer, assembly: `g1Row : G1Row` (`d = 2`)

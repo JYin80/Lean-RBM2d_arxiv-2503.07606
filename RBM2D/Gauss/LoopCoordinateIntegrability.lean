@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Gauss.LoopCoordinateDerivativeBounds
-import Mathlib.MeasureTheory.Integral.IntegrableOn
+
+module
+
+public import RBM2D.Gauss.LoopCoordinateDerivativeBounds
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
+
+@[expose] public section
 
 /-!
 # Measurability and integrability of finite-loop coordinate derivatives

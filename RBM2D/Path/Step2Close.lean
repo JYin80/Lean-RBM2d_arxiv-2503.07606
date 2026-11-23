@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Step2TargetV3
-import RBM2D.Path.Bootstrap
-import RBM2D.Path.Step2Grid
-import RBM2D.Path.Step2Local
+
+module
+
+public import RBM2D.Induction.Step2TargetV3
+public import RBM2D.Path.Bootstrap
+public import RBM2D.Path.Step2Grid
+public import RBM2D.Path.Step2Local
+
+@[expose] public section
 
 /-!
 # The Step 2 closure of `lem:main_ind`

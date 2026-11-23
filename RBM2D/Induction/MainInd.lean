@@ -3,24 +3,29 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Chain
-import RBM2D.Induction.HierVocab
-import RBM2D.Induction.Step1
-import RBM2D.Induction.Step3
-import RBM2D.Induction.Step45
-import RBM2D.Induction.Step2TargetV3
-import RBM2D.Induction.GridGoodN
-import RBM2D.Path.Step2Close
-import RBM2D.Green.GbEXP
-import RBM2D.Loop.KBound
-import RBM2D.Evolution.Case3
-import RBM2D.Evolution.Bridge
-import RBM2D.Evolution.MLExpVocab
-import RBM2D.Evolution.MLExpDuhamel
-import RBM2D.Evolution.MLExpDrift
-import RBM2D.Evolution.MLExpInv
-import RBM2D.Evolution.MLExpHier
-import RBM2D.Evolution.MLExpQ
+
+module
+
+public import RBM2D.Induction.Chain
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Induction.Step1
+public import RBM2D.Induction.Step3
+public import RBM2D.Induction.Step45
+public import RBM2D.Induction.Step2TargetV3
+public import RBM2D.Induction.GridGoodN
+public import RBM2D.Path.Step2Close
+public import RBM2D.Green.GbEXP
+public import RBM2D.Loop.KBound
+public import RBM2D.Evolution.Case3
+public import RBM2D.Evolution.Bridge
+public import RBM2D.Evolution.MLExpVocab
+public import RBM2D.Evolution.MLExpDuhamel
+public import RBM2D.Evolution.MLExpDrift
+public import RBM2D.Evolution.MLExpInv
+public import RBM2D.Evolution.MLExpHier
+public import RBM2D.Evolution.MLExpQ
+
+@[expose] public section
 
 /-!
 # The last link of the induction chain: `lem:main_ind` from Steps 1–5, and `ML:exp`

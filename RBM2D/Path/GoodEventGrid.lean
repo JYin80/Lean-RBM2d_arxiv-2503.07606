@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.GoodEvent
-import RBM2D.Path.LemDecCalEdif
-import RBM2D.Path.UTransport
-import RBM2D.Path.KellStar
-import RBM2D.Path.QVIdentity
-import RBM2D.Path.QVForm
-import RBM2D.Path.StepDecompLoop
+
+module
+
+public import RBM2D.Path.GoodEvent
+public import RBM2D.Path.LemDecCalEdif
+public import RBM2D.Path.UTransport
+public import RBM2D.Path.KellStar
+public import RBM2D.Path.QVIdentity
+public import RBM2D.Path.QVForm
+public import RBM2D.Path.StepDecompLoop
+
+@[expose] public section
 
 /-!
 # The linear part of the Step 2 good event on the grid

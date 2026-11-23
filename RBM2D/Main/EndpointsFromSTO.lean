@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Main.P7FromSTO
-import RBM2D.Main.ZRescale
-import RBM2D.Main.DecolFromLocal
-import RBM2D.Main.QUEFromQDiff
+
+module
+
+public import RBM2D.Main.P7FromSTO
+public import RBM2D.Main.ZRescale
+public import RBM2D.Main.DecolFromLocal
+public import RBM2D.Main.QUEFromQDiff
+
+@[expose] public section
 
 /-!
 # Endpoint conversions from the stopped-evolution estimate

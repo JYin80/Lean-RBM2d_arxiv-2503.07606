@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Defs
-import RBM2D.Induction.PerTimeCalc
-import RBM2D.Induction.ScaleFacts
-import RBM2D.Green.Pins
-import RBM2D.Path.Step2PropsV3
-import RBM2D.Path.ScalesBridge
-import RBM2D.Loop.Cyclic
-import RBM2D.Gauss.LoopInitialValueScalar
+
+module
+
+public import RBM2D.Induction.Defs
+public import RBM2D.Induction.PerTimeCalc
+public import RBM2D.Induction.ScaleFacts
+public import RBM2D.Green.Pins
+public import RBM2D.Path.Step2PropsV3
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Loop.Cyclic
+public import RBM2D.Gauss.LoopInitialValueScalar
+
+@[expose] public section
 
 /-!
 # Steps 4 and 5 of Theorem `lem:main_ind`: `Step4TargetV3`, `Step5TargetV3`

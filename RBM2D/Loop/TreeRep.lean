@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Loop.Kcal
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Data.List.GetD
+
+module
+
+public import RBM2D.Loop.Kcal
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Data.List.GetD
+
+@[expose] public section
 
 /-!
 # The tree representation `𝒦` solves `(pro_dyncalK)` ([YY_25] Lemma 3.4 in `d = 2`)
@@ -191,7 +196,7 @@ private theorem minNode_le {s : Finset (Fin n × Fin n)} {e : Fin n × Fin n} (h
 /-! ### Laminarity -/
 
 /-- `F` is a family of diagonals with no crossing pair: an element of `T_SP(n)`. -/
-private def IsTSP (F : Finset (Fin n × Fin n)) : Prop :=
+def IsTSP (F : Finset (Fin n × Fin n)) : Prop :=
   (∀ d ∈ F, IsDiag n d.1 d.2) ∧ CrossingFree F
 
 omit [NeZero n] in

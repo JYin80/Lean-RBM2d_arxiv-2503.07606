@@ -3,8 +3,13 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Hierarchy.ContractionBasic
-import RBM2D.Gauss.Model
+
+module
+
+public import RBM2D.Hierarchy.ContractionBasic
+public import RBM2D.Gauss.Model
+
+@[expose] public section
 
 /-!
 # Hermitian coordinate directions in the loop contraction

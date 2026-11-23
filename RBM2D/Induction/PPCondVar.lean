@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.PPVocab
-import RBM2D.Induction.PPKernel
-import RBM2D.Induction.NonAltGood
-import RBM2D.Induction.BcalEDecay
+
+module
+
+public import RBM2D.Induction.PPVocab
+public import RBM2D.Induction.PPKernel
+public import RBM2D.Induction.NonAltGood
+public import RBM2D.Induction.BcalEDecay
+
+@[expose] public section
 
 /-!
 # The `(+,+)` conditional-variance bound `ppCondVarN`

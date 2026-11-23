@@ -3,15 +3,20 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Evolution.Defs
-import RBM2D.Evolution.XiBounds
-import RBM2D.Hierarchy.ContractionSecondLoopSameEdge
-import RBM2D.Gauss.LoopFlowCoordinateChain
-import RBM2D.Gauss.LoopCoordinateDerivativeBounds
-import RBM2D.Gauss.LoopInitialValueScalar
-import RBM2D.Gauss.MomentBridge
-import RBM2D.Gauss.SteinMatrix
-import RBM2D.Path.PerTime
+
+module
+
+public import RBM2D.Evolution.Defs
+public import RBM2D.Evolution.XiBounds
+public import RBM2D.Hierarchy.ContractionSecondLoopSameEdge
+public import RBM2D.Gauss.LoopFlowCoordinateChain
+public import RBM2D.Gauss.LoopCoordinateDerivativeBounds
+public import RBM2D.Gauss.LoopInitialValueScalar
+public import RBM2D.Gauss.MomentBridge
+public import RBM2D.Gauss.SteinMatrix
+public import RBM2D.Path.PerTime
+
+@[expose] public section
 
 /-!
 # `lemma:step6-1`: `𝔼⟨(G_u - m)E_a⟩ ≺ M_u^{-2}`

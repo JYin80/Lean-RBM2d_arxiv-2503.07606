@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.OU
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
+
+module
+
+public import RBM2D.Universality.OU
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.Order.Interval.Finset.Fin
+public import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
+
+@[expose] public section
 
 /-!
 # Courant-Fischer, Weyl, and measurability of the `k`-point functional

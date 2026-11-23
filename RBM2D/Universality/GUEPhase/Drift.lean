@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.OneStep
-import RBM2D.Universality.GUEPhase.Generator
-import RBM2D.Universality.GUEPhase.Markov
-import RBM2D.Endpoints
+
+module
+
+public import RBM2D.Path.OneStep
+public import RBM2D.Universality.GUEPhase.Generator
+public import RBM2D.Universality.GUEPhase.Markov
+public import RBM2D.Endpoints
+
+@[expose] public section
 
 /-!
 # The one-step drift of the GUE-phase grid (`d = 2`)

@@ -3,17 +3,22 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.AzumaProxyN
-import RBM2D.Induction.GridEnvelopeN
-import RBM2D.Induction.GridAssemblyN
-import RBM2D.Induction.GridGoodEvent
-import RBM2D.Induction.LoopC2N
-import RBM2D.Induction.DecayLoop
-import RBM2D.Induction.KcalDecay
-import RBM2D.Induction.QVN
-import RBM2D.Induction.Step3
-import RBM2D.Green.GbEXP
-import RBM2D.Evolution.MLExpVocab
+
+module
+
+public import RBM2D.Induction.AzumaProxyN
+public import RBM2D.Induction.GridEnvelopeN
+public import RBM2D.Induction.GridAssemblyN
+public import RBM2D.Induction.GridGoodEvent
+public import RBM2D.Induction.LoopC2N
+public import RBM2D.Induction.DecayLoop
+public import RBM2D.Induction.KcalDecay
+public import RBM2D.Induction.QVN
+public import RBM2D.Induction.Step3
+public import RBM2D.Green.GbEXP
+public import RBM2D.Evolution.MLExpVocab
+
+@[expose] public section
 
 /-!
 # The `(+,+)` two-loop base case: vocabulary, statements and the assembly

@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.Scales
-import RBM2D.Path.Kernel
-import RBM2D.Propagator.Bounds
-import RBM2D.Propagator.Deriv
-import RBM2D.Gauss.SpectralAlgebra
+
+module
+
+public import RBM2D.Path.Scales
+public import RBM2D.Path.Kernel
+public import RBM2D.Propagator.Bounds
+public import RBM2D.Propagator.Deriv
+public import RBM2D.Gauss.SpectralAlgebra
+
+@[expose] public section
 
 /-!
 # The `𝒰` bounds: nonnegativity, row sums, `lem:sum_Ndecay` at `n = 2`, back and one-step kernels

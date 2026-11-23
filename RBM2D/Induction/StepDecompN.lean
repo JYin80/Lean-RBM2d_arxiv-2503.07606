@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.LoopC2N
-import RBM2D.Path.LoopStep
-import RBM2D.Path.StepDecomp
+
+module
+
+public import RBM2D.Induction.LoopC2N
+public import RBM2D.Path.LoopStep
+public import RBM2D.Path.StepDecomp
+
+@[expose] public section
 
 /-!
 # The complex-valued one-step decomposition `ξ = Z + Y` of the grid walk (`d = 2`)

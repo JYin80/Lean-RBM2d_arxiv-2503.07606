@@ -3,19 +3,24 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Matrix.MeasurableSpace
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
-import Mathlib.Topology.Instances.Matrix
-import RBM2D.Delocalization
-import RBM2D.Gauss.Domination
-import RBM2D.Gauss.Envelope
-import RBM2D.Gauss.LinearForm
-import RBM2D.Gauss.Model
-import RBM2D.Gauss.Stein
-import RBM2D.Green.EntryCore
-import RBM2D.Green.Minor
+
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Matrix.MeasurableSpace
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
+public import Mathlib.Topology.Instances.Matrix
+public import RBM2D.Delocalization
+public import RBM2D.Gauss.Domination
+public import RBM2D.Gauss.Envelope
+public import RBM2D.Gauss.LinearForm
+public import RBM2D.Gauss.Model
+public import RBM2D.Gauss.Stein
+public import RBM2D.Green.EntryCore
+public import RBM2D.Green.Minor
+
+@[expose] public section
 
 /-!
 # The minor resolvent does not read row `x`

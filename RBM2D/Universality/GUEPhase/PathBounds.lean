@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUEPhase.BoundsA
-import RBM2D.Universality.GUEPhase.DuhamelC
-import RBM2D.Universality.GUEPhase.EntryGrid
-import RBM2D.Universality.GUEPhase.HypB
-import RBM2D.Green.FlucAvg
-import RBM2D.Main.Endpoints
+
+module
+
+public import RBM2D.Universality.GUEPhase.BoundsA
+public import RBM2D.Universality.GUEPhase.DuhamelC
+public import RBM2D.Universality.GUEPhase.EntryGrid
+public import RBM2D.Universality.GUEPhase.HypB
+public import RBM2D.Green.FlucAvg
+public import RBM2D.Main.Endpoints
+
+@[expose] public section
 
 /-!
 # The output of the §7.2 random layer on the grid: `gueGrid_pathBounds`, `d = 2`

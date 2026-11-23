@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Green.Eq45Small
-import RBM2D.Green.AvgPins
-import RBM2D.Green.MinorDiffCond
+
+module
+
+public import RBM2D.Green.Eq45Small
+public import RBM2D.Green.AvgPins
+public import RBM2D.Green.MinorDiffCond
+
+@[expose] public section
 
 /-!
 # A movable deterministic threshold, and the fluctuation gain from the local law

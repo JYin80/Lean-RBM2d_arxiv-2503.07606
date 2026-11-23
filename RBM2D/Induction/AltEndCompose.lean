@@ -3,12 +3,17 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.AltBudgetTerms
-import RBM2D.Induction.AltProxyQ
-import RBM2D.Induction.GridGoodEvent
-import RBM2D.Induction.NonAltEnd
-import RBM2D.Induction.AltGridQ
-import RBM2D.Induction.AltDriftQ
+
+module
+
+public import RBM2D.Induction.AltBudgetTerms
+public import RBM2D.Induction.AltProxyQ
+public import RBM2D.Induction.GridGoodEvent
+public import RBM2D.Induction.NonAltEnd
+public import RBM2D.Induction.AltGridQ
+public import RBM2D.Induction.AltDriftQ
+
+@[expose] public section
 
 /-!
 # The alternating endpoint, part 1: vocabulary, the kernel-start shift and the compositions

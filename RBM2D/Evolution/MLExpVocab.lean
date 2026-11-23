@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierVocab
-import RBM2D.Evolution.Bridge
-import RBM2D.Induction.SumZeroQ
-import RBM2D.Induction.QopBounds
-import RBM2D.Induction.HierarchyN
-import RBM2D.Gauss.LoopInitialValueScalar
-import RBM2D.Gauss.MomentBridge
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+
+module
+
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Evolution.Bridge
+public import RBM2D.Induction.SumZeroQ
+public import RBM2D.Induction.QopBounds
+public import RBM2D.Induction.HierarchyN
+public import RBM2D.Gauss.LoopInitialValueScalar
+public import RBM2D.Gauss.MomentBridge
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+
+@[expose] public section
 
 /-!
 # The vocabulary, the statements and the assembly of `ML:exp` (`eq:step6main`)

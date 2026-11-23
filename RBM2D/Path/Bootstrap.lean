@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.GoodEvent
-import RBM2D.Path.Stop
-import RBM2D.Path.Transfer
-import RBM2D.Path.Walk
-import RBM2D.Path.PerTime
-import RBM2D.Path.Scales
-import RBM2D.Path.Step2Props
+
+module
+
+public import RBM2D.Path.GoodEvent
+public import RBM2D.Path.Stop
+public import RBM2D.Path.Transfer
+public import RBM2D.Path.Walk
+public import RBM2D.Path.PerTime
+public import RBM2D.Path.Scales
+public import RBM2D.Path.Step2Props
+
+@[expose] public section
 
 /-!
 # The grid hand-off `GridStep2PT` of (`Eq:Gdecay_w`) and its transfer to `Step2DecayPT`

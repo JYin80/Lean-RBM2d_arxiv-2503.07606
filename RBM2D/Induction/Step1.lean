@@ -3,15 +3,20 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.Defs
-import RBM2D.Induction.ConArg
-import RBM2D.Induction.Continuity
-import RBM2D.Induction.ScaleFacts
-import RBM2D.Induction.PerTimeCalc
-import RBM2D.Induction.Split
-import RBM2D.Green.Pins
-import RBM2D.Path.ScalesBridge
-import RBM2D.Gauss.GreenTimeCont
+
+module
+
+public import RBM2D.Induction.Defs
+public import RBM2D.Induction.ConArg
+public import RBM2D.Induction.Continuity
+public import RBM2D.Induction.ScaleFacts
+public import RBM2D.Induction.PerTimeCalc
+public import RBM2D.Induction.Split
+public import RBM2D.Green.Pins
+public import RBM2D.Path.ScalesBridge
+public import RBM2D.Gauss.GreenTimeCont
+
+@[expose] public section
 
 /-!
 # Step 1 of `lem:main_ind`: (`lRB1`) and (`Gtmwc`) uniformly in `u ∈ [s,t]`

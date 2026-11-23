@@ -3,9 +3,14 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.HierVocab
-import RBM2D.Induction.BcalEDecay
-import RBM2D.Induction.Chain
+
+module
+
+public import RBM2D.Induction.HierVocab
+public import RBM2D.Induction.BcalEDecay
+public import RBM2D.Induction.Chain
+
+@[expose] public section
 
 /-!
 # `lem_BcalE` per time over `[s,t]`, random controls: `bcalEPT'`

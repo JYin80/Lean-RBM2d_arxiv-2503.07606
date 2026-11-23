@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.DerivBounds
-import RBM2D.Propagator.ZeroMode
-import RBM2D.Propagator.ShellCutoff
-import RBM2D.Propagator.ShellKernelFD
+
+module
+
+public import RBM2D.Propagator.DerivBounds
+public import RBM2D.Propagator.ZeroMode
+public import RBM2D.Propagator.ShellCutoff
+public import RBM2D.Propagator.ShellKernelFD
+
+@[expose] public section
 
 /-!
 # Property 6 of `lem_propTH`: `(prop:BD1)` and `(prop:BD2)`

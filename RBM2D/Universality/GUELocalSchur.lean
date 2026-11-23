@@ -3,13 +3,18 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Universality.GUELocalBootstrap
-import RBM2D.Universality.GUEPhase.AuxCarrier
-import RBM2D.Universality.EigenInterlacing
-import RBM2D.Green.Minor
-import RBM2D.Green.LDE
-import RBM2D.Green.LDEQuadInst
-import RBM2D.Green.Pins
+
+module
+
+public import RBM2D.Universality.GUELocalBootstrap
+public import RBM2D.Universality.GUEPhase.AuxCarrier
+public import RBM2D.Universality.EigenInterlacing
+public import RBM2D.Green.Minor
+public import RBM2D.Green.LDE
+public import RBM2D.Green.LDEQuadInst
+public import RBM2D.Green.Pins
+
+@[expose] public section
 
 /-!
 # The GUE local law from the Schur tail: the probabilistic input

@@ -3,14 +3,19 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.DriftLip
-import RBM2D.Gauss.SteinMatrix
-import RBM2D.Gauss.LoopSampleCont
-import RBM2D.Gauss.LoopEnvelope
-import RBM2D.Gauss.SpectralAlgebra
-import RBM2D.Gauss.LoopDerivative
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.Calculus.MeanValue
+
+module
+
+public import RBM2D.Path.DriftLip
+public import RBM2D.Gauss.SteinMatrix
+public import RBM2D.Gauss.LoopSampleCont
+public import RBM2D.Gauss.LoopEnvelope
+public import RBM2D.Gauss.SpectralAlgebra
+public import RBM2D.Gauss.LoopDerivative
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+public import Mathlib.Analysis.Calculus.MeanValue
+
+@[expose] public section
 
 /-!
 # The one-step expansion with its envelope (`d = 2`)

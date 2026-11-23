@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.AltEnd
-import RBM2D.Induction.QopBounds
-import RBM2D.Induction.GridGoodEvent
-import RBM2D.Induction.KcalDecay
-import RBM2D.Induction.DecayLoop
+
+module
+
+public import RBM2D.Induction.AltEnd
+public import RBM2D.Induction.QopBounds
+public import RBM2D.Induction.GridGoodEvent
+public import RBM2D.Induction.KcalDecay
+public import RBM2D.Induction.DecayLoop
+
+@[expose] public section
 
 /-!
 # The per-time levels of `𝒬_u B_m`, `m = 1..5` (part (b) of `AltLevelsQ`)

@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.StepDecompLoop
-import RBM2D.Path.DriftAlgebra
-import RBM2D.Path.LoopStep
-import RBM2D.Path.UBounds
-import RBM2D.Path.Kernel
+
+module
+
+public import RBM2D.Path.StepDecompLoop
+public import RBM2D.Path.DriftAlgebra
+public import RBM2D.Path.LoopStep
+public import RBM2D.Path.UBounds
+public import RBM2D.Path.Kernel
+
+@[expose] public section
 
 /-!
 # The one-step expansion of `A_k = (𝓛 - 𝒦)_{u_k,(+,-)}` along the walk (`d = 2`)

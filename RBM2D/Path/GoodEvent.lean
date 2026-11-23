@@ -3,11 +3,16 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Path.DuhamelTail
-import RBM2D.Path.GoodSet
-import RBM2D.Path.Transfer
-import RBM2D.Induction.Defs
-import RBM2D.Induction.Chain
+
+module
+
+public import RBM2D.Path.DuhamelTail
+public import RBM2D.Path.GoodSet
+public import RBM2D.Path.Transfer
+public import RBM2D.Induction.Defs
+public import RBM2D.Induction.Chain
+
+@[expose] public section
 
 /-!
 # The grid stopping index, the initial event, the grid size and the Chebyshev event
@@ -697,7 +702,7 @@ theorem GoodEvent_Yterm_inputs {E : ℝ} (hE : |E| < 2) {s v : ℕ → ℝ} {K :
     exact hω.trans ((le_abs_self _).trans_eq (Real.norm_eq_abs _).symm)
   have hint : Integrable Y (pathP d) := hm.integrable (by norm_num)
   have h4' : (pathP d)[Y | filt d j] =ᵐ[pathP d] fun _ => (0 : ℂ) := h4
-  have hmI : MemLp (S.indicator Y) 2 (pathP d) := hm.indicator ((filt d).le j S hS)
+  have hmI : MemLp (S.indicator Y) 2 (pathP d) := hm.indicator ((filt d).le j S hS).nullMeasurableSet
   -- mean zero
   have hmean : ∀ F : ℂ →L[ℝ] ℝ,
       (pathP d)[fun ω => F (S.indicator Y ω) | filt d j] =ᵐ[pathP d] 0 := by

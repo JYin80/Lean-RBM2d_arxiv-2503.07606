@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Propagator.ContinuumSymbol
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+
+module
+
+public import RBM2D.Propagator.ContinuumSymbol
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+
+@[expose] public section
 
 /-!
 # Contour shift for the infinite-volume kernel
@@ -223,7 +228,7 @@ theorem abs_le_of_mem_uIcc_zero {η y : ℝ} (hy : y ∈ Set.uIcc 0 η) :
     linarith [hy.1]
 
 /-- The rectangle used to move the first Fourier momentum. -/
-def contourRect (η : ℝ) : Set ℂ :=
+noncomputable def contourRect (η : ℝ) : Set ℂ :=
   Set.uIcc (-Real.pi) Real.pi ×ℂ Set.uIcc 0 η
 
 /-- A one-variable contour shift when the two vertical boundary values coincide. -/

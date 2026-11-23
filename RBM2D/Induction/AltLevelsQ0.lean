@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import RBM2D.Induction.AltEnd
-import RBM2D.Induction.B45
-import RBM2D.Induction.DecayLoop
-import RBM2D.Induction.KcalDecay
+
+module
+
+public import RBM2D.Induction.AltEnd
+public import RBM2D.Induction.B45
+public import RBM2D.Induction.DecayLoop
+public import RBM2D.Induction.KcalDecay
+
+@[expose] public section
 
 /-!
 # `AltLevelsQ`, part (a): the level of `𝒬_s B_0` at the time `s`

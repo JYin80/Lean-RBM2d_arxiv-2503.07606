@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import RBM2D.Defs.Domination
+
+module
+
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import RBM2D.Defs.Domination
+
+@[expose] public section
 
 /-!
 # The harmonic sum is `≺ 1`

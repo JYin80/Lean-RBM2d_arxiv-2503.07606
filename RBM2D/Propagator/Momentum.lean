@@ -3,10 +3,15 @@ Copyright (c) 2026 Jun Yin. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jun Yin
 -/
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.Analysis.Real.Pi.Bounds
-import RBM2D.Defs.Dist
-import RBM2D.Propagator.Elliptic
+
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import RBM2D.Defs.Dist
+public import RBM2D.Propagator.Elliptic
+
+@[expose] public section
 
 /-!
 # `(eq_qcomp)`: the comparison `q(p) ∼ |p|_*²`
